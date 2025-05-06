@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     // A URL base DEVE ser configurada na Vercel como NEXT_PUBLIC_BASE_URL
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'; // Fallback para localhost
 
-    console.log(`Criando preferência para: ${title} no valor de ${unit_price}`);
+    console.log(`Criando preferência para: ${title} no valor de ${unit_price}`) ;
     console.log(`Base URL para retorno: ${baseUrl}`);
 
     const body = {
@@ -54,12 +54,12 @@ export async function POST(request: Request) {
   } catch (e) {
     console.error("Erro ao criar preferência:", e);
     // Verifica se é um erro de JSON parsing
-    if (e instanceof SyntaxError) {
+    if (e instanceof SyntaxError && e.message.includes("JSON")) {
         return NextResponse.json({ error: 'Erro ao processar JSON da requisição' }, { status: 400 });
     }
     // Tenta extrair mais detalhes do erro do Mercado Pago, se disponível
-    const errorDetails = e instanceof Error ? e.message : String(e);
+    // Modificado para serializar o objeto de erro completo para melhor depuração
+    const errorDetails = JSON.stringify(e, Object.getOwnPropertyNames(e));
     return NextResponse.json({ error: 'Erro ao criar preferência de pagamento', details: errorDetails }, { status: 500 });
   }
 }
-
