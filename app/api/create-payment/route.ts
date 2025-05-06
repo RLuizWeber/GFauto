@@ -10,12 +10,11 @@ const preference = new Preference(client);
 export async function POST(request: Request) {
   // Adicionando logs para depuração
   console.log("--- INÍCIO DA REQUISIÇÃO /api/create-payment ---");
-  console.log("Valor de process.env.BASE_URL:", process.env.BASE_URL);
-  console.log("Valor de process.env.VERCEL_URL:", process.env.VERCEL_URL); // URL do deploy atual, fornecida pela Vercel
-  console.log("Valor de process.env.NEXT_PUBLIC_VERCEL_URL:", process.env.NEXT_PUBLIC_VERCEL_URL); // Similar, mas para o cliente
+  console.log("Valor de process.env.BASE_URL (não mais usado diretamente):", process.env.BASE_URL);
+  console.log("Valor de process.env.VERCEL_URL:", process.env.VERCEL_URL);
+  console.log("Valor de process.env.NEXT_PUBLIC_VERCEL_URL:", process.env.NEXT_PUBLIC_VERCEL_URL);
   console.log("Valor de process.env.MP_ACCESS_TOKEN (apenas para verificar se existe):", process.env.MP_ACCESS_TOKEN ? "Definido" : "NÃO DEFINIDO");
-  // console.log("Todas as variáveis de ambiente (chaves):", Object.keys(process.env)); // Comentado para não poluir demais inicialmente
-  console.log("--- FIM DOS LOGS DE VARIÁVEIS DE AMBIENTE ---");
+  console.log("--- FIM DOS LOGS DE VARIÁVEIS DE AMBIENTE INICIAIS ---");
 
   try {
     const { planId, title, unit_price } = await request.json();
@@ -25,20 +24,25 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Campos planId, title e unit_price são obrigatórios' }, { status: 400 });
     }
 
-    const baseUrl = process.env.BASE_URL;
+    // A URL base será construída a partir de process.env.VERCEL_URL
+    const vercelUrl = process.env.VERCEL_URL;
+    const baseUrl = vercelUrl ? `https://${vercelUrl}` : undefined; // Adiciona https:// e mantém undefined se VERCEL_URL não existir
+
+    // Logs para depurar a construção da baseUrl
+    console.log("Tentando construir baseUrl a partir de VERCEL_URL:") ;
+    console.log("  process.env.VERCEL_URL (usado para construir baseUrl):", vercelUrl);
+    console.log("  baseUrl construída (com https://) :", baseUrl);
 
     if (!baseUrl) {
-      console.error("Variável de ambiente BASE_URL não está definida! (Verificação no código)");
+      console.error("Não foi possível construir baseUrl a partir de process.env.VERCEL_URL! (Verificação no código)");
       // Log adicional para entender o contexto
-      console.log("Contexto do erro BASE_URL ausente:");
-      console.log("  process.env.BASE_URL (dentro do if !baseUrl):", process.env.BASE_URL);
-      console.log("  process.env.VERCEL_URL (dentro do if !baseUrl):", process.env.VERCEL_URL);
-      console.log("  process.env.NEXT_PUBLIC_VERCEL_URL (dentro do if !baseUrl):", process.env.NEXT_PUBLIC_VERCEL_URL);
-      return NextResponse.json({ error: 'Configuração do servidor incompleta: BASE_URL ausente.' }, { status: 500 });
+      console.log("Contexto do erro baseUrl ausente (após tentar usar VERCEL_URL):");
+      console.log("  process.env.VERCEL_URL (dentro do if !baseUrl):", process.env.VERCEL_URL); // Já logado acima, mas repetindo para contexto do erro
+      return NextResponse.json({ error: 'Configuração do servidor incompleta: Não foi possível determinar a URL base.' }, { status: 500 });
     }
 
     console.log(`Criando preferência para: ${title} no valor de ${unit_price}`);
-    console.log(`Base URL para retorno: ${baseUrl}`);
+    console.log(`Base URL para retorno (construída a partir de VERCEL_URL): ${baseUrl}`);
 
     const body = {
       items: [
