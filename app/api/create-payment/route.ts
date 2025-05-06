@@ -19,10 +19,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Campos planId, title e unit_price são obrigatórios' }, { status: 400 });
     }
 
-    // A URL base DEVE ser configurada na Vercel como NEXT_PUBLIC_BASE_URL
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'; // Fallback para localhost
+    // A URL base DEVE ser configurada na Vercel como BASE_URL (sem o prefixo NEXT_PUBLIC_)
+    const baseUrl = process.env.BASE_URL; // Alterado de NEXT_PUBLIC_BASE_URL para BASE_URL
 
-    console.log(`Criando preferência para: ${title} no valor de ${unit_price}`) ;
+    if (!baseUrl) {
+      console.error("Variável de ambiente BASE_URL não está definida!");
+      return NextResponse.json({ error: 'Configuração do servidor incompleta: BASE_URL ausente.' }, { status: 500 });
+    }
+
+    console.log(`Criando preferência para: ${title} no valor de ${unit_price}`);
     console.log(`Base URL para retorno: ${baseUrl}`);
 
     const body = {
@@ -58,7 +63,6 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: 'Erro ao processar JSON da requisição' }, { status: 400 });
     }
     // Tenta extrair mais detalhes do erro do Mercado Pago, se disponível
-    // Modificado para serializar o objeto de erro completo para melhor depuração
     const errorDetails = JSON.stringify(e, Object.getOwnPropertyNames(e));
     return NextResponse.json({ error: 'Erro ao criar preferência de pagamento', details: errorDetails }, { status: 500 });
   }
