@@ -1,3 +1,5 @@
+// Forçando novo deploy para pegar variáveis de ambiente.
+
 import { NextResponse } from 'next/server';
 
 // Esta é a sua chave secreta para validar webhooks do Mercado Pago.
