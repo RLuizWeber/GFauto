@@ -31,14 +31,13 @@ export async function POST(request: Request) {
     console.log("Corpo da requisição (payload) do webhook recebido (parseado):", JSON.stringify(body, null, 2));
 
     const signatureHeader = request.headers.get("x-signature");
-    // const requestId = request.headers.get("x-request-id"); // Não usaremos requestId nesta tentativa
 
     if (!signatureHeader) {
       console.warn("Alerta de segurança: Requisição de webhook sem header x-signature.");
       return NextResponse.json({ error: "Assinatura ausente." }, { status: 400 });
     }
 
-    console.log(`Headers recebidos: x-signature: ${signatureHeader}`); // Removido requestId do log aqui
+    console.log(`Headers recebidos: x-signature: ${signatureHeader}`);
 
     const parts = signatureHeader.split(",");
     const ts = parts.find(part => part.startsWith("ts="))?.split("=")[1];
@@ -49,31 +48,26 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Formato de assinatura inválido." }, { status: 400 });
     }
 
-    // TENTATIVA COM TEMPLATE MAIS SIMPLES: id da notificação e ts
-    // Usando body.id (ID da notificação) em vez de body.data.id (ID do recurso)
-    const templateToSign = `id:${body.id};ts:${ts};`;
-    console.log("DEBUG: templateToSign (SIMPLIFICADO - usando body.id, sem request-id):", JSON.stringify(templateToSign));
-
-    const stringCompletaParaAssinar = templateToSign + requestBodyText;
-    console.log("DEBUG: stringCompletaParaAssinar (com template SIMPLIFICADO):", JSON.stringify(stringCompletaParaAssinar));
+    // TENTATIVA COM FORMATO ts;body (baseado na lógica do SDK)
+    const stringToSign = `ts:${ts};body:${requestBodyText}`;
+    console.log("DEBUG: stringToSign (formato ts;body):", JSON.stringify(stringToSign));
 
     const calculatedSignature = crypto.createHmac("sha256", MERCADOPAGO_WEBHOOK_SECRET)
-                                    .update(stringCompletaParaAssinar)
+                                    .update(stringToSign)
                                     .digest("hex");
 
     if (calculatedSignature !== v1) {
-      console.warn("Alerta de segurança: Assinatura do webhook inválida (com template SIMPLIFICADO).");
-      console.log("  Template usado (SIMPLIFICADO):", templateToSign);
+      console.warn("Alerta de segurança: Assinatura do webhook inválida (com formato ts;body).");
+      console.log("  String usada para assinatura (ts;body):", stringToSign);
       console.log("  Assinatura calculada:", calculatedSignature);
       console.log("  Assinatura recebida (v1):", v1);
       return NextResponse.json({ error: "Assinatura inválida." }, { status: 400 });
     }
 
-    console.log("Assinatura do webhook validada com sucesso (com template SIMPLIFICADO)! Processando pagamento...");
+    console.log("Assinatura do webhook validada com sucesso (com formato ts;body)! Processando pagamento...");
 
-    // O restante do código de processamento do pagamento permanece o mesmo
     if (body.type === "payment") {
-      const paymentId = body.data.id; // ID do pagamento (do campo data.id)
+      const paymentId = body.data.id;
       console.log(`Evento de pagamento recebido para o ID: ${paymentId}. Buscando detalhes...`);
 
       try {
@@ -134,3 +128,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ received: false, error: errorMessage, details: errorDetails }, { status: 500 });
   }
 }
+
