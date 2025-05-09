@@ -12,8 +12,12 @@ const mercadopagoPayment = new MercadoPagoPayment(mpClient);
 
 const MERCADOPAGO_WEBHOOK_SECRET = process.env.MERCADOPAGO_WEBHOOK_SECRET;
 
+console.log("DEBUG: Valor de MERCADOPAGO_WEBHOOK_SECRET no runtime:", MERCADOPAGO_WEBHOOK_SECRET);
+
 export async function POST(request: Request) {
   console.log("--- INÍCIO DA REQUISIÇÃO WEBHOOK MERCADO PAGO ---");
+
+console.log("DEBUG INTERNO: Valor de process.env.MERCADOPAGO_WEBHOOK_SECRET:", process.env.MERCADOPAGO_WEBHOOK_SECRET);
 
   if (!MERCADOPAGO_WEBHOOK_SECRET) {
     console.error("Erro crítico: MERCADOPAGO_WEBHOOK_SECRET não está configurada.");
