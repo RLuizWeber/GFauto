@@ -1,9 +1,9 @@
-// Forçando novo deploy para pegar variáveis de ambiente atualizadas
-
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { MercadoPagoConfig, Payment as MercadoPagoPayment } from 'mercadopago';
 import crypto from 'crypto';
+
+// Forçando novo deploy após recriar variável, eu que botei esse comentário
 
 const prisma = new PrismaClient();
 
