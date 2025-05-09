@@ -3,6 +3,8 @@ import { PrismaClient } from "@prisma/client";
 import { MercadoPagoConfig, Payment as MercadoPagoPayment } from "mercadopago";
 import crypto from "crypto";
 
+// Comentário para forçar deploy
+
 const prisma = new PrismaClient();
 
 const mpClient = new MercadoPagoConfig({ accessToken: process.env.MP_ACCESS_TOKEN! });
@@ -14,7 +16,6 @@ console.log("DEBUG: Valor de MERCADOPAGO_WEBHOOK_SECRET no runtime:", MERCADOPAG
 
 export async function POST(request: Request) {
   console.log("--- INÍCIO DA REQUISIÇÃO WEBHOOK MERCADO PAGO ---");
-
   console.log("DEBUG INTERNO: Valor de process.env.MERCADOPAGO_WEBHOOK_SECRET:", process.env.MERCADOPAGO_WEBHOOK_SECRET);
 
   if (!MERCADOPAGO_WEBHOOK_SECRET) {
@@ -24,11 +25,9 @@ export async function POST(request: Request) {
 
   try {
     const requestBodyText = await request.text();
-    // ADICIONADO PARA DEBUG DO CORPO CRU:
     console.log("DEBUG: requestBodyText CRU:", JSON.stringify(requestBodyText));
 
     const body = JSON.parse(requestBodyText);
-
     console.log("Corpo da requisição (payload) do webhook recebido (parseado):", JSON.stringify(body, null, 2));
 
     const signatureHeader = request.headers.get("x-signature");
@@ -50,33 +49,32 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Formato de assinatura inválido." }, { status: 400 });
     }
 
-    let templateToSign = `id:${body.id};ts:${ts};`;
+    // CORREÇÃO: Usar body.data.id e o prefixo "data.id:" no template
+    let templateToSign = `data.id:${body.data.id};ts:${ts};`;
     if (requestId) {
-        templateToSign = `id:${body.id};request-id:${requestId};ts:${ts};`;
+        templateToSign = `data.id:${body.data.id};request-id:${requestId};ts:${ts};`;
     }
-    // ADICIONADO PARA DEBUG DO TEMPLATE:
-    console.log("DEBUG: templateToSign:", JSON.stringify(templateToSign));
+    console.log("DEBUG: templateToSign (usando data.id):", JSON.stringify(templateToSign));
 
-    // ADICIONADO PARA DEBUG DA STRING COMPLETA PARA ASSINAR:
     const stringCompletaParaAssinar = templateToSign + requestBodyText;
-    console.log("DEBUG: stringCompletaParaAssinar:", JSON.stringify(stringCompletaParaAssinar));
+    console.log("DEBUG: stringCompletaParaAssinar (usando data.id no template):", JSON.stringify(stringCompletaParaAssinar));
 
     const calculatedSignature = crypto.createHmac("sha256", MERCADOPAGO_WEBHOOK_SECRET)
-                                    .update(stringCompletaParaAssinar) // Usando a variável correta
+                                    .update(stringCompletaParaAssinar)
                                     .digest("hex");
 
     if (calculatedSignature !== v1) {
       console.warn("Alerta de segurança: Assinatura do webhook inválida.");
-      console.log("  Template usado para assinatura (direto):", templateToSign);
+      console.log("  Template usado para assinatura (usando data.id):", templateToSign);
       console.log("  Assinatura calculada:", calculatedSignature);
       console.log("  Assinatura recebida (v1):", v1);
       return NextResponse.json({ error: "Assinatura inválida." }, { status: 400 });
     }
 
-    console.log("Assinatura do webhook validada com sucesso!");
+    console.log("Assinatura do webhook validada com sucesso! Processando pagamento...");
 
     if (body.type === "payment") {
-      const paymentId = body.data.id;
+      const paymentId = body.data.id; // ID do pagamento
       console.log(`Evento de pagamento recebido para o ID: ${paymentId}. Buscando detalhes...`);
 
       try {
@@ -91,7 +89,7 @@ export async function POST(request: Request) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const paymentStatus = (paymentDetails as any)?.status as string | undefined;
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const mercadopagoInternalPaymentId = (paymentDetails as any)?.id?.toString();
+          const mercadopagoInternalPaymentId = (paymentDetails as any)?.id?.toString(); // ID do pagamento do MP
 
           if (!paymentStatus) {
             console.warn("Status do pagamento não encontrado nos detalhes do Mercado Pago. Não será possível atualizar o status.");
@@ -116,6 +114,7 @@ export async function POST(request: Request) {
         }
       } catch (mpError) {
         console.error("Erro ao buscar detalhes do pagamento no Mercado Pago:", mpError);
+        // Não retornar erro 500 aqui, apenas logar, pois a notificação foi autenticada
       }
     } else {
       console.log(`Tipo de evento não processado: ${body.type}`);
