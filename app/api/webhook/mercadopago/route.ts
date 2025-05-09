@@ -1,3 +1,5 @@
+// Forçando novo deploy para pegar variáveis de ambiente atualizadas
+
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { MercadoPagoConfig, Payment as MercadoPagoPayment } from 'mercadopago';
