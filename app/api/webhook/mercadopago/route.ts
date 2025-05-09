@@ -70,11 +70,14 @@ export async function POST(request: Request) {
         const paymentDetails = await mercadopagoPayment.get({ id: paymentId });
         console.log("Detalhes do pagamento obtidos do Mercado Pago:", JSON.stringify(paymentDetails, null, 2));
         
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const preferenceIdFromDetails = (paymentDetails as any)?.preference_id as string | undefined;
 
         if (paymentDetails && preferenceIdFromDetails) {
           const preferenceId = preferenceIdFromDetails;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const paymentStatus = (paymentDetails as any)?.status as string | undefined;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const mercadopagoInternalPaymentId = (paymentDetails as any)?.id?.toString();
 
           if (!paymentStatus) {
@@ -96,7 +99,7 @@ export async function POST(request: Request) {
             }
           }
         } else {
-          console.warn("Detalhes do pagamento ou preference_id (acessado como (paymentDetails as any)?.preference_id) não encontrados na resposta do Mercado Pago.");
+          console.warn("Detalhes do pagamento ou preference_id não encontrados na resposta do Mercado Pago.");
         }
       } catch (mpError) {
         console.error("Erro ao buscar detalhes do pagamento no Mercado Pago:", mpError);
@@ -123,3 +126,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ received: false, error: errorMessage, details: errorDetails }, { status: 500 });
   }
 }
+
