@@ -1,4 +1,3 @@
-```typescript
 import { NextResponse, NextRequest } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { MercadoPagoConfig, Payment as MercadoPagoPayment } from "mercadopago";
@@ -204,4 +203,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ received: false, error: errorMessage, details: errorDetails }, { status: 500 });
   }
 }
-```
