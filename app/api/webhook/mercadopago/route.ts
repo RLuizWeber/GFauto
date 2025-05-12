@@ -11,7 +11,7 @@ const mpClient = new MercadoPagoConfig({ accessToken: process.env.MP_ACCESS_TOKE
 const mercadopagoPayment = new MercadoPagoPayment(mpClient);
 const mercadopagoMerchantOrder = new MerchantOrder(mpClient);
 
-// Configuração do Resend
+// Configuração do Resend Segunda-Feira
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 console.log("DEBUG MODULE LOAD (v2.8): Raw process.env.MERCADOPAGO_WEBHOOK_SECRET:", process.env.MERCADOPAGO_WEBHOOK_SECRET);
