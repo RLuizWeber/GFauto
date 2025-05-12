@@ -1,0 +1,10 @@
+
+No Git Bash o caminho inserido deve ser:
+cd /w/A_Weber/Pai/Hostmachine/gfauto/githubVercel/GFauto
+
+que vai direto para o gitHub neste endereço:
+
+https://github.com/RLuizWeber/GFauto/blob/main/app/api/webhook/mercadopago/route.ts
+
+Weber
+mai/2025
