@@ -66,6 +66,7 @@ function validateWebhookSignatureRecommended(
 }
 
 // --- Funções de envio de e-mail com Resend ---
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function sendPaymentConfirmationEmail(paymentDetails: any, clientEmail: string) {
   const subject = "Confirmação de Pagamento - GFAuto";
   const body = `<p>Olá,</p><p>Seu pagamento para o anúncio no GFAuto foi aprovado com sucesso!</p><p>Detalhes do Pagamento:</p><ul><li>ID do Pagamento MP: ${paymentDetails.id}</li><li>Status: ${paymentDetails.status}</li><li>Valor: ${paymentDetails.transaction_amount} ${paymentDetails.currency_id}</li></ul><p>Em breve você poderá cadastrar os dados do seu anúncio.</p><p>Obrigado,<br>Equipe GFAuto</p>`;
@@ -83,6 +84,7 @@ async function sendPaymentConfirmationEmail(paymentDetails: any, clientEmail: st
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function sendAdminPaymentNotification(paymentDetails: any, type: "approved" | "rejected" | "cancelled") {
   const subject = `Notificação de Pagamento: ${type.toUpperCase()} - GFAuto`;
   const body = `<p>Um pagamento foi ${type} no sistema GFAuto.</p><p>Detalhes:</p><ul><li>ID do Pagamento MP: ${paymentDetails.id}</li><li>Status: ${paymentDetails.status}</li><li>Preference ID: ${paymentDetails.preference_id}</li><li>Usuário (se disponível): ${paymentDetails.payer?.email || 'Não disponível'}</li></ul>`;
@@ -109,16 +111,16 @@ async function sendAdminPaymentNotification(paymentDetails: any, type: "approved
 
 // --- Função POST principal (processamento do webhook) ---
 export async function POST(request: NextRequest) {
-  console.log("--- INÍCIO DA REQUISIÇÃO WEBHOOK MERCADO PAGO (v2.2 - Resend Integration) ---");
+  console.log("--- INÍCIO DA REQUISIÇÃO WEBHOOK MERCADO PAGO (v2.3 - ESLint Fix) ---");
   const MERCADOPAGO_WEBHOOK_SECRET_RUNTIME = process.env.MERCADOPAGO_WEBHOOK_SECRET;
   const RESEND_API_KEY_RUNTIME = process.env.RESEND_API_KEY;
 
   if (!MERCADOPAGO_WEBHOOK_SECRET_RUNTIME) {
-    console.error("Erro crítico (v2.2): MERCADOPAGO_WEBHOOK_SECRET não configurada.");
+    console.error("Erro crítico (v2.3): MERCADOPAGO_WEBHOOK_SECRET não configurada.");
     return NextResponse.json({ error: "Configuração do servidor incompleta (MP Secret)." }, { status: 500 });
   }
   if (!RESEND_API_KEY_RUNTIME) {
-    console.error("Erro crítico (v2.2): RESEND_API_KEY não configurada. E-mails não serão enviados.");
+    console.error("Erro crítico (v2.3): RESEND_API_KEY não configurada. E-mails não serão enviados.");
     // Não retornamos erro 500 aqui, pois o webhook pode ser processado mesmo sem e-mails
   }
 
@@ -130,7 +132,7 @@ export async function POST(request: NextRequest) {
     const rawBodyForText = await request.clone().text(); 
     requestBodyTextForLog = rawBodyForText;
     body = JSON.parse(requestBodyTextForLog);
-    console.log("Corpo da requisição (parseado) (v2.2):", JSON.stringify(body, null, 2));
+    console.log("Corpo da requisição (parseado) (v2.3):", JSON.stringify(body, null, 2));
 
     const signatureHeader = request.headers.get("x-signature");
     const requestIdHeader = request.headers.get("x-request-id");
@@ -138,21 +140,21 @@ export async function POST(request: NextRequest) {
     const isSignatureValid = validateWebhookSignatureRecommended(signatureHeader, requestIdHeader, body, MERCADOPAGO_WEBHOOK_SECRET_RUNTIME);
 
     if (!isSignatureValid) {
-      console.warn("FALHA NA VALIDAÇÃO DA ASSINATURA (v2.2).");
+      console.warn("FALHA NA VALIDAÇÃO DA ASSINATURA (v2.3).");
       return NextResponse.json({ error: "Assinatura inválida." }, { status: 400 });
     }
-    console.log("SUCESSO (v2.2): Assinatura do webhook validada!");
+    console.log("SUCESSO (v2.3): Assinatura do webhook validada!");
 
     // Processamento de Eventos
     if (body.type === "payment") {
       const paymentId = body.data?.id;
       if (!paymentId) {
-        console.warn("Evento de pagamento (v2.2) sem body.data.id.", body);
+        console.warn("Evento de pagamento (v2.3) sem body.data.id.", body);
       } else {
-        console.log(`Evento de pagamento (v2.2) ID: ${paymentId}. Buscando detalhes...`);
+        console.log(`Evento de pagamento (v2.3) ID: ${paymentId}. Buscando detalhes...`);
         try {
           const paymentDetails = await mercadopagoPayment.get({ id: paymentId });
-          console.log("Detalhes do pagamento obtidos (v2.2):", JSON.stringify(paymentDetails, null, 2));
+          console.log("Detalhes do pagamento obtidos (v2.3):", JSON.stringify(paymentDetails, null, 2));
           
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const preferenceIdFromDetails = (paymentDetails as any)?.preference_id as string | undefined;
@@ -164,16 +166,16 @@ export async function POST(request: NextRequest) {
           const clientEmail = (paymentDetails as any)?.payer?.email as string | undefined;
 
           if (paymentDetails && preferenceIdFromDetails && paymentStatus) {
-            console.log(`Atualizando pagamento no DB (v2.2): Preference ID ${preferenceIdFromDetails}, Status: ${paymentStatus}`);
+            console.log(`Atualizando pagamento no DB (v2.3): Preference ID ${preferenceIdFromDetails}, Status: ${paymentStatus}`);
             await prisma.payment.updateMany({
               where: { mercadopagoPreferenceId: preferenceIdFromDetails },
               data: { status: paymentStatus, mercadopagoPaymentId: mercadopagoInternalPaymentId },
             });
-            console.log(`Pagamento com Preference ID ${preferenceIdFromDetails} atualizado (v2.2).`);
+            console.log(`Pagamento com Preference ID ${preferenceIdFromDetails} atualizado (v2.3).`);
 
             // Lógica de e-mail baseada no status
             if (paymentStatus === "approved") {
-              console.log("Pagamento aprovado (v2.2). Disparando e-mails...");
+              console.log("Pagamento aprovado (v2.3). Disparando e-mails...");
               if (clientEmail) {
                 await sendPaymentConfirmationEmail(paymentDetails, clientEmail);
               } else {
@@ -183,22 +185,22 @@ export async function POST(request: NextRequest) {
               // Aqui você adicionaria a lógica para liberar o anúncio
               console.log("AÇÃO: Liberar cliente para cadastrar anúncio (Preference ID:", preferenceIdFromDetails, ")");
             } else if (paymentStatus === "rejected" || paymentStatus === "cancelled") {
-              console.log(`Pagamento ${paymentStatus} (v2.2). Notificando admin...`);
-              await sendAdminPaymentNotification(paymentDetails, paymentStatus);
+              console.log(`Pagamento ${paymentStatus} (v2.3). Notificando admin...`);
+              await sendAdminPaymentNotification(paymentDetails, paymentStatus as "rejected" | "cancelled");
               // Adicionar lógica se o anúncio já estava publicado e precisa ser removido/suspenso
               console.log("AÇÃO: Verificar se anúncio (Preference ID:", preferenceIdFromDetails, ") precisa ser suspenso/removido.");
             }
 
           } else {
-            console.warn("Detalhes do pagamento, preference_id ou status não encontrados (v2.2).");
+            console.warn("Detalhes do pagamento, preference_id ou status não encontrados (v2.3).");
           }
         } catch (mpError) {
-          console.error("Erro ao buscar detalhes do pagamento no MP (v2.2):", mpError);
+          console.error("Erro ao buscar detalhes do pagamento no MP (v2.3):", mpError);
         }
       }
     } else if (body.type === "merchant_order") {
       const orderId = body.data?.id || body.resource?.split("/").pop();
-      console.log(`Evento de merchant_order (v2.2) recebido para o ID: ${orderId}.`);
+      console.log(`Evento de merchant_order (v2.3) recebido para o ID: ${orderId}.`);
       // TODO: Implementar lógica para buscar detalhes da merchant_order e agir conforme o status.
       // Exemplo: se order_status for 'paid', liberar o fluxo do anúncio.
       // const orderDetails = await mercadopago.merchant_orders.get(orderId);
@@ -206,16 +208,16 @@ export async function POST(request: NextRequest) {
       console.log("AÇÃO (merchant_order): Verificar status da ordem e liberar cliente para cadastrar anúncio se aplicável.");
 
     } else if (body.type === "test_notification") {
-        console.log("Recebida notificação de teste (v2.2):", JSON.stringify(body, null, 2));
+        console.log("Recebida notificação de teste (v2.3):", JSON.stringify(body, null, 2));
     } else {
-      console.log(`Tipo de evento não processado (v2.2): ${body.type}`);
+      console.log(`Tipo de evento não processado (v2.3): ${body.type}`);
     }
 
-    console.log("--- FIM DA REQUISIÇÃO WEBHOOK MERCADO PAGO (Processada v2.2) ---");
-    return NextResponse.json({ received: true, message: "Webhook processado com sucesso (v2.2)." });
+    console.log("--- FIM DA REQUISIÇÃO WEBHOOK MERCADO PAGO (Processada v2.3) ---");
+    return NextResponse.json({ received: true, message: "Webhook processado com sucesso (v2.3)." });
 
   } catch (error) {
-    console.error("Erro geral ao processar webhook (v2.2):", error);
+    console.error("Erro geral ao processar webhook (v2.3):", error);
     let errorMessage = "Erro desconhecido.";
     let errorDetails = "";
     if (error instanceof Error) {
@@ -224,7 +226,7 @@ export async function POST(request: NextRequest) {
             errorMessage = "Erro: Corpo da requisição não é um JSON válido. Corpo recebido: " + requestBodyTextForLog;
         }
     }
-    console.log("--- FIM DA REQUISIÇÃO WEBHOOK MERCADO PAGO (Erro Geral v2.2) ---");
+    console.log("--- FIM DA REQUISIÇÃO WEBHOOK MERCADO PAGO (Erro Geral v2.3) ---");
     return NextResponse.json({ received: false, error: errorMessage, details: errorDetails }, { status: 500 });
   }
 }
