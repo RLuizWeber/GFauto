@@ -1,0 +1,6 @@
+{
+  "env": {
+    "GF_PRIMARY_ADMIN_EMAIL": "@gf_primary_admin_email",
+    "GFAUTO_TEST_VAR": "@gfauto_test_var"
+  }
+}
