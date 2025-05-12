@@ -1,4 +1,3 @@
-// Forçando novo build com limpeza de cache
 import { NextResponse, NextRequest } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { MercadoPagoConfig, Payment as MercadoPagoPayment, MerchantOrder } from "mercadopago";
