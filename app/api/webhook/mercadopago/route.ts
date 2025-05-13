@@ -6,7 +6,7 @@ import { Resend } from "resend";
 
 const prisma = new PrismaClient();
 
-// Configuração do Mercado Pago Testando após reautenticação do GitHub
+// Testando deploy via CLI com VERCEL_IGNORE_ENV_CACHE e login CLI OK
 const mpClient = new MercadoPagoConfig({ accessToken: process.env.MP_ACCESS_TOKEN! });
 const mercadopagoPayment = new MercadoPagoPayment(mpClient);
 const mercadopagoMerchantOrder = new MerchantOrder(mpClient);
