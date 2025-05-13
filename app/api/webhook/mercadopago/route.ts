@@ -6,7 +6,7 @@ import { Resend } from "resend";
 
 const prisma = new PrismaClient();
 
-// Configuração do Mercado Pago Segunda de noite
+// Configuração do Mercado Pago Testando após reautenticação do GitHub
 const mpClient = new MercadoPagoConfig({ accessToken: process.env.MP_ACCESS_TOKEN! });
 const mercadopagoPayment = new MercadoPagoPayment(mpClient);
 const mercadopagoMerchantOrder = new MerchantOrder(mpClient);
