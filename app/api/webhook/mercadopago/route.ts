@@ -6,7 +6,7 @@ import { Resend } from "resend";
 
 const prisma = new PrismaClient();
 
-// Configuração do Mercado Pago versão v2.9.1
+// Configuração do Mercado Pago Atualizar a versão v2.9.2 15/05/25
 const mpClient = new MercadoPagoConfig({ accessToken: process.env.MP_ACCESS_TOKEN! });
 const mercadopagoPayment = new MercadoPagoPayment(mpClient);
 const mercadopagoMerchantOrder = new MerchantOrder(mpClient);
