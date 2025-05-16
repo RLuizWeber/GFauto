@@ -11,28 +11,71 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL") 
+  url      = env("DATABASE_URL")
 }
 
 model Advertiser {
-  id        String   @id @default(cuid())
-  email     String   @unique
+  id        String    @id @default(cuid())
+  email     String    @unique
   name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   payments  Payment[] // Relação com Pagamentos
+  anuncios  Anuncio[] // Relação com Anuncios
+}
+
+// Enum para os status possíveis de um Pagamento, alinhados com o Mercado Pago e uso interno
+enum StatusPagamento {
+  PENDING      // Aguardando pagamento
+  APPROVED     // Pagamento aprovado
+  AUTHORIZED   // Pagamento autorizado (pré-autorização)
+  IN_PROCESS   // Pagamento em processamento
+  IN_MEDIATION // Pagamento em mediação/disputa
+  REJECTED     // Pagamento rejeitado
+  CANCELLED    // Pagamento cancelado
+  REFUNDED     // Pagamento reembolsado
+  CHARGED_BACK // Pagamento contestado (chargeback)
+  // Adicione outros status se necessário para seu fluxo interno
 }
 
 model Payment {
-  id                      String    @id @default(cuid())
-  advertiserId            String    // Chave estrangeira para o Advertiser
-  advertiser              Advertiser @relation(fields: [advertiserId], references: [id])
-  mercadopagoPreferenceId String?   @unique // ID da preferência gerada pelo MP
-  mercadopagoPaymentId    String?   @unique // ID do pagamento efetivo no MP (quando aprovado)
-  status                  String    // Ex: PENDING, APPROVED, REJECTED, CANCELLED
-  amount                  Float     // Valor do pagamento
-  currency                String    @default("BRL")
-  planId                  String?   // ID do plano associado, se houver
-  createdAt               DateTime  @default(now())
-  updatedAt               DateTime  @updatedAt
+  id                      String          @id @default(cuid())
+  advertiserId            String          // Chave estrangeira para o Advertiser
+  advertiser              Advertiser      @relation(fields: [advertiserId], references: [id])
+  mercadopagoPreferenceId String          @unique // ID da preferência gerada pelo MP. Usado para ligar ao Anuncio.
+  mercadopagoPaymentId    String?         @unique // ID do pagamento efetivo no MP (quando aprovado)
+  status                  StatusPagamento // Status do pagamento, usando a enum StatusPagamento
+  amount                  Float           // Valor do pagamento
+  currency                String          @default("BRL")
+  planId                  String?         // ID do plano associado, se houver (pode ser redundante se Anuncio tiver essa info)
+  createdAt               DateTime        @default(now())
+  updatedAt               DateTime        @updatedAt
+  anuncio                 Anuncio?        @relation(fields: [mercadopagoPreferenceId], references: [mercadopagoPreferenceId], name: "PaymentToAnuncio")
+}
+
+// Enum para os status possíveis de um Anúncio
+enum StatusAnuncio {
+  AGUARDANDO_PAGAMENTO      // Anúncio criado, aguardando pagamento da preferência
+  AGUARDANDO_CADASTRO     // Pagamento aprovado, aguardando cliente preencher detalhes do anúncio
+  PUBLICADO                 // Anúncio ativo e online
+  PAGAMENTO_PROBLEMA        // Ex: pagamento rejeitado/cancelado após publicação
+  REEMBOLSADO_POS_PUBLICACAO // Anúncio teve seu pagamento reembolsado após publicação
+  SUSPENSO_CHARGEBACK       // Anúncio suspenso devido a chargeback
+  SUSPENSO_ADMIN            // Anúncio suspenso por um administrador
+  EXPIRADO                  // Anúncio expirou
+  // Adicione outros status conforme a necessidade do seu fluxo
+}
+
+model Anuncio {
+  id                      String         @id @default(cuid())
+  advertiserId            String         // Chave estrangeira para o Advertiser
+  advertiser              Advertiser     @relation(fields: [advertiserId], references: [id])
+  mercadopagoPreferenceId String         @unique // ID da preferência do MP, usado para ligar ao Payment
+  status                  StatusAnuncio  // Status atual do anúncio, usando a enum StatusAnuncio
+  tituloPlano             String?        // Descrição do plano (ex: "Plano Anual", "Destaque Trimestral") para e-mails, etc.
+  // Adicione aqui outros campos específicos do anúncio que você precisará:
+  // ex: titulo String?, descricao String?, imagemUrl String?, dataExpiracao DateTime? etc.
+  createdAt               DateTime       @default(now())
+  updatedAt               DateTime       @updatedAt
+  payment                 Payment?       @relation(name: "PaymentToAnuncio") // Relação opcional de volta para o pagamento, se necessário
 }
