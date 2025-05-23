@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { FiHome, FiList, FiDollarSign, FiUsers, FiSettings, FiHelpCircle } from 'react-icons/fi';
 
