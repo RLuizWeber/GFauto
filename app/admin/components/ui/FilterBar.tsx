@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { FiFilter, FiSearch, FiX } from 'react-icons/fi';
 
