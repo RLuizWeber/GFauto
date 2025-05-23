@@ -42,13 +42,13 @@ const AnunciosPage = () => {
 
   // Dados de exemplo para a tabela de anúncios
   const columns = [
-    { Header: 'ID', accessor: 'id' },
-    { Header: 'Título', accessor: 'titulo' },
-    { Header: 'Categoria', accessor: 'categoria' },
-    { Header: 'Preço', accessor: 'preco' },
-    { Header: 'Status', accessor: 'status' },
-    { Header: 'Data', accessor: 'data' },
-    { Header: 'Visualizações', accessor: 'visualizacoes' },
+    { Header: 'ID', accessor: 'id' as const },
+    { Header: 'Título', accessor: 'titulo' as const },
+    { Header: 'Categoria', accessor: 'categoria' as const },
+    { Header: 'Preço', accessor: 'preco' as const },
+    { Header: 'Status', accessor: 'status' as const },
+    { Header: 'Data', accessor: 'data' as const },
+    { Header: 'Visualizações', accessor: 'visualizacoes' as const },
   ];
 
   const anuncios = [
