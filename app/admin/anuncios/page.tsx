@@ -2,6 +2,7 @@ import React from 'react';
 import AdminLayout from '../components/layout/AdminLayout';
 import DataTable from '../components/ui/DataTable';
 import FilterBar from '../components/ui/FilterBar';
+import { Column } from 'react-table';
 
 const AnunciosPage = () => {
   // Filtros de exemplo
@@ -41,7 +42,15 @@ const AnunciosPage = () => {
   ];
 
   // Dados de exemplo para a tabela de anúncios
-  const columns = [
+  const columns: Column<{
+    id: string;
+    titulo: string;
+    categoria: string;
+    preco: string;
+    status: string;
+    data: string;
+    visualizacoes: string;
+  }>[] = [
     { Header: 'ID', accessor: 'id' as const },
     { Header: 'Título', accessor: 'titulo' as const },
     { Header: 'Categoria', accessor: 'categoria' as const },

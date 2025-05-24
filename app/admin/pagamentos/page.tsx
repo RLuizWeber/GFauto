@@ -3,6 +3,7 @@ import AdminLayout from '../components/layout/AdminLayout';
 import DataTable from '../components/ui/DataTable';
 import FilterBar from '../components/ui/FilterBar';
 import TrendChart from '../components/ui/TrendChart';
+import { Column } from 'react-table';
 
 const PagamentosPage = () => {
   // Filtros de exemplo
@@ -40,14 +41,22 @@ const PagamentosPage = () => {
   ];
 
   // Dados de exemplo para a tabela de pagamentos
-  const columns = [
-    { Header: 'ID', accessor: 'id' },
-    { Header: 'Anúncio', accessor: 'anuncio' },
-    { Header: 'Cliente', accessor: 'cliente' },
-    { Header: 'Valor', accessor: 'valor' },
-    { Header: 'Método', accessor: 'metodo' },
-    { Header: 'Status', accessor: 'status' },
-    { Header: 'Data', accessor: 'data' },
+  const columns: Column<{
+    id: string;
+    anuncio: string;
+    cliente: string;
+    valor: string;
+    metodo: string;
+    status: string;
+    data: string;
+  }>[] = [
+    { Header: 'ID', accessor: 'id' as const },
+    { Header: 'Anúncio', accessor: 'anuncio' as const },
+    { Header: 'Cliente', accessor: 'cliente' as const },
+    { Header: 'Valor', accessor: 'valor' as const },
+    { Header: 'Método', accessor: 'metodo' as const },
+    { Header: 'Status', accessor: 'status' as const },
+    { Header: 'Data', accessor: 'data' as const },
   ];
 
   const pagamentos = [
@@ -141,7 +150,7 @@ const PagamentosPage = () => {
           data={pagamentos}
           onRowClick={handleRowClick}
           pagination={true}
-          pageSize={10}
+          itemsPerPage={10}
         />
       </div>
     </AdminLayout>
