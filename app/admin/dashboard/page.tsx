@@ -4,6 +4,7 @@ import MetricCard from '../components/ui/MetricCard';
 import TrendChart from '../components/ui/TrendChart';
 import DataTable from '../components/ui/DataTable';
 import { FiDollarSign, FiList, FiUsers, FiShoppingCart } from 'react-icons/fi';
+import { Column } from 'react-table';
 
 const DashboardPage = () => {
   // Dados de exemplo para métricas
@@ -34,13 +35,20 @@ const DashboardPage = () => {
   };
 
   // Dados de exemplo para a tabela de transações recentes
-  const columns = [
-    { Header: 'ID', accessor: 'id' },
-    { Header: 'Anúncio', accessor: 'anuncio' },
-    { Header: 'Cliente', accessor: 'cliente' },
-    { Header: 'Valor', accessor: 'valor' },
-    { Header: 'Data', accessor: 'data' },
-    { Header: 'Status', accessor: 'status' },
+  const columns: Column<{
+    id: string;
+    anuncio: string;
+    cliente: string;
+    valor: string;
+    data: string;
+    status: string;
+  }>[] = [
+    { Header: 'ID', accessor: 'id' as const },
+    { Header: 'Anúncio', accessor: 'anuncio' as const },
+    { Header: 'Cliente', accessor: 'cliente' as const },
+    { Header: 'Valor', accessor: 'valor' as const },
+    { Header: 'Data', accessor: 'data' as const },
+    { Header: 'Status', accessor: 'status' as const },
   ];
 
   const transacoes = [
