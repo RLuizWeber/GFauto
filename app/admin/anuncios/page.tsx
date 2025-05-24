@@ -107,7 +107,7 @@ const AnunciosPage = () => {
           data={anuncios}
           onRowClick={handleRowClick}
           pagination={true}
-          pageSize={10}
+          itemsPerPage={10}
         />
       </div>
     </AdminLayout>
