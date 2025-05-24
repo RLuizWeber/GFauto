@@ -40,9 +40,7 @@ const DataTable = <T extends object>({
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 {/* Aqui está a alteração para resolver o erro de tipagem */}
-                {typeof column.Header === 'function' 
-                  ? column.render('Header') 
-                  : column.Header as React.ReactNode}
+                {column.Header as React.ReactNode}
               </th>
             ))}
           </tr>
