@@ -67,7 +67,7 @@ const DashboardPage = () => {
             change={metric.change}
             changeLabel={metric.changeLabel}
             icon={metric.icon}
-            color={metric.color}
+            color={metric.color as "blue" | "green" | "red" | "yellow" | "purple"}
           />
         ))}
       </div>
@@ -94,7 +94,7 @@ const DashboardPage = () => {
           columns={columns}
           data={transacoes}
           pagination={true}
-          pageSize={5}
+          itemsPerPage={5}
         />
       </div>
     </AdminLayout>
