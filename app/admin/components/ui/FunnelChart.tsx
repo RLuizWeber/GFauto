@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { Funnel } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,10 +9,9 @@ import {
   Title,
   Tooltip,
   Legend,
-  ChartOptions
 } from 'chart.js';
 
-// Registrar componentes do Chart.js
+// Registre os componentes necessários
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -23,47 +22,57 @@ ChartJS.register(
 );
 
 interface FunnelChartProps {
-  title: string;
   data: {
     labels: string[];
-    datasets: {
-      label: string;
-      data: number[];
-      backgroundColor: string[];
-      borderColor: string[];
-      borderWidth: number;
-    }[];
+    values: number[];
   };
-  height?: number;
+  title?: string;
 }
 
-const FunnelChart: React.FC<FunnelChartProps> = ({
-  title,
-  data,
-  height = 300
-}) => {
-  const options: ChartOptions<'bar'> = {
+const FunnelChart: React.FC<FunnelChartProps> = ({ data, title = 'Funil de Conversão' }) => {
+  // Configuração para simular um gráfico de funil usando Bar
+  const chartData = {
+    labels: data.labels,
+    datasets: [
+      {
+        label: 'Conversões',
+        data: data.values,
+        backgroundColor: [
+          'rgba(54, 162, 235, 0.8)',
+          'rgba(75, 192, 192, 0.8)',
+          'rgba(153, 102, 255, 0.8)',
+          'rgba(255, 159, 64, 0.8)',
+          'rgba(255, 99, 132, 0.8)',
+        ],
+        borderColor: [
+          'rgba(54, 162, 235, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
     indexAxis: 'y' as const,
     responsive: true,
-    maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top',
+        position: 'top' as const,
       },
       title: {
-        display: true,
+        display: !!title,
         text: title,
-        font: {
-          size: 16,
-          weight: 'bold'
-        }
       },
     },
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm" style={{ height: `${height}px` }}>
-      <Funnel options={options} data={data} />
+    <div className="bg-white p-4 rounded-lg shadow">
+      <Bar data={chartData} options={options} />
     </div>
   );
 };
