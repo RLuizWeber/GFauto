@@ -1,6 +1,5 @@
 "use client";
 import React from 'react';
-import AdminLayout from '../components/layout/AdminLayout';
 import DataTable from '../components/ui/DataTable';
 import FilterBar from '../components/ui/FilterBar';
 import TrendChart from '../components/ui/TrendChart';
@@ -108,7 +107,7 @@ const PagamentosPage = () => {
   };
 
   return (
-    <AdminLayout>
+    <>
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Pagamentos</h1>
         <p className="text-gray-600">Gerencie e analise todos os pagamentos da plataforma</p>
@@ -154,7 +153,7 @@ const PagamentosPage = () => {
           itemsPerPage={10}
         />
       </div>
-    </AdminLayout>
+    </>
   );
 };
 

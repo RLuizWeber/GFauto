@@ -1,6 +1,5 @@
 "use client";
 import React from 'react';
-import AdminLayout from '../components/layout/AdminLayout';
 import DataTable from '../components/ui/DataTable';
 import FilterBar from '../components/ui/FilterBar';
 import { Column } from 'react-table';
@@ -90,7 +89,7 @@ const AnunciosPage = () => {
   };
 
   return (
-    <AdminLayout>
+    <>
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Anúncios</h1>
         <p className="text-gray-600">Gerencie todos os anúncios da plataforma</p>
@@ -120,7 +119,7 @@ const AnunciosPage = () => {
           itemsPerPage={10}
         />
       </div>
-    </AdminLayout>
+    </>
   );
 };
 
