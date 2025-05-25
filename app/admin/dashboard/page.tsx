@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import AdminLayout from '../components/layout/AdminLayout';
 import MetricCard from '../components/ui/MetricCard';
