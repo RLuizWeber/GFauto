@@ -1,6 +1,5 @@
 "use client";
 import React from 'react';
-import AdminLayout from '../components/layout/AdminLayout';
 import MetricCard from '../components/ui/MetricCard';
 import TrendChart from '../components/ui/TrendChart';
 import DataTable from '../components/ui/DataTable';
@@ -61,7 +60,7 @@ const DashboardPage = () => {
   ];
 
   return (
-    <AdminLayout>
+    <>
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
         <p className="text-gray-600">Visão geral do desempenho da plataforma</p>
@@ -106,7 +105,7 @@ const DashboardPage = () => {
           itemsPerPage={5}
         />
       </div>
-    </AdminLayout>
+    </>
   );
 };
 
