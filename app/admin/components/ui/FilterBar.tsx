@@ -1,4 +1,5 @@
 "use client";
+// Comentário para forçar um novo deploy na Vercel - [25/05/2025]
 import React from 'react';
 import { FiFilter, FiSearch, FiX } from 'react-icons/fi';
 
