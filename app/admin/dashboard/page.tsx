@@ -4,14 +4,14 @@ import { FiDollarSign, FiList, FiUsers, FiShoppingCart } from 'react-icons/fi';
 import { Column } from 'react-table';
 
 // Importando componentes existentes
-import MetricCard from '../../components/MetricCard';
-import TrendChart from '../../components/TrendChart';
-import DataTable from '../../components/DataTable';
+import MetricCard from '../components/ui/MetricCard';
+import TrendChart from '../components/ui/TrendChart';
+import DataTable from '../components/ui/DataTable';
 
 // Importando novos componentes do Dashboard
-import DashboardMetricCard from '../../components/dashboard/MetricCard';
-import DashboardTrendChart from '../../components/dashboard/TrendChart';
-import RecentItemsTable from '../../components/dashboard/RecentItemsTable';
+import DashboardMetricCard from '../components/dashboard/MetricCard';
+import DashboardTrendChart from '../components/dashboard/TrendChart';
+import RecentItemsTable from '../components/dashboard/RecentItemsTable';
 
 const DashboardPage = () => {
   // Estado para controlar qual versão do dashboard mostrar
