@@ -1,0 +1,205 @@
+// Schema.prisma integrado com Fluxo do Visitante
+// Esta versão mantém todos os modelos existentes e adiciona os novos modelos necessários
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ========== MODELOS EXISTENTES ==========
+
+model Advertiser {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  payments  Payment[] // Relação com Pagamentos
+  anuncios  Anuncio[] // Relação com Anuncios
+}
+
+// Enum para os status possíveis de um Pagamento
+enum StatusPagamento {
+  PENDING      // Aguardando pagamento
+  APPROVED     // Pagamento aprovado
+  AUTHORIZED   // Pagamento autorizado (pré-autorização)
+  IN_PROCESS   // Pagamento em processamento
+  IN_MEDIATION // Pagamento em mediação/disputa
+  REJECTED     // Pagamento rejeitado
+  CANCELLED    // Pagamento cancelado
+  REFUNDED     // Pagamento reembolsado
+  CHARGED_BACK // Pagamento contestado (chargeback)
+}
+
+model Payment {
+  id                      String          @id @default(cuid())
+  advertiserId            String          // Chave estrangeira para o Advertiser
+  advertiser              Advertiser      @relation(fields: [advertiserId], references: [id])
+  mercadopagoPreferenceId String          @unique // ID da preferência gerada pelo MP
+  mercadopagoPaymentId    String?         @unique // ID do pagamento efetivo no MP
+  status                  StatusPagamento // Status do pagamento
+  amount                  Float           // Valor do pagamento
+  currency                String          @default("BRL")
+  planId                  String?         // ID do plano associado
+  createdAt               DateTime        @default(now())
+  updatedAt               DateTime        @updatedAt
+  anuncio                 Anuncio?        @relation(fields: [mercadopagoPreferenceId], references: [mercadopagoPreferenceId], name: "PaymentToAnuncio")
+}
+
+// Enum para os status possíveis de um Anúncio
+enum StatusAnuncio {
+  AGUARDANDO_PAGAMENTO      // Anúncio criado, aguardando pagamento da preferência
+  AGUARDANDO_CADASTRO       // Pagamento aprovado, aguardando cliente preencher detalhes do anúncio
+  PUBLICADO                 // Anúncio ativo e online
+  PAGAMENTO_PROBLEMA        // Ex: pagamento rejeitado/cancelado após publicação
+  REEMBOLSADO_POS_PUBLICACAO // Anúncio teve seu pagamento reembolsado após publicação
+  SUSPENSO_CHARGEBACK       // Anúncio suspenso devido a chargeback
+  SUSPENSO_ADMIN            // Anúncio suspenso por um administrador
+  EXPIRADO                  // Anúncio expirou
+}
+
+// ========== NOVOS MODELOS PARA FLUXO DO VISITANTE ==========
+
+// Tabela de estados brasileiros
+model Estado {
+  id        Int      @id @default(autoincrement())
+  nome      String   @db.VarChar(50)
+  sigla     String   @db.Char(2)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  // Relacionamentos
+  cidades   Cidade[]
+  
+  @@map("estados")
+}
+
+// Tabela de cidades
+model Cidade {
+  id        Int      @id @default(autoincrement())
+  nome      String   @db.VarChar(100)
+  estadoId  Int      @map("estado_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  // Relacionamentos
+  estado                  Estado                   @relation(fields: [estadoId], references: [id], onDelete: Cascade)
+  anuncios                Anuncio[]
+  especialidadesDisponiveis EspecialidadeDisponivel[]
+  rotacoesPremium         RotacaoPremium[]
+  
+  @@index([estadoId], name: "idx_cidades_estado")
+  @@map("cidades")
+}
+
+// Tabela de especialidades automotivas
+model Especialidade {
+  id        Int      @id @default(autoincrement())
+  nome      String   @db.VarChar(100)
+  descricao String?  @db.Text
+  slug      String   @db.VarChar(100)
+  icone     String?  @db.VarChar(100)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  // Relacionamentos
+  anuncios                Anuncio[]
+  especialidadesDisponiveis EspecialidadeDisponivel[]
+  rotacoesPremium         RotacaoPremium[]
+  
+  @@map("especialidades")
+}
+
+// Tabela para controle de rotação de anúncios premium
+model RotacaoPremium {
+  id              Int      @id @default(autoincrement())
+  especialidadeId Int      @map("especialidade_id")
+  cidadeId        Int      @map("cidade_id")
+  ultimaPosicao   Int      @default(0) @map("ultima_posicao")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  
+  // Relacionamentos
+  especialidade   Especialidade @relation(fields: [especialidadeId], references: [id], onDelete: Cascade)
+  cidade          Cidade        @relation(fields: [cidadeId], references: [id], onDelete: Cascade)
+  
+  @@unique([especialidadeId, cidadeId])
+  @@map("rotacao_premium")
+}
+
+// Tabela para rastrear quais especialidades estão disponíveis em cada cidade
+model EspecialidadeDisponivel {
+  id              Int      @id @default(autoincrement())
+  cidadeId        Int      @map("cidade_id")
+  especialidadeId Int      @map("especialidade_id")
+  createdAt       DateTime @default(now()) @map("created_at")
+  
+  // Relacionamentos
+  cidade        Cidade        @relation(fields: [cidadeId], references: [id], onDelete: Cascade)
+  especialidade Especialidade @relation(fields: [especialidadeId], references: [id], onDelete: Cascade)
+  
+  @@unique([cidadeId, especialidadeId])
+  @@index([cidadeId], name: "idx_especialidades_disponiveis_cidade")
+  @@map("especialidades_disponiveis")
+}
+
+// ========== MODELO ANUNCIO ESTENDIDO ==========
+
+// Modelo Anuncio estendido com campos para o fluxo do visitante
+model Anuncio {
+  id                      String         @id @default(cuid())
+  
+  // Campos existentes
+  advertiserId            String         // Chave estrangeira para o Advertiser
+  advertiser              Advertiser     @relation(fields: [advertiserId], references: [id])
+  mercadopagoPreferenceId String         @unique // ID da preferência do MP
+  status                  StatusAnuncio  // Status atual do anúncio
+  tituloPlano             String?        // Descrição do plano
+  createdAt               DateTime       @default(now())
+  updatedAt               DateTime       @updatedAt
+  payment                 Payment?       @relation(name: "PaymentToAnuncio")
+  
+  // Novos campos para o fluxo do visitante
+  titulo                  String?        @db.VarChar(200)
+  descricao               String?        @db.Text
+  endereco                String?        @db.Text
+  telefone                String?        @db.VarChar(20)
+  whatsapp                String?        @db.VarChar(20)
+  email                   String?        @db.VarChar(100)
+  site                    String?        @db.VarChar(200)
+  plano                   String         @default("cortesia") @db.VarChar(20) // 'premium' ou 'cortesia'
+  especialidadeId         Int?           @map("especialidade_id")
+  cidadeId                Int?           @map("cidade_id")
+  imagemPrincipal         String?        @map("imagem_principal") @db.VarChar(255)
+  latitude                Decimal?       @db.Decimal(10, 8)
+  longitude               Decimal?       @db.Decimal(11, 8)
+  dataExpiracao           DateTime?      @map("data_expiracao")
+  
+  // Novos relacionamentos
+  especialidade           Especialidade? @relation(fields: [especialidadeId], references: [id])
+  cidade                  Cidade?        @relation(fields: [cidadeId], references: [id])
+  imagens                 ImagemAnuncio[]
+  
+  // Índices para otimização
+  @@index([cidadeId, especialidadeId], name: "idx_anuncios_cidade_especialidade")
+  @@index([plano], name: "idx_anuncios_plano")
+}
+
+// Tabela de imagens dos anúncios
+model ImagemAnuncio {
+  id        Int      @id @default(autoincrement())
+  anuncioId String   @map("anuncio_id")
+  url       String   @db.VarChar(255)
+  ordem     Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  // Relacionamentos
+  anuncio   Anuncio  @relation(fields: [anuncioId], references: [id], onDelete: Cascade)
+  
+  @@map("imagens_anuncio")
+}
