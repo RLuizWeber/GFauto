@@ -73,6 +73,8 @@ model Anuncio {
   mercadopagoPreferenceId String         @unique // ID da preferência do MP, usado para ligar ao Payment
   status                  StatusAnuncio  // Status atual do anúncio, usando a enum StatusAnuncio
   tituloPlano             String?        // Descrição do plano (ex: "Plano Anual", "Destaque Trimestral") para e-mails, etc.
+  titulo                  String?        // Título do anúncio para exibição
+  descricao               String?        // Descrição detalhada do anúncio
   // Adicione aqui outros campos específicos do anúncio que você precisará:
   // ex: titulo String?, descricao String?, imagemUrl String?, dataExpiracao DateTime? etc.
   createdAt               DateTime       @default(now())
