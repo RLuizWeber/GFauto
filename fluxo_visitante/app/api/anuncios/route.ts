@@ -27,6 +27,28 @@ export async function GET(request: Request) {
       );
     }
     
+    // Definir o tipo para anúncios
+    type Anuncio = {
+      id: string;
+      titulo: string;
+      descricao: string | null;
+      endereco: string;
+      telefone: string;
+      whatsapp: string | null;
+      email: string | null;
+      site: string | null;
+      plano: string;
+      imagemPrincipal: string | null;
+      latitude: number | null;
+      longitude: number | null;
+      imagens: {
+        id: string;
+        url: string;
+        ordem: number;
+      }[];
+      [key: string]: any; // Para outros campos que possam existir
+    };
+    
     // Buscar anúncios premium
     const anunciosPremium = await prisma.anuncio.findMany({
       where: {
@@ -80,7 +102,7 @@ export async function GET(request: Request) {
     }
     
     // Aplicar rotação aos anúncios premium
-    let anunciosPremiumRotacionados = [];
+    let anunciosPremiumRotacionados: typeof anunciosPremium = [];
     if (anunciosPremium.length > 0) {
       const posicao = rotacao.ultimaPosicao % anunciosPremium.length;
       anunciosPremiumRotacionados = [
