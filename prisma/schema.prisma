@@ -75,9 +75,19 @@ model Anuncio {
   tituloPlano             String?        // Descrição do plano (ex: "Plano Anual", "Destaque Trimestral") para e-mails, etc.
   titulo                  String?        // Título do anúncio para exibição
   descricao               String?        // Descrição detalhada do anúncio
-  // Adicione aqui outros campos específicos do anúncio que você precisará:
   // ex: titulo String?, descricao String?, imagemUrl String?, dataExpiracao DateTime? etc.
   createdAt               DateTime       @default(now())
   updatedAt               DateTime       @updatedAt
   payment                 Payment?       @relation(name: "PaymentToAnuncio") // Relação opcional de volta para o pagamento, se necessário
+  imagens                 Imagem[]       // Adicionar este relacionamento
+}
+
+model Imagem {
+  id        Int      @id @default(autoincrement())
+  url       String
+  ordem     Int      @default(0)
+  anuncioId String
+  anuncio   Anuncio  @relation(fields: [anuncioId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
