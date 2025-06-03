@@ -1,114 +1,93 @@
+// Caminho: /fluxo_visitante/components/visitante/AnuncioCard.tsx
 import Image from 'next/image';
 import Link from 'next/link';
+import { formatarTelefone } from '../../utils/formatters';
 
 interface Anuncio {
-  id: string;
+  id: string; // Alterado de number para string
   titulo: string;
-  descricao: string;
+  descricao: string | null;
   endereco: string;
   telefone: string;
   whatsapp: string | null;
   email: string | null;
   site: string | null;
-  plano: 'premium' | 'cortesia';
+  plano: string;
   imagemPrincipal: string | null;
-  latitude: number | null;
-  longitude: number | null;
   imagens: {
-    id: string;
+    id: string; // Alterado de number para string
     url: string;
     ordem: number;
   }[];
+  especialidade: {
+    id: string; // Alterado de number para string
+    nome: string;
+  };
+  cidade: {
+    id: string; // Alterado de number para string
+    nome: string;
+    estado: {
+      id: string; // Alterado de number para string
+      sigla: string;
+    };
+  };
 }
 
-export default function AnuncioCard({ anuncio }: { anuncio: Anuncio }) {
+interface AnuncioCardProps {
+  anuncio: Anuncio;
+  isPremium?: boolean;
+}
+
+export default function AnuncioCard({ anuncio, isPremium = false }: AnuncioCardProps) {
   const imagemUrl = anuncio.imagemPrincipal || 
-    (anuncio.imagens.length > 0 ? anuncio.imagens[0].url : '/images/placeholder.jpg');
+    (anuncio.imagens && anuncio.imagens.length > 0 ? anuncio.imagens[0].url : '/placeholder.jpg');
   
   return (
-    <div className={`bg-white rounded-lg shadow-md overflow-hidden ${anuncio.plano === 'premium' ? 'border-2 border-yellow-400' : ''}`}>
-      <div className="grid md:grid-cols-3 gap-4">
-        {/* Coluna da Esquerda - Imagem */}
-        <div className="relative h-48 md:h-full">
-          <Image
-            src={imagemUrl}
-            alt={anuncio.titulo}
+    <div className={`bg-white rounded-lg shadow-md overflow-hidden ${isPremium ? 'border-2 border-yellow-400' : ''}`}>
+      <div className="relative">
+        {isPremium && (
+          <div className="absolute top-0 right-0 bg-yellow-400 text-xs font-bold px-2 py-1 rounded-bl-lg z-10">
+            PREMIUM
+          </div>
+        )}
+        <div className="aspect-video relative">
+          <Image 
+            src={imagemUrl} 
+            alt={anuncio.titulo} 
             fill
-            style={{ objectFit: 'cover' }}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover"
           />
-          {anuncio.plano === 'premium' && (
-            <div className="absolute top-2 left-2 bg-yellow-400 text-yellow-800 px-2 py-1 rounded-md text-xs font-bold">
-              PREMIUM
-            </div>
-          )}
+        </div>
+      </div>
+      
+      <div className="p-4">
+        <h2 className="text-xl font-bold text-gray-800 mb-2">{anuncio.titulo}</h2>
+        <p className="text-gray-600 mb-4 line-clamp-3">{anuncio.descricao}</p>
+        
+        <div className="flex items-center text-gray-600 mb-2">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span>{anuncio.cidade.nome}, {anuncio.cidade.estado.sigla}</span>
         </div>
         
-        {/* Coluna do Centro - Descrição */}
-        <div className="p-4">
-          <h2 className="text-xl font-bold text-gray-800 mb-2">{anuncio.titulo}</h2>
-          <p className="text-gray-600 mb-4 line-clamp-3">{anuncio.descricao}</p>
-          <div className="space-y-2">
-            <p className="text-gray-700">
-              <span className="font-semibold">Endereço:</span> {anuncio.endereco}
-            </p>
-            <p className="text-gray-700">
-              <span className="font-semibold">Telefone:</span> {anuncio.telefone}
-            </p>
-            {anuncio.whatsapp && (
-              <p className="text-gray-700">
-                <span className="font-semibold">WhatsApp:</span> {anuncio.whatsapp}
-              </p>
-            )}
-          </div>
+        <div className="flex items-center text-gray-600 mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+          </svg>
+          <span>{formatarTelefone(anuncio.telefone)}</span>
         </div>
         
-        {/* Coluna da Direita - Mapa e Ações */}
-        <div className="p-4 bg-gray-50">
-          <div className="h-32 bg-gray-200 mb-4 relative">
-            {anuncio.latitude && anuncio.longitude ? (
-              <div className="absolute inset-0">
-                {/* Aqui entraria o componente de mapa com as coordenadas */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-gray-500">Mapa: {anuncio.latitude.toFixed(6)}, {anuncio.longitude.toFixed(6)}</span>
-                </div>
-              </div>
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-gray-500">Localização não disponível</span>
-              </div>
-            )}
-          </div>
-          
-          <div className="space-y-2">
-            <Link
-              href={`/anuncio/${anuncio.id}`}
-              className="block w-full py-2 px-4 bg-blue-600 text-white text-center rounded-md hover:bg-blue-700 transition-colors"
-            >
-              Ver Detalhes
-            </Link>
-            
-            {anuncio.whatsapp && (
-              <a
-                href={`https://wa.me/${anuncio.whatsapp.replace(/\D/g, '')}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full py-2 px-4 bg-green-600 text-white text-center rounded-md hover:bg-green-700 transition-colors"
-              >
-                Contato via WhatsApp
-              </a>
-            )}
-            
-            {anuncio.site && (
-              <a
-                href={anuncio.site}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full py-2 px-4 bg-gray-200 text-gray-800 text-center rounded-md hover:bg-gray-300 transition-colors"
-              >
-                Visitar Site
-              </a>
-            )}
-          </div>
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-gray-500">{anuncio.especialidade.nome}</span>
+          <Link 
+            href={`/anuncio/${anuncio.id}`}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+          >
+            Ver Detalhes
+          </Link>
         </div>
       </div>
     </div>

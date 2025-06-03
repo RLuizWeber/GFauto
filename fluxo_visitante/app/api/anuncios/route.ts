@@ -1,4 +1,4 @@
-// app/api/anuncios/route.ts
+// Caminho: /fluxo_visitante/app/api/anuncios/route.ts
 import { NextResponse } from 'next/server';
 import { prisma } from '../../../../lib/prisma';
 

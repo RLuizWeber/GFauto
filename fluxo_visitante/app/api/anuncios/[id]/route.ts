@@ -1,16 +1,13 @@
-// app/api/anuncios/[id]/route.ts
+// Caminho: /fluxo_visitante/app/api/anuncios/[id]/route.ts
 import { NextResponse } from 'next/server';
 import { prisma } from '../../../../../lib/prisma';
 
 /**
- * API para detalhes de um anúncio específico
- * 
- * Esta API retorna os detalhes completos de um anúncio específico,
- * incluindo todas as suas imagens, informações da especialidade e cidade.
+ * API para buscar detalhes de um anúncio específico
  * 
  * @param {Request} request - Objeto de requisição
- * @param {Object} params - Parâmetros da rota, contendo o id do anúncio
- * @returns {Promise<NextResponse>} Detalhes completos do anúncio
+ * @param {Object} params - Parâmetros da rota, incluindo o ID do anúncio
+ * @returns {Promise<NextResponse>} Detalhes do anúncio
  */
 export async function GET(
   request: Request,

@@ -1,25 +1,19 @@
+// Caminho: /fluxo_visitante/app/api/estados/route.ts
 // app/api/estados/route.ts
 import { NextResponse } from 'next/server';
 import { prisma } from '../../../../lib/prisma';
 
 /**
- * API para busca de estados brasileiros
+ * API para buscar todos os estados brasileiros
  * 
- * Esta API retorna a lista completa de estados brasileiros ordenados por nome.
- * Utilizada no primeiro campo do formulário de busca na página inicial.
- * 
- * @returns {Promise<NextResponse>} Lista de estados com id, nome e sigla
+ * @param {Request} request - Objeto de requisição
+ * @returns {Promise<NextResponse>} Lista de estados
  */
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const estados = await prisma.estado.findMany({
       orderBy: {
         nome: 'asc'
-      },
-      select: {
-        id: true,
-        nome: true,
-        sigla: true
       }
     });
     

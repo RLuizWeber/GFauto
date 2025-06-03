@@ -1,7 +1,8 @@
+// Caminho: /fluxo_visitante/app/resultados/page.tsx
 import { Suspense } from 'react';
 import { Metadata } from 'next';
-import ResultadosList from '@/components/visitante/ResultadosList';
-import LoadingResults from '@/components/visitante/LoadingResults';
+import ResultadosList from '../../../components/visitante/ResultadosList';
+import LoadingResults from '../../../components/visitante/LoadingResults';
 
 export const metadata: Metadata = {
   title: 'Resultados da Busca | GFauto',

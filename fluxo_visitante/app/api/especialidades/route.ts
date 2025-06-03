@@ -1,16 +1,12 @@
-// app/api/especialidades/route.ts
+// Caminho: /fluxo_visitante/app/api/especialidades/route.ts
 import { NextResponse } from 'next/server';
 import { prisma } from '../../../../lib/prisma';
 
 /**
- * API para busca de especialidades disponíveis na cidade selecionada
- * 
- * Esta API retorna a lista de especialidades automotivas disponíveis na cidade
- * especificada, ordenadas por nome. Utilizada no terceiro campo do formulário
- * de busca na página inicial, após a seleção da cidade.
+ * API para buscar especialidades disponíveis em uma cidade
  * 
  * @param {Request} request - Objeto de requisição com parâmetro cidade_id
- * @returns {Promise<NextResponse>} Lista de especialidades com id, nome e slug
+ * @returns {Promise<NextResponse>} Lista de especialidades disponíveis na cidade
  */
 export async function GET(request: Request) {
   try {
@@ -18,31 +14,33 @@ export async function GET(request: Request) {
     const cidadeId = searchParams.get('cidade_id');
     
     if (!cidadeId) {
-      return NextResponse.json(
-        { error: 'Parâmetro cidade_id é obrigatório' },
-        { status: 400 }
-      );
+      // Se não for fornecido cidade_id, retorna todas as especialidades
+      const especialidades = await prisma.especialidade.findMany({
+        orderBy: {
+          nome: 'asc'
+        }
+      });
+      
+      return NextResponse.json(especialidades);
     }
     
-    // Buscar especialidades disponíveis na cidade (que possuem anúncios ativos)
-    const especialidades = await prisma.especialidade.findMany({
+    // Buscar especialidades disponíveis na cidade
+    const especialidadesDisponiveis = await prisma.especialidadeDisponivel.findMany({
       where: {
-        especialidadesDisponiveis: {
-          some: {
-            cidadeId: cidadeId
-          }
-        }
+        cidadeId: cidadeId
+      },
+      include: {
+        especialidade: true
       },
       orderBy: {
-        nome: 'asc'
-      },
-      select: {
-        id: true,
-        nome: true,
-        slug: true,
-        icone: true
+        especialidade: {
+          nome: 'asc'
+        }
       }
     });
+    
+    // Extrair apenas as especialidades
+    const especialidades = especialidadesDisponiveis.map(item => item.especialidade);
     
     return NextResponse.json(especialidades);
   } catch (error) {

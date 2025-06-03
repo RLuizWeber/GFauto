@@ -1,16 +1,12 @@
-// app/api/cidades/route.ts
+// Caminho: /fluxo_visitante/app/api/cidades/route.ts
 import { NextResponse } from 'next/server';
 import { prisma } from '../../../../lib/prisma';
 
 /**
- * API para busca de cidades filtradas por estado
- * 
- * Esta API retorna a lista de cidades pertencentes ao estado especificado,
- * ordenadas por nome. Utilizada no segundo campo do formulário de busca
- * na página inicial, após a seleção do estado.
+ * API para buscar cidades por estado
  * 
  * @param {Request} request - Objeto de requisição com parâmetro estado_id
- * @returns {Promise<NextResponse>} Lista de cidades com id e nome
+ * @returns {Promise<NextResponse>} Lista de cidades do estado
  */
 export async function GET(request: Request) {
   try {
@@ -30,10 +26,6 @@ export async function GET(request: Request) {
       },
       orderBy: {
         nome: 'asc'
-      },
-      select: {
-        id: true,
-        nome: true
       }
     });
     
