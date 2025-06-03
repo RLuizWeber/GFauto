@@ -15,7 +15,7 @@ interface Anuncio {
   latitude: number | null;
   longitude: number | null;
   imagens: {
-    id: number;
+    id: string;
     url: string;
     ordem: number;
   }[];
@@ -23,7 +23,7 @@ interface Anuncio {
 
 export default function AnuncioCard({ anuncio }: { anuncio: Anuncio }) {
   const imagemUrl = anuncio.imagemPrincipal || 
-    (anuncio.imagens && anuncio.imagens.length > 0 ? anuncio.imagens[0].url : '/images/placeholder.jpg');
+    (anuncio.imagens.length > 0 ? anuncio.imagens[0].url : '/images/placeholder.jpg');
   
   return (
     <div className={`bg-white rounded-lg shadow-md overflow-hidden ${anuncio.plano === 'premium' ? 'border-2 border-yellow-400' : ''}`}>
@@ -32,7 +32,7 @@ export default function AnuncioCard({ anuncio }: { anuncio: Anuncio }) {
         <div className="relative h-48 md:h-full">
           <Image
             src={imagemUrl}
-            alt={anuncio.titulo || 'Anúncio'}
+            alt={anuncio.titulo}
             fill
             style={{ objectFit: 'cover' }}
           />

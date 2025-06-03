@@ -18,7 +18,7 @@ interface Anuncio {
   latitude: number | null;
   longitude: number | null;
   imagens: {
-    id: number;
+    id: string;
     url: string;
     ordem: number;
   }[];

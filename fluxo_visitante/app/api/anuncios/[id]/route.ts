@@ -1,5 +1,6 @@
+// app/api/anuncios/[id]/route.ts
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { prisma } from '../../../../../lib/prisma';
 
 /**
  * API para detalhes de um anúncio específico

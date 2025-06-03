@@ -1,13 +1,14 @@
+// app/api/estados/route.ts
 import { NextResponse } from 'next/server';
 import { prisma } from '../../../../lib/prisma';
 
 /**
  * API para busca de estados brasileiros
- *
+ * 
  * Esta API retorna a lista completa de estados brasileiros ordenados por nome.
- * Utilizada no formulário de busca do fluxo do visitante.
- *
- * @returns {Promise<NextResponse>} Lista de estados
+ * Utilizada no primeiro campo do formulário de busca na página inicial.
+ * 
+ * @returns {Promise<NextResponse>} Lista de estados com id, nome e sigla
  */
 export async function GET() {
   try {
@@ -21,7 +22,7 @@ export async function GET() {
         sigla: true
       }
     });
-
+    
     return NextResponse.json(estados);
   } catch (error) {
     console.error('Erro ao buscar estados:', error);
