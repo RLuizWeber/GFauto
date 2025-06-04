@@ -101,15 +101,15 @@ export default function ResultadosList({
           anuncios: [
             {
               id: '1',
-              titulo: 'Mecânica Exemplo',
-              descricao: 'Oficina especializada em carros importados com mais de 20 anos de experiência.',
-              endereco: 'Av. Brasil, 1500, Centro, Passo Fundo',
+              titulo: 'Mecânica Exemplo Premium',
+              descricao: 'Oficina especializada em carros importados com mais de 20 anos de experiência. Atendemos todas as marcas e modelos, com garantia de serviço e peças originais.',
+              endereco: 'Av. Brasil, 1500, Centro, Passo Fundo, RS',
               telefone: '5499999999',
               whatsapp: '5499999999',
               email: 'contato@mecanicaexemplo.com',
               site: 'https://mecanicaexemplo.com',
               plano: 'premium',
-              imagemPrincipal: '/placeholder.jpg',
+              imagemPrincipal: '/images/anuncios/mecanica1.jpg',
               imagens: [],
               especialidade: {
                 id: '1',
@@ -127,14 +127,14 @@ export default function ResultadosList({
             {
               id: '2',
               titulo: 'Auto Elétrica Central',
-              descricao: 'Especialistas em sistema elétrico automotivo. Atendemos todas as marcas.',
-              endereco: 'Rua das Palmeiras, 123, Bairro São José, Passo Fundo',
+              descricao: 'Especialistas em sistema elétrico automotivo. Atendemos todas as marcas e modelos, com serviços de injeção eletrônica, ar condicionado, alarmes e travas.',
+              endereco: 'Rua das Palmeiras, 123, Bairro São José, Passo Fundo, RS',
               telefone: '5499888888',
               whatsapp: '5499888888',
               email: 'contato@autoeletricacentral.com',
               site: null,
-              plano: 'basico',
-              imagemPrincipal: '/placeholder.jpg',
+              plano: 'premium',
+              imagemPrincipal: '/images/anuncios/autoeletrica1.jpg',
               imagens: [],
               especialidade: {
                 id: '2',
@@ -152,18 +152,68 @@ export default function ResultadosList({
             {
               id: '3',
               titulo: 'Autopeças Genuínas',
-              descricao: 'A maior loja de autopeças da região. Peças originais com garantia.',
-              endereco: 'Av. Principal, 500, Centro, Passo Fundo',
+              descricao: 'A maior loja de autopeças da região. Peças originais com garantia para todas as marcas nacionais e importadas. Entrega para todo o Brasil.',
+              endereco: 'Av. Principal, 500, Centro, Passo Fundo, RS',
               telefone: '5499777777',
-              whatsapp: null,
+              whatsapp: '5499777777',
               email: 'vendas@autopecas.com',
               site: 'https://autopecas.com',
-              plano: 'premium',
-              imagemPrincipal: '/placeholder.jpg',
+              plano: 'basico',
+              imagemPrincipal: '/images/anuncios/autopecas1.jpg',
               imagens: [],
               especialidade: {
                 id: '3',
                 nome: 'Autopeças'
+              },
+              cidade: {
+                id: '1',
+                nome: 'Passo Fundo',
+                estado: {
+                  id: '1',
+                  sigla: 'RS'
+                }
+              }
+            },
+            {
+              id: '4',
+              titulo: 'Funilaria e Pintura Express',
+              descricao: 'Serviços de funilaria e pintura com qualidade e rapidez. Atendemos seguradoras e particulares. Orçamento sem compromisso.',
+              endereco: 'Rua dos Técnicos, 789, Vila Nova, Passo Fundo, RS',
+              telefone: '5499666666',
+              whatsapp: '5499666666',
+              email: 'contato@funilariaexpress.com',
+              site: null,
+              plano: 'basico',
+              imagemPrincipal: '/images/anuncios/mecanica1.jpg',
+              imagens: [],
+              especialidade: {
+                id: '4',
+                nome: 'Funilaria e Pintura'
+              },
+              cidade: {
+                id: '1',
+                nome: 'Passo Fundo',
+                estado: {
+                  id: '1',
+                  sigla: 'RS'
+                }
+              }
+            },
+            {
+              id: '5',
+              titulo: 'Centro Automotivo Total',
+              descricao: 'Serviços completos para seu veículo: mecânica, elétrica, funilaria, pintura e muito mais. Equipe especializada e preços justos.',
+              endereco: 'Av. das Indústrias, 456, Distrito Industrial, Passo Fundo, RS',
+              telefone: '5499555555',
+              whatsapp: '5499555555',
+              email: 'atendimento@centroautomotivo.com',
+              site: 'https://centroautomotivo.com',
+              plano: 'premium',
+              imagemPrincipal: '/images/anuncios/autoeletrica1.jpg',
+              imagens: [],
+              especialidade: {
+                id: '5',
+                nome: 'Centro Automotivo'
               },
               cidade: {
                 id: '1',
@@ -178,7 +228,7 @@ export default function ResultadosList({
           pagination: {
             page: 1,
             pageSize: 10,
-            total: 3,
+            total: 5,
             totalPages: 1
           }
         };
