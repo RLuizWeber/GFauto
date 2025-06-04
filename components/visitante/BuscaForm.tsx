@@ -118,7 +118,7 @@ export default function BuscaForm() {
       
       const textoLowerCase = texto.toLowerCase();
       const sugestoes = data.filter(
-        cidade => cidade.nome.toLowerCase().includes(textoLowerCase)
+        cidade: CidadeItem => cidade.nome.toLowerCase().includes(textoLowerCase)
       );
       
       setCidadesSugestoes(sugestoes);
@@ -150,7 +150,7 @@ export default function BuscaForm() {
       
       const textoLowerCase = texto.toLowerCase();
       const sugestoes = data.filter(
-        especialidade => especialidade.nome.toLowerCase().includes(textoLowerCase)
+        especialidade: EspecialidadeItem => especialidade.nome.toLowerCase().includes(textoLowerCase)
       );
       
       setEspecialidadesSugestoes(sugestoes);
