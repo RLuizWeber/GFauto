@@ -11,7 +11,7 @@ export default function ResultadosPage() {
   const estado = searchParams.get("estado");
   const cidade = searchParams.get("cidade");
   const especialidade = searchParams.get("especialidade");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     // Simula um tempo de carregamento para mostrar o componente de loading

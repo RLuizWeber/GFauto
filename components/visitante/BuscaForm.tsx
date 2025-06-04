@@ -4,25 +4,37 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+// Interfaces para tipagem
+interface EstadoItem {
+  id: string;
+  nome: string;
+  sigla: string;
+}
+
+interface CidadeItem {
+  id: string;
+  nome: string;
+}
+
 // Componente BuscaForm para a página inicial
 export default function BuscaForm() {
   const router = useRouter();
   
   // Estados para armazenar os valores dos campos
-  const [estado, setEstado] = useState('');
-  const [cidade, setCidade] = useState('');
-  const [especialidade, setEspecialidade] = useState('');
+  const [estado, setEstado] = useState<string>('');
+  const [cidade, setCidade] = useState<string>('');
+  const [especialidade, setEspecialidade] = useState<string>('');
   
   // Estados para sugestões de autocompletar
-  const [estadosSugestoes, setEstadosSugestoes] = useState([]);
-  const [cidadesSugestoes, setCidadesSugestoes] = useState([]);
+  const [estadosSugestoes, setEstadosSugestoes] = useState<EstadoItem[]>([]);
+  const [cidadesSugestoes, setCidadesSugestoes] = useState<CidadeItem[]>([]);
   
   // Estados para controle de carregamento e erros
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   
   // Função para buscar sugestões de estados com base no texto digitado
-  const buscarEstados = async (texto) => {
+  const buscarEstados = async (texto: string): Promise<void> => {
     if (!texto || texto.length < 2) {
       setEstadosSugestoes([]);
       return;
@@ -33,7 +45,7 @@ export default function BuscaForm() {
       
       // Em um ambiente real, isso seria uma chamada à API
       // Simulando uma lista de estados para demonstração
-      const estadosSimulados = [
+      const estadosSimulados: EstadoItem[] = [
         { id: 'rs', nome: 'Rio Grande do Sul', sigla: 'RS' },
         { id: 'sc', nome: 'Santa Catarina', sigla: 'SC' },
         { id: 'pr', nome: 'Paraná', sigla: 'PR' },
@@ -59,7 +71,7 @@ export default function BuscaForm() {
   };
   
   // Função para buscar sugestões de cidades com base no texto digitado e estado selecionado
-  const buscarCidades = async (texto, estadoSelecionado) => {
+  const buscarCidades = async (texto: string, estadoSelecionado: string): Promise<void> => {
     if (!texto || texto.length < 2 || !estadoSelecionado) {
       setCidadesSugestoes([]);
       return;
@@ -70,7 +82,7 @@ export default function BuscaForm() {
       
       // Em um ambiente real, isso seria uma chamada à API
       // Simulando uma lista de cidades para demonstração
-      const cidadesSimuladas = {
+      const cidadesSimuladas: Record<string, CidadeItem[]> = {
         'Rio Grande do Sul': [
           { id: 'pf', nome: 'Passo Fundo' },
           { id: 'poa', nome: 'Porto Alegre' },
@@ -108,7 +120,7 @@ export default function BuscaForm() {
   };
   
   // Função para lidar com o envio do formulário
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     
     if (!estado || !cidade || !especialidade) {
