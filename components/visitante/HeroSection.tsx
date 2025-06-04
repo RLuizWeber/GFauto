@@ -12,7 +12,7 @@ export default function HeroSection() {
       </div>
       
       <div className="container mx-auto px-4 py-16 relative z-10">
-        <div className="flex flex-col md:flex-row items-start justify-between">
+        <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="md:w-1/2 mb-8 md:mb-0">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Encontre os melhores serviços automotivos
@@ -21,49 +21,49 @@ export default function HeroSection() {
               Conectamos você aos melhores profissionais e lojas de autopeças da sua região.
             </p>
             
-            {/* Seção de imagens - usando imagens locais da pasta /public/images/fluxo_visitante */}
-            <div className="flex flex-col space-y-8">
+            {/* Seção de imagens - usando imagens locais com 180px de largura */}
+            <div className="flex flex-col space-y-6">
               {/* Primeira imagem */}
               <div className="flex flex-col">
-                <div className="mb-3">
+                <div className="mb-2">
                   <Image 
                     src="/images/fluxo_visitante/logo_gf.png"
                     alt="Logo GF Auto"
-                    width={400}
-                    height={200}
+                    width={180}
+                    height={90}
                     style={{ height: 'auto', maxWidth: '100%' }}
                     priority
                   />
                 </div>
-                <span className="text-xl font-medium">Busca rápida e fácil</span>
+                <span className="text-lg font-medium">Busca rápida e fácil</span>
               </div>
               
               {/* Segunda imagem */}
               <div className="flex flex-col">
-                <div className="mb-3">
+                <div className="mb-2">
                   <Image 
                     src="/images/fluxo_visitante/mc4.png"
                     alt="Serviços confiáveis"
-                    width={400}
-                    height={200}
+                    width={180}
+                    height={90}
                     style={{ height: 'auto', maxWidth: '100%' }}
                   />
                 </div>
-                <span className="text-xl font-medium">Serviços confiáveis</span>
+                <span className="text-lg font-medium">Serviços confiáveis</span>
               </div>
               
               {/* Terceira imagem */}
               <div className="flex flex-col">
-                <div className="mb-3">
+                <div className="mb-2">
                   <Image 
                     src="/images/fluxo_visitante/image001.jpg"
                     alt="Contato direto"
-                    width={400}
-                    height={200}
+                    width={180}
+                    height={90}
                     style={{ height: 'auto', maxWidth: '100%' }}
                   />
                 </div>
-                <span className="text-xl font-medium">Contato direto</span>
+                <span className="text-lg font-medium">Contato direto</span>
               </div>
             </div>
           </div>
