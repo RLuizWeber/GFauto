@@ -1,6 +1,6 @@
 // Caminho: /GFauto/app/page.tsx
-import BuscaForm from "../fluxo_visitante/components/visitante/BuscaForm";
-import HeroSection from "../fluxo_visitante/components/visitante/HeroSection";
+import BuscaForm from '../components/visitante/BuscaForm';
+import HeroSection from '../components/visitante/HeroSection';
 
 export default function Home() {
   return (

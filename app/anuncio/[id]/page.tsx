@@ -1,8 +1,8 @@
 // Caminho: /GFauto/app/anuncio/[id]/page.tsx
-import { prisma } from "../../../../lib/prisma";
+import { prisma } from "../../../lib/prisma";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { formatarTelefone } from "../../../../fluxo_visitante/utils/formatters";
+import { formatarTelefone } from "../../../utils/formatters";
 
 export default async function AnuncioPage({ params }: { params: { id: string } }) {
   const anuncio = await prisma.anuncio.findUnique({

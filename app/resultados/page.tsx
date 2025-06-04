@@ -2,8 +2,8 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import ResultadosList from "../../../fluxo_visitante/components/visitante/ResultadosList";
-import LoadingResults from "../../../fluxo_visitante/components/visitante/LoadingResults";
+import ResultadosList from '../../components/visitante/ResultadosList';
+import LoadingResults from '../../components/visitante/LoadingResults';
 import { useState, useEffect } from "react";
 
 export default function ResultadosPage() {
