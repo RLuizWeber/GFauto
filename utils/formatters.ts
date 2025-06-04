@@ -1,4 +1,4 @@
-// Caminho: /fluxo_visitante/utils/formatters.ts
+// Caminho: /utils/formatters.ts
 
 /**
  * Formata um número de telefone para exibição mais legível

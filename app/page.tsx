@@ -1,4 +1,4 @@
-// Caminho: /GFauto/app/page.tsx
+// Caminho: /app/page.tsx
 import BuscaForm from '../components/visitante/BuscaForm';
 import HeroSection from '../components/visitante/HeroSection';
 

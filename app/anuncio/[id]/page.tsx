@@ -1,28 +1,27 @@
-// Caminho: /GFauto/app/anuncio/[id]/page.tsx
-import { prisma } from "../../../lib/prisma";
-import { notFound } from "next/navigation";
+// Caminho: /app/anuncio/[id]/page.tsx
 import Image from "next/image";
 import { formatarTelefone } from "../../../utils/formatters";
 
-export default async function AnuncioPage({ params }: { params: { id: string } }) {
-  const anuncio = await prisma.anuncio.findUnique({
-    where: {
-      id: params.id,
-    },
-    include: {
-      imagens: true,
-      especialidade: true,
-      cidade: {
-        include: {
-          estado: true,
-        },
-      },
-    },
-  });
+// Função simulada para obter dados do anúncio
+// Em produção, isso seria substituído por uma chamada real ao Prisma
+async function getAnuncio(id: string) {
+  // Dados simulados para demonstração
+  return {
+    id,
+    titulo: "Mecânica Exemplo",
+    descricao: "Oficina especializada em carros importados com mais de 20 anos de experiência. Oferecemos serviços de manutenção preventiva, corretiva, diagnóstico computadorizado, injeção eletrônica, freios, suspensão, direção, motor, câmbio e muito mais.",
+    endereco: "Rua Exemplo, 123 - Centro, São Paulo - SP",
+    telefone: "1199998888",
+    email: "contato@mecanicaexemplo.com",
+    website: "https://mecanicaexemplo.com",
+    imagens: [{ url: "/placeholder.jpg" }],
+    especialidade: { nome: "Mecânica Geral" },
+    cidade: { nome: "São Paulo", estado: { nome: "São Paulo", sigla: "SP" } }
+  };
+}
 
-  if (!anuncio) {
-    notFound();
-  }
+export default async function AnuncioPage({ params }: { params: { id: string } }) {
+  const anuncio = await getAnuncio(params.id);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -52,7 +51,7 @@ export default async function AnuncioPage({ params }: { params: { id: string } }
               {anuncio.titulo}
             </h1>
             <p className="mt-2 text-gray-600">
-              {anuncio.cidade?.nome}, {anuncio.cidade?.estado?.nome}
+              {anuncio.cidade?.nome}, {anuncio.cidade?.estado?.sigla}
             </p>
             <div className="mt-4 border-t border-gray-200 pt-4">
               <h2 className="text-xl font-semibold text-gray-800">Descrição</h2>

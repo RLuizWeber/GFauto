@@ -1,4 +1,4 @@
-// Caminho: /GFauto/app/resultados/page.tsx
+// Caminho: /app/resultados/page.tsx
 "use client";
 
 import { useSearchParams } from "next/navigation";
