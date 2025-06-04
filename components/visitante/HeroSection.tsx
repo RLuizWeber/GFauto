@@ -12,50 +12,58 @@ export default function HeroSection() {
       </div>
       
       <div className="container mx-auto px-4 py-16 relative z-10">
-        <div className="flex flex-col md:flex-row items-center justify-between">
+        <div className="flex flex-col md:flex-row items-start justify-between">
           <div className="md:w-1/2 mb-8 md:mb-0">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Encontre os melhores serviços automotivos
             </h1>
-            <p className="text-xl mb-6">
+            <p className="text-xl mb-10">
               Conectamos você aos melhores profissionais e lojas de autopeças da sua região.
             </p>
-            <div className="flex flex-col gap-6">
-              <div className="flex items-center">
-                <div className="mr-4">
+            
+            {/* Seção de imagens - completamente redesenhada para acomodar imagens grandes */}
+            <div className="flex flex-col space-y-12">
+              {/* Primeira imagem */}
+              <div className="flex flex-col">
+                <div className="mb-4">
                   <Image 
                     src="https://www.gfauto.com.br/aa_anuncio/images/logo_gf.png"
                     alt="Logo GF Auto"
                     width={400}
                     height={200}
-                    style={{ height: 'auto' }}
+                    style={{ height: 'auto', maxWidth: '100%' }}
+                    priority
                   />
                 </div>
-                <span className="text-lg">Busca rápida e fácil</span>
+                <span className="text-xl font-medium">Busca rápida e fácil</span>
               </div>
-              <div className="flex items-center">
-                <div className="mr-4">
+              
+              {/* Segunda imagem */}
+              <div className="flex flex-col">
+                <div className="mb-4">
                   <Image 
                     src="https://www.gfauto.com.br/aa_anuncio/images/mc4.png"
                     alt="Serviços confiáveis"
                     width={400}
                     height={200}
-                    style={{ height: 'auto' }}
+                    style={{ height: 'auto', maxWidth: '100%' }}
                   />
                 </div>
-                <span className="text-lg">Serviços confiáveis</span>
+                <span className="text-xl font-medium">Serviços confiáveis</span>
               </div>
-              <div className="flex items-center">
-                <div className="mr-4">
+              
+              {/* Terceira imagem */}
+              <div className="flex flex-col">
+                <div className="mb-4">
                   <Image 
                     src="https://gfauto.com.br/image001.jpg"
                     alt="Contato direto"
                     width={400}
                     height={200}
-                    style={{ height: 'auto' }}
+                    style={{ height: 'auto', maxWidth: '100%' }}
                   />
                 </div>
-                <span className="text-lg">Contato direto</span>
+                <span className="text-xl font-medium">Contato direto</span>
               </div>
             </div>
           </div>
