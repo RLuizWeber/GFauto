@@ -1,4 +1,4 @@
-// Caminho: /fluxo_visitante/components/visitante/BuscaForm.tsx
+// Caminho: /components/visitante/BuscaForm.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -7,104 +7,125 @@ import { useRouter } from 'next/navigation';
 // Componente BuscaForm para a página inicial
 export default function BuscaForm() {
   const router = useRouter();
-  const [estados, setEstados] = useState<any[]>([]);
-  const [cidades, setCidades] = useState<any[]>([]);
-  const [especialidades, setEspecialidades] = useState<any[]>([]);
-  const [estadoId, setEstadoId] = useState<string>('');
-  const [cidadeId, setCidadeId] = useState<string>('');
-  const [especialidadeId, setEspecialidadeId] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null); // Corrigido para aceitar string ou null
-
-  // Buscar estados ao carregar o componente
-  useEffect(() => {
-    const fetchEstados = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('/api/estados');
-        if (!response.ok) {
-          throw new Error('Falha ao buscar estados');
-        }
-        const data = await response.json();
-        setEstados(data);
-      } catch (err) {
-        console.error('Erro ao buscar estados:', err);
-        setError('Não foi possível carregar os estados. Por favor, tente novamente.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchEstados();
-  }, []);
-
-  // Buscar cidades quando o estado for selecionado
-  useEffect(() => {
-    if (!estadoId) {
-      setCidades([]);
+  
+  // Estados para armazenar os valores dos campos
+  const [estado, setEstado] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [especialidade, setEspecialidade] = useState('');
+  
+  // Estados para sugestões de autocompletar
+  const [estadosSugestoes, setEstadosSugestoes] = useState([]);
+  const [cidadesSugestoes, setCidadesSugestoes] = useState([]);
+  
+  // Estados para controle de carregamento e erros
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  
+  // Função para buscar sugestões de estados com base no texto digitado
+  const buscarEstados = async (texto) => {
+    if (!texto || texto.length < 2) {
+      setEstadosSugestoes([]);
       return;
     }
-
-    const fetchCidades = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(`/api/cidades?estado_id=${estadoId}`);
-        if (!response.ok) {
-          throw new Error('Falha ao buscar cidades');
-        }
-        const data = await response.json();
-        setCidades(data);
-      } catch (err) {
-        console.error('Erro ao buscar cidades:', err);
-        setError('Não foi possível carregar as cidades. Por favor, tente novamente.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCidades();
-  }, [estadoId]);
-
-  // Buscar especialidades quando a cidade for selecionada
-  useEffect(() => {
-    if (!cidadeId) {
-      setEspecialidades([]);
+    
+    try {
+      setLoading(true);
+      
+      // Em um ambiente real, isso seria uma chamada à API
+      // Simulando uma lista de estados para demonstração
+      const estadosSimulados = [
+        { id: 'rs', nome: 'Rio Grande do Sul', sigla: 'RS' },
+        { id: 'sc', nome: 'Santa Catarina', sigla: 'SC' },
+        { id: 'pr', nome: 'Paraná', sigla: 'PR' },
+        { id: 'sp', nome: 'São Paulo', sigla: 'SP' },
+        { id: 'rj', nome: 'Rio de Janeiro', sigla: 'RJ' },
+        { id: 'mg', nome: 'Minas Gerais', sigla: 'MG' },
+      ];
+      
+      // Filtra estados que correspondem ao texto digitado (nome ou sigla)
+      const sugestoes = estadosSimulados.filter(estado => 
+        estado.nome.toLowerCase().includes(texto.toLowerCase()) || 
+        estado.sigla.toLowerCase().includes(texto.toLowerCase())
+      );
+      
+      setEstadosSugestoes(sugestoes);
+      
+    } catch (err) {
+      console.error('Erro ao buscar estados:', err);
+      setError('Não foi possível carregar sugestões de estados. Por favor, tente novamente.');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  // Função para buscar sugestões de cidades com base no texto digitado e estado selecionado
+  const buscarCidades = async (texto, estadoSelecionado) => {
+    if (!texto || texto.length < 2 || !estadoSelecionado) {
+      setCidadesSugestoes([]);
       return;
     }
-
-    const fetchEspecialidades = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(`/api/especialidades?cidade_id=${cidadeId}`);
-        if (!response.ok) {
-          throw new Error('Falha ao buscar especialidades');
-        }
-        const data = await response.json();
-        setEspecialidades(data);
-      } catch (err) {
-        console.error('Erro ao buscar especialidades:', err);
-        setError('Não foi possível carregar as especialidades. Por favor, tente novamente.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchEspecialidades();
-  }, [cidadeId]);
-
+    
+    try {
+      setLoading(true);
+      
+      // Em um ambiente real, isso seria uma chamada à API
+      // Simulando uma lista de cidades para demonstração
+      const cidadesSimuladas = {
+        'Rio Grande do Sul': [
+          { id: 'pf', nome: 'Passo Fundo' },
+          { id: 'poa', nome: 'Porto Alegre' },
+          { id: 'sm', nome: 'Santa Maria' },
+          { id: 'pel', nome: 'Pelotas' },
+        ],
+        'Santa Catarina': [
+          { id: 'fln', nome: 'Florianópolis' },
+          { id: 'jvl', nome: 'Joinville' },
+          { id: 'bln', nome: 'Blumenau' },
+        ],
+        'São Paulo': [
+          { id: 'sp', nome: 'São Paulo' },
+          { id: 'cps', nome: 'Campinas' },
+          { id: 'sto', nome: 'Santos' },
+        ]
+      };
+      
+      // Obtém as cidades do estado selecionado
+      const cidadesDoEstado = cidadesSimuladas[estadoSelecionado] || [];
+      
+      // Filtra cidades que correspondem ao texto digitado
+      const sugestoes = cidadesDoEstado.filter(cidade => 
+        cidade.nome.toLowerCase().includes(texto.toLowerCase())
+      );
+      
+      setCidadesSugestoes(sugestoes);
+      
+    } catch (err) {
+      console.error('Erro ao buscar cidades:', err);
+      setError('Não foi possível carregar sugestões de cidades. Por favor, tente novamente.');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   // Função para lidar com o envio do formulário
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     
-    if (!cidadeId || !especialidadeId) {
-      setError('Por favor, selecione cidade e especialidade.');
+    if (!estado || !cidade || !especialidade) {
+      setError('Por favor, preencha todos os campos.');
       return;
     }
     
-    // Redirecionar para a página de resultados com os parâmetros selecionados
-    router.push(`/resultados?cidade_id=${cidadeId}&especialidade_id=${especialidadeId}`);
+    // Redirecionar para a página de resultados com os parâmetros informados
+    router.push(`/resultados?estado=${encodeURIComponent(estado)}&cidade=${encodeURIComponent(cidade)}&especialidade=${encodeURIComponent(especialidade)}`);
   };
-
+  
+  // Efeito para limpar cidades quando o estado mudar
+  useEffect(() => {
+    setCidade('');
+    setCidadesSugestoes([]);
+  }, [estado]);
+  
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error && (
@@ -115,76 +136,91 @@ export default function BuscaForm() {
       
       <div>
         <label htmlFor="estado" className="block text-sm font-medium text-gray-700 mb-1">
-          Estado
+          Informe o Estado
         </label>
-        <select
+        <input
+          type="text"
           id="estado"
-          value={estadoId}
+          value={estado}
           onChange={(e) => {
-            setEstadoId(e.target.value);
-            setCidadeId('');
-            setEspecialidadeId('');
+            setEstado(e.target.value);
+            buscarEstados(e.target.value);
           }}
+          placeholder="Digite o nome ou sigla do estado"
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          disabled={loading || estados.length === 0}
-        >
-          <option value="">Selecione um estado</option>
-          {estados.map((estado) => (
-            <option key={estado.id} value={estado.id}>
-              {estado.nome}
-            </option>
-          ))}
-        </select>
+        />
+        {estadosSugestoes.length > 0 && (
+          <div className="mt-1 border border-gray-300 rounded-md shadow-sm bg-white max-h-40 overflow-y-auto">
+            {estadosSugestoes.map((estadoItem) => (
+              <div 
+                key={estadoItem.id}
+                className="px-3 py-2 cursor-pointer hover:bg-gray-100"
+                onClick={() => {
+                  setEstado(estadoItem.nome);
+                  setEstadosSugestoes([]);
+                }}
+              >
+                {estadoItem.nome} ({estadoItem.sigla})
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       
       <div>
         <label htmlFor="cidade" className="block text-sm font-medium text-gray-700 mb-1">
-          Cidade
+          Informe a Cidade
         </label>
-        <select
+        <input
+          type="text"
           id="cidade"
-          value={cidadeId}
+          value={cidade}
           onChange={(e) => {
-            setCidadeId(e.target.value);
-            setEspecialidadeId('');
+            setCidade(e.target.value);
+            buscarCidades(e.target.value, estado);
           }}
+          placeholder="Digite o nome da cidade"
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          disabled={loading || !estadoId || cidades.length === 0}
-        >
-          <option value="">Selecione uma cidade</option>
-          {cidades.map((cidade) => (
-            <option key={cidade.id} value={cidade.id}>
-              {cidade.nome}
-            </option>
-          ))}
-        </select>
+          disabled={!estado}
+        />
+        {cidadesSugestoes.length > 0 && (
+          <div className="mt-1 border border-gray-300 rounded-md shadow-sm bg-white max-h-40 overflow-y-auto">
+            {cidadesSugestoes.map((cidadeItem) => (
+              <div 
+                key={cidadeItem.id}
+                className="px-3 py-2 cursor-pointer hover:bg-gray-100"
+                onClick={() => {
+                  setCidade(cidadeItem.nome);
+                  setCidadesSugestoes([]);
+                }}
+              >
+                {cidadeItem.nome}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       
       <div>
         <label htmlFor="especialidade" className="block text-sm font-medium text-gray-700 mb-1">
-          Especialidade
+          O que procura?
         </label>
-        <select
+        <input
+          type="text"
           id="especialidade"
-          value={especialidadeId}
-          onChange={(e) => setEspecialidadeId(e.target.value)}
+          value={especialidade}
+          onChange={(e) => setEspecialidade(e.target.value)}
+          placeholder="Ex.: Auto Elétrica, Mecânica, Funilaria, Farol quebrado, etc."
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          disabled={loading || !cidadeId || especialidades.length === 0}
-        >
-          <option value="">Selecione uma especialidade</option>
-          {especialidades.map((especialidade) => (
-            <option key={especialidade.id} value={especialidade.id}>
-              {especialidade.nome}
-            </option>
-          ))}
-        </select>
+          disabled={!cidade}
+        />
       </div>
       
       <div>
         <button
           type="submit"
           className="w-full px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-          disabled={loading || !cidadeId || !especialidadeId}
+          disabled={loading || !estado || !cidade || !especialidade}
         >
           {loading ? 'Carregando...' : 'Buscar Serviços'}
         </button>

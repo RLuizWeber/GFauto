@@ -21,13 +21,13 @@ export default function HeroSection() {
               Conectamos você aos melhores profissionais e lojas de autopeças da sua região.
             </p>
             
-            {/* Seção de imagens - completamente redesenhada para acomodar imagens grandes */}
-            <div className="flex flex-col space-y-12">
+            {/* Seção de imagens - usando imagens locais da pasta /public/images/fluxo_visitante */}
+            <div className="flex flex-col space-y-8">
               {/* Primeira imagem */}
               <div className="flex flex-col">
-                <div className="mb-4">
+                <div className="mb-3">
                   <Image 
-                    src="https://www.gfauto.com.br/aa_anuncio/images/logo_gf.png"
+                    src="/images/fluxo_visitante/logo_gf.png"
                     alt="Logo GF Auto"
                     width={400}
                     height={200}
@@ -40,9 +40,9 @@ export default function HeroSection() {
               
               {/* Segunda imagem */}
               <div className="flex flex-col">
-                <div className="mb-4">
+                <div className="mb-3">
                   <Image 
-                    src="https://www.gfauto.com.br/aa_anuncio/images/mc4.png"
+                    src="/images/fluxo_visitante/mc4.png"
                     alt="Serviços confiáveis"
                     width={400}
                     height={200}
@@ -54,9 +54,9 @@ export default function HeroSection() {
               
               {/* Terceira imagem */}
               <div className="flex flex-col">
-                <div className="mb-4">
+                <div className="mb-3">
                   <Image 
-                    src="https://gfauto.com.br/image001.jpg"
+                    src="/images/fluxo_visitante/image001.jpg"
                     alt="Contato direto"
                     width={400}
                     height={200}

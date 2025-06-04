@@ -33,7 +33,7 @@ export default function ResultadosPage() {
         <p className="text-gray-600">
           Filtros aplicados: {estado && `Estado: ${estado}`}{" "}
           {cidade && `| Cidade: ${cidade}`}{" "}
-          {especialidade && `| Especialidade: ${especialidade}`}
+          {especialidade && `| O que procura: ${especialidade}`}
         </p>
       </div>
       <ResultadosList
