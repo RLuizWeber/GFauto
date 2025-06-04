@@ -1,35 +1,46 @@
-// Caminho: GFauto/app/resultados/page.tsx
-import { Metadata } from 'next';
-import { prisma } from '../../lib/prisma';
-import ResultadosList from '../../fluxo_visitante/components/visitante/ResultadosList';
-import LoadingResults from '../../fluxo_visitante/components/visitante/LoadingResults';
+// Caminho: /GFauto/app/resultados/page.tsx
+"use client";
 
-export const metadata: Metadata = {
-  title: 'Resultados da Busca | GFauto',
-  description: 'Resultados da sua busca por serviços automotivos.',
-};
+import { useSearchParams } from "next/navigation";
+import ResultadosList from "../../../fluxo_visitante/components/visitante/ResultadosList";
+import LoadingResults from "../../../fluxo_visitante/components/visitante/LoadingResults";
+import { useState, useEffect } from "react";
 
-export default async function ResultadosPage({
-  searchParams,
-}: {
-  searchParams: { cidade_id: string; especialidade_id: string; page?: string };
-}) {
-  const { cidade_id, especialidade_id, page = '1' } = searchParams;
+export default function ResultadosPage() {
+  const searchParams = useSearchParams();
+  const estado = searchParams.get("estado");
+  const cidade = searchParams.get("cidade");
+  const especialidade = searchParams.get("especialidade");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simula um tempo de carregamento para mostrar o componente de loading
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <LoadingResults />;
+  }
 
   return (
-    <main className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">
-          Resultados da Busca
-        </h1>
-        <Suspense fallback={<LoadingResults />}>
-          <ResultadosList 
-            cidadeId={cidade_id}
-            especialidadeId={especialidade_id}
-            page={parseInt(page)}
-          />
-        </Suspense>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-6">Resultados da Busca</h1>
+      <div className="mb-4">
+        <p className="text-gray-600">
+          Filtros aplicados: {estado && `Estado: ${estado}`}{" "}
+          {cidade && `| Cidade: ${cidade}`}{" "}
+          {especialidade && `| Especialidade: ${especialidade}`}
+        </p>
       </div>
-    </main>
+      <ResultadosList
+        estado={estado}
+        cidade={cidade}
+        especialidade={especialidade}
+      />
+    </div>
   );
 }
