@@ -7,14 +7,14 @@ import { useRouter } from 'next/navigation';
 // Componente BuscaForm para a página inicial
 export default function BuscaForm() {
   const router = useRouter();
-  const [estados, setEstados] = useState([]);
-  const [cidades, setCidades] = useState([]);
-  const [especialidades, setEspecialidades] = useState([]);
-  const [estadoId, setEstadoId] = useState('');
-  const [cidadeId, setCidadeId] = useState('');
-  const [especialidadeId, setEspecialidadeId] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [estados, setEstados] = useState<any[]>([]);
+  const [cidades, setCidades] = useState<any[]>([]);
+  const [especialidades, setEspecialidades] = useState<any[]>([]);
+  const [estadoId, setEstadoId] = useState<string>('');
+  const [cidadeId, setCidadeId] = useState<string>('');
+  const [especialidadeId, setEspecialidadeId] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null); // Corrigido para aceitar string ou null
 
   // Buscar estados ao carregar o componente
   useEffect(() => {
@@ -93,7 +93,7 @@ export default function BuscaForm() {
   }, [cidadeId]);
 
   // Função para lidar com o envio do formulário
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     if (!cidadeId || !especialidadeId) {
