@@ -1,4 +1,4 @@
-// Caminho: /fluxo_visitante/components/visitante/HeroSection.tsx
+// Caminho: /components/visitante/HeroSection.tsx
 'use client';
 
 import Image from 'next/image';
@@ -20,30 +20,42 @@ export default function HeroSection() {
             <p className="text-xl mb-6">
               Conectamos você aos melhores profissionais e lojas de autopeças da sua região.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col gap-6">
               <div className="flex items-center">
-                <div className="bg-white rounded-full p-2 mr-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+                <div className="mr-4">
+                  <Image 
+                    src="https://www.gfauto.com.br/aa_anuncio/images/logo_gf.png"
+                    alt="Logo GF Auto"
+                    width={400}
+                    height={200}
+                    style={{ height: 'auto' }}
+                  />
                 </div>
-                <span>Busca rápida e fácil</span>
+                <span className="text-lg">Busca rápida e fácil</span>
               </div>
               <div className="flex items-center">
-                <div className="bg-white rounded-full p-2 mr-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+                <div className="mr-4">
+                  <Image 
+                    src="https://www.gfauto.com.br/aa_anuncio/images/mc4.png"
+                    alt="Serviços confiáveis"
+                    width={400}
+                    height={200}
+                    style={{ height: 'auto' }}
+                  />
                 </div>
-                <span>Serviços confiáveis</span>
+                <span className="text-lg">Serviços confiáveis</span>
               </div>
               <div className="flex items-center">
-                <div className="bg-white rounded-full p-2 mr-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+                <div className="mr-4">
+                  <Image 
+                    src="https://gfauto.com.br/image001.jpg"
+                    alt="Contato direto"
+                    width={400}
+                    height={200}
+                    style={{ height: 'auto' }}
+                  />
                 </div>
-                <span>Contato direto</span>
+                <span className="text-lg">Contato direto</span>
               </div>
             </div>
           </div>
