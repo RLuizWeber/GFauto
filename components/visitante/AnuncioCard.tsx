@@ -39,8 +39,11 @@ interface AnuncioCardProps {
 }
 
 export default function AnuncioCard({ anuncio, isPremium = false }: AnuncioCardProps) {
+  // Definir uma imagem padrão caso a imagem principal não esteja disponível
   const imagemUrl = anuncio.imagemPrincipal || 
     (anuncio.imagens && anuncio.imagens.length > 0 ? anuncio.imagens[0].url : '/placeholder.jpg');
+  
+  console.log('Renderizando anúncio:', anuncio.titulo, 'Imagem:', imagemUrl);
   
   return (
     <div className={`bg-white rounded-lg shadow-md overflow-hidden ${isPremium ? 'border-l-4 border-yellow-400' : ''} mb-4`}>
@@ -53,13 +56,25 @@ export default function AnuncioCard({ anuncio, isPremium = false }: AnuncioCardP
               PREMIUM
             </div>
           )}
-          <div className="relative w-full aspect-square">
+          <div className="relative w-full h-32 bg-gray-100 rounded-lg">
+            {/* Usar div com background-image como fallback para garantir que algo seja exibido */}
+            <div 
+              className="absolute inset-0 bg-cover bg-center rounded-lg" 
+              style={{ backgroundImage: `url(${imagemUrl})` }}
+            ></div>
+            
+            {/* Tentar carregar a imagem com o componente Image */}
             <Image 
               src={imagemUrl} 
               alt={anuncio.titulo} 
               fill
               sizes="(max-width: 768px) 100vw, 25vw"
               className="object-cover rounded-lg"
+              onError={(e) => {
+                // Fallback para uma imagem padrão em caso de erro
+                const target = e.target as HTMLImageElement;
+                target.src = '/placeholder.jpg';
+              }}
             />
           </div>
         </div>

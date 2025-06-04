@@ -95,6 +95,8 @@ export default function ResultadosList({
         
         apiUrl += `page=${page}`;
         
+        console.log('Buscando anúncios com URL:', apiUrl);
+        
         // Simular dados para desenvolvimento
         // Em produção, isso seria substituído pela chamada real à API
         const mockData = {
