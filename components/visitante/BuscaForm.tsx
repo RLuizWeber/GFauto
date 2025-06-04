@@ -1,7 +1,7 @@
-// Caminho: /components/visitante/BuscaForm.tsx
+// Caminho: /fluxo_visitante/components/visitante/BuscaForm.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
 // Interfaces para tipagem
@@ -16,128 +16,254 @@ interface CidadeItem {
   nome: string;
 }
 
+interface EspecialidadeItem {
+  id: string;
+  nome: string;
+}
+
 // Componente BuscaForm para a página inicial
 export default function BuscaForm() {
   const router = useRouter();
   
-  // Estados para armazenar os valores dos campos
+  // Estados para armazenar os dados
+  const [estados, setEstados] = useState<EstadoItem[]>([]);
+  const [cidades, setCidades] = useState<CidadeItem[]>([]);
+  const [especialidades, setEspecialidades] = useState<EspecialidadeItem[]>([]);
+  
+  // Estados para os valores digitados pelo usuário
   const [estado, setEstado] = useState<string>('');
   const [cidade, setCidade] = useState<string>('');
   const [especialidade, setEspecialidade] = useState<string>('');
   
-  // Estados para sugestões de autocompletar
+  // Estados para os IDs selecionados
+  const [estadoId, setEstadoId] = useState<string>('');
+  const [cidadeId, setCidadeId] = useState<string>('');
+  const [especialidadeId, setEspecialidadeId] = useState<string>('');
+  
+  // Estados para as sugestões
   const [estadosSugestoes, setEstadosSugestoes] = useState<EstadoItem[]>([]);
   const [cidadesSugestoes, setCidadesSugestoes] = useState<CidadeItem[]>([]);
+  const [especialidadesSugestoes, setEspecialidadesSugestoes] = useState<EspecialidadeItem[]>([]);
   
-  // Estados para controle de carregamento e erros
+  // Estados para controle de exibição das sugestões
+  const [mostrarEstadosSugestoes, setMostrarEstadosSugestoes] = useState<boolean>(false);
+  const [mostrarCidadesSugestoes, setMostrarCidadesSugestoes] = useState<boolean>(false);
+  const [mostrarEspecialidadesSugestoes, setMostrarEspecialidadesSugestoes] = useState<boolean>(false);
+  
+  // Estados para carregamento e erro
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   
-  // Função para buscar sugestões de estados com base no texto digitado
+  // Refs para os campos de input
+  const estadoInputRef = useRef<HTMLInputElement>(null);
+  const cidadeInputRef = useRef<HTMLInputElement>(null);
+  const especialidadeInputRef = useRef<HTMLInputElement>(null);
+
+  // Buscar todos os estados ao carregar o componente
+  useEffect(() => {
+    const fetchEstados = async (): Promise<void> => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/estados');
+        if (!response.ok) {
+          throw new Error('Falha ao buscar estados');
+        }
+        const data = await response.json();
+        setEstados(data);
+      } catch (err) {
+        console.error('Erro ao buscar estados:', err);
+        setError('Não foi possível carregar os estados. Por favor, tente novamente.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEstados();
+  }, []);
+
+  // Função para buscar estados com base no texto digitado
   const buscarEstados = async (texto: string): Promise<void> => {
-    if (!texto || texto.length < 2) {
+    if (!texto.trim()) {
       setEstadosSugestoes([]);
       return;
     }
     
-    try {
-      setLoading(true);
-      
-      // Em um ambiente real, isso seria uma chamada à API
-      // Simulando uma lista de estados para demonstração
-      const estadosSimulados: EstadoItem[] = [
-        { id: 'rs', nome: 'Rio Grande do Sul', sigla: 'RS' },
-        { id: 'sc', nome: 'Santa Catarina', sigla: 'SC' },
-        { id: 'pr', nome: 'Paraná', sigla: 'PR' },
-        { id: 'sp', nome: 'São Paulo', sigla: 'SP' },
-        { id: 'rj', nome: 'Rio de Janeiro', sigla: 'RJ' },
-        { id: 'mg', nome: 'Minas Gerais', sigla: 'MG' },
-      ];
-      
-      // Filtra estados que correspondem ao texto digitado (nome ou sigla)
-      const sugestoes = estadosSimulados.filter(estado => 
-        estado.nome.toLowerCase().includes(texto.toLowerCase()) || 
-        estado.sigla.toLowerCase().includes(texto.toLowerCase())
-      );
-      
-      setEstadosSugestoes(sugestoes);
-      
-    } catch (err) {
-      console.error('Erro ao buscar estados:', err);
-      setError('Não foi possível carregar sugestões de estados. Por favor, tente novamente.');
-    } finally {
-      setLoading(false);
-    }
+    const textoLowerCase = texto.toLowerCase();
+    const sugestoes = estados.filter(
+      estado => 
+        estado.nome.toLowerCase().includes(textoLowerCase) || 
+        estado.sigla.toLowerCase().includes(textoLowerCase)
+    );
+    
+    setEstadosSugestoes(sugestoes);
+    setMostrarEstadosSugestoes(true);
   };
-  
-  // Função para buscar sugestões de cidades com base no texto digitado e estado selecionado
-  const buscarCidades = async (texto: string, estadoSelecionado: string): Promise<void> => {
-    if (!texto || texto.length < 2 || !estadoSelecionado) {
+
+  // Função para buscar cidades com base no texto digitado e estado selecionado
+  const buscarCidades = async (texto: string): Promise<void> => {
+    if (!estadoId || !texto.trim()) {
       setCidadesSugestoes([]);
       return;
     }
     
     try {
       setLoading(true);
+      const response = await fetch(`/api/cidades?estado_id=${estadoId}`);
+      if (!response.ok) {
+        throw new Error('Falha ao buscar cidades');
+      }
       
-      // Em um ambiente real, isso seria uma chamada à API
-      // Simulando uma lista de cidades para demonstração
-      const cidadesSimuladas: Record<string, CidadeItem[]> = {
-        'Rio Grande do Sul': [
-          { id: 'pf', nome: 'Passo Fundo' },
-          { id: 'poa', nome: 'Porto Alegre' },
-          { id: 'sm', nome: 'Santa Maria' },
-          { id: 'pel', nome: 'Pelotas' },
-        ],
-        'Santa Catarina': [
-          { id: 'fln', nome: 'Florianópolis' },
-          { id: 'jvl', nome: 'Joinville' },
-          { id: 'bln', nome: 'Blumenau' },
-        ],
-        'São Paulo': [
-          { id: 'sp', nome: 'São Paulo' },
-          { id: 'cps', nome: 'Campinas' },
-          { id: 'sto', nome: 'Santos' },
-        ]
-      };
+      const data = await response.json();
+      setCidades(data);
       
-      // Obtém as cidades do estado selecionado
-      const cidadesDoEstado = cidadesSimuladas[estadoSelecionado] || [];
-      
-      // Filtra cidades que correspondem ao texto digitado
-      const sugestoes = cidadesDoEstado.filter(cidade => 
-        cidade.nome.toLowerCase().includes(texto.toLowerCase())
+      const textoLowerCase = texto.toLowerCase();
+      const sugestoes = data.filter(
+        cidade => cidade.nome.toLowerCase().includes(textoLowerCase)
       );
       
       setCidadesSugestoes(sugestoes);
-      
+      setMostrarCidadesSugestoes(true);
     } catch (err) {
       console.error('Erro ao buscar cidades:', err);
-      setError('Não foi possível carregar sugestões de cidades. Por favor, tente novamente.');
+      setError('Não foi possível carregar as cidades. Por favor, tente novamente.');
     } finally {
       setLoading(false);
     }
   };
-  
+
+  // Função para buscar especialidades com base no texto digitado e cidade selecionada
+  const buscarEspecialidades = async (texto: string): Promise<void> => {
+    if (!cidadeId || !texto.trim()) {
+      setEspecialidadesSugestoes([]);
+      return;
+    }
+    
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/especialidades?cidade_id=${cidadeId}`);
+      if (!response.ok) {
+        throw new Error('Falha ao buscar especialidades');
+      }
+      
+      const data = await response.json();
+      setEspecialidades(data);
+      
+      const textoLowerCase = texto.toLowerCase();
+      const sugestoes = data.filter(
+        especialidade => especialidade.nome.toLowerCase().includes(textoLowerCase)
+      );
+      
+      setEspecialidadesSugestoes(sugestoes);
+      setMostrarEspecialidadesSugestoes(true);
+    } catch (err) {
+      console.error('Erro ao buscar especialidades:', err);
+      setError('Não foi possível carregar as especialidades. Por favor, tente novamente.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Função para selecionar um estado da lista de sugestões
+  const selecionarEstado = (estadoSelecionado: EstadoItem): void => {
+    setEstado(estadoSelecionado.sigla + ' - ' + estadoSelecionado.nome);
+    setEstadoId(estadoSelecionado.id);
+    setMostrarEstadosSugestoes(false);
+    
+    // Limpar campos dependentes
+    setCidade('');
+    setCidadeId('');
+    setEspecialidade('');
+    setEspecialidadeId('');
+    
+    // Focar no próximo campo
+    if (cidadeInputRef.current) {
+      cidadeInputRef.current.focus();
+    }
+  };
+
+  // Função para selecionar uma cidade da lista de sugestões
+  const selecionarCidade = (cidadeSelecionada: CidadeItem): void => {
+    setCidade(cidadeSelecionada.nome);
+    setCidadeId(cidadeSelecionada.id);
+    setMostrarCidadesSugestoes(false);
+    
+    // Limpar campos dependentes
+    setEspecialidade('');
+    setEspecialidadeId('');
+    
+    // Focar no próximo campo
+    if (especialidadeInputRef.current) {
+      especialidadeInputRef.current.focus();
+    }
+  };
+
+  // Função para selecionar uma especialidade da lista de sugestões
+  const selecionarEspecialidade = (especialidadeSelecionada: EspecialidadeItem): void => {
+    setEspecialidade(especialidadeSelecionada.nome);
+    setEspecialidadeId(especialidadeSelecionada.id);
+    setMostrarEspecialidadesSugestoes(false);
+  };
+
   // Função para lidar com o envio do formulário
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     
-    if (!estado || !cidade || !especialidade) {
-      setError('Por favor, preencha todos os campos.');
+    // Validar se os campos necessários foram preenchidos
+    if (!estado) {
+      setError('Por favor, informe o estado.');
       return;
     }
     
-    // Redirecionar para a página de resultados com os parâmetros informados
-    router.push(`/resultados?estado=${encodeURIComponent(estado)}&cidade=${encodeURIComponent(cidade)}&especialidade=${encodeURIComponent(especialidade)}`);
+    if (!cidade) {
+      setError('Por favor, informe a cidade.');
+      return;
+    }
+    
+    if (!especialidade) {
+      setError('Por favor, informe o que você procura.');
+      return;
+    }
+    
+    // Se temos os IDs, usamos eles para a busca
+    if (cidadeId && especialidadeId) {
+      router.push(`/resultados?cidade_id=${cidadeId}&especialidade_id=${especialidadeId}`);
+    } else {
+      // Caso contrário, usamos os textos digitados
+      router.push(`/resultados?estado=${encodeURIComponent(estado)}&cidade=${encodeURIComponent(cidade)}&especialidade=${encodeURIComponent(especialidade)}`);
+    }
   };
-  
-  // Efeito para limpar cidades quando o estado mudar
+
+  // Função para fechar as sugestões quando clicar fora delas
   useEffect(() => {
-    setCidade('');
-    setCidadesSugestoes([]);
-  }, [estado]);
-  
+    const handleClickOutside = (event: MouseEvent): void => {
+      if (
+        estadoInputRef.current && 
+        !estadoInputRef.current.contains(event.target as Node)
+      ) {
+        setMostrarEstadosSugestoes(false);
+      }
+      
+      if (
+        cidadeInputRef.current && 
+        !cidadeInputRef.current.contains(event.target as Node)
+      ) {
+        setMostrarCidadesSugestoes(false);
+      }
+      
+      if (
+        especialidadeInputRef.current && 
+        !especialidadeInputRef.current.contains(event.target as Node)
+      ) {
+        setMostrarEspecialidadesSugestoes(false);
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error && (
@@ -146,93 +272,129 @@ export default function BuscaForm() {
         </div>
       )}
       
-      <div>
+      {/* Campo de Estado */}
+      <div className="relative">
         <label htmlFor="estado" className="block text-sm font-medium text-gray-700 mb-1">
-          Informe o Estado
+          Informe o Estado:
         </label>
         <input
-          type="text"
+          ref={estadoInputRef}
           id="estado"
+          type="text"
           value={estado}
           onChange={(e) => {
             setEstado(e.target.value);
             buscarEstados(e.target.value);
           }}
-          placeholder="Digite o nome ou sigla do estado"
+          onFocus={() => {
+            if (estado) buscarEstados(estado);
+            setMostrarEstadosSugestoes(true);
+          }}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Digite o nome ou sigla do estado"
+          disabled={loading}
         />
-        {estadosSugestoes.length > 0 && (
-          <div className="mt-1 border border-gray-300 rounded-md shadow-sm bg-white max-h-40 overflow-y-auto">
+        
+        {/* Lista de sugestões de estados */}
+        {mostrarEstadosSugestoes && estadosSugestoes.length > 0 && (
+          <ul className="absolute z-10 w-full mt-1 bg-white shadow-lg max-h-60 rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm">
             {estadosSugestoes.map((estadoItem) => (
-              <div 
+              <li
                 key={estadoItem.id}
-                className="px-3 py-2 cursor-pointer hover:bg-gray-100"
-                onClick={() => {
-                  setEstado(estadoItem.nome);
-                  setEstadosSugestoes([]);
-                }}
+                onClick={() => selecionarEstado(estadoItem)}
+                className="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-gray-100"
               >
-                {estadoItem.nome} ({estadoItem.sigla})
-              </div>
+                {estadoItem.sigla} - {estadoItem.nome}
+              </li>
             ))}
-          </div>
+          </ul>
         )}
       </div>
       
-      <div>
+      {/* Campo de Cidade */}
+      <div className="relative">
         <label htmlFor="cidade" className="block text-sm font-medium text-gray-700 mb-1">
-          Informe a Cidade
+          Informe a Cidade:
         </label>
         <input
-          type="text"
+          ref={cidadeInputRef}
           id="cidade"
+          type="text"
           value={cidade}
           onChange={(e) => {
             setCidade(e.target.value);
-            buscarCidades(e.target.value, estado);
+            buscarCidades(e.target.value);
           }}
-          placeholder="Digite o nome da cidade"
+          onFocus={() => {
+            if (cidade) buscarCidades(cidade);
+            setMostrarCidadesSugestoes(true);
+          }}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          disabled={!estado}
+          placeholder="Digite o nome da cidade"
+          disabled={loading || !estadoId}
         />
-        {cidadesSugestoes.length > 0 && (
-          <div className="mt-1 border border-gray-300 rounded-md shadow-sm bg-white max-h-40 overflow-y-auto">
+        
+        {/* Lista de sugestões de cidades */}
+        {mostrarCidadesSugestoes && cidadesSugestoes.length > 0 && (
+          <ul className="absolute z-10 w-full mt-1 bg-white shadow-lg max-h-60 rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm">
             {cidadesSugestoes.map((cidadeItem) => (
-              <div 
+              <li
                 key={cidadeItem.id}
-                className="px-3 py-2 cursor-pointer hover:bg-gray-100"
-                onClick={() => {
-                  setCidade(cidadeItem.nome);
-                  setCidadesSugestoes([]);
-                }}
+                onClick={() => selecionarCidade(cidadeItem)}
+                className="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-gray-100"
               >
                 {cidadeItem.nome}
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
       </div>
       
-      <div>
+      {/* Campo de Especialidade */}
+      <div className="relative">
         <label htmlFor="especialidade" className="block text-sm font-medium text-gray-700 mb-1">
           O que procura?
         </label>
         <input
-          type="text"
+          ref={especialidadeInputRef}
           id="especialidade"
+          type="text"
           value={especialidade}
-          onChange={(e) => setEspecialidade(e.target.value)}
-          placeholder="Ex.: Auto Elétrica, Mecânica, Funilaria, Farol quebrado, etc."
+          onChange={(e) => {
+            setEspecialidade(e.target.value);
+            buscarEspecialidades(e.target.value);
+          }}
+          onFocus={() => {
+            if (especialidade) buscarEspecialidades(especialidade);
+            setMostrarEspecialidadesSugestoes(true);
+          }}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          disabled={!cidade}
+          placeholder="Digite o que você está procurando"
+          disabled={loading || !cidadeId}
         />
+        
+        {/* Lista de sugestões de especialidades */}
+        {mostrarEspecialidadesSugestoes && especialidadesSugestoes.length > 0 && (
+          <ul className="absolute z-10 w-full mt-1 bg-white shadow-lg max-h-60 rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm">
+            {especialidadesSugestoes.map((especialidadeItem) => (
+              <li
+                key={especialidadeItem.id}
+                onClick={() => selecionarEspecialidade(especialidadeItem)}
+                className="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-gray-100"
+              >
+                {especialidadeItem.nome}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       
+      {/* Botão de Busca */}
       <div>
         <button
           type="submit"
           className="w-full px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-          disabled={loading || !estado || !cidade || !especialidade}
+          disabled={loading}
         >
           {loading ? 'Carregando...' : 'Buscar Serviços'}
         </button>
