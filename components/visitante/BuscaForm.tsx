@@ -54,6 +54,9 @@ export default function BuscaForm() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   
+  // Estado para controlar se o formulário é válido
+  const [formValido, setFormValido] = useState<boolean>(false);
+  
   // Refs para os campos de input
   const estadoInputRef = useRef<HTMLInputElement>(null);
   const cidadeInputRef = useRef<HTMLInputElement>(null);
@@ -81,6 +84,13 @@ export default function BuscaForm() {
     fetchEstados();
   }, []);
 
+  // Validar o formulário sempre que os campos mudarem
+  useEffect(() => {
+    // Formulário é válido quando todos os campos têm conteúdo
+    const isValid = estado.trim() !== '' && cidade.trim() !== '' && especialidade.trim() !== '';
+    setFormValido(isValid);
+  }, [estado, cidade, especialidade]);
+
   // Função para buscar estados com base no texto digitado
   const buscarEstados = async (texto: string): Promise<void> => {
     if (!texto.trim()) {
@@ -101,14 +111,14 @@ export default function BuscaForm() {
 
   // Função para buscar cidades com base no texto digitado e estado selecionado
   const buscarCidades = async (texto: string): Promise<void> => {
-    if (!estadoId || !texto.trim()) {
+    if (!texto.trim()) {
       setCidadesSugestoes([]);
       return;
     }
     
     try {
       setLoading(true);
-      const response = await fetch(`/api/cidades?estado_id=${estadoId}`);
+      const response = await fetch(estadoId ? `/api/cidades?estado_id=${estadoId}` : `/api/cidades`);
       if (!response.ok) {
         throw new Error('Falha ao buscar cidades');
       }
@@ -133,14 +143,14 @@ export default function BuscaForm() {
 
   // Função para buscar especialidades com base no texto digitado e cidade selecionada
   const buscarEspecialidades = async (texto: string): Promise<void> => {
-    if (!cidadeId || !texto.trim()) {
+    if (!texto.trim()) {
       setEspecialidadesSugestoes([]);
       return;
     }
     
     try {
       setLoading(true);
-      const response = await fetch(`/api/especialidades?cidade_id=${cidadeId}`);
+      const response = await fetch(cidadeId ? `/api/especialidades?cidade_id=${cidadeId}` : `/api/especialidades`);
       if (!response.ok) {
         throw new Error('Falha ao buscar especialidades');
       }
@@ -209,17 +219,17 @@ export default function BuscaForm() {
     e.preventDefault();
     
     // Validar se os campos necessários foram preenchidos
-    if (!estado) {
+    if (!estado.trim()) {
       setError('Por favor, informe o estado.');
       return;
     }
     
-    if (!cidade) {
+    if (!cidade.trim()) {
       setError('Por favor, informe a cidade.');
       return;
     }
     
-    if (!especialidade) {
+    if (!especialidade.trim()) {
       setError('Por favor, informe o que você procura.');
       return;
     }
@@ -285,6 +295,7 @@ export default function BuscaForm() {
           onChange={(e) => {
             setEstado(e.target.value);
             buscarEstados(e.target.value);
+            setError(null); // Limpar erro ao digitar
           }}
           onFocus={() => {
             if (estado) buscarEstados(estado);
@@ -324,6 +335,7 @@ export default function BuscaForm() {
           onChange={(e) => {
             setCidade(e.target.value);
             buscarCidades(e.target.value);
+            setError(null); // Limpar erro ao digitar
           }}
           onFocus={() => {
             if (cidade) buscarCidades(cidade);
@@ -331,7 +343,7 @@ export default function BuscaForm() {
           }}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           placeholder="Digite o nome da cidade"
-          disabled={loading || !estadoId}
+          disabled={loading}
         />
         
         {/* Lista de sugestões de cidades */}
@@ -363,6 +375,7 @@ export default function BuscaForm() {
           onChange={(e) => {
             setEspecialidade(e.target.value);
             buscarEspecialidades(e.target.value);
+            setError(null); // Limpar erro ao digitar
           }}
           onFocus={() => {
             if (especialidade) buscarEspecialidades(especialidade);
@@ -370,7 +383,7 @@ export default function BuscaForm() {
           }}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           placeholder="Digite o que você está procurando"
-          disabled={loading || !cidadeId}
+          disabled={loading}
         />
         
         {/* Lista de sugestões de especialidades */}
@@ -393,8 +406,12 @@ export default function BuscaForm() {
       <div>
         <button
           type="submit"
-          className="w-full px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-          disabled={loading}
+          className={`w-full px-4 py-2 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors ${
+            formValido && !loading
+              ? 'bg-blue-600 text-white hover:bg-blue-700'
+              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+          }`}
+          disabled={!formValido || loading}
         >
           {loading ? 'Carregando...' : 'Buscar Serviços'}
         </button>
