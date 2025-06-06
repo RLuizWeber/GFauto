@@ -34,3 +34,9 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Documentação do Formulário de Busca
+
+O formulário de busca é um componente central do GFauto, permitindo que os usuários encontrem serviços automotivos com base em sua localização e necessidades específicas.
+
+Para mais detalhes sobre o funcionamento e implementação do formulário de busca, consulte a [documentação completa do formulário](./docs/formulario_busca.md).

@@ -465,7 +465,6 @@ export default function BuscaForm() {
           }}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           placeholder="Digite o nome da cidade"
-          disabled={loading}
         />
         
         {/* Lista de sugestões de cidades */}
@@ -509,7 +508,6 @@ export default function BuscaForm() {
           }}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           placeholder="Digite o que você está procurando"
-          disabled={loading}
         />
         
         {/* Lista de sugestões de especialidades */}
