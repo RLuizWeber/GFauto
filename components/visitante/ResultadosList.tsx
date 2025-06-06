@@ -2,269 +2,78 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import AnuncioCard from './AnuncioCard';
-import Pagination from './Pagination';
-import LoadingResults from './LoadingResults';
+import Link from 'next/link';
 
-interface Anuncio {
+interface Fornecedor {
   id: string;
-  titulo: string;
-  descricao: string | null;
+  nome: string;
+  descricao: string;
   endereco: string;
   telefone: string;
-  whatsapp: string | null;
-  email: string | null;
-  site: string | null;
-  plano: string;
-  imagemPrincipal: string | null;
-  imagens: {
-    id: string;
-    url: string;
-    ordem: number;
-  }[];
-  especialidade: {
-    id: string;
-    nome: string;
-  };
-  cidade: {
-    id: string;
-    nome: string;
-    estado: {
-      id: string;
-      sigla: string;
-    };
-  };
+  email: string;
+  website: string;
+  tipo: 'premium' | 'cortesia';
 }
 
 interface ResultadosListProps {
-  estado?: string | null;
-  cidade?: string | null;
-  especialidade?: string | null;
   cidadeId?: string;
   especialidadeId?: string;
   page?: number;
+  fornecedores?: Fornecedor[];
 }
 
-export default function ResultadosList({ 
-  estado, 
-  cidade, 
-  especialidade, 
-  cidadeId, 
-  especialidadeId, 
-  page = 1 
-}: ResultadosListProps) {
-  const [anuncios, setAnuncios] = useState<Anuncio[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function ResultadosList({ cidadeId, especialidadeId, page = 1, fornecedores: fornecedoresProp }: ResultadosListProps) {
+  const [fornecedores, setFornecedores] = useState<Fornecedor[]>(fornecedoresProp || []);
+  const [loading, setLoading] = useState(!fornecedoresProp);
   const [error, setError] = useState<string | null>(null);
-  const [pagination, setPagination] = useState({
-    page,
-    pageSize: 10,
-    total: 0,
-    totalPages: 0
-  });
   
   useEffect(() => {
-    const fetchAnuncios = async () => {
+    // Se fornecedores foram passados como prop, não precisamos buscar
+    if (fornecedoresProp) {
+      setFornecedores(fornecedoresProp);
+      setLoading(false);
+      return;
+    }
+    
+    // Se não temos cidadeId ou especialidadeId, não podemos buscar
+    if (!cidadeId || !especialidadeId) {
+      setError('Parâmetros de busca insuficientes');
+      setLoading(false);
+      return;
+    }
+    
+    const fetchFornecedores = async () => {
       try {
         setLoading(true);
         setError(null);
         
-        // Construir a URL da API com base nos parâmetros disponíveis
-        let apiUrl = '/api/anuncios?';
-        
-        if (cidadeId) {
-          apiUrl += `cidade_id=${cidadeId}&`;
-        }
-        
-        if (especialidadeId) {
-          apiUrl += `especialidade_id=${especialidadeId}&`;
-        }
-        
-        // Se temos estado/cidade/especialidade como strings (da busca por texto)
-        if (cidade && !cidadeId) {
-          apiUrl += `cidade=${encodeURIComponent(cidade)}&`;
-        }
-        
-        if (estado) {
-          apiUrl += `estado=${encodeURIComponent(estado)}&`;
-        }
-        
-        if (especialidade && !especialidadeId) {
-          apiUrl += `especialidade=${encodeURIComponent(especialidade)}&`;
-        }
-        
-        apiUrl += `page=${page}`;
-        
-        console.log('Buscando anúncios com URL:', apiUrl);
-        
-        // Simular dados para desenvolvimento
-        // Em produção, isso seria substituído pela chamada real à API
-        const mockData = {
-          anuncios: [
-            {
-              id: '1',
-              titulo: 'Mecânica Exemplo Premium',
-              descricao: 'Oficina especializada em carros importados com mais de 20 anos de experiência. Atendemos todas as marcas e modelos, com garantia de serviço e peças originais.',
-              endereco: 'Av. Brasil, 1500, Centro, Passo Fundo, RS',
-              telefone: '5499999999',
-              whatsapp: '5499999999',
-              email: 'contato@mecanicaexemplo.com',
-              site: 'https://mecanicaexemplo.com',
-              plano: 'premium',
-              imagemPrincipal: '/images/anuncios/mecanica1.jpg',
-              imagens: [],
-              especialidade: {
-                id: '1',
-                nome: 'Mecânica Geral'
-              },
-              cidade: {
-                id: '1',
-                nome: 'Passo Fundo',
-                estado: {
-                  id: '1',
-                  sigla: 'RS'
-                }
-              }
-            },
-            {
-              id: '2',
-              titulo: 'Auto Elétrica Central',
-              descricao: 'Especialistas em sistema elétrico automotivo. Atendemos todas as marcas e modelos, com serviços de injeção eletrônica, ar condicionado, alarmes e travas.',
-              endereco: 'Rua das Palmeiras, 123, Bairro São José, Passo Fundo, RS',
-              telefone: '5499888888',
-              whatsapp: '5499888888',
-              email: 'contato@autoeletricacentral.com',
-              site: null,
-              plano: 'premium',
-              imagemPrincipal: '/images/anuncios/autoeletrica1.jpg',
-              imagens: [],
-              especialidade: {
-                id: '2',
-                nome: 'Auto Elétrica'
-              },
-              cidade: {
-                id: '1',
-                nome: 'Passo Fundo',
-                estado: {
-                  id: '1',
-                  sigla: 'RS'
-                }
-              }
-            },
-            {
-              id: '3',
-              titulo: 'Autopeças Genuínas',
-              descricao: 'A maior loja de autopeças da região. Peças originais com garantia para todas as marcas nacionais e importadas. Entrega para todo o Brasil.',
-              endereco: 'Av. Principal, 500, Centro, Passo Fundo, RS',
-              telefone: '5499777777',
-              whatsapp: '5499777777',
-              email: 'vendas@autopecas.com',
-              site: 'https://autopecas.com',
-              plano: 'basico',
-              imagemPrincipal: '/images/anuncios/autopecas1.jpg',
-              imagens: [],
-              especialidade: {
-                id: '3',
-                nome: 'Autopeças'
-              },
-              cidade: {
-                id: '1',
-                nome: 'Passo Fundo',
-                estado: {
-                  id: '1',
-                  sigla: 'RS'
-                }
-              }
-            },
-            {
-              id: '4',
-              titulo: 'Funilaria e Pintura Express',
-              descricao: 'Serviços de funilaria e pintura com qualidade e rapidez. Atendemos seguradoras e particulares. Orçamento sem compromisso.',
-              endereco: 'Rua dos Técnicos, 789, Vila Nova, Passo Fundo, RS',
-              telefone: '5499666666',
-              whatsapp: '5499666666',
-              email: 'contato@funilariaexpress.com',
-              site: null,
-              plano: 'basico',
-              imagemPrincipal: '/images/anuncios/mecanica1.jpg',
-              imagens: [],
-              especialidade: {
-                id: '4',
-                nome: 'Funilaria e Pintura'
-              },
-              cidade: {
-                id: '1',
-                nome: 'Passo Fundo',
-                estado: {
-                  id: '1',
-                  sigla: 'RS'
-                }
-              }
-            },
-            {
-              id: '5',
-              titulo: 'Centro Automotivo Total',
-              descricao: 'Serviços completos para seu veículo: mecânica, elétrica, funilaria, pintura e muito mais. Equipe especializada e preços justos.',
-              endereco: 'Av. das Indústrias, 456, Distrito Industrial, Passo Fundo, RS',
-              telefone: '5499555555',
-              whatsapp: '5499555555',
-              email: 'atendimento@centroautomotivo.com',
-              site: 'https://centroautomotivo.com',
-              plano: 'premium',
-              imagemPrincipal: '/images/anuncios/autoeletrica1.jpg',
-              imagens: [],
-              especialidade: {
-                id: '5',
-                nome: 'Centro Automotivo'
-              },
-              cidade: {
-                id: '1',
-                nome: 'Passo Fundo',
-                estado: {
-                  id: '1',
-                  sigla: 'RS'
-                }
-              }
-            }
-          ],
-          pagination: {
-            page: 1,
-            pageSize: 10,
-            total: 5,
-            totalPages: 1
-          }
-        };
-        
-        // Na produção, descomente o código abaixo e remova a simulação
-        /*
-        const response = await fetch(apiUrl);
+        const response = await fetch(
+          `/api/fornecedores?cidade_id=${cidadeId}&especialidade_id=${especialidadeId}&page=${page}`
+        );
         
         if (!response.ok) {
-          throw new Error('Falha ao buscar anúncios');
+          throw new Error('Falha ao buscar fornecedores');
         }
         
         const data = await response.json();
-        setAnuncios(data.anuncios);
-        setPagination(data.pagination);
-        */
-        
-        // Usando dados simulados para desenvolvimento
-        setAnuncios(mockData.anuncios);
-        setPagination(mockData.pagination);
-        
+        setFornecedores(data);
       } catch (err) {
-        console.error('Erro ao buscar anúncios:', err);
-        setError('Não foi possível carregar os anúncios. Por favor, tente novamente.');
+        console.error('Erro ao buscar fornecedores:', err);
+        setError('Não foi possível carregar os fornecedores. Por favor, tente novamente.');
       } finally {
         setLoading(false);
       }
     };
     
-    fetchAnuncios();
-  }, [cidadeId, especialidadeId, estado, cidade, especialidade, page]);
+    fetchFornecedores();
+  }, [cidadeId, especialidadeId, page, fornecedoresProp]);
   
   if (loading) {
-    return <LoadingResults />;
+    return (
+      <div className="flex justify-center items-center py-12">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
   }
   
   if (error) {
@@ -275,63 +84,88 @@ export default function ResultadosList({
     );
   }
   
-  if (anuncios.length === 0) {
+  if (fornecedores.length === 0) {
     return (
       <div className="bg-yellow-50 border border-yellow-200 text-yellow-700 px-4 py-3 rounded">
-        <p>Nenhum anúncio encontrado para esta busca.</p>
+        <p>Nenhum fornecedor encontrado para esta busca.</p>
         <p className="mt-2">Tente selecionar outra cidade ou especialidade.</p>
       </div>
     );
   }
   
-  // Separar anúncios premium dos regulares
-  const anunciosPremium = anuncios.filter(anuncio => anuncio.plano === 'premium');
-  const anunciosRegulares = anuncios.filter(anuncio => anuncio.plano !== 'premium');
+  // Separar fornecedores por tipo
+  const fornecedoresPremium = fornecedores.filter(f => f.tipo === 'premium');
+  const fornecedoresCortesia = fornecedores.filter(f => f.tipo === 'cortesia');
   
   return (
     <div>
-      {/* Seção de anúncios premium */}
-      {anunciosPremium.length > 0 && (
+      {/* Fornecedores Premium */}
+      {fornecedoresPremium.length > 0 && (
         <div className="mb-8">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">PREMIUM</h2>
-          <div className="space-y-4">
-            {anunciosPremium.map((anuncio) => (
-              <AnuncioCard 
-                key={anuncio.id} 
-                anuncio={anuncio} 
-                isPremium={true} 
-              />
+          <h2 className="text-xl font-bold mb-4 text-blue-700">Fornecedores Premium</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {fornecedoresPremium.map((fornecedor) => (
+              <div 
+                key={fornecedor.id}
+                className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-500"
+              >
+                <div className="p-6">
+                  <div className="flex justify-between items-start">
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">{fornecedor.nome}</h3>
+                    <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Premium</span>
+                  </div>
+                  <p className="text-gray-700 mb-4">{fornecedor.descricao}</p>
+                  <div className="space-y-2">
+                    <p className="text-sm text-gray-600"><strong>Endereço:</strong> {fornecedor.endereco}</p>
+                    <p className="text-sm text-gray-600"><strong>Telefone:</strong> {fornecedor.telefone}</p>
+                    {fornecedor.email && (
+                      <p className="text-sm text-gray-600"><strong>Email:</strong> {fornecedor.email}</p>
+                    )}
+                    {fornecedor.website && (
+                      <p className="text-sm text-gray-600">
+                        <strong>Website:</strong> <a href={fornecedor.website.startsWith('http') ? fornecedor.website : `https://${fornecedor.website}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{fornecedor.website}</a>
+                      </p>
+                    )}
+                  </div>
+                  <div className="mt-4">
+                    <Link 
+                      href={`/fornecedor/${fornecedor.id}`}
+                      className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700"
+                    >
+                      Ver detalhes
+                    </Link>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       )}
       
-      {/* Seção de anúncios regulares */}
-      {anunciosRegulares.length > 0 && (
+      {/* Fornecedores Cortesia */}
+      {fornecedoresCortesia.length > 0 && (
         <div>
-          {anunciosPremium.length > 0 && (
-            <h2 className="text-xl font-bold text-gray-800 mb-4">OUTROS ANÚNCIOS</h2>
-          )}
-          <div className="space-y-4">
-            {anunciosRegulares.map((anuncio) => (
-              <AnuncioCard 
-                key={anuncio.id} 
-                anuncio={anuncio} 
-                isPremium={false} 
-              />
+          <h2 className="text-xl font-bold mb-4 text-gray-700">Fornecedores</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {fornecedoresCortesia.map((fornecedor) => (
+              <div 
+                key={fornecedor.id}
+                className="bg-white rounded-lg shadow overflow-hidden"
+              >
+                <div className="p-6">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">{fornecedor.nome}</h3>
+                  <p className="text-gray-700 mb-4">{fornecedor.descricao}</p>
+                  <div className="space-y-2">
+                    <p className="text-sm text-gray-600"><strong>Endereço:</strong> {fornecedor.endereco}</p>
+                    <p className="text-sm text-gray-600"><strong>Telefone:</strong> {fornecedor.telefone}</p>
+                    {fornecedor.email && (
+                      <p className="text-sm text-gray-600"><strong>Email:</strong> {fornecedor.email}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
-        </div>
-      )}
-      
-      {/* Paginação */}
-      {pagination.totalPages > 1 && (
-        <div className="mt-8">
-          <Pagination 
-            currentPage={pagination.page} 
-            totalPages={pagination.totalPages} 
-            baseUrl={`/resultados?${cidadeId ? `cidade_id=${cidadeId}&` : ''}${especialidadeId ? `especialidade_id=${especialidadeId}&` : ''}${estado ? `estado=${encodeURIComponent(estado)}&` : ''}${cidade ? `cidade=${encodeURIComponent(cidade)}&` : ''}${especialidade ? `especialidade=${encodeURIComponent(especialidade)}&` : ''}`} 
-          />
         </div>
       )}
     </div>
