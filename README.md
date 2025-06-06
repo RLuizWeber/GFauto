@@ -22,7 +22,7 @@ Para mais detalhes sobre o funcionamento e implementação do formulário de bus
 ### Página de Resultados
 
 A página de resultados exibe os fornecedores encontrados com base nos critérios de busca:
-- Filtros aplicados claramente exibidos
+- Filtros aplicados claramente exibidos com separadores visuais
 - Fornecedores Premium em destaque
 - Fornecedores Cortesia listados abaixo
 - Informações completas de contato e serviços
@@ -38,6 +38,24 @@ Para mais detalhes sobre a implementação da página de resultados, consulte a 
 - `/public`: Arquivos estáticos (imagens, ícones, etc.)
 - `/scripts`: Scripts utilitários e de população do banco de dados
 - `/docs`: Documentação do projeto
+
+## Componentes Principais
+
+### ResultadosList
+
+O componente `ResultadosList` é responsável por exibir a lista de fornecedores nos resultados da busca. Ele pode ser utilizado de duas formas:
+
+1. **Com fornecedores passados diretamente:**
+   ```jsx
+   <ResultadosList fornecedores={fornecedores} />
+   ```
+
+2. **Com parâmetros para busca automática:**
+   ```jsx
+   <ResultadosList cidadeId="cidade_id" especialidadeId="especialidade_id" page={1} />
+   ```
+
+Para mais detalhes, consulte a [documentação do componente ResultadosList](./docs/componentes/resultados_list.md).
 
 ## Desenvolvimento
 

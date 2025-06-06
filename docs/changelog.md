@@ -10,6 +10,19 @@ Este arquivo registra todas as alterações significativas feitas no projeto.
 
 ### Corrigido
 
+## [0.3.0] - 2025-06-06
+
+### Adicionado
+- Documentação detalhada do componente ResultadosList
+- Suporte para dois modos de uso no componente ResultadosList
+
+### Alterado
+- Refatoração da página de resultados para usar o componente ResultadosList de forma mais flexível
+
+### Corrigido
+- Erro de tipagem no componente ResultadosList que causava falha no deploy
+- Incompatibilidade de props entre a página de resultados e o componente ResultadosList
+
 ## [0.2.0] - 2025-06-06
 
 ### Adicionado
