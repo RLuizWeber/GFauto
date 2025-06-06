@@ -1,48 +1,39 @@
-# Histórico de Alterações do Projeto GFauto
+# Changelog do Projeto GFauto
 
-**Última atualização:** 04/06/2025 20:45
+Este arquivo registra todas as alterações significativas feitas no projeto.
 
-## Índice
+## [Não Lançado]
 
-1. [Alterações Recentes](#alterações-recentes)
-2. [Problemas Conhecidos](#problemas-conhecidos)
-3. [Versões Anteriores](#versões-anteriores)
+### Adicionado
 
-## Alterações Recentes
+### Alterado
 
-### Commits Recentes
+### Corrigido
 
-- **2025-06-04** - Corrige sintaxe das arrow functions com tipagem no BuscaForm.tsx (RLuizWeber)
-- **2025-06-04** - Corrige erro de tipagem no BuscaForm.tsx (RLuizWeber)
-- **2025-06-04** - Implementa campos de texto no BuscaForm e ajusta navegação para resultados (RLuizWeber)
-- **2025-06-04** - Corrige layout dos anúncios e exibição das imagens (RLuizWeber)
-- **2025-06-04** - Adiciona dados simulados realistas para a página de resultados (RLuizWeber)
-- **2025-06-04** - Ajusta tamanho das imagens para 180px e remodela layout da página de resultados (RLuizWeber)
-- **2025-06-04** - Corrige tipagem explícita no BuscaForm e ResultadosPage (RLuizWeber)
-- **2025-06-04** - Implementa correções: pasta de imagens, campos de texto no BuscaForm e layout de imagens (RLuizWeber)
-- **2025-06-04** - Ajusta layout para exibir imagens personalizadas com 400px de largura (RLuizWeber)
-- **2025-06-04** - Substitui sinais de visto por imagens personalizadas no HeroSection (RLuizWeber)
+## [0.2.0] - 2025-06-06
 
-### Alterações Manuais
+### Adicionado
+- Scripts para popular o banco de dados com fornecedores de auto elétricas em Passo Fundo
+- Documentação detalhada da página de resultados
+- Separador visual entre filtros aplicados na página de resultados
 
-- **04/06/2025** - Implementação de campos de texto com autocomplete no formulário de busca
-- **04/06/2025** - Correção de erros de tipagem no BuscaForm.tsx
-- **04/06/2025** - Correção de sintaxe das arrow functions com tipagem no BuscaForm.tsx
+### Alterado
+- Atualização do README.md principal com mais informações sobre o projeto
+- Melhoria na exibição dos filtros aplicados na página de resultados
 
-## Problemas Conhecidos
+### Corrigido
+- Espaçamento entre os filtros aplicados na página de resultados
 
-| Problema | Status | Solução |
-|----------|--------|---------|
-| Erro de tipagem no BuscaForm.tsx | Resolvido | Adicionada tipagem explícita com parênteses nas arrow functions |
-| [Adicionar mais problemas conforme identificados] | | |
+## [0.1.0] - 2025-06-06
 
-## Versões Anteriores
+### Adicionado
+- Implementação inicial do formulário de busca
+- Lista padrão de 57 especialidades automotivas
+- Sugestões automáticas ao clicar ou focar nos campos
 
-### Versão 0.1.0 (Inicial)
+### Alterado
+- Comportamento do formulário para permitir digitação livre em todos os campos
 
-- Implementação do painel administrativo
-- Autenticação com senha forte e 2FA
-- Dashboard básico
-- Listagem de anúncios
-- Detalhes de anúncio
-- Relatórios de pagamentos
+### Corrigido
+- Problema que impedia a digitação nos campos de Cidade e Especialidade
+- Problema com sugestões que não apareciam ao clicar nos campos

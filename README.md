@@ -1,42 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GFauto - Guia de Fornecedores Automotivos
 
-## Getting Started
+GFauto é uma plataforma que conecta usuários a fornecedores de serviços automotivos em sua região.
 
-First, run the development server:
+## Funcionalidades Principais
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Formulário de Busca
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O formulário de busca permite que os usuários encontrem serviços automotivos com base em:
+- Estado
+- Cidade
+- Especialidade automotiva
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-## Documentação do Formulário de Busca
-
-O formulário de busca é um componente central do GFauto, permitindo que os usuários encontrem serviços automotivos com base em sua localização e necessidades específicas.
+Características:
+- Digitação livre em todos os campos
+- Sugestões automáticas ao clicar ou focar nos campos
+- Lista completa de 57 especialidades automotivas
+- Validação de formulário com feedback visual
 
 Para mais detalhes sobre o funcionamento e implementação do formulário de busca, consulte a [documentação completa do formulário](./docs/formulario_busca.md).
+
+### Página de Resultados
+
+A página de resultados exibe os fornecedores encontrados com base nos critérios de busca:
+- Filtros aplicados claramente exibidos
+- Fornecedores Premium em destaque
+- Fornecedores Cortesia listados abaixo
+- Informações completas de contato e serviços
+
+Para mais detalhes sobre a implementação da página de resultados, consulte a [documentação da página de resultados](./docs/pagina_resultados.md).
+
+## Estrutura do Projeto
+
+- `/app`: Páginas e rotas da aplicação Next.js
+- `/components`: Componentes React reutilizáveis
+- `/fluxo_visitante`: Componentes específicos para o fluxo de visitantes
+- `/prisma`: Esquema e configurações do banco de dados
+- `/public`: Arquivos estáticos (imagens, ícones, etc.)
+- `/scripts`: Scripts utilitários e de população do banco de dados
+- `/docs`: Documentação do projeto
+
+## Desenvolvimento
+
+### Pré-requisitos
+
+- Node.js 18+
+- npm ou yarn
+- Banco de dados PostgreSQL
+
+### Instalação
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/RLuizWeber/GFauto.git
+   cd GFauto
+   ```
+
+2. Instale as dependências:
+   ```bash
+   npm install
+   # ou
+   yarn install
+   ```
+
+3. Configure as variáveis de ambiente:
+   ```bash
+   cp .env.example .env.local
+   # Edite .env.local com suas configurações
+   ```
+
+4. Execute as migrações do banco de dados:
+   ```bash
+   npx prisma migrate dev
+   ```
+
+5. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   # ou
+   yarn dev
+   ```
+
+### Scripts Úteis
+
+- `scripts/db/popular_fornecedores_autoeletricas.js`: Popula o banco de dados com fornecedores de auto elétricas em Passo Fundo
+
+## Deployment
+
+O projeto está configurado para deploy automático na Vercel a partir do branch `main`.
+
+## Changelog
+
+Para ver o histórico completo de alterações, consulte o [changelog](./docs/changelog.md).
