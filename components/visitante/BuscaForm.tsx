@@ -1,4 +1,4 @@
-// Caminho: /fluxo_visitante/components/visitante/BuscaForm.tsx
+// Caminho: /components/visitante/BuscaForm.tsx
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
@@ -20,6 +20,67 @@ interface EspecialidadeItem {
   id: string;
   nome: string;
 }
+
+// Lista de especialidades automotivas padrão para sugestões iniciais
+const ESPECIALIDADES_PADRAO = [
+  "Acessórios Alarmes e Som",
+  "Embreagens",
+  "Sistemas Anti-Furto",
+  "Acessórios Pick-Up / Caminhões",
+  "Estofarias e Revestimento",
+  "Som Automotivo",
+  "Adesivação Automotiva",
+  "Faróis, Lanternas e Piscas",
+  "Teto Solar",
+  "Aditivos em Geral",
+  "Filtros - Linha Leve e Pesada",
+  "Tinta Automotiva",
+  "Advogados de Trânsito",
+  "Freios em Geral - ABS",
+  "Transporte Escolar / Turismo",
+  "Air Bags e Cintos",
+  "Gás Veicular",
+  "Tunning",
+  "Ar Condicionado - Ar quente",
+  "Geometria e Balanceamento",
+  "Veículos Especiais",
+  "Auto Elétricas",
+  "Grilos e Painéis",
+  "Velocímetros - Contagiros",
+  "Alto-Falantes",
+  "Guinchos - Linha Leve e Pesada",
+  "Vidros e Travas Elétricas",
+  "Auto Peças em Geral",
+  "Hidráulicos - Bombas, Painéis",
+  "Bancos em Couro",
+  "Injeção Eletrônica",
+  "Bloqueador para Veículos",
+  "Lavagens, Garagens Estacionamentos",
+  "Buchas e Mancais",
+  "Pára-Brisas - Rev. e Consertos",
+  "Camioneta - Consertos",
+  "Pára-Choques - Rev. e Recuper.",
+  "Carrocerias",
+  "Placas Automotivas",
+  "Central Formação Condutores",
+  "Pneus",
+  "Chapeação e Pintura",
+  "Postos de Abastecimento",
+  "Chaveiro",
+  "Radiadores Consertos e Limpeza",
+  "Cilindros de Rodas",
+  "Regulagem Eletrônica",
+  "Comandos e Cilíndros Hidráulicos",
+  "Retíficas",
+  "Conserto de Cilindro Mestre",
+  "Revenda Motos, Autos e Caminhões",
+  "Conversão Bi-Combustível",
+  "Rodas Esportivas - Novas e Usadas",
+  "Correias e Mangueiras",
+  "Rolamentos e Retentores",
+  "Direção Hidráulica",
+  "Seguro e DPVAT"
+];
 
 // Componente BuscaForm para a página inicial
 export default function BuscaForm() {
@@ -44,6 +105,7 @@ export default function BuscaForm() {
   const [estadosSugestoes, setEstadosSugestoes] = useState<EstadoItem[]>([]);
   const [cidadesSugestoes, setCidadesSugestoes] = useState<CidadeItem[]>([]);
   const [especialidadesSugestoes, setEspecialidadesSugestoes] = useState<EspecialidadeItem[]>([]);
+  const [especialidadesPadrao, setEspecialidadesPadrao] = useState<string[]>(ESPECIALIDADES_PADRAO);
   
   // Estados para controle de exibição das sugestões
   const [mostrarEstadosSugestoes, setMostrarEstadosSugestoes] = useState<boolean>(false);
@@ -93,8 +155,10 @@ export default function BuscaForm() {
 
   // Função para buscar estados com base no texto digitado
   const buscarEstados = async (texto: string): Promise<void> => {
+    // Mostrar todas as sugestões se o campo estiver vazio
     if (!texto.trim()) {
-      setEstadosSugestoes([]);
+      setEstadosSugestoes(estados.slice(0, 10)); // Limitar a 10 sugestões iniciais
+      setMostrarEstadosSugestoes(true);
       return;
     }
     
@@ -111,20 +175,28 @@ export default function BuscaForm() {
 
   // Função para buscar cidades com base no texto digitado e estado selecionado
   const buscarCidades = async (texto: string): Promise<void> => {
-    if (!texto.trim()) {
-      setCidadesSugestoes([]);
-      return;
-    }
-    
     try {
       setLoading(true);
-      const response = await fetch(estadoId ? `/api/cidades?estado_id=${estadoId}` : `/api/cidades`);
+      
+      // Construir a URL da API com ou sem o filtro de estado
+      const apiUrl = estadoId 
+        ? `/api/cidades?estado_id=${estadoId}` 
+        : `/api/cidades`;
+      
+      const response = await fetch(apiUrl);
       if (!response.ok) {
         throw new Error('Falha ao buscar cidades');
       }
       
       const data = await response.json();
       setCidades(data);
+      
+      // Mostrar todas as sugestões se o campo estiver vazio
+      if (!texto.trim()) {
+        setCidadesSugestoes(data.slice(0, 10)); // Limitar a 10 sugestões iniciais
+        setMostrarCidadesSugestoes(true);
+        return;
+      }
       
       const textoLowerCase = texto.toLowerCase();
       const sugestoes = data.filter(
@@ -143,31 +215,73 @@ export default function BuscaForm() {
 
   // Função para buscar especialidades com base no texto digitado e cidade selecionada
   const buscarEspecialidades = async (texto: string): Promise<void> => {
-    if (!texto.trim()) {
-      setEspecialidadesSugestoes([]);
-      return;
-    }
-    
     try {
       setLoading(true);
-      const response = await fetch(cidadeId ? `/api/especialidades?cidade_id=${cidadeId}` : `/api/especialidades`);
-      if (!response.ok) {
-        throw new Error('Falha ao buscar especialidades');
+      
+      // Buscar especialidades da API
+      const apiUrl = cidadeId 
+        ? `/api/especialidades?cidade_id=${cidadeId}` 
+        : `/api/especialidades`;
+      
+      const response = await fetch(apiUrl);
+      
+      let data: EspecialidadeItem[] = [];
+      
+      if (response.ok) {
+        data = await response.json();
+        setEspecialidades(data);
+      } else {
+        console.warn('Falha ao buscar especialidades da API, usando lista padrão');
       }
       
-      const data = await response.json();
-      setEspecialidades(data);
+      // Mostrar todas as sugestões se o campo estiver vazio
+      if (!texto.trim()) {
+        // Combinar especialidades da API com as padrão
+        const todasEspecialidades = [...data];
+        
+        // Adicionar especialidades padrão que não existem na API
+        especialidadesPadrao.forEach(esp => {
+          if (!data.some(item => item.nome.toLowerCase() === esp.toLowerCase())) {
+            todasEspecialidades.push({ id: `padrao-${esp}`, nome: esp });
+          }
+        });
+        
+        setEspecialidadesSugestoes(todasEspecialidades.slice(0, 15)); // Limitar a 15 sugestões iniciais
+        setMostrarEspecialidadesSugestoes(true);
+        setLoading(false);
+        return;
+      }
       
+      // Filtrar especialidades da API
       const textoLowerCase = texto.toLowerCase();
-      const sugestoes = data.filter(
+      let sugestoes = data.filter(
         (especialidade: EspecialidadeItem) => especialidade.nome.toLowerCase().includes(textoLowerCase)
       );
+      
+      // Adicionar especialidades padrão que correspondem ao texto
+      const especialidadesPadraoFiltradas = especialidadesPadrao
+        .filter(esp => esp.toLowerCase().includes(textoLowerCase))
+        .filter(esp => !sugestoes.some(item => item.nome.toLowerCase() === esp.toLowerCase()))
+        .map(esp => ({ id: `padrao-${esp}`, nome: esp }));
+      
+      sugestoes = [...sugestoes, ...especialidadesPadraoFiltradas];
       
       setEspecialidadesSugestoes(sugestoes);
       setMostrarEspecialidadesSugestoes(true);
     } catch (err) {
       console.error('Erro ao buscar especialidades:', err);
       setError('Não foi possível carregar as especialidades. Por favor, tente novamente.');
+      
+      // Em caso de erro, usar apenas a lista padrão
+      if (texto.trim()) {
+        const textoLowerCase = texto.toLowerCase();
+        const sugestoesPadrao = especialidadesPadrao
+          .filter(esp => esp.toLowerCase().includes(textoLowerCase))
+          .map(esp => ({ id: `padrao-${esp}`, nome: esp }));
+        
+        setEspecialidadesSugestoes(sugestoesPadrao);
+        setMostrarEspecialidadesSugestoes(true);
+      }
     } finally {
       setLoading(false);
     }
@@ -298,7 +412,11 @@ export default function BuscaForm() {
             setError(null); // Limpar erro ao digitar
           }}
           onFocus={() => {
-            if (estado) buscarEstados(estado);
+            buscarEstados(estado); // Mostrar sugestões ao focar
+            setMostrarEstadosSugestoes(true);
+          }}
+          onClick={() => {
+            buscarEstados(estado); // Mostrar sugestões ao clicar
             setMostrarEstadosSugestoes(true);
           }}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -338,7 +456,11 @@ export default function BuscaForm() {
             setError(null); // Limpar erro ao digitar
           }}
           onFocus={() => {
-            if (cidade) buscarCidades(cidade);
+            buscarCidades(cidade); // Mostrar sugestões ao focar
+            setMostrarCidadesSugestoes(true);
+          }}
+          onClick={() => {
+            buscarCidades(cidade); // Mostrar sugestões ao clicar
             setMostrarCidadesSugestoes(true);
           }}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -378,7 +500,11 @@ export default function BuscaForm() {
             setError(null); // Limpar erro ao digitar
           }}
           onFocus={() => {
-            if (especialidade) buscarEspecialidades(especialidade);
+            buscarEspecialidades(especialidade); // Mostrar sugestões ao focar
+            setMostrarEspecialidadesSugestoes(true);
+          }}
+          onClick={() => {
+            buscarEspecialidades(especialidade); // Mostrar sugestões ao clicar
             setMostrarEspecialidadesSugestoes(true);
           }}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
