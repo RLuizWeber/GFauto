@@ -14,7 +14,7 @@ const fornecedoresPremium = [
     telefone: "(54) 3311-1234",
     email: "contato@voltagempremium.com.br",
     website: "www.voltagempremium.com.br",
-    tipo: "premium"
+    plano: "premium"
   },
   {
     nome: "Eletro Car Service",
@@ -23,7 +23,7 @@ const fornecedoresPremium = [
     telefone: "(54) 3313-5678",
     email: "atendimento@eletrocarservice.com.br",
     website: "www.eletrocarservice.com.br",
-    tipo: "premium"
+    plano: "premium"
   },
   {
     nome: "Master Auto Elétrica",
@@ -32,7 +32,7 @@ const fornecedoresPremium = [
     telefone: "(54) 3314-9876",
     email: "contato@masterautoeletrica.com.br",
     website: "www.masterautoeletrica.com.br",
-    tipo: "premium"
+    plano: "premium"
   }
 ];
 
@@ -44,7 +44,7 @@ const fornecedoresCortesia = [
     telefone: "(54) 3315-4321",
     email: "paulo@autoeletrica.com.br",
     website: "",
-    tipo: "cortesia"
+    plano: "cortesia"
   },
   {
     nome: "Elétrica Automotiva Luz",
@@ -53,7 +53,7 @@ const fornecedoresCortesia = [
     telefone: "(54) 3316-7890",
     email: "contato@eletricaautomotivaluz.com.br",
     website: "",
-    tipo: "cortesia"
+    plano: "cortesia"
   },
   {
     nome: "Auto Elétrica Confiança",
@@ -62,7 +62,7 @@ const fornecedoresCortesia = [
     telefone: "(54) 3317-0123",
     email: "",
     website: "",
-    tipo: "cortesia"
+    plano: "cortesia"
   },
   {
     nome: "Elétrica Veicular Rápida",
@@ -71,7 +71,7 @@ const fornecedoresCortesia = [
     telefone: "(54) 3318-5432",
     email: "",
     website: "",
-    tipo: "cortesia"
+    plano: "cortesia"
   }
 ];
 
@@ -130,7 +130,6 @@ export async function GET(request: NextRequest) {
     }
     
     // Verificar se já existe a especialidade Auto Elétricas
-    // Corrigido: removido o filtro por cidadeId que não existe no modelo Especialidade
     let especialidade = await prisma.especialidade.findFirst({
       where: {
         nome: 'Auto Elétricas'
@@ -142,8 +141,7 @@ export async function GET(request: NextRequest) {
       especialidade = await prisma.especialidade.create({
         data: {
           nome: 'Auto Elétricas',
-          slug: 'auto-eletricas',
-          // Removido cidadeId que não existe no tipo EspecialidadeCreateInput
+          slug: 'auto-eletricas'
         }
       });
       console.log('Especialidade criada:', especialidade);
@@ -155,9 +153,9 @@ export async function GET(request: NextRequest) {
     const resultadosPremium = await Promise.all(
       fornecedoresPremium.map(async (fornecedor) => {
         // Verificar se o fornecedor já existe
-        const fornecedorExistente = await prisma.fornecedores.findFirst({
+        const fornecedorExistente = await prisma.anuncio.findFirst({
           where: {
-            nome: fornecedor.nome,
+            titulo: fornecedor.nome,
             especialidadeId: especialidade.id
           }
         });
@@ -166,18 +164,25 @@ export async function GET(request: NextRequest) {
           return { status: 'existente', fornecedor: fornecedorExistente };
         }
         
-        // Criar novo fornecedor
-        const novoFornecedor = await prisma.fornecedores.create({
+        // Gerar um ID de preferência único para o Mercado Pago (simulado)
+        const mercadopagoPreferenceId = `pref_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+        
+        // Criar novo fornecedor usando o modelo Anuncio
+        const novoFornecedor = await prisma.anuncio.create({
           data: {
-            nome: fornecedor.nome,
+            titulo: fornecedor.nome,
             descricao: fornecedor.descricao,
             endereco: fornecedor.endereco,
             telefone: fornecedor.telefone,
             email: fornecedor.email || null,
-            website: fornecedor.website || null,
-            tipo: fornecedor.tipo,
+            site: fornecedor.website || null,
+            plano: fornecedor.plano,
             especialidadeId: especialidade.id,
-            cidadeId: cidade.id
+            cidadeId: cidade.id,
+            // Campos obrigatórios do modelo Anuncio
+            advertiserId: 'admin', // ID do anunciante (admin para registros do sistema)
+            mercadopagoPreferenceId: mercadopagoPreferenceId,
+            status: 'PUBLICADO' // Status do anúncio (enum StatusAnuncio)
           }
         });
         
@@ -189,9 +194,9 @@ export async function GET(request: NextRequest) {
     const resultadosCortesia = await Promise.all(
       fornecedoresCortesia.map(async (fornecedor) => {
         // Verificar se o fornecedor já existe
-        const fornecedorExistente = await prisma.fornecedores.findFirst({
+        const fornecedorExistente = await prisma.anuncio.findFirst({
           where: {
-            nome: fornecedor.nome,
+            titulo: fornecedor.nome,
             especialidadeId: especialidade.id
           }
         });
@@ -200,18 +205,25 @@ export async function GET(request: NextRequest) {
           return { status: 'existente', fornecedor: fornecedorExistente };
         }
         
-        // Criar novo fornecedor
-        const novoFornecedor = await prisma.fornecedores.create({
+        // Gerar um ID de preferência único para o Mercado Pago (simulado)
+        const mercadopagoPreferenceId = `pref_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+        
+        // Criar novo fornecedor usando o modelo Anuncio
+        const novoFornecedor = await prisma.anuncio.create({
           data: {
-            nome: fornecedor.nome,
+            titulo: fornecedor.nome,
             descricao: fornecedor.descricao,
             endereco: fornecedor.endereco,
             telefone: fornecedor.telefone,
             email: fornecedor.email || null,
-            website: fornecedor.website || null,
-            tipo: fornecedor.tipo,
+            site: fornecedor.website || null,
+            plano: fornecedor.plano,
             especialidadeId: especialidade.id,
-            cidadeId: cidade.id
+            cidadeId: cidade.id,
+            // Campos obrigatórios do modelo Anuncio
+            advertiserId: 'admin', // ID do anunciante (admin para registros do sistema)
+            mercadopagoPreferenceId: mercadopagoPreferenceId,
+            status: 'PUBLICADO' // Status do anúncio (enum StatusAnuncio)
           }
         });
         
