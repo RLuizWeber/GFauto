@@ -130,10 +130,10 @@ export async function GET(request: NextRequest) {
     }
     
     // Verificar se já existe a especialidade Auto Elétricas
+    // Corrigido: removido o filtro por cidadeId que não existe no modelo Especialidade
     let especialidade = await prisma.especialidade.findFirst({
       where: {
-        nome: 'Auto Elétricas',
-        cidadeId: cidade.id
+        nome: 'Auto Elétricas'
       }
     });
     
@@ -142,7 +142,7 @@ export async function GET(request: NextRequest) {
       especialidade = await prisma.especialidade.create({
         data: {
           nome: 'Auto Elétricas',
-          cidadeId: cidade.id
+          cidadeId: cidade.id  // Esta relação existe na criação, mas não na consulta
         }
       });
       console.log('Especialidade criada:', especialidade);
