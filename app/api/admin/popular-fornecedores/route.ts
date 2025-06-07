@@ -142,6 +142,7 @@ export async function GET(request: NextRequest) {
       especialidade = await prisma.especialidade.create({
         data: {
           nome: 'Auto Elétricas',
+          slug: 'auto-eletricas',
           // Removido cidadeId que não existe no tipo EspecialidadeCreateInput
         }
       });
