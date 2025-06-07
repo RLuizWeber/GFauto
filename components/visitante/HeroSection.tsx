@@ -1,4 +1,4 @@
-// Caminho: /components/visitante/HeroSection.tsx
+// Caminho: /fluxo_visitante/components/visitante/HeroSection.tsx
 'use client';
 
 import Image from 'next/image';
@@ -17,53 +17,33 @@ export default function HeroSection() {
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Encontre os melhores serviços automotivos
             </h1>
-            <p className="text-xl mb-10">
+            <p className="text-xl mb-6">
               Conectamos você aos melhores profissionais e lojas de autopeças da sua região.
             </p>
-            
-            {/* Seção de imagens - usando imagens locais com 180px de largura */}
-            <div className="flex flex-col space-y-6">
-              {/* Primeira imagem */}
-              <div className="flex flex-col">
-                <div className="mb-2">
-                  <Image 
-                    src="/images/fluxo_visitante/logo_gf.png"
-                    alt="Logo GF Auto"
-                    width={180}
-                    height={90}
-                    style={{ height: 'auto', maxWidth: '100%' }}
-                    priority
-                  />
+            <div className="flex flex-wrap gap-4">
+              <div className="flex items-center">
+                <div className="bg-white rounded-full p-2 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
-                <span className="text-lg font-medium">Busca rápida e fácil</span>
+                <span>Busca rápida e fácil</span>
               </div>
-              
-              {/* Segunda imagem */}
-              <div className="flex flex-col">
-                <div className="mb-2">
-                  <Image 
-                    src="/images/fluxo_visitante/mc4.png"
-                    alt="Serviços confiáveis"
-                    width={180}
-                    height={90}
-                    style={{ height: 'auto', maxWidth: '100%' }}
-                  />
+              <div className="flex items-center">
+                <div className="bg-white rounded-full p-2 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
-                <span className="text-lg font-medium">Serviços confiáveis</span>
+                <span>Serviços confiáveis</span>
               </div>
-              
-              {/* Terceira imagem */}
-              <div className="flex flex-col">
-                <div className="mb-2">
-                  <Image 
-                    src="/images/fluxo_visitante/image001.jpg"
-                    alt="Contato direto"
-                    width={180}
-                    height={90}
-                    style={{ height: 'auto', maxWidth: '100%' }}
-                  />
+              <div className="flex items-center">
+                <div className="bg-white rounded-full p-2 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
-                <span className="text-lg font-medium">Contato direto</span>
+                <span>Contato direto</span>
               </div>
             </div>
           </div>
