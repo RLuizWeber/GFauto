@@ -115,6 +115,7 @@ export default function BuscaForm() {
   // Estados para carregamento e erro
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [tentouCarregar, setTentouCarregar] = useState<boolean>(false);
   
   // Estado para controlar se o formulário é válido
   const [formValido, setFormValido] = useState<boolean>(false);
