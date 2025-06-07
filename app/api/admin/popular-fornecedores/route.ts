@@ -142,7 +142,7 @@ export async function GET(request: NextRequest) {
       especialidade = await prisma.especialidade.create({
         data: {
           nome: 'Auto Elétricas',
-          cidadeId: cidade.id  // Esta relação existe na criação, mas não na consulta
+          // Removido cidadeId que não existe no tipo EspecialidadeCreateInput
         }
       });
       console.log('Especialidade criada:', especialidade);
