@@ -1,48 +1,54 @@
-# Changelog
+# Changelog do GFauto
 
-Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
+Este documento registra todas as alterações significativas feitas no projeto GFauto.
 
-O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
-e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
-
-## [0.4.0] - 2025-06-07
+## [0.5.0] - 07/06/2025
 
 ### Adicionado
-- Endpoint de API para popular o banco de dados com fornecedores de exemplo
-- Documentação detalhada da API de administração
-- Suporte para dois modos de uso no componente ResultadosList
+- Documentação completa e atualizada no GitHub
+- Registro detalhado de problemas conhecidos e soluções
+- Descrição da metodologia de trabalho baseada em scripts
 
 ### Corrigido
-- Erro de tipagem no endpoint de API para popular o banco de dados
-- Problema que impedia a digitação nos campos de texto do formulário de busca
-- Espaçamento incorreto nos filtros aplicados na página de resultados
+- Modelo Prisma no endpoint de API (fornecedor -> fornecedores)
+- Exibição da mensagem de erro de carregamento dos estados
 
-## [0.3.0] - 2025-06-06
+## [0.4.0] - 06/06/2025
 
 ### Adicionado
-- Lista completa de 57 especialidades automotivas nas sugestões
-- Sugestões imediatas ao clicar ou focar nos campos
+- Endpoint de API para popular o banco de dados
+- Campo slug obrigatório na criação de especialidade
+
+### Corrigido
+- Erro de tipagem no endpoint de API
+- Erro de tipagem na criação de especialidade
+
+## [0.3.0] - 05/06/2025
+
+### Adicionado
+- Suporte para dois modos de uso no ResultadosList
 - Documentação do componente ResultadosList
 
 ### Corrigido
 - Erro de tipagem que causava falha no deploy
-- Refatoração da página de resultados para melhor manutenibilidade
+- Refatoração da página de resultados
 
-## [0.2.0] - 2025-06-05
+## [0.2.0] - 04/06/2025
 
 ### Adicionado
-- Formulário de busca com autocomplete para todos os campos
-- Validação do formulário para garantir preenchimento de todos os campos
-- Página de resultados com exibição de fornecedores
+- Espaçamento correto nos filtros aplicados
+- Scripts para popular o banco com fornecedores de exemplo
 
 ### Corrigido
-- Problemas de responsividade em dispositivos móveis
-- Melhorias de acessibilidade nos campos de formulário
+- Espaçamento entre os filtros na página de resultados
 
-## [0.1.0] - 2025-06-01
+## [0.1.0] - 03/06/2025
 
 ### Adicionado
-- Estrutura inicial do projeto
-- Configuração do Next.js e Prisma
-- Integração com banco de dados PostgreSQL via Neon
-- Configuração de deploy automático na Vercel
+- Formulário de busca com digitação livre
+- Sugestões automáticas ao clicar ou focar nos campos
+- Lista completa de 57 especialidades automotivas
+- Validação do formulário
+
+### Corrigido
+- Digitação nos campos do formulário de busca
