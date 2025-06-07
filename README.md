@@ -1,111 +1,91 @@
-# GFauto - Guia de Fornecedores Automotivos
+# GFauto - Sistema de Busca de Serviços Automotivos
 
-GFauto é uma plataforma que conecta usuários a fornecedores de serviços automotivos em sua região.
-
-## Funcionalidades Principais
-
-### Formulário de Busca
-
-O formulário de busca permite que os usuários encontrem serviços automotivos com base em:
-- Estado
-- Cidade
-- Especialidade automotiva
-
-Características:
-- Digitação livre em todos os campos
-- Sugestões automáticas ao clicar ou focar nos campos
-- Lista completa de 57 especialidades automotivas
-- Validação de formulário com feedback visual
-
-Para mais detalhes sobre o funcionamento e implementação do formulário de busca, consulte a [documentação completa do formulário](./docs/formulario_busca.md).
-
-### Página de Resultados
-
-A página de resultados exibe os fornecedores encontrados com base nos critérios de busca:
-- Filtros aplicados claramente exibidos com separadores visuais
-- Fornecedores Premium em destaque
-- Fornecedores Cortesia listados abaixo
-- Informações completas de contato e serviços
-
-Para mais detalhes sobre a implementação da página de resultados, consulte a [documentação da página de resultados](./docs/pagina_resultados.md).
+GFauto é uma plataforma que conecta usuários a serviços automotivos em sua região. O sistema permite buscar por especialidades automotivas em diferentes cidades e estados.
 
 ## Estrutura do Projeto
 
-- `/app`: Páginas e rotas da aplicação Next.js
-- `/components`: Componentes React reutilizáveis
-- `/fluxo_visitante`: Componentes específicos para o fluxo de visitantes
-- `/prisma`: Esquema e configurações do banco de dados
-- `/public`: Arquivos estáticos (imagens, ícones, etc.)
-- `/scripts`: Scripts utilitários e de população do banco de dados
-- `/docs`: Documentação do projeto
+O projeto está organizado da seguinte forma:
 
-## Componentes Principais
+```
+GFauto/
+├── app/                    # Páginas e rotas da aplicação
+│   ├── api/                # Endpoints de API
+│   │   └── admin/          # Endpoints administrativos
+│   ├── resultados/         # Página de resultados da busca
+│   └── page.tsx            # Página inicial
+├── components/             # Componentes reutilizáveis
+│   ├── admin/              # Componentes do painel administrativo
+│   └── visitante/          # Componentes para visitantes
+│       ├── BuscaForm.tsx   # Formulário de busca
+│       └── ResultadosList.tsx # Lista de resultados
+├── fluxo_visitante/        # Fluxo específico para visitantes
+├── prisma/                 # Configuração do Prisma ORM
+├── public/                 # Arquivos estáticos
+└── scripts/                # Scripts utilitários
+    └── db/                 # Scripts para o banco de dados
+```
 
-### ResultadosList
+## Principais Funcionalidades
 
-O componente `ResultadosList` é responsável por exibir a lista de fornecedores nos resultados da busca. Ele pode ser utilizado de duas formas:
+### Formulário de Busca
+O formulário de busca permite aos usuários encontrar serviços automotivos por:
+- Estado
+- Cidade
+- Especialidade
 
-1. **Com fornecedores passados diretamente:**
-   ```jsx
-   <ResultadosList fornecedores={fornecedores} />
-   ```
+O formulário inclui autocomplete para todos os campos e validação para garantir que todos os campos sejam preenchidos antes da busca.
 
-2. **Com parâmetros para busca automática:**
-   ```jsx
-   <ResultadosList cidadeId="cidade_id" especialidadeId="especialidade_id" page={1} />
-   ```
+### Página de Resultados
+A página de resultados exibe os fornecedores encontrados para a busca realizada, organizados por categoria:
+- Fornecedores Premium (destacados)
+- Fornecedores Cortesia (listagem padrão)
 
-Para mais detalhes, consulte a [documentação do componente ResultadosList](./docs/componentes/resultados_list.md).
+### API para População do Banco
+O sistema inclui um endpoint de API para popular o banco de dados com fornecedores de exemplo:
+```
+/api/admin/popular-fornecedores?key=gfauto-admin-2025
+```
+
+## Documentação Detalhada
+
+- [Formulário de Busca](./docs/formulario_busca.md)
+- [Página de Resultados](./docs/pagina_resultados.md)
+- [API de Administração](./docs/api/admin_api.md)
+- [Changelog](./docs/changelog.md)
+
+## Tecnologias Utilizadas
+
+- Next.js 14
+- React
+- TypeScript
+- Tailwind CSS
+- Prisma ORM
+- PostgreSQL (via Neon)
+- Vercel (hospedagem)
 
 ## Desenvolvimento
 
 ### Pré-requisitos
-
 - Node.js 18+
 - npm ou yarn
-- Banco de dados PostgreSQL
 
 ### Instalação
+```bash
+# Clonar o repositório
+git clone https://github.com/RLuizWeber/GFauto.git
 
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/RLuizWeber/GFauto.git
-   cd GFauto
-   ```
+# Instalar dependências
+cd GFauto
+npm install
 
-2. Instale as dependências:
-   ```bash
-   npm install
-   # ou
-   yarn install
-   ```
+# Configurar variáveis de ambiente
+cp .env.example .env.local
+# Editar .env.local com suas configurações
 
-3. Configure as variáveis de ambiente:
-   ```bash
-   cp .env.example .env.local
-   # Edite .env.local com suas configurações
-   ```
+# Iniciar servidor de desenvolvimento
+npm run dev
+```
 
-4. Execute as migrações do banco de dados:
-   ```bash
-   npx prisma migrate dev
-   ```
-
-5. Inicie o servidor de desenvolvimento:
-   ```bash
-   npm run dev
-   # ou
-   yarn dev
-   ```
-
-### Scripts Úteis
-
-- `scripts/db/popular_fornecedores_autoeletricas.js`: Popula o banco de dados com fornecedores de auto elétricas em Passo Fundo
-
-## Deployment
+## Deploy
 
 O projeto está configurado para deploy automático na Vercel a partir do branch `main`.
-
-## Changelog
-
-Para ver o histórico completo de alterações, consulte o [changelog](./docs/changelog.md).

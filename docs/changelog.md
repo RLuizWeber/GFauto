@@ -1,52 +1,48 @@
-# Changelog do Projeto GFauto
+# Changelog
 
-Este arquivo registra todas as alterações significativas feitas no projeto.
+Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
-## [Não Lançado]
+O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
+e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
+
+## [0.4.0] - 2025-06-07
 
 ### Adicionado
-
-### Alterado
+- Endpoint de API para popular o banco de dados com fornecedores de exemplo
+- Documentação detalhada da API de administração
+- Suporte para dois modos de uso no componente ResultadosList
 
 ### Corrigido
+- Erro de tipagem no endpoint de API para popular o banco de dados
+- Problema que impedia a digitação nos campos de texto do formulário de busca
+- Espaçamento incorreto nos filtros aplicados na página de resultados
 
 ## [0.3.0] - 2025-06-06
 
 ### Adicionado
-- Documentação detalhada do componente ResultadosList
-- Suporte para dois modos de uso no componente ResultadosList
-
-### Alterado
-- Refatoração da página de resultados para usar o componente ResultadosList de forma mais flexível
+- Lista completa de 57 especialidades automotivas nas sugestões
+- Sugestões imediatas ao clicar ou focar nos campos
+- Documentação do componente ResultadosList
 
 ### Corrigido
-- Erro de tipagem no componente ResultadosList que causava falha no deploy
-- Incompatibilidade de props entre a página de resultados e o componente ResultadosList
+- Erro de tipagem que causava falha no deploy
+- Refatoração da página de resultados para melhor manutenibilidade
 
-## [0.2.0] - 2025-06-06
+## [0.2.0] - 2025-06-05
 
 ### Adicionado
-- Scripts para popular o banco de dados com fornecedores de auto elétricas em Passo Fundo
-- Documentação detalhada da página de resultados
-- Separador visual entre filtros aplicados na página de resultados
-
-### Alterado
-- Atualização do README.md principal com mais informações sobre o projeto
-- Melhoria na exibição dos filtros aplicados na página de resultados
+- Formulário de busca com autocomplete para todos os campos
+- Validação do formulário para garantir preenchimento de todos os campos
+- Página de resultados com exibição de fornecedores
 
 ### Corrigido
-- Espaçamento entre os filtros aplicados na página de resultados
+- Problemas de responsividade em dispositivos móveis
+- Melhorias de acessibilidade nos campos de formulário
 
-## [0.1.0] - 2025-06-06
+## [0.1.0] - 2025-06-01
 
 ### Adicionado
-- Implementação inicial do formulário de busca
-- Lista padrão de 57 especialidades automotivas
-- Sugestões automáticas ao clicar ou focar nos campos
-
-### Alterado
-- Comportamento do formulário para permitir digitação livre em todos os campos
-
-### Corrigido
-- Problema que impedia a digitação nos campos de Cidade e Especialidade
-- Problema com sugestões que não apareciam ao clicar nos campos
+- Estrutura inicial do projeto
+- Configuração do Next.js e Prisma
+- Integração com banco de dados PostgreSQL via Neon
+- Configuração de deploy automático na Vercel
