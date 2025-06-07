@@ -155,7 +155,7 @@ export async function GET(request: NextRequest) {
     const resultadosPremium = await Promise.all(
       fornecedoresPremium.map(async (fornecedor) => {
         // Verificar se o fornecedor já existe
-        const fornecedorExistente = await prisma.fornecedor.findFirst({
+        const fornecedorExistente = await prisma.fornecedores.findFirst({
           where: {
             nome: fornecedor.nome,
             especialidadeId: especialidade.id
@@ -167,7 +167,7 @@ export async function GET(request: NextRequest) {
         }
         
         // Criar novo fornecedor
-        const novoFornecedor = await prisma.fornecedor.create({
+        const novoFornecedor = await prisma.fornecedores.create({
           data: {
             nome: fornecedor.nome,
             descricao: fornecedor.descricao,
@@ -189,7 +189,7 @@ export async function GET(request: NextRequest) {
     const resultadosCortesia = await Promise.all(
       fornecedoresCortesia.map(async (fornecedor) => {
         // Verificar se o fornecedor já existe
-        const fornecedorExistente = await prisma.fornecedor.findFirst({
+        const fornecedorExistente = await prisma.fornecedores.findFirst({
           where: {
             nome: fornecedor.nome,
             especialidadeId: especialidade.id
@@ -201,7 +201,7 @@ export async function GET(request: NextRequest) {
         }
         
         // Criar novo fornecedor
-        const novoFornecedor = await prisma.fornecedor.create({
+        const novoFornecedor = await prisma.fornecedores.create({
           data: {
             nome: fornecedor.nome,
             descricao: fornecedor.descricao,
