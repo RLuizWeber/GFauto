@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${anuncio.titulo} | GFauto`,
-    description: anuncio.descricao || `Detalhes sobre ${anuncio.titulo} em ${anuncio.cidade.nome}/${anuncio.cidade.estado.uf}`,
+    description: anuncio.descricao || `Detalhes sobre ${anuncio.titulo} em ${anuncio.cidade.nome}/${anuncio.cidade.estado.sigla}`,
   };
 }
 
@@ -72,7 +72,7 @@ export default async function AnuncioPage({ params }: Props) {
               <div>
                 <h1 className="text-2xl md:text-3xl font-bold">{anuncio.titulo}</h1>
                 <p className="text-blue-100 mt-1">
-                  {anuncio.especialidade.nome} em {anuncio.cidade.nome}/{anuncio.cidade.estado.uf}
+                  {anuncio.especialidade.nome} em {anuncio.cidade.nome}/{anuncio.cidade.estado.sigla}
                 </p>
               </div>
               <div className="mt-4 md:mt-0">
@@ -145,7 +145,7 @@ export default async function AnuncioPage({ params }: Props) {
                       <div>
                         <p className="text-sm text-gray-500">Endereço:</p>
                         <p className="font-medium">{anuncio.endereco}</p>
-                        <p className="text-sm">{anuncio.cidade.nome}/{anuncio.cidade.estado.uf}</p>
+                        <p className="text-sm">{anuncio.cidade.nome}/{anuncio.cidade.estado.sigla}</p>
                       </div>
                     )}
                     
