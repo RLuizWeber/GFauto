@@ -25,6 +25,14 @@ GFauto/
     └── db/                 # Scripts para manipulação do banco de dados
 ```
 
+## Fluxos
+
+O projeto possui os seguintes fluxos documentados :
+
+1. [Fluxo do Visitante - Integração](./fluxos/fluxo_visitante_integracao.md)
+2. [Instruções de Commit e Push](./fluxos/instrucoes_commit_push.md)
+3. [Instrucoes de Instalação](./fluxos/intrucoes_instalacao.md)
+
 ## Metodologia de Trabalho
 
 Este projeto adota uma metodologia de trabalho baseada em scripts para garantir consistência e facilitar a manutenção:
