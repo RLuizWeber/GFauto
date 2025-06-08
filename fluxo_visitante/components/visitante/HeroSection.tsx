@@ -20,28 +20,43 @@ export default function HeroSection() {
             <p className="text-xl mb-6">
               Conectamos você aos melhores profissionais e lojas de autopeças da sua região.
             </p>
+            
             <div className="flex flex-wrap gap-4">
               <div className="flex items-center">
                 <div className="bg-white rounded-full p-2 mr-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+                  <Image
+                    src="/images/mc4.png"
+                    alt="Busca rápida e fácil"
+                    width={180}
+                    height={135}
+                    className="w-6 h-auto"
+                  />
                 </div>
                 <span>Busca rápida e fácil</span>
               </div>
+              
               <div className="flex items-center">
                 <div className="bg-white rounded-full p-2 mr-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+                  <Image
+                    src="/images/logo_gf.png"
+                    alt="Serviços confiáveis"
+                    width={180}
+                    height={135}
+                    className="w-6 h-auto"
+                  />
                 </div>
                 <span>Serviços confiáveis</span>
               </div>
+              
               <div className="flex items-center">
                 <div className="bg-white rounded-full p-2 mr-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+                  <Image
+                    src="/images/image001.jpg"
+                    alt="Contato direto"
+                    width={180}
+                    height={135}
+                    className="w-6 h-auto"
+                  />
                 </div>
                 <span>Contato direto</span>
               </div>
@@ -52,7 +67,7 @@ export default function HeroSection() {
             <div className="relative w-full max-w-md aspect-video">
               <div className="absolute inset-0 bg-white rounded-lg shadow-xl overflow-hidden">
                 <div className="relative w-full h-full">
-                  {/* Placeholder para imagem */}
+                  {/* Placeholder para imagem ilustrativa */}
                   <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
                     <span className="text-gray-500">Imagem ilustrativa</span>
                   </div>
