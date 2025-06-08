@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { prisma } from '../../../lib/prisma';
 import Image from 'next/image';
 import Link from 'next/link';
-import { formatarTelefone } from '../../../fluxo_visitante/utils/formatters';
+import { formatarTelefone } from '../../../utils/formatters';
 
 type Props = {
   params: { id: string }
