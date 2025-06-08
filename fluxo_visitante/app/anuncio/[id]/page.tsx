@@ -156,16 +156,16 @@ export default async function AnuncioPage({ params }: Props) {
                       </div>
                     )}
                     
-                    {anuncio.website && (
+                    {anuncio.site && (
                       <div>
                         <p className="text-sm text-gray-500">Website:</p>
                         <a 
-                          href={anuncio.website.startsWith('http') ? anuncio.website : `https://${anuncio.website}`} 
+                          href={anuncio.site.startsWith('http') ? anuncio.site : `https://${anuncio.site}`} 
                           target="_blank" 
                           rel="noopener noreferrer"
                           className="text-blue-600 hover:underline font-medium"
                         >
-                          {anuncio.website}
+                          {anuncio.site}
                         </a>
                       </div>
                     )}
