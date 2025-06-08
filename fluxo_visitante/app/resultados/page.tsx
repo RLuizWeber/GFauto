@@ -1,8 +1,9 @@
 // Caminho: /fluxo_visitante/app/resultados/page.tsx
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import { prisma } from '../../lib/prisma';
-import ResultadosList from '../../fluxo_visitante/components/visitante/ResultadosList';
-import LoadingResults from '../../fluxo_visitante/components/visitante/LoadingResults';
+import ResultadosList from '../../components/visitante/ResultadosList';
+import LoadingResults from '../../components/visitante/LoadingResults';
 
 export const metadata: Metadata = {
   title: 'Resultados da Busca | GFauto',
