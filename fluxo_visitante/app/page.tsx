@@ -1,7 +1,7 @@
 // Caminho: /fluxo_visitante/app/page.tsx
 import { Metadata } from 'next';
-import BuscaForm from '../fluxo_visitante/components/visitante/BuscaForm';
-import HeroSection from '../fluxo_visitante/components/visitante/HeroSection';
+import BuscaForm from '../components/visitante/BuscaForm';
+import HeroSection from '../components/visitante/HeroSection';
 
 export const metadata: Metadata = {
   title: 'GFauto - Encontre serviços automotivos na sua cidade',
