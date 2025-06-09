@@ -1,4 +1,4 @@
-// Caminho: /fluxo_visitante/components/visitante/HeroSection.tsx
+// Caminho Novo: /fluxo_visitante/components/visitante/HeroSection.tsx
 'use client';
 
 import Image from 'next/image';
