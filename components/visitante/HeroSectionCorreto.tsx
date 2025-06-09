@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 // Base de dados de estados brasileiros
@@ -34,7 +34,7 @@ const ESTADOS_BRASIL = [
   { sigla: 'TO', nome: 'Tocantins' }
 ];
 
-// Base de dados de cidades por estado (amostra inicial)
+// Base de dados de cidades por estado
 const CIDADES_POR_ESTADO: { [key: string]: string[] } = {
   'RS': [
     'Porto Alegre', 'Caxias do Sul', 'Pelotas', 'Canoas', 'Santa Maria',
@@ -55,10 +55,9 @@ const CIDADES_POR_ESTADO: { [key: string]: string[] } = {
     'Belo Horizonte', 'Uberlândia', 'Contagem', 'Juiz de Fora', 'Betim',
     'Montes Claros', 'Ribeirão das Neves', 'Uberaba', 'Governador Valadares', 'Ipatinga'
   ]
-  // Mais estados serão adicionados conforme necessário
 };
 
-// Especialidades disponíveis (expansível)
+// Especialidades disponíveis
 const ESPECIALIDADES = [
   'Auto Elétricas',
   'Auto Peças',
@@ -72,7 +71,7 @@ const ESPECIALIDADES = [
   'Suspensão e Freios'
 ];
 
-// Mapeamento inteligente de termos para especialidades
+// Mapeamento inteligente de termos
 const MAPEAMENTO_BUSCA: { [key: string]: string } = {
   'farol': 'Auto Elétricas',
   'farol quebrado': 'Auto Elétricas',
@@ -85,28 +84,7 @@ const MAPEAMENTO_BUSCA: { [key: string]: string } = {
   'pecas': 'Auto Peças',
   'motor': 'Oficinas Mecânicas',
   'mecânica': 'Oficinas Mecânicas',
-  'mecanica': 'Oficinas Mecânicas',
-  'funilaria': 'Funilaria e Pintura',
-  'pintura': 'Funilaria e Pintura',
-  'amassado': 'Funilaria e Pintura',
-  'pneu': 'Pneus e Rodas',
-  'pneus': 'Pneus e Rodas',
-  'roda': 'Pneus e Rodas',
-  'rodas': 'Pneus e Rodas',
-  'som': 'Som e Acessórios',
-  'radio': 'Som e Acessórios',
-  'rádio': 'Som e Acessórios',
-  'vidro': 'Vidros Automotivos',
-  'vidros': 'Vidros Automotivos',
-  'parabrisa': 'Vidros Automotivos',
-  'ar condicionado': 'Ar Condicionado Automotivo',
-  'ar': 'Ar Condicionado Automotivo',
-  'injeção': 'Injeção Eletrônica',
-  'injecao': 'Injeção Eletrônica',
-  'suspensão': 'Suspensão e Freios',
-  'suspensao': 'Suspensão e Freios',
-  'freio': 'Suspensão e Freios',
-  'freios': 'Suspensão e Freios'
+  'mecanica': 'Oficinas Mecânicas'
 };
 
 export default function HeroSectionCorreto() {
@@ -127,13 +105,12 @@ export default function HeroSectionCorreto() {
   const [mostrarCidadeSugestoes, setMostrarCidadeSugestoes] = useState(false);
   const [mostrarEspecialidadeSugestoes, setMostrarEspecialidadeSugestoes] = useState(false);
   
-  // Estado selecionado (sigla)
+  // Estado selecionado (sigla) - CORRIGIDO
   const [estadoSelecionado, setEstadoSelecionado] = useState('');
   
   // Função para filtrar estados
   const filtrarEstados = (termo: string) => {
     if (!termo) return [];
-    
     const termoLower = termo.toLowerCase();
     return ESTADOS_BRASIL.filter(est => 
       est.sigla.toLowerCase().includes(termoLower) ||
@@ -143,11 +120,11 @@ export default function HeroSectionCorreto() {
   
   // Função para filtrar cidades
   const filtrarCidades = (termo: string, estadoSigla: string) => {
-    if (!termo || !estadoSigla) return [];
-    
+    if (!estadoSigla) return [];
     const cidades = CIDADES_POR_ESTADO[estadoSigla] || [];
-    const termoLower = termo.toLowerCase();
+    if (!termo) return cidades;
     
+    const termoLower = termo.toLowerCase();
     return cidades.filter(cidade => 
       cidade.toLowerCase().includes(termoLower)
     );
@@ -158,14 +135,11 @@ export default function HeroSectionCorreto() {
     if (!termo) return ESPECIALIDADES;
     
     const termoLower = termo.toLowerCase();
-    
-    // Primeiro, verificar mapeamento inteligente
     const especialidadeMapeada = MAPEAMENTO_BUSCA[termoLower];
     if (especialidadeMapeada) {
       return [especialidadeMapeada];
     }
     
-    // Depois, filtrar por nome
     return ESPECIALIDADES.filter(esp => 
       esp.toLowerCase().includes(termoLower)
     );
@@ -196,12 +170,13 @@ export default function HeroSectionCorreto() {
     setMostrarEspecialidadeSugestoes(true);
   };
   
-  // Handlers para seleção de sugestões
+  // Handlers para seleção de sugestões - CORRIGIDO
   const selecionarEstado = (estadoObj: typeof ESTADOS_BRASIL[0]) => {
     setEstado(`${estadoObj.sigla} - ${estadoObj.nome}`);
-    setEstadoSelecionado(estadoObj.sigla);
+    setEstadoSelecionado(estadoObj.sigla); // IMPORTANTE: Define o estado selecionado
     setMostrarEstadoSugestoes(false);
     setCidade(''); // Limpar cidade
+    setCidadeSugestoes([]); // Limpar sugestões de cidade
   };
   
   const selecionarCidade = (cidadeNome: string) => {
@@ -243,27 +218,29 @@ export default function HeroSectionCorreto() {
   return (
     <section className="relative bg-gradient-to-br from-blue-50 to-white py-20">
       <div className="container mx-auto px-4">
+        
+        {/* Logo GFauto - PRIMEIRO */}
+        <div className="text-center mb-8">
+          <img 
+            src="/images/fluxo_visitante/logo_gf.png" 
+            alt="GFauto Logo" 
+            className="mx-auto h-auto"
+            style={{ width: '180px' }}
+          />
+        </div>
+        
+        {/* Manda Chuva - SEGUNDO */}
+        <div className="text-center mb-8">
+          <img 
+            src="/images/fluxo_visitante/mc4.png" 
+            alt="Manda Chuva" 
+            className="mx-auto h-auto"
+            style={{ width: '180px' }}
+          />
+        </div>
+        
+        {/* Título e Descrição */}
         <div className="text-center mb-12">
-          {/* Logo GFauto */}
-          <div className="mb-8">
-            <img 
-              src="/images/fluxo_visitante/logo_gf.png" 
-              alt="GFauto Logo" 
-              className="mx-auto h-auto"
-              style={{ width: '180px' }}
-            />
-          </div>
-          
-          {/* Manda Chuva */}
-          <div className="mb-8">
-            <img 
-              src="/images/fluxo_visitante/mc4.png" 
-              alt="Manda Chuva" 
-              className="mx-auto h-auto"
-              style={{ width: '180px' }}
-            />
-          </div>
-          
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
             Encontre serviços automotivos na sua cidade
           </h1>
@@ -272,7 +249,7 @@ export default function HeroSectionCorreto() {
           </p>
         </div>
 
-        {/* Formulário de Busca */}
+        {/* Formulário de Busca - TERCEIRO */}
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
           <form onSubmit={handleBuscar} className="space-y-6">
             <div className="grid md:grid-cols-3 gap-6">
@@ -310,7 +287,7 @@ export default function HeroSectionCorreto() {
                 )}
               </div>
 
-              {/* Campo Cidade */}
+              {/* Campo Cidade - CORRIGIDO */}
               <div className="relative">
                 <label htmlFor="cidade" className="block text-sm font-medium text-gray-700 mb-2">
                   Informe a Cidade:
@@ -320,10 +297,17 @@ export default function HeroSectionCorreto() {
                   id="cidade"
                   value={cidade}
                   onChange={(e) => handleCidadeChange(e.target.value)}
-                  onFocus={() => setMostrarCidadeSugestoes(true)}
+                  onFocus={() => {
+                    if (estadoSelecionado) {
+                      setCidadeSugestoes(filtrarCidades(cidade, estadoSelecionado));
+                      setMostrarCidadeSugestoes(true);
+                    }
+                  }}
                   onBlur={() => setTimeout(() => setMostrarCidadeSugestoes(false), 200)}
-                  placeholder="Digite sua cidade"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder={estadoSelecionado ? "Digite sua cidade" : "Selecione um estado primeiro"}
+                  className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                    !estadoSelecionado ? 'bg-gray-100 cursor-not-allowed' : ''
+                  }`}
                   disabled={!estadoSelecionado}
                   required
                 />
@@ -341,10 +325,6 @@ export default function HeroSectionCorreto() {
                       </div>
                     ))}
                   </div>
-                )}
-                
-                {!estadoSelecionado && (
-                  <p className="text-sm text-gray-500 mt-1">Selecione um estado primeiro</p>
                 )}
               </div>
 
@@ -394,7 +374,7 @@ export default function HeroSectionCorreto() {
           </form>
         </div>
 
-        {/* Moto */}
+        {/* Moto - QUARTO */}
         <div className="text-center mt-12">
           <img 
             src="/images/fluxo_visitante/image001.jpg" 
