@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Imagens - GFauto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .image-test {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        .image-test img {
+            max-width: 200px;
+            height: auto;
+            border: 1px solid #ccc;
+        }
+        .success {
+            border-color: #4CAF50;
+            background-color: #f0fff0;
+        }
+        .error {
+            border-color: #f44336;
+            background-color: #fff0f0;
+        }
+        .status {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .success .status {
+            color: #4CAF50;
+        }
+        .error .status {
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Teste de Imagens - GFauto Vercel</h1>
+        <p>Este arquivo testa se as 3 imagens existem nos caminhos corretos na Vercel.</p>
+        
+        <div class="image-test" id="test1">
+            <h3>Teste 1: mc4.png (Zé Colmeia)</h3>
+            <p><strong>Caminho:</strong> /images/fluxo_visitante/mc4.png</p>
+            <img src="/images/fluxo_visitante/mc4.png" alt="mc4.png" onload="imageLoaded(this)" onerror="imageError(this)">
+            <div class="status" id="status1">Carregando...</div>
+        </div>
+
+        <div class="image-test" id="test2">
+            <h3>Teste 2: logo_gf.png (Logo GFauto)</h3>
+            <p><strong>Caminho:</strong> /images/fluxo_visitante/logo_gf.png</p>
+            <img src="/images/fluxo_visitante/logo_gf.png" alt="logo_gf.png" onload="imageLoaded(this)" onerror="imageError(this)">
+            <div class="status" id="status2">Carregando...</div>
+        </div>
+
+        <div class="image-test" id="test3">
+            <h3>Teste 3: image001.jpg (Moto)</h3>
+            <p><strong>Caminho:</strong> /images/fluxo_visitante/image001.jpg</p>
+            <img src="/images/fluxo_visitante/image001.jpg" alt="image001.jpg" onload="imageLoaded(this)" onerror="imageError(this)">
+            <div class="status" id="status3">Carregando...</div>
+        </div>
+
+        <div style="margin-top: 30px; padding: 15px; background-color: #e3f2fd; border-radius: 5px;">
+            <h3>📋 Instruções:</h3>
+            <ul>
+                <li>✅ <strong>Verde:</strong> Imagem carregou com sucesso</li>
+                <li>❌ <strong>Vermelho:</strong> Imagem não foi encontrada (404)</li>
+                <li>🔗 <strong>URL do teste:</strong> https://gfauto.vercel.app/teste-imagens.html</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function imageLoaded(img) {
+            const testDiv = img.closest('.image-test');
+            const statusDiv = testDiv.querySelector('.status');
+            testDiv.className = 'image-test success';
+            statusDiv.textContent = '✅ SUCESSO: Imagem carregada!';
+            console.log('✅ Imagem carregada:', img.src);
+        }
+
+        function imageError(img) {
+            const testDiv = img.closest('.image-test');
+            const statusDiv = testDiv.querySelector('.status');
+            testDiv.className = 'image-test error';
+            statusDiv.textContent = '❌ ERRO: Imagem não encontrada (404)';
+            console.log('❌ Erro ao carregar:', img.src);
+        }
+
+        // Log inicial
+        console.log('🔍 Iniciando teste de imagens...');
+        console.log('📍 URL atual:', window.location.href);
+    </script>
+</body>
+</html>
+
