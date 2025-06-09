@@ -1,3 +1,4 @@
+// Caminho: /fluxo_visitante/components/visitante/HeroSection.tsx
 'use client';
 
 import Image from 'next/image';
@@ -22,48 +23,42 @@ export default function HeroSection() {
             
             <div className="flex flex-wrap gap-4">
               <div className="flex items-center">
-                <div className="bg-white rounded-lg p-2 mr-3 shadow-lg">
+                <div className="bg-white rounded-full p-2 mr-2">
                   <Image
-                    src="/images/pag_principal/mc4.png"
+                    src="/images/anuncios/autopecas1.jpg"
                     alt="Busca rápida e fácil"
                     width={180}
                     height={135}
-                    className="w-24 h-18 object-cover rounded-md"
-                    priority
-                    unoptimized
+                    className="w-12 h-9 object-cover rounded-full"
                   />
                 </div>
-                <span className="text-lg font-medium">Busca rápida e fácil</span>
+                <span>Busca rápida e fácil</span>
               </div>
               
               <div className="flex items-center">
-                <div className="bg-white rounded-lg p-2 mr-3 shadow-lg">
+                <div className="bg-white rounded-full p-2 mr-2">
                   <Image
-                    src="/images/pag_principal/logo_gf.png"
+                    src="/images/anuncios/autoeletrica1.jpg"
                     alt="Serviços confiáveis"
                     width={180}
                     height={135}
-                    className="w-24 h-18 object-cover rounded-md"
-                    priority
-                    unoptimized
+                    className="w-12 h-9 object-cover rounded-full"
                   />
                 </div>
-                <span className="text-lg font-medium">Serviços confiáveis</span>
+                <span>Serviços confiáveis</span>
               </div>
               
               <div className="flex items-center">
-                <div className="bg-white rounded-lg p-2 mr-3 shadow-lg">
+                <div className="bg-white rounded-full p-2 mr-2">
                   <Image
-                    src="/images/pag_principal/image001.jpg"
+                    src="/images/anuncios/mecanica1.jpg"
                     alt="Contato direto"
                     width={180}
                     height={135}
-                    className="w-24 h-18 object-cover rounded-md"
-                    priority
-                    unoptimized
+                    className="w-12 h-9 object-cover rounded-full"
                   />
                 </div>
-                <span className="text-lg font-medium">Contato direto</span>
+                <span>Contato direto</span>
               </div>
             </div>
           </div>
@@ -73,16 +68,12 @@ export default function HeroSection() {
               <div className="absolute inset-0 bg-white rounded-lg shadow-xl overflow-hidden">
                 <div className="relative w-full h-full">
                   <Image
-                    src="/images/pag_principal/logo_gf.png"
-                    alt="Serviços automotivos - GF Auto"
+                    src="/images/anuncios/autoeletrica1.jpg"
+                    alt="Serviços automotivos - Auto elétrica"
                     fill
                     className="object-cover"
                     priority
-                    unoptimized
                   />
-                </div>
-                <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded">
-                  Imagem ilustrativa
                 </div>
               </div>
             </div>

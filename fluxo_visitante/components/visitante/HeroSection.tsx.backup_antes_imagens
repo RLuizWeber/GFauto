@@ -1,3 +1,4 @@
+// Caminho: /fluxo_visitante/components/visitante/HeroSection.tsx
 'use client';
 
 import Image from 'next/image';
@@ -20,15 +21,15 @@ export default function HeroSection() {
               Conectamos você aos melhores profissionais e lojas de autopeças da sua região.
             </p>
             
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col gap-4">
               <div className="flex items-center">
-                <div className="bg-white rounded-lg p-2 mr-3 shadow-lg">
+                <div className="bg-white rounded-lg p-3 mr-4 shadow-md">
                   <Image
                     src="/images/pag_principal/mc4.png"
                     alt="Busca rápida e fácil"
                     width={180}
                     height={135}
-                    className="w-24 h-18 object-cover rounded-md"
+                    className="w-20 h-15 object-cover rounded-lg"
                     priority
                     unoptimized
                   />
@@ -37,13 +38,13 @@ export default function HeroSection() {
               </div>
               
               <div className="flex items-center">
-                <div className="bg-white rounded-lg p-2 mr-3 shadow-lg">
+                <div className="bg-white rounded-lg p-3 mr-4 shadow-md">
                   <Image
                     src="/images/pag_principal/logo_gf.png"
                     alt="Serviços confiáveis"
                     width={180}
                     height={135}
-                    className="w-24 h-18 object-cover rounded-md"
+                    className="w-20 h-15 object-cover rounded-lg"
                     priority
                     unoptimized
                   />
@@ -52,13 +53,13 @@ export default function HeroSection() {
               </div>
               
               <div className="flex items-center">
-                <div className="bg-white rounded-lg p-2 mr-3 shadow-lg">
+                <div className="bg-white rounded-lg p-3 mr-4 shadow-md">
                   <Image
                     src="/images/pag_principal/image001.jpg"
                     alt="Contato direto"
                     width={180}
                     height={135}
-                    className="w-24 h-18 object-cover rounded-md"
+                    className="w-20 h-15 object-cover rounded-lg"
                     priority
                     unoptimized
                   />
@@ -92,3 +93,5 @@ export default function HeroSection() {
     </div>
   );
 }
+
+// Cache refresh: $(date)
