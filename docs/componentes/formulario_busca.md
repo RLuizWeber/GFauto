@@ -1,6 +1,6 @@
 # Formulário de Busca
 
-O formulário de busca é um componente central do GFauto, permitindo que os usuários encontrem serviços automotivos com base em sua localização e necessidades específicas.
+O formulário de busca é um componente central do GFauto, permitindo que os usuários encontrem na "página de resultados" serviços automotivos com base em sua localização e necessidades específicas informadas no campo "O que procura?".
 
 ## Localização do Componente
 
