@@ -219,7 +219,7 @@ Chaves implementadas no ambiente Vercel (conferir e ir anotando ao lado se já f
 2. ADMIN_EMAIL (email do yahoo)
 3. GF_PRIMARY_ADMIN_EMAIL
 4. GFAUTO_TEST_VAR
-5. VERCEL_IGNORE_ENV_CACHE
+5. VERCEL_IGNORE_ENV_CACHE = 1
 6. MERCADOPAGO_WEBHOOK_SECRET (já testada com pagto efetuado na Vercel https://gfauto.vercel.app/api/webhook/mercadopago)
 7. MP_ACCESS_TOKEN (já testada com pagto efetuado na Vercel https://gfauto.vercel.app/api/webhook/mercadopago)
 8. BASE_URL
