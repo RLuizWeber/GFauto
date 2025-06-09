@@ -3,7 +3,7 @@
 
 import Image from 'next/image';
 
-export default function HeroSection() {
+export default function HeroSectionUpdated() {
   return (
     <div className="relative bg-blue-600 text-white">
       <div className="absolute inset-0 overflow-hidden">
