@@ -25,7 +25,7 @@ export default function HeroSection() {
               <div className="flex items-center">
                 <div className="bg-white rounded-lg p-2 mr-3 shadow-md">
                   <img 
-                    src="/images/fluxo_visitante/mc4.png" 
+                    src=""/GFauto/public/images/fluxo_visitante/mc4.png" 
                     alt="Busca rápida e fácil" 
                     className="w-12 h-9 object-cover rounded"
                   />
@@ -37,7 +37,7 @@ export default function HeroSection() {
               <div className="flex items-center">
                 <div className="bg-white rounded-lg p-2 mr-3 shadow-md">
                   <img 
-                    src="/images/fluxo_visitante/logo_gf.png" 
+                    src="/GFauto/public/images/fluxo_visitante/logo_gf.png" 
                     alt="Serviços confiáveis" 
                     className="w-12 h-9 object-cover rounded"
                   />
@@ -49,7 +49,7 @@ export default function HeroSection() {
               <div className="flex items-center">
                 <div className="bg-white rounded-lg p-2 mr-3 shadow-md">
                   <img 
-                    src="/images/fluxo_visitante/image001.jpg" 
+                    src="/GFauto/public/images/fluxo_visitante/image001.jpg" 
                     alt="Contato direto" 
                     className="w-12 h-9 object-cover rounded"
                   />
