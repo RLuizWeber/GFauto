@@ -1,7 +1,4 @@
-// Rebuild forçado em 20250608_230426
 'use client';
-
-import Image from 'next/image';
 
 export default function HeroSection() {
   return (
@@ -24,14 +21,11 @@ export default function HeroSection() {
             <div className="flex flex-wrap gap-4">
               <div className="flex items-center">
                 <div className="bg-white rounded-lg p-2 mr-3 shadow-lg">
-                  <Image
-                    src="/images/pag_principal/mc4.png"
-                    alt="Busca rápida e fácil"
-                    width={180}
-                    height={135}
+                  <img 
+                    src="/images/pag_principal/mc4.png" 
+                    alt="Busca rápida e fácil" 
                     className="w-24 h-18 object-cover rounded-md"
-                    priority
-                    unoptimized
+                    style={{ width: '96px', height: '72px' }}
                   />
                 </div>
                 <span className="text-lg font-medium">Busca rápida e fácil</span>
@@ -39,14 +33,11 @@ export default function HeroSection() {
               
               <div className="flex items-center">
                 <div className="bg-white rounded-lg p-2 mr-3 shadow-lg">
-                  <Image
-                    src="/images/pag_principal/logo_gf.png"
-                    alt="Serviços confiáveis"
-                    width={180}
-                    height={135}
+                  <img 
+                    src="/images/pag_principal/logo_gf.png" 
+                    alt="Serviços confiáveis" 
                     className="w-24 h-18 object-cover rounded-md"
-                    priority
-                    unoptimized
+                    style={{ width: '96px', height: '72px' }}
                   />
                 </div>
                 <span className="text-lg font-medium">Serviços confiáveis</span>
@@ -54,14 +45,11 @@ export default function HeroSection() {
               
               <div className="flex items-center">
                 <div className="bg-white rounded-lg p-2 mr-3 shadow-lg">
-                  <Image
-                    src="/images/pag_principal/image001.jpg"
-                    alt="Contato direto"
-                    width={180}
-                    height={135}
+                  <img 
+                    src="/images/pag_principal/image001.jpg" 
+                    alt="Contato direto" 
                     className="w-24 h-18 object-cover rounded-md"
-                    priority
-                    unoptimized
+                    style={{ width: '96px', height: '72px' }}
                   />
                 </div>
                 <span className="text-lg font-medium">Contato direto</span>
@@ -73,13 +61,10 @@ export default function HeroSection() {
             <div className="relative w-full max-w-md aspect-video">
               <div className="absolute inset-0 bg-white rounded-lg shadow-xl overflow-hidden">
                 <div className="relative w-full h-full">
-                  <Image
-                    src="/images/pag_principal/logo_gf.png"
-                    alt="Serviços automotivos - GF Auto"
-                    fill
-                    className="object-cover"
-                    priority
-                    unoptimized
+                  <img 
+                    src="/images/pag_principal/logo_gf.png" 
+                    alt="Serviços automotivos - GF Auto" 
+                    className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded">
