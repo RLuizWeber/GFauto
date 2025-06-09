@@ -291,3 +291,39 @@ Para configurar o ambiente de desenvolvimento:
 O projeto é automaticamente implantado na Vercel após cada push para a branch principal.
 
 Para acessar a versão em produção, visite [https://gfauto.vercel.app](https://gfauto.vercel.app).
+
+## 🧠 CAMPOS INTELIGENTES - ESPECIFICAÇÕES TÉCNICAS
+
+### **Campo Estado:**
+- ✅ **Autocompletar:** Aceita siglas (RS) ou nomes completos (Rio Grande do Sul)
+- ✅ **Sugestões:** Filtra em tempo real conforme digitação
+- ✅ **Base de dados:** Todos os 27 estados brasileiros
+- ✅ **Formato exibição:** "RS - Rio Grande do Sul"
+
+### **Campo Cidade:**
+- ✅ **Dependência:** Só ativa após seleção do estado
+- ✅ **Filtro:** Mostra apenas cidades do estado selecionado
+- ✅ **Validação:** Impede seleção de cidade de outro estado
+- ✅ **Erro:** Alerta se cidade não pertence ao estado
+- ✅ **Expansão:** Base de dados crescerá conforme demanda
+
+### **Campo "O que Procura":**
+- ✅ **Mapeamento inteligente:** "farol quebrado" → "Auto Elétricas"
+- ✅ **Opções iniciais:** 10 especialidades principais
+- ✅ **Expansível:** Sistema preparado para crescimento diário
+- ✅ **Busca flexível:** Aceita termos técnicos e coloquiais
+
+### **Considerações para Grandes Cidades:**
+- 🎯 **Cidades > 1.500.000 hab:** Implementar busca por proximidade (10km)
+- 🎯 **Geolocalização:** Usar localização do visitante
+- 🎯 **Performance:** Otimizar para grandes volumes de dados
+
+### **Página de Resultados:**
+- 🔗 **URL:** `/resultados?estado=RS&cidade=Passo+Fundo&especialidade=Auto+Elétricas`
+- 🔗 **Parâmetros:** estado (sigla), cidade (nome), especialidade (nome completo)
+
+### **Histórico de Funcionamento:**
+- ✅ **CONFIRMADO:** Página com mc4.png já funcionou em https://gfauto.vercel.app/
+- ✅ **Objetivo:** Recriar funcionalidade com as 3 imagens (mc4.png, logo_gf.png, image001.jpg)
+- ✅ **Status atual:** Página `/pagina-correta` funcionando perfeitamente
+
