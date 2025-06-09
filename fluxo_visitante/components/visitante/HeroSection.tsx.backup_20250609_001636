@@ -1,7 +1,4 @@
-// Caminho: /fluxo_visitante/components/visitante/HeroSection.tsx
 'use client';
-
-import Image from 'next/image';
 
 export default function HeroSection() {
   return (
@@ -20,38 +17,39 @@ export default function HeroSection() {
             <p className="text-xl mb-6">
               Conectamos você aos melhores profissionais e lojas de autopeças da sua região.
             </p>
-            <div className="flex flex-col gap-4">
-              {/* Busca rápida e fácil */}
+            
+            <div className="flex flex-wrap gap-4">
               <div className="flex items-center">
-                <div className="bg-white rounded-lg p-2 mr-3 shadow-md">
+                <div className="bg-white rounded-lg p-2 mr-3 shadow-lg">
                   <img 
-                    src="/images/fluxo_visitante/mc4.png" 
+                    src="/images/pag_principal/mc4.png" 
                     alt="Busca rápida e fácil" 
-                    className="w-12 h-9 object-cover rounded"
+                    className="w-24 h-18 object-cover rounded-md"
+                    style={{ width: '96px', height: '72px' }}
                   />
                 </div>
                 <span className="text-lg font-medium">Busca rápida e fácil</span>
               </div>
               
-              {/* Serviços confiáveis */}
               <div className="flex items-center">
-                <div className="bg-white rounded-lg p-2 mr-3 shadow-md">
+                <div className="bg-white rounded-lg p-2 mr-3 shadow-lg">
                   <img 
-                    src="/images/fluxo_visitante/logo_gf.png" 
+                    src="/images/pag_principal/logo_gf.png" 
                     alt="Serviços confiáveis" 
-                    className="w-12 h-9 object-cover rounded"
+                    className="w-24 h-18 object-cover rounded-md"
+                    style={{ width: '96px', height: '72px' }}
                   />
                 </div>
                 <span className="text-lg font-medium">Serviços confiáveis</span>
               </div>
               
-              {/* Contato direto */}
               <div className="flex items-center">
-                <div className="bg-white rounded-lg p-2 mr-3 shadow-md">
+                <div className="bg-white rounded-lg p-2 mr-3 shadow-lg">
                   <img 
-                    src="/images/fluxo_visitante/image001.jpg" 
+                    src="/images/pag_principal/image001.jpg" 
                     alt="Contato direto" 
-                    className="w-12 h-9 object-cover rounded"
+                    className="w-24 h-18 object-cover rounded-md"
+                    style={{ width: '96px', height: '72px' }}
                   />
                 </div>
                 <span className="text-lg font-medium">Contato direto</span>
@@ -63,12 +61,14 @@ export default function HeroSection() {
             <div className="relative w-full max-w-md aspect-video">
               <div className="absolute inset-0 bg-white rounded-lg shadow-xl overflow-hidden">
                 <div className="relative w-full h-full">
-                  {/* Imagem ilustrativa principal */}
                   <img 
-                    src="/images/fluxo_visitante/logo_gf.png" 
-                    alt="GFauto - Serviços Automotivos" 
+                    src="/images/pag_principal/logo_gf.png" 
+                    alt="Serviços automotivos - GF Auto" 
                     className="w-full h-full object-cover"
                   />
+                </div>
+                <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded">
+                  Imagem ilustrativa
                 </div>
               </div>
             </div>
