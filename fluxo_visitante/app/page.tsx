@@ -1,7 +1,6 @@
 // Caminho: /fluxo_visitante/app/page.tsx
 import { Metadata } from 'next';
 import BuscaForm from '../components/visitante/BuscaForm';
-// import HeroSectionUpdated from '../components/visitante/HeroSection';
 import HeroSection from '../components/visitante/HeroSection';
 
 export const metadata: Metadata = {
@@ -12,7 +11,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <HeroSectionUpdated />
+      <HeroSection />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6">
           <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
