@@ -21,44 +21,50 @@ export default function HeroSection() {
               Conectamos você aos melhores profissionais e lojas de autopeças da sua região.
             </p>
             
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col gap-4">
               <div className="flex items-center">
-                <div className="bg-white rounded-full p-2 mr-2">
+                <div className="bg-white rounded-lg p-3 mr-4 shadow-md">
                   <Image
-                    src="/images/anuncios/autopecas1.jpg"
+                    src="/images/pag_principal/mc4.png"
                     alt="Busca rápida e fácil"
                     width={180}
                     height={135}
-                    className="w-12 h-9 object-cover rounded-full"
+                    className="w-20 h-15 object-cover rounded-lg"
+                    priority
+                    unoptimized
                   />
                 </div>
-                <span>Busca rápida e fácil</span>
+                <span className="text-lg font-medium">Busca rápida e fácil</span>
               </div>
               
               <div className="flex items-center">
-                <div className="bg-white rounded-full p-2 mr-2">
+                <div className="bg-white rounded-lg p-3 mr-4 shadow-md">
                   <Image
-                    src="/images/anuncios/autoeletrica1.jpg"
+                    src="/images/pag_principal/logo_gf.png"
                     alt="Serviços confiáveis"
                     width={180}
                     height={135}
-                    className="w-12 h-9 object-cover rounded-full"
+                    className="w-20 h-15 object-cover rounded-lg"
+                    priority
+                    unoptimized
                   />
                 </div>
-                <span>Serviços confiáveis</span>
+                <span className="text-lg font-medium">Serviços confiáveis</span>
               </div>
               
               <div className="flex items-center">
-                <div className="bg-white rounded-full p-2 mr-2">
+                <div className="bg-white rounded-lg p-3 mr-4 shadow-md">
                   <Image
-                    src="/images/anuncios/mecanica1.jpg"
+                    src="/images/pag_principal/image001.jpg"
                     alt="Contato direto"
                     width={180}
                     height={135}
-                    className="w-12 h-9 object-cover rounded-full"
+                    className="w-20 h-15 object-cover rounded-lg"
+                    priority
+                    unoptimized
                   />
                 </div>
-                <span>Contato direto</span>
+                <span className="text-lg font-medium">Contato direto</span>
               </div>
             </div>
           </div>
@@ -68,12 +74,16 @@ export default function HeroSection() {
               <div className="absolute inset-0 bg-white rounded-lg shadow-xl overflow-hidden">
                 <div className="relative w-full h-full">
                   <Image
-                    src="/images/anuncios/autoeletrica1.jpg"
-                    alt="Serviços automotivos - Auto elétrica"
+                    src="/images/pag_principal/logo_gf.png"
+                    alt="Serviços automotivos - GF Auto"
                     fill
                     className="object-cover"
                     priority
+                    unoptimized
                   />
+                </div>
+                <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded">
+                  Imagem ilustrativa
                 </div>
               </div>
             </div>

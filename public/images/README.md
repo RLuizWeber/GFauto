@@ -1,57 +1,84 @@
-# Estrutura Organizacional de Imagens - GFauto
+# Estrutura Organizacional Explícita de Imagens - Projeto GFauto
 
-## Organização por Funcionalidade
+## Filosofia da Organização
+**Princípio**: Cada pasta indica claramente ONDE a imagem é usada no sistema.
+**Benefício**: Localização rápida e manutenção facilitada.
 
-### `/ui/` - Elementos de Interface
-- Ícones de funcionalidades (busca, contato, etc.)
-- Elementos visuais da interface do usuário
-- Símbolos e indicadores
-- **Tamanho padrão**: 24x24px para ícones pequenos, 48x48px para ícones médios
+## Estrutura Explícita Definida
 
-### `/hero/` - Imagens Principais de Seções
-- Imagens principais das seções hero
-- Banners e imagens de destaque
-- **Tamanho padrão**: Landscape (16:9 ou similar)
+```
+public/images/
+├── pag_principal/      # Imagens da página principal (HeroSection)
+│   ├── mc4.png         # "Busca rápida e fácil"
+│   ├── logo_gf.png     # "Serviços confiáveis" 
+│   └── image001.jpg    # "Contato direto"
+├── pag_resultados/     # Imagens da página de resultados
+├── pag_anuncio/        # Imagens das páginas de anúncios
+├── ui_elementos/       # Ícones, botões, elementos de interface
+├── logos_marcas/       # Logos de empresas e marcas
+├── backgrounds/        # Imagens de fundo e texturas
+└── anuncios/          # LEGADO - manter por compatibilidade
+```
 
-### `/anuncios/` - Imagens de Anúncios
-- Fotos de estabelecimentos e serviços
-- Imagens ilustrativas de especialidades
-- **Tamanho padrão**: 400x300px ou proporção 4:3
+## Convenções Obrigatórias
 
-### `/logos/` - Logos e Marcas
-- Logo do GFauto
-- Logos de parceiros
-- Marcas e identidades visuais
-- **Formato preferido**: PNG com transparência
+### 1. Nomenclatura de Pastas
+- **Formato**: `pag_[nome_da_pagina]` ou `[categoria]_[tipo]`
+- **Exemplos**: `pag_principal`, `ui_elementos`, `logos_marcas`
+- **Proibido**: espaços, caracteres especiais, CamelCase
 
-### `/backgrounds/` - Imagens de Fundo
-- Texturas e padrões de fundo
-- Imagens para overlays
-- **Formato preferido**: JPG otimizado
+### 2. Nomenclatura de Arquivos
+- **Manter nomes originais** quando possível (mc4.png, logo_gf.png)
+- **Formato alternativo**: `[descricao]_[versao].[ext]`
+- **Proibido**: espaços, acentos, caracteres especiais
 
-## Convenções de Nomenclatura
+### 3. Tamanhos Padrão por Categoria
+- **pag_principal**: 180px largura, altura proporcional
+- **ui_elementos**: 24px, 48px, 96px (múltiplos de 24)
+- **logos_marcas**: 200px largura máxima
+- **backgrounds**: 1920px largura máxima
 
-1. **Usar nomes descritivos**: `autoeletrica1.jpg` em vez de `img1.jpg`
-2. **Usar lowercase**: `busca-rapida.png` em vez de `BuscaRapida.png`
-3. **Usar hífens**: `contato-direto.png` em vez de `contato_direto.png`
-4. **Incluir dimensões quando relevante**: `logo-gfauto-180px.png`
+### 4. Formatos por Categoria
+- **pag_principal**: .jpg, .png (conforme original)
+- **ui_elementos**: .png (com transparência)
+- **logos_marcas**: .png (com transparência)
+- **backgrounds**: .jpg, .webp
 
-## Boas Práticas
+## Mapeamento Atual - Página Principal
 
-1. **Otimização**: Todas as imagens devem ser otimizadas para web
-2. **Formatos**:
-   - PNG: Para ícones e imagens com transparência
-   - JPG: Para fotos e imagens complexas
-   - WebP: Quando suportado, para melhor compressão
-3. **Responsividade**: Considerar diferentes tamanhos de tela
-4. **Acessibilidade**: Sempre incluir alt text descritivo
+| Arquivo Original | Novo Local | Uso no HeroSection |
+|------------------|------------|-------------------|
+| autoeletrica1.jpg | pag_principal/mc4.png | "Busca rápida e fácil" |
+| mecanica1.jpg | pag_principal/logo_gf.png | "Serviços confiáveis" |
+| autopecas1.jpg | pag_principal/image001.jpg | "Contato direto" |
 
-## Mapeamento Atual
+## Processo para Novas Imagens
 
-- `autoeletrica1.jpg` → `/anuncios/autoeletrica1.jpg` ✓
-- `autopecas1.jpg` → `/anuncios/autopecas1.jpg` ✓  
-- `mecanica1.jpg` → `/anuncios/mecanica1.jpg` ✓
+1. **Identificar uso**: Qual página/componente usará a imagem?
+2. **Escolher pasta**: Baseado no uso identificado
+3. **Verificar existência**: Evitar duplicatas
+4. **Otimizar**: Tamanho e formato adequados
+5. **Nomear corretamente**: Seguir convenções
+6. **Documentar**: Atualizar este README se necessário
 
-## Próximas Imagens
+## Regras de Preservação
 
-Novas imagens devem seguir esta estrutura organizacional.
+### ⚠️ CRÍTICO - NÃO ALTERAR SEM APROVAÇÃO
+- **pag_principal/mc4.png**: Imagem principal do HeroSection
+- **pag_principal/logo_gf.png**: Logo oficial GF Auto
+- **pag_principal/image001.jpg**: Imagem de contato
+
+### 🔄 Processo para Alterações
+1. Fazer backup da imagem atual
+2. Testar nova imagem em ambiente local
+3. Verificar todos os componentes que usam a imagem
+4. Aplicar alteração com commit descritivo
+5. Verificar resultado no deploy
+
+## Migração de Imagens Legadas
+
+A pasta `anuncios/` será mantida temporariamente para compatibilidade.
+Novas implementações devem usar a estrutura explícita.
+
+**Data da implementação**: $(date)
+**Responsável**: Sistema de organização automática
