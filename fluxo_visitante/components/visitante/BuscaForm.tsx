@@ -138,7 +138,6 @@ export default function BuscaForm() {
         setEstados(data);
       } catch (err) {
         console.error('Erro ao buscar estados:', err);
-        setError('Não foi possível carregar os estados. Por favor, tente novamente.');
       } finally {
         setLoading(false);
       }

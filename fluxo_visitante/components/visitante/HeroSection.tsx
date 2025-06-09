@@ -27,9 +27,9 @@ export default function HeroSection() {
                   <Image
                     src="/images/anuncios/autopecas1.jpg"
                     alt="Busca rápida e fácil"
-                    width={24}
-                    height={24}
-                    className="w-6 h-6 object-cover rounded-full"
+                    width={180}
+                    height={135}
+                    className="w-12 h-9 object-cover rounded-full"
                   />
                 </div>
                 <span>Busca rápida e fácil</span>
@@ -40,9 +40,9 @@ export default function HeroSection() {
                   <Image
                     src="/images/anuncios/autoeletrica1.jpg"
                     alt="Serviços confiáveis"
-                    width={24}
-                    height={24}
-                    className="w-6 h-6 object-cover rounded-full"
+                    width={180}
+                    height={135}
+                    className="w-12 h-9 object-cover rounded-full"
                   />
                 </div>
                 <span>Serviços confiáveis</span>
@@ -53,9 +53,9 @@ export default function HeroSection() {
                   <Image
                     src="/images/anuncios/mecanica1.jpg"
                     alt="Contato direto"
-                    width={24}
-                    height={24}
-                    className="w-6 h-6 object-cover rounded-full"
+                    width={180}
+                    height={135}
+                    className="w-12 h-9 object-cover rounded-full"
                   />
                 </div>
                 <span>Contato direto</span>
