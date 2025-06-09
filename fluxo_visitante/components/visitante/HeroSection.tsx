@@ -1,3 +1,4 @@
+// Rebuild forçado em 20250608_230426
 'use client';
 
 import Image from 'next/image';
