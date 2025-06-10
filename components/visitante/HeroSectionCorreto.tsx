@@ -84,7 +84,28 @@ const MAPEAMENTO_BUSCA: { [key: string]: string } = {
   'pecas': 'Auto Peças',
   'motor': 'Oficinas Mecânicas',
   'mecânica': 'Oficinas Mecânicas',
-  'mecanica': 'Oficinas Mecânicas'
+  'mecanica': 'Oficinas Mecânicas',
+  'funilaria': 'Funilaria e Pintura',
+  'pintura': 'Funilaria e Pintura',
+  'amassado': 'Funilaria e Pintura',
+  'pneu': 'Pneus e Rodas',
+  'pneus': 'Pneus e Rodas',
+  'roda': 'Pneus e Rodas',
+  'rodas': 'Pneus e Rodas',
+  'som': 'Som e Acessórios',
+  'radio': 'Som e Acessórios',
+  'rádio': 'Som e Acessórios',
+  'vidro': 'Vidros Automotivos',
+  'vidros': 'Vidros Automotivos',
+  'parabrisa': 'Vidros Automotivos',
+  'ar condicionado': 'Ar Condicionado Automotivo',
+  'ar': 'Ar Condicionado Automotivo',
+  'injeção': 'Injeção Eletrônica',
+  'injecao': 'Injeção Eletrônica',
+  'suspensão': 'Suspensão e Freios',
+  'suspensao': 'Suspensão e Freios',
+  'freio': 'Suspensão e Freios',
+  'freios': 'Suspensão e Freios'
 };
 
 export default function HeroSectionCorreto() {
@@ -105,7 +126,7 @@ export default function HeroSectionCorreto() {
   const [mostrarCidadeSugestoes, setMostrarCidadeSugestoes] = useState(false);
   const [mostrarEspecialidadeSugestoes, setMostrarEspecialidadeSugestoes] = useState(false);
   
-  // Estado selecionado (sigla) - CORRIGIDO
+  // Estado selecionado (sigla)
   const [estadoSelecionado, setEstadoSelecionado] = useState('');
   
   // Função para filtrar estados
@@ -170,13 +191,13 @@ export default function HeroSectionCorreto() {
     setMostrarEspecialidadeSugestoes(true);
   };
   
-  // Handlers para seleção de sugestões - CORRIGIDO
+  // Handlers para seleção de sugestões
   const selecionarEstado = (estadoObj: typeof ESTADOS_BRASIL[0]) => {
     setEstado(`${estadoObj.sigla} - ${estadoObj.nome}`);
-    setEstadoSelecionado(estadoObj.sigla); // IMPORTANTE: Define o estado selecionado
+    setEstadoSelecionado(estadoObj.sigla);
     setMostrarEstadoSugestoes(false);
-    setCidade(''); // Limpar cidade
-    setCidadeSugestoes([]); // Limpar sugestões de cidade
+    setCidade('');
+    setCidadeSugestoes([]);
   };
   
   const selecionarCidade = (cidadeNome: string) => {
@@ -216,174 +237,229 @@ export default function HeroSectionCorreto() {
   };
 
   return (
-    <section className="relative bg-gradient-to-br from-blue-50 to-white py-20">
-      <div className="container mx-auto px-4">
-        
-        {/* Logo GFauto - PRIMEIRO */}
-        <div className="text-center mb-8">
-          <img 
-            src="/images/fluxo_visitante/logo_gf.png" 
-            alt="GFauto Logo" 
-            className="mx-auto h-auto"
-            style={{ width: '180px' }}
-          />
+    <div className="min-h-screen bg-white">
+      
+      {/* Header Azul com Logo e Textos */}
+      <section className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-12 px-4">
+        <div className="container mx-auto">
+          <div className="flex flex-col lg:flex-row items-center justify-between">
+            
+            {/* Logo Principal */}
+            <div className="flex-shrink-0 mb-8 lg:mb-0">
+              <img 
+                src="/images/fluxo_visitante/logo.png" 
+                alt="Pesquise o melhor lugar para o seu carro" 
+                className="h-auto max-w-full"
+                style={{ height: '200px' }}
+              />
+            </div>
+            
+            {/* Textos do Header */}
+            <div className="flex-1 lg:ml-12 text-center lg:text-right">
+              <h1 className="text-4xl lg:text-5xl font-bold mb-4">
+                Bem Vindo!
+              </h1>
+              <p className="text-xl lg:text-2xl leading-relaxed">
+                Acesse recursos exclusivos e informações detalhadas sobre serviços automotivos em sua região.
+              </p>
+            </div>
+          </div>
         </div>
-        
-        {/* Manda Chuva - SEGUNDO */}
-        <div className="text-center mb-8">
-          <img 
-            src="/images/fluxo_visitante/mc4.png" 
-            alt="Manda Chuva" 
-            className="mx-auto h-auto"
-            style={{ width: '180px' }}
-          />
-        </div>
-        
-        {/* Título e Descrição */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            Encontre serviços automotivos na sua cidade
-          </h1>
-          <p className="text-xl text-gray-600 mb-8">
-            A plataforma que conecta você aos melhores profissionais automotivos
+      </section>
+
+      {/* Seção Central com Título e Veículos */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="container mx-auto text-center">
+          
+          {/* Título Principal */}
+          <h2 className="text-4xl lg:text-5xl font-bold text-blue-600 mb-6">
+            Uma Proposta Ganha-Ganha
+          </h2>
+          
+          <h3 className="text-2xl lg:text-3xl font-semibold text-blue-500 mb-8">
+            Em que todos os envolvidos ganham.
+          </h3>
+          
+          {/* Texto Descritivo */}
+          <p className="text-lg text-gray-700 mb-12 max-w-4xl mx-auto leading-relaxed">
+            Encontre os melhores serviços para seu veículo na sua cidade. Pesquise oficinas, autopeças, concessionárias e muito mais.
           </p>
+          
+          {/* Três Veículos */}
+          <div className="flex flex-col md:flex-row justify-center items-center gap-8 mb-16">
+            
+            {/* Moto Azul */}
+            <div className="flex-shrink-0">
+              <img 
+                src="/images/fluxo_visitante/image001.jpg" 
+                alt="Moto" 
+                className="h-auto max-w-full rounded-lg shadow-md"
+                style={{ height: '150px' }}
+              />
+            </div>
+            
+            {/* Carro Vermelho */}
+            <div className="flex-shrink-0">
+              <img 
+                src="/images/fluxo_visitante/image003.jpg" 
+                alt="Carro Vermelho" 
+                className="h-auto max-w-full rounded-lg shadow-md"
+                style={{ height: '150px' }}
+              />
+            </div>
+            
+            {/* Carro Branco */}
+            <div className="flex-shrink-0">
+              <img 
+                src="/images/fluxo_visitante/image005.jpg" 
+                alt="Carro Branco" 
+                className="h-auto max-w-full rounded-lg shadow-md"
+                style={{ height: '150px' }}
+              />
+            </div>
+          </div>
         </div>
+      </section>
 
-        {/* Formulário de Busca - TERCEIRO */}
-        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
-          <form onSubmit={handleBuscar} className="space-y-6">
-            <div className="grid md:grid-cols-3 gap-6">
+      {/* Tarja Verde com Formulário */}
+      <section className="bg-green-500 py-12 px-4">
+        <div className="container mx-auto">
+          
+          {/* Título da Seção */}
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-bold text-white mb-4">
+              Começar Agora
+            </h3>
+          </div>
+          
+          {/* Formulário de Busca */}
+          <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+            <form onSubmit={handleBuscar} className="space-y-6">
               
-              {/* Campo Estado */}
-              <div className="relative">
-                <label htmlFor="estado" className="block text-sm font-medium text-gray-700 mb-2">
-                  Informe o Estado:
-                </label>
-                <input
-                  type="text"
-                  id="estado"
-                  value={estado}
-                  onChange={(e) => handleEstadoChange(e.target.value)}
-                  onFocus={() => setMostrarEstadoSugestoes(true)}
-                  onBlur={() => setTimeout(() => setMostrarEstadoSugestoes(false), 200)}
-                  placeholder="Ex: RS ou Rio Grande do Sul"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                />
+              {/* Três Campos na Mesma Linha */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
-                {/* Sugestões de Estados */}
-                {mostrarEstadoSugestoes && estadoSugestoes.length > 0 && (
-                  <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                    {estadoSugestoes.map((est) => (
-                      <div
-                        key={est.sigla}
-                        onClick={() => selecionarEstado(est)}
-                        className="px-4 py-2 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0"
-                      >
-                        <span className="font-medium">{est.sigla}</span> - {est.nome}
-                      </div>
-                    ))}
-                  </div>
-                )}
+                {/* Campo Estado */}
+                <div className="relative">
+                  <label htmlFor="estado" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Estado
+                  </label>
+                  <input
+                    type="text"
+                    id="estado"
+                    value={estado}
+                    onChange={(e) => handleEstadoChange(e.target.value)}
+                    onFocus={() => setMostrarEstadoSugestoes(true)}
+                    onBlur={() => setTimeout(() => setMostrarEstadoSugestoes(false), 200)}
+                    placeholder="Ex: RS ou Rio Grande do Sul"
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                    required
+                  />
+                  
+                  {/* Sugestões de Estados */}
+                  {mostrarEstadoSugestoes && estadoSugestoes.length > 0 && (
+                    <div className="absolute z-20 w-full mt-1 bg-white border-2 border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                      {estadoSugestoes.map((est) => (
+                        <div
+                          key={est.sigla}
+                          onMouseDown={() => selecionarEstado(est)}
+                          className="px-4 py-3 hover:bg-green-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors"
+                        >
+                          <span className="font-semibold text-green-600">{est.sigla}</span> - {est.nome}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Campo Cidade */}
+                <div className="relative">
+                  <label htmlFor="cidade" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Cidade
+                  </label>
+                  <input
+                    type="text"
+                    id="cidade"
+                    value={cidade}
+                    onChange={(e) => handleCidadeChange(e.target.value)}
+                    onFocus={() => {
+                      if (estadoSelecionado) {
+                        setCidadeSugestoes(filtrarCidades(cidade, estadoSelecionado));
+                        setMostrarCidadeSugestoes(true);
+                      }
+                    }}
+                    onBlur={() => setTimeout(() => setMostrarCidadeSugestoes(false), 200)}
+                    placeholder={estadoSelecionado ? "Digite sua cidade" : "Selecione um estado primeiro"}
+                    className={`w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors ${
+                      !estadoSelecionado ? 'bg-gray-100 cursor-not-allowed' : ''
+                    }`}
+                    disabled={!estadoSelecionado}
+                    required
+                  />
+                  
+                  {/* Sugestões de Cidades */}
+                  {mostrarCidadeSugestoes && cidadeSugestoes.length > 0 && (
+                    <div className="absolute z-20 w-full mt-1 bg-white border-2 border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                      {cidadeSugestoes.map((cid) => (
+                        <div
+                          key={cid}
+                          onMouseDown={() => selecionarCidade(cid)}
+                          className="px-4 py-3 hover:bg-green-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors"
+                        >
+                          {cid}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Campo O que Procura */}
+                <div className="relative">
+                  <label htmlFor="especialidade" className="block text-sm font-semibold text-gray-700 mb-2">
+                    O que procura?
+                  </label>
+                  <input
+                    type="text"
+                    id="especialidade"
+                    value={especialidade}
+                    onChange={(e) => handleEspecialidadeChange(e.target.value)}
+                    onFocus={() => setMostrarEspecialidadeSugestoes(true)}
+                    onBlur={() => setTimeout(() => setMostrarEspecialidadeSugestoes(false), 200)}
+                    placeholder="Ex: farol quebrado, auto elétrica"
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                    required
+                  />
+                  
+                  {/* Sugestões de Especialidades */}
+                  {mostrarEspecialidadeSugestoes && especialidadeSugestoes.length > 0 && (
+                    <div className="absolute z-20 w-full mt-1 bg-white border-2 border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                      {especialidadeSugestoes.map((esp) => (
+                        <div
+                          key={esp}
+                          onMouseDown={() => selecionarEspecialidade(esp)}
+                          className="px-4 py-3 hover:bg-green-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors"
+                        >
+                          {esp}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
 
-              {/* Campo Cidade - CORRIGIDO */}
-              <div className="relative">
-                <label htmlFor="cidade" className="block text-sm font-medium text-gray-700 mb-2">
-                  Informe a Cidade:
-                </label>
-                <input
-                  type="text"
-                  id="cidade"
-                  value={cidade}
-                  onChange={(e) => handleCidadeChange(e.target.value)}
-                  onFocus={() => {
-                    if (estadoSelecionado) {
-                      setCidadeSugestoes(filtrarCidades(cidade, estadoSelecionado));
-                      setMostrarCidadeSugestoes(true);
-                    }
-                  }}
-                  onBlur={() => setTimeout(() => setMostrarCidadeSugestoes(false), 200)}
-                  placeholder={estadoSelecionado ? "Digite sua cidade" : "Selecione um estado primeiro"}
-                  className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                    !estadoSelecionado ? 'bg-gray-100 cursor-not-allowed' : ''
-                  }`}
-                  disabled={!estadoSelecionado}
-                  required
-                />
-                
-                {/* Sugestões de Cidades */}
-                {mostrarCidadeSugestoes && cidadeSugestoes.length > 0 && (
-                  <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                    {cidadeSugestoes.map((cid) => (
-                      <div
-                        key={cid}
-                        onClick={() => selecionarCidade(cid)}
-                        className="px-4 py-2 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0"
-                      >
-                        {cid}
-                      </div>
-                    ))}
-                  </div>
-                )}
+              {/* Botão de Busca */}
+              <div className="text-center pt-4">
+                <button
+                  type="submit"
+                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-12 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                  Buscar Serviços
+                </button>
               </div>
-
-              {/* Campo O que Procura */}
-              <div className="relative">
-                <label htmlFor="especialidade" className="block text-sm font-medium text-gray-700 mb-2">
-                  O que procura?
-                </label>
-                <input
-                  type="text"
-                  id="especialidade"
-                  value={especialidade}
-                  onChange={(e) => handleEspecialidadeChange(e.target.value)}
-                  onFocus={() => setMostrarEspecialidadeSugestoes(true)}
-                  onBlur={() => setTimeout(() => setMostrarEspecialidadeSugestoes(false), 200)}
-                  placeholder="Ex: farol quebrado, auto elétrica"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                />
-                
-                {/* Sugestões de Especialidades */}
-                {mostrarEspecialidadeSugestoes && especialidadeSugestoes.length > 0 && (
-                  <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                    {especialidadeSugestoes.map((esp) => (
-                      <div
-                        key={esp}
-                        onClick={() => selecionarEspecialidade(esp)}
-                        className="px-4 py-2 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0"
-                      >
-                        {esp}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Botão de Busca */}
-            <div className="text-center">
-              <button
-                type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105"
-              >
-                Buscar Serviços
-              </button>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-
-        {/* Moto - QUARTO */}
-        <div className="text-center mt-12">
-          <img 
-            src="/images/fluxo_visitante/image001.jpg" 
-            alt="Moto" 
-            className="mx-auto h-auto rounded-lg shadow-lg"
-            style={{ width: '180px' }}
-          />
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
