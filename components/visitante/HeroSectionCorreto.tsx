@@ -3,232 +3,127 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-// Base de dados de estados brasileiros
-const ESTADOS_BRASIL = [
-  { sigla: 'AC', nome: 'Acre' },
-  { sigla: 'AL', nome: 'Alagoas' },
-  { sigla: 'AP', nome: 'Amapá' },
-  { sigla: 'AM', nome: 'Amazonas' },
-  { sigla: 'BA', nome: 'Bahia' },
-  { sigla: 'CE', nome: 'Ceará' },
-  { sigla: 'DF', nome: 'Distrito Federal' },
-  { sigla: 'ES', nome: 'Espírito Santo' },
-  { sigla: 'GO', nome: 'Goiás' },
-  { sigla: 'MA', nome: 'Maranhão' },
-  { sigla: 'MT', nome: 'Mato Grosso' },
-  { sigla: 'MS', nome: 'Mato Grosso do Sul' },
-  { sigla: 'MG', nome: 'Minas Gerais' },
-  { sigla: 'PA', nome: 'Pará' },
-  { sigla: 'PB', nome: 'Paraíba' },
-  { sigla: 'PR', nome: 'Paraná' },
-  { sigla: 'PE', nome: 'Pernambuco' },
-  { sigla: 'PI', nome: 'Piauí' },
-  { sigla: 'RJ', nome: 'Rio de Janeiro' },
-  { sigla: 'RN', nome: 'Rio Grande do Norte' },
-  { sigla: 'RS', nome: 'Rio Grande do Sul' },
-  { sigla: 'RO', nome: 'Rondônia' },
-  { sigla: 'RR', nome: 'Roraima' },
-  { sigla: 'SC', nome: 'Santa Catarina' },
-  { sigla: 'SP', nome: 'São Paulo' },
-  { sigla: 'SE', nome: 'Sergipe' },
-  { sigla: 'TO', nome: 'Tocantins' }
-];
-
-// Base de dados de cidades por estado
-const CIDADES_POR_ESTADO: { [key: string]: string[] } = {
-  'RS': [
-    'Porto Alegre', 'Caxias do Sul', 'Pelotas', 'Canoas', 'Santa Maria',
-    'Gravataí', 'Viamão', 'Novo Hamburgo', 'São Leopoldo', 'Rio Grande',
-    'Alvorada', 'Passo Fundo', 'Sapucaia do Sul', 'Uruguaiana', 'Santa Cruz do Sul',
-    'Cachoeirinha', 'Bagé', 'Bento Gonçalves', 'Erechim', 'Guaíba'
-  ],
-  'SP': [
-    'São Paulo', 'Guarulhos', 'Campinas', 'São Bernardo do Campo', 'Santo André',
-    'Osasco', 'Ribeirão Preto', 'Sorocaba', 'Santos', 'Mauá',
-    'São José dos Campos', 'Mogi das Cruzes', 'Diadema', 'Jundiaí', 'Carapicuíba'
-  ],
-  'RJ': [
-    'Rio de Janeiro', 'São Gonçalo', 'Duque de Caxias', 'Nova Iguaçu', 'Niterói',
-    'Belford Roxo', 'São João de Meriti', 'Campos dos Goytacazes', 'Petrópolis', 'Volta Redonda'
-  ],
-  'MG': [
-    'Belo Horizonte', 'Uberlândia', 'Contagem', 'Juiz de Fora', 'Betim',
-    'Montes Claros', 'Ribeirão das Neves', 'Uberaba', 'Governador Valadares', 'Ipatinga'
-  ]
-};
-
-// Especialidades disponíveis
-const ESPECIALIDADES = [
-  'Auto Elétricas',
-  'Auto Peças',
-  'Oficinas Mecânicas',
-  'Funilaria e Pintura',
-  'Pneus e Rodas',
-  'Som e Acessórios',
-  'Vidros Automotivos',
-  'Ar Condicionado Automotivo',
-  'Injeção Eletrônica',
-  'Suspensão e Freios'
-];
-
-// Mapeamento inteligente de termos
-const MAPEAMENTO_BUSCA: { [key: string]: string } = {
-  'farol': 'Auto Elétricas',
-  'farol quebrado': 'Auto Elétricas',
-  'luz': 'Auto Elétricas',
-  'bateria': 'Auto Elétricas',
-  'elétrica': 'Auto Elétricas',
-  'eletrica': 'Auto Elétricas',
-  'peça': 'Auto Peças',
-  'peças': 'Auto Peças',
-  'pecas': 'Auto Peças',
-  'motor': 'Oficinas Mecânicas',
-  'mecânica': 'Oficinas Mecânicas',
-  'mecanica': 'Oficinas Mecânicas',
-  'funilaria': 'Funilaria e Pintura',
-  'pintura': 'Funilaria e Pintura',
-  'amassado': 'Funilaria e Pintura',
-  'pneu': 'Pneus e Rodas',
-  'pneus': 'Pneus e Rodas',
-  'roda': 'Pneus e Rodas',
-  'rodas': 'Pneus e Rodas',
-  'som': 'Som e Acessórios',
-  'radio': 'Som e Acessórios',
-  'rádio': 'Som e Acessórios',
-  'vidro': 'Vidros Automotivos',
-  'vidros': 'Vidros Automotivos',
-  'parabrisa': 'Vidros Automotivos',
-  'ar condicionado': 'Ar Condicionado Automotivo',
-  'ar': 'Ar Condicionado Automotivo',
-  'injeção': 'Injeção Eletrônica',
-  'injecao': 'Injeção Eletrônica',
-  'suspensão': 'Suspensão e Freios',
-  'suspensao': 'Suspensão e Freios',
-  'freio': 'Suspensão e Freios',
-  'freios': 'Suspensão e Freios'
-};
-
 export default function HeroSectionCorreto() {
-  const router = useRouter();
-  
-  // Estados do formulário
   const [estado, setEstado] = useState('');
   const [cidade, setCidade] = useState('');
   const [especialidade, setEspecialidade] = useState('');
-  
-  // Estados para autocompletar
-  const [estadoSugestoes, setEstadoSugestoes] = useState<typeof ESTADOS_BRASIL>([]);
+  const [estadoSugestoes, setEstadoSugestoes] = useState<string[]>([]);
   const [cidadeSugestoes, setCidadeSugestoes] = useState<string[]>([]);
   const [especialidadeSugestoes, setEspecialidadeSugestoes] = useState<string[]>([]);
-  
-  // Estados para controle de exibição
-  const [mostrarEstadoSugestoes, setMostrarEstadoSugestoes] = useState(false);
-  const [mostrarCidadeSugestoes, setMostrarCidadeSugestoes] = useState(false);
-  const [mostrarEspecialidadeSugestoes, setMostrarEspecialidadeSugestoes] = useState(false);
-  
-  // Estado selecionado (sigla)
-  const [estadoSelecionado, setEstadoSelecionado] = useState('');
-  
-  // Função para filtrar estados
-  const filtrarEstados = (termo: string) => {
-    if (!termo) return [];
-    const termoLower = termo.toLowerCase();
-    return ESTADOS_BRASIL.filter(est => 
-      est.sigla.toLowerCase().includes(termoLower) ||
-      est.nome.toLowerCase().includes(termoLower)
-    );
+  const [cidadeHabilitada, setCidadeHabilitada] = useState(false);
+  const router = useRouter();
+
+  // Estados brasileiros
+  const estados = [
+    'AC - Acre', 'AL - Alagoas', 'AP - Amapá', 'AM - Amazonas', 'BA - Bahia',
+    'CE - Ceará', 'DF - Distrito Federal', 'ES - Espírito Santo', 'GO - Goiás',
+    'MA - Maranhão', 'MT - Mato Grosso', 'MS - Mato Grosso do Sul', 'MG - Minas Gerais',
+    'PA - Pará', 'PB - Paraíba', 'PR - Paraná', 'PE - Pernambuco', 'PI - Piauí',
+    'RJ - Rio de Janeiro', 'RN - Rio Grande do Norte', 'RS - Rio Grande do Sul',
+    'RO - Rondônia', 'RR - Roraima', 'SC - Santa Catarina', 'SP - São Paulo',
+    'SE - Sergipe', 'TO - Tocantins'
+  ];
+
+  // Cidades do RS (exemplo)
+  const cidadesRS = [
+    'Porto Alegre', 'Caxias do Sul', 'Pelotas', 'Canoas', 'Santa Maria',
+    'Gravataí', 'Viamão', 'Novo Hamburgo', 'São Leopoldo', 'Rio Grande'
+  ];
+
+  // Especialidades
+  const especialidades = [
+    'Auto Elétricas', 'Mecânicas', 'Funilarias', 'Concessionárias',
+    'Autopeças', 'Pneus e Rodas', 'Vidros Automotivos', 'Som e Acessórios',
+    'Seguros', 'Despachantes'
+  ];
+
+  // Mapeamento inteligente
+  const mapeamento = {
+    'farol quebrado': 'Auto Elétricas',
+    'auto elétrica': 'Auto Elétricas',
+    'elétrica': 'Auto Elétricas',
+    'motor': 'Mecânicas',
+    'freio': 'Mecânicas',
+    'batida': 'Funilarias',
+    'amassado': 'Funilarias'
   };
-  
-  // Função para filtrar cidades
-  const filtrarCidades = (termo: string, estadoSigla: string) => {
-    if (!estadoSigla) return [];
-    const cidades = CIDADES_POR_ESTADO[estadoSigla] || [];
-    if (!termo) return cidades;
-    
-    const termoLower = termo.toLowerCase();
-    return cidades.filter(cidade => 
-      cidade.toLowerCase().includes(termoLower)
-    );
-  };
-  
-  // Função para filtrar especialidades
-  const filtrarEspecialidades = (termo: string) => {
-    if (!termo) return ESPECIALIDADES;
-    
-    const termoLower = termo.toLowerCase();
-    const especialidadeMapeada = MAPEAMENTO_BUSCA[termoLower];
-    if (especialidadeMapeada) {
-      return [especialidadeMapeada];
-    }
-    
-    return ESPECIALIDADES.filter(esp => 
-      esp.toLowerCase().includes(termoLower)
-    );
-  };
-  
-  // Handlers para mudanças nos campos
-  const handleEstadoChange = (valor: string) => {
-    setEstado(valor);
-    setEstadoSugestoes(filtrarEstados(valor));
-    setMostrarEstadoSugestoes(true);
-    
-    // Limpar cidade quando estado muda
-    setCidade('');
-    setEstadoSelecionado('');
-  };
-  
-  const handleCidadeChange = (valor: string) => {
-    setCidade(valor);
-    if (estadoSelecionado) {
-      setCidadeSugestoes(filtrarCidades(valor, estadoSelecionado));
-      setMostrarCidadeSugestoes(true);
+
+  // Autocompletar Estado
+  const handleEstadoChange = (value: string) => {
+    setEstado(value);
+    if (value.length > 0) {
+      const filtrados = estados.filter(est => 
+        est.toLowerCase().includes(value.toLowerCase())
+      );
+      setEstadoSugestoes(filtrados);
+    } else {
+      setEstadoSugestoes([]);
+      setCidadeHabilitada(false);
+      setCidade('');
     }
   };
-  
-  const handleEspecialidadeChange = (valor: string) => {
-    setEspecialidade(valor);
-    setEspecialidadeSugestoes(filtrarEspecialidades(valor));
-    setMostrarEspecialidadeSugestoes(true);
-  };
-  
-  // Handlers para seleção de sugestões
-  const selecionarEstado = (estadoObj: typeof ESTADOS_BRASIL[0]) => {
-    setEstado(`${estadoObj.sigla} - ${estadoObj.nome}`);
-    setEstadoSelecionado(estadoObj.sigla);
-    setMostrarEstadoSugestoes(false);
+
+  // Selecionar Estado
+  const selecionarEstado = (estadoSelecionado: string) => {
+    setEstado(estadoSelecionado);
+    setEstadoSugestoes([]);
+    setCidadeHabilitada(true);
     setCidade('');
+  };
+
+  // Autocompletar Cidade
+  const handleCidadeChange = (value: string) => {
+    if (!cidadeHabilitada) return;
+    setCidade(value);
+    if (value.length > 0) {
+      const filtradas = cidadesRS.filter(cid => 
+        cid.toLowerCase().includes(value.toLowerCase())
+      );
+      setCidadeSugestoes(filtradas);
+    } else {
+      setCidadeSugestoes([]);
+    }
+  };
+
+  // Selecionar Cidade
+  const selecionarCidade = (cidadeSelecionada: string) => {
+    setCidade(cidadeSelecionada);
     setCidadeSugestoes([]);
   };
-  
-  const selecionarCidade = (cidadeNome: string) => {
-    setCidade(cidadeNome);
-    setMostrarCidadeSugestoes(false);
-  };
-  
-  const selecionarEspecialidade = (espNome: string) => {
-    setEspecialidade(espNome);
-    setMostrarEspecialidadeSugestoes(false);
-  };
-  
-  // Handler para busca
-  const handleBuscar = (e: React.FormEvent) => {
-    e.preventDefault();
+
+  // Autocompletar Especialidade
+  const handleEspecialidadeChange = (value: string) => {
+    setEspecialidade(value);
     
-    if (!estadoSelecionado || !cidade || !especialidade) {
-      alert('Por favor, preencha todos os campos');
+    // Verificar mapeamento inteligente
+    const mapeado = mapeamento[value.toLowerCase()];
+    if (mapeado) {
+      setEspecialidadeSugestoes([mapeado]);
+    } else if (value.length > 0) {
+      const filtradas = especialidades.filter(esp => 
+        esp.toLowerCase().includes(value.toLowerCase())
+      );
+      setEspecialidadeSugestoes(filtradas);
+    } else {
+      setEspecialidadeSugestoes([]);
+    }
+  };
+
+  // Selecionar Especialidade
+  const selecionarEspecialidade = (especialidadeSelecionada: string) => {
+    setEspecialidade(especialidadeSelecionada);
+    setEspecialidadeSugestoes([]);
+  };
+
+  // Buscar Serviços
+  const buscarServicos = () => {
+    if (!estado || !cidade || !especialidade) {
+      alert('Por favor preencha todos os campos');
       return;
     }
     
-    // Verificar se a cidade pertence ao estado
-    const cidadesDoEstado = CIDADES_POR_ESTADO[estadoSelecionado] || [];
-    if (!cidadesDoEstado.includes(cidade)) {
-      alert(`A cidade "${cidade}" não pertence ao estado selecionado. Por favor, escolha uma cidade válida.`);
-      return;
-    }
-    
-    // Redirecionar para página de resultados
     const params = new URLSearchParams({
-      estado: estadoSelecionado,
+      estado: estado,
       cidade: cidade,
       especialidade: especialidade
     });
@@ -237,229 +132,187 @@ export default function HeroSectionCorreto() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      
-      {/* Header Azul com Logo e Textos */}
-      <section className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-12 px-4">
-        <div className="container mx-auto">
+    <div className="min-h-screen bg-gray-50">
+      {/* HEADER AZUL - Conforme novo modelo */}
+      <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+        <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col lg:flex-row items-center justify-between">
-            
-            {/* Logo Principal */}
-            <div className="flex-shrink-0 mb-8 lg:mb-0">
+            {/* Logo à esquerda - 200px altura proporcional */}
+            <div className="mb-6 lg:mb-0">
               <img 
                 src="/images/fluxo_visitante/logo.png" 
                 alt="Pesquise o melhor lugar para o seu carro" 
-                className="h-auto max-w-full"
-                style={{ height: '200px' }}
+                className="h-48 w-auto object-contain"
               />
             </div>
             
-            {/* Textos do Header */}
-            <div className="flex-1 lg:ml-12 text-center lg:text-right">
-              <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-                Bem Vindo!
-              </h1>
-              <p className="text-xl lg:text-2xl leading-relaxed">
+            {/* Textos à direita - Conforme especificado */}
+            <div className="text-center lg:text-right lg:ml-8">
+              <h1 className="text-4xl lg:text-5xl font-bold mb-4">Bem Vindo!</h1>
+              <p className="text-lg lg:text-xl leading-relaxed max-w-2xl">
                 Acesse recursos exclusivos e informações detalhadas sobre serviços automotivos em sua região.
               </p>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Seção Central com Título e Veículos */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="container mx-auto text-center">
-          
-          {/* Título Principal */}
-          <h2 className="text-4xl lg:text-5xl font-bold text-blue-600 mb-6">
-            Uma Proposta Ganha-Ganha
-          </h2>
-          
-          <h3 className="text-2xl lg:text-3xl font-semibold text-blue-500 mb-8">
-            Em que todos os envolvidos ganham.
-          </h3>
-          
-          {/* Texto Descritivo */}
-          <p className="text-lg text-gray-700 mb-12 max-w-4xl mx-auto leading-relaxed">
-            Encontre os melhores serviços para seu veículo na sua cidade. Pesquise oficinas, autopeças, concessionárias e muito mais.
-          </p>
-          
-          {/* Três Veículos */}
-          <div className="flex flex-col md:flex-row justify-center items-center gap-8 mb-16">
+      {/* SEÇÃO CENTRAL - Duas Colunas conforme especificado */}
+      <div className="bg-white py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             
-            {/* Moto Azul */}
-            <div className="flex-shrink-0">
-              <img 
-                src="/images/fluxo_visitante/image001.jpg" 
-                alt="Moto" 
-                className="h-auto max-w-full rounded-lg shadow-md"
-                style={{ height: '150px' }}
-              />
+            {/* Coluna Esquerda - Textos conforme AjustesSolicitados.txt */}
+            <div className="text-center lg:text-left">
+              <h2 className="text-4xl lg:text-5xl font-bold text-blue-600 mb-6">
+                Uma Proposta Ganha-Ganha
+              </h2>
+              <h3 className="text-2xl lg:text-3xl text-blue-500 mb-8">
+                Em que todos os envolvidos ganham.
+              </h3>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                Encontre os melhores serviços para seu veículo na sua cidade. Pesquise oficinas, autopeças, concessionárias e muito mais.
+              </p>
             </div>
-            
-            {/* Carro Vermelho */}
-            <div className="flex-shrink-0">
-              <img 
-                src="/images/fluxo_visitante/image003.jpg" 
-                alt="Carro Vermelho" 
-                className="h-auto max-w-full rounded-lg shadow-md"
-                style={{ height: '150px' }}
-              />
-            </div>
-            
-            {/* Carro Branco */}
-            <div className="flex-shrink-0">
-              <img 
-                src="/images/fluxo_visitante/image005.jpg" 
-                alt="Carro Branco" 
-                className="h-auto max-w-full rounded-lg shadow-md"
-                style={{ height: '150px' }}
-              />
+
+            {/* Coluna Direita - 3 Veículos (150px cada) */}
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-8">
+              <div className="text-center">
+                <img 
+                  src="/images/fluxo_visitante/image001.jpg" 
+                  alt="Moto azul" 
+                  className="h-32 w-auto object-contain mx-auto mb-2"
+                />
+              </div>
+              <div className="text-center">
+                <img 
+                  src="/images/fluxo_visitante/image003.jpg" 
+                  alt="Carro vermelho" 
+                  className="h-32 w-auto object-contain mx-auto mb-2"
+                />
+              </div>
+              <div className="text-center">
+                <img 
+                  src="/images/fluxo_visitante/image005.jpg" 
+                  alt="Carro branco" 
+                  className="h-32 w-auto object-contain mx-auto mb-2"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Tarja Verde com Formulário */}
-      <section className="bg-green-500 py-12 px-4">
-        <div className="container mx-auto">
-          
-          {/* Título da Seção */}
-          <div className="text-center mb-8">
-            <h3 className="text-3xl font-bold text-white mb-4">
+      {/* TARJA VERDE - Cantos arredondados conforme especificado */}
+      <div className="bg-green-500 py-12">
+        <div className="container mx-auto px-4">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-4xl mx-auto">
+            <h3 className="text-3xl font-bold text-center text-green-600 mb-8">
               Começar Agora
             </h3>
-          </div>
-          
-          {/* Formulário de Busca */}
-          <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-            <form onSubmit={handleBuscar} className="space-y-6">
+            
+            {/* 3 Campos na mesma linha - SEM dropdown conforme solicitado */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               
-              {/* Três Campos na Mesma Linha */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
-                {/* Campo Estado */}
-                <div className="relative">
-                  <label htmlFor="estado" className="block text-sm font-semibold text-gray-700 mb-2">
-                    Estado
-                  </label>
-                  <input
-                    type="text"
-                    id="estado"
-                    value={estado}
-                    onChange={(e) => handleEstadoChange(e.target.value)}
-                    onFocus={() => setMostrarEstadoSugestoes(true)}
-                    onBlur={() => setTimeout(() => setMostrarEstadoSugestoes(false), 200)}
-                    placeholder="Ex: RS ou Rio Grande do Sul"
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
-                    required
-                  />
-                  
-                  {/* Sugestões de Estados */}
-                  {mostrarEstadoSugestoes && estadoSugestoes.length > 0 && (
-                    <div className="absolute z-20 w-full mt-1 bg-white border-2 border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                      {estadoSugestoes.map((est) => (
-                        <div
-                          key={est.sigla}
-                          onMouseDown={() => selecionarEstado(est)}
-                          className="px-4 py-3 hover:bg-green-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors"
-                        >
-                          <span className="font-semibold text-green-600">{est.sigla}</span> - {est.nome}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Campo Cidade */}
-                <div className="relative">
-                  <label htmlFor="cidade" className="block text-sm font-semibold text-gray-700 mb-2">
-                    Cidade
-                  </label>
-                  <input
-                    type="text"
-                    id="cidade"
-                    value={cidade}
-                    onChange={(e) => handleCidadeChange(e.target.value)}
-                    onFocus={() => {
-                      if (estadoSelecionado) {
-                        setCidadeSugestoes(filtrarCidades(cidade, estadoSelecionado));
-                        setMostrarCidadeSugestoes(true);
-                      }
-                    }}
-                    onBlur={() => setTimeout(() => setMostrarCidadeSugestoes(false), 200)}
-                    placeholder={estadoSelecionado ? "Digite sua cidade" : "Selecione um estado primeiro"}
-                    className={`w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors ${
-                      !estadoSelecionado ? 'bg-gray-100 cursor-not-allowed' : ''
-                    }`}
-                    disabled={!estadoSelecionado}
-                    required
-                  />
-                  
-                  {/* Sugestões de Cidades */}
-                  {mostrarCidadeSugestoes && cidadeSugestoes.length > 0 && (
-                    <div className="absolute z-20 w-full mt-1 bg-white border-2 border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                      {cidadeSugestoes.map((cid) => (
-                        <div
-                          key={cid}
-                          onMouseDown={() => selecionarCidade(cid)}
-                          className="px-4 py-3 hover:bg-green-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors"
-                        >
-                          {cid}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Campo O que Procura */}
-                <div className="relative">
-                  <label htmlFor="especialidade" className="block text-sm font-semibold text-gray-700 mb-2">
-                    O que procura?
-                  </label>
-                  <input
-                    type="text"
-                    id="especialidade"
-                    value={especialidade}
-                    onChange={(e) => handleEspecialidadeChange(e.target.value)}
-                    onFocus={() => setMostrarEspecialidadeSugestoes(true)}
-                    onBlur={() => setTimeout(() => setMostrarEspecialidadeSugestoes(false), 200)}
-                    placeholder="Ex: farol quebrado, auto elétrica"
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
-                    required
-                  />
-                  
-                  {/* Sugestões de Especialidades */}
-                  {mostrarEspecialidadeSugestoes && especialidadeSugestoes.length > 0 && (
-                    <div className="absolute z-20 w-full mt-1 bg-white border-2 border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                      {especialidadeSugestoes.map((esp) => (
-                        <div
-                          key={esp}
-                          onMouseDown={() => selecionarEspecialidade(esp)}
-                          className="px-4 py-3 hover:bg-green-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors"
-                        >
-                          {esp}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
+              {/* Campo Estado */}
+              <div className="relative">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Estado
+                </label>
+                <input
+                  type="text"
+                  value={estado}
+                  onChange={(e) => handleEstadoChange(e.target.value)}
+                  placeholder="Ex: RS ou Rio Grande do Sul"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none transition-colors"
+                />
+                {estadoSugestoes.length > 0 && (
+                  <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1 max-h-40 overflow-y-auto shadow-lg">
+                    {estadoSugestoes.map((sugestao, index) => (
+                      <div
+                        key={index}
+                        onClick={() => selecionarEstado(sugestao)}
+                        className="px-4 py-2 hover:bg-green-100 cursor-pointer border-b border-gray-100 last:border-b-0"
+                      >
+                        {sugestao}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
-              {/* Botão de Busca */}
-              <div className="text-center pt-4">
-                <button
-                  type="submit"
-                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-12 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
-                >
-                  Buscar Serviços
-                </button>
+              {/* Campo Cidade */}
+              <div className="relative">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Cidade
+                </label>
+                <input
+                  type="text"
+                  value={cidade}
+                  onChange={(e) => handleCidadeChange(e.target.value)}
+                  placeholder={cidadeHabilitada ? "Digite sua cidade" : "Selecione um estado primeiro"}
+                  disabled={!cidadeHabilitada}
+                  className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors ${
+                    cidadeHabilitada 
+                      ? 'border-gray-300 focus:border-green-500 bg-white' 
+                      : 'border-gray-200 bg-gray-100 cursor-not-allowed'
+                  }`}
+                />
+                {cidadeSugestoes.length > 0 && (
+                  <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1 max-h-40 overflow-y-auto shadow-lg">
+                    {cidadeSugestoes.map((sugestao, index) => (
+                      <div
+                        key={index}
+                        onClick={() => selecionarCidade(sugestao)}
+                        className="px-4 py-2 hover:bg-green-100 cursor-pointer border-b border-gray-100 last:border-b-0"
+                      >
+                        {sugestao}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-            </form>
+
+              {/* Campo O que procura */}
+              <div className="relative">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  O que procura?
+                </label>
+                <input
+                  type="text"
+                  value={especialidade}
+                  onChange={(e) => handleEspecialidadeChange(e.target.value)}
+                  placeholder="Ex: farol quebrado, auto elétrica"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none transition-colors"
+                />
+                {especialidadeSugestoes.length > 0 && (
+                  <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1 max-h-40 overflow-y-auto shadow-lg">
+                    {especialidadeSugestoes.map((sugestao, index) => (
+                      <div
+                        key={index}
+                        onClick={() => selecionarEspecialidade(sugestao)}
+                        className="px-4 py-2 hover:bg-green-100 cursor-pointer border-b border-gray-100 last:border-b-0"
+                      >
+                        {sugestao}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Botão Buscar Serviços - Abaixo dos campos */}
+            <div className="text-center">
+              <button
+                onClick={buscarServicos}
+                className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-12 rounded-lg text-lg transition-colors shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                Buscar Serviços
+              </button>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
