@@ -327,3 +327,62 @@ Para acessar a versão em produção, visite [https://gfauto.vercel.app](https:/
 - ✅ **Objetivo:** Recriar funcionalidade com as 3 imagens (mc4.png, logo_gf.png, image001.jpg)
 - ✅ **Status atual:** Página `/pagina-correta` funcionando perfeitamente
 
+
+## 🎨 NOVO LAYOUT MODERNO - PÁGINA /PAGINA-CORRETA
+
+### **Implementação realizada em:** $(date '+%d/%m/%Y %H:%M:%S')
+
+### **ESTRUTURA DO NOVO LAYOUT:**
+
+#### **1. Header Azul (Seção Superior):**
+- ✅ **Logo principal:** `logo.png` (200px altura proporcional)
+- ✅ **Texto principal:** "Bem Vindo!" (fonte grande, negrito)
+- ✅ **Texto descritivo:** "Acesse recursos exclusivos e informações detalhadas sobre serviços automotivos em sua região."
+- ✅ **Background:** Gradiente azul (blue-500 to blue-600)
+- ✅ **Layout:** Logo à esquerda, textos à direita (responsivo)
+
+#### **2. Seção Central (Fundo Cinza Claro):**
+- ✅ **Título principal:** "Uma Proposta Ganha-Ganha" (azul, grande)
+- ✅ **Subtítulo:** "Em que todos os envolvidos ganham." (azul médio)
+- ✅ **Texto descritivo:** "Encontre os melhores serviços para seu veículo na sua cidade. Pesquise oficinas, autopeças, concessionárias e muito mais."
+- ✅ **3 Veículos lado a lado:**
+  - `image001.jpg` (moto azul - 150px)
+  - `image003.jpg` (carro vermelho - 150px) 
+  - `image005.jpg` (carro branco - 150px)
+
+#### **3. Tarja Verde (Seção do Formulário):**
+- ✅ **Background:** Verde (green-500)
+- ✅ **Título:** "Começar Agora" (branco, centralizado)
+- ✅ **Formulário:** Caixa branca com cantos arredondados (rounded-2xl)
+- ✅ **3 Campos na mesma linha:**
+  - Estado (autocompletar RS/Rio Grande do Sul)
+  - Cidade (habilitado após selecionar estado)
+  - O que procura? (mapeamento inteligente)
+- ✅ **Botão:** "Buscar Serviços" (verde escuro, hover effects)
+
+### **FUNCIONALIDADES MANTIDAS:**
+- ✅ **Autocompletar** funcionando nos 3 campos
+- ✅ **Campo cidade** habilitando após selecionar estado
+- ✅ **Validação** impedindo erros de cidade/estado
+- ✅ **Mapeamento inteligente** de especialidades
+- ✅ **Redirecionamento** para página de resultados
+
+### **CARACTERÍSTICAS TÉCNICAS:**
+- ✅ **Framework:** Next.js + React + TypeScript
+- ✅ **Estilização:** TailwindCSS
+- ✅ **Responsividade:** Mobile-first design
+- ✅ **Acessibilidade:** Labels adequados, contraste de cores
+- ✅ **Performance:** Imagens otimizadas, lazy loading
+
+### **IMAGENS UTILIZADAS:**
+- 📁 `/public/images/fluxo_visitante/logo.png` (200px)
+- 📁 `/public/images/fluxo_visitante/image001.jpg` (150px)
+- 📁 `/public/images/fluxo_visitante/image003.jpg` (150px)
+- 📁 `/public/images/fluxo_visitante/image005.jpg` (150px)
+
+### **ARQUIVO MODIFICADO:**
+- 📁 `/components/visitante/HeroSectionCorreto.tsx`
+
+### **URL DE TESTE:**
+- 🌐 https://gfauto.vercel.app/pagina-correta
+
