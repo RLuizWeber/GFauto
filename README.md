@@ -639,3 +639,194 @@ Tarja Verde com Cantos Arredondados
 - **Padrão:** `/resultados?estado=RS&cidade=Passo+Fundo&especialidade=Auto+Elétricas`
 - **Parâmetros:** estado (sigla), cidade (nome), especialidade (nome completo)
 
+### Metodologia de Sincronização Obrigatória
+
+⚠️ REGRA CRÍTICA - SINCRONIZAÇÃO ANTES DE QUALQUER MODIFICAÇÃO
+
+LIÇÃO APRENDIDA: Scripts falham quando baseados em código desatualizado.
+
+📋 PROTOCOLO OBRIGATÓRIO:
+
+ANTES DE GERAR QUALQUER CÓDIGO/SCRIPT:
+
+1.
+🔄 SINCRONIZAR SANDBOX COM GITHUB:
+
+2.
+🔍 VERIFICAR ÚLTIMO DEPLOY VERCEL:
+
+•
+Acessar: https://vercel.com/dashboard
+
+•
+Confirmar status: "Ready" no último commit
+
+•
+Verificar se commit local = commit deployado
+
+
+
+3.
+✅ CONFIRMAR ALINHAMENTO:
+
+•
+Sandbox ↔ GitHub ↔ Vercel ↔ Local
+
+•
+Todos os ambientes devem estar na mesma versão
+
+
+
+4.
+🚫 NUNCA TRABALHAR COM CÓDIGO DESATUALIZADO:
+
+•
+Código desatualizado = Scripts inúteis
+
+•
+Modificações em arquivos obsoletos = Tempo perdido
+
+
+
+🎯 RESULTADO ESPERADO:
+
+•
+✅ Scripts funcionam na primeira execução
+
+•
+✅ Modificações aplicadas nos arquivos corretos
+
+•
+✅ Eficiência máxima no desenvolvimento
+
+❌ CONSEQUÊNCIAS DE NÃO SEGUIR:
+
+•
+❌ Scripts que não resolvem problemas
+
+•
+❌ Modificações em arquivos obsoletos
+
+•
+❌ Perda de tempo e retrabalho
+
+•
+❌ Frustração e ineficiência
+
+📝 IMPLEMENTAÇÃO:
+
+•
+Data: 11/06/2025 16:52
+
+•
+Motivo: Identificação de falha crítica na metodologia
+
+•
+Status: OBRIGATÓRIO para todos os desenvolvimentos futuros
+
+🔄 Fluxo Correto de Atualizações
+
+📋 FLUXO OFICIAL DOS AMBIENTES:
+
+SEQUÊNCIA CORRETA:
+
+Plain Text
+
+
+Local → GitHub → Vercel
+  ↓
+Sandbox (somente leitura/análise)
+
+
+🎯 RESPONSABILIDADES:
+
+AMBIENTE LOCAL:
+
+•
+✅ Origem de todas as modificações
+
+•
+✅ Envia para GitHub via git push
+
+•
+✅ Controla versões e releases
+
+GITHUB:
+
+•
+✅ Repositório central oficial
+
+•
+✅ Recebe do Local
+
+•
+✅ Alimenta Vercel e Sandbox
+
+VERCEL:
+
+•
+✅ Deploy automático do GitHub
+
+•
+✅ Ambiente de produção
+
+•
+✅ Reflete estado do GitHub
+
+SANDBOX:
+
+•
+✅ Somente leitura do GitHub
+
+•
+✅ Análise e geração de scripts
+
+•
+❌ NUNCA envia para GitHub
+
+⚠️ REGRAS CRÍTICAS:
+
+1.
+SANDBOX NÃO PODE FAZER PUSH:
+
+•
+❌ Sandbox → GitHub (PROIBIDO)
+
+•
+✅ GitHub → Sandbox (PERMITIDO)
+
+
+
+2.
+ATUALIZAÇÕES VÊM DO LOCAL:
+
+•
+✅ Local → GitHub → Vercel
+
+•
+✅ READMEs atualizados no Local primeiro
+
+
+
+3.
+SINCRONIZAÇÃO OBRIGATÓRIA:
+
+•
+🔄 Sempre git pull no sandbox antes de trabalhar
+
+•
+🔍 Verificar alinhamento entre ambientes
+
+
+
+📝 IMPLEMENTAÇÃO:
+
+•
+Data: 11/06/2025 17:00
+
+•
+Motivo: Correção do fluxo de atualizações
+
+•
+Status: OBRIGATÓRIO - Fluxo oficial do projeto
+
