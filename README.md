@@ -417,7 +417,7 @@ Para acessar a versão em produção, visite [https://gfauto.vercel.app](https:/
 
 ### 🎯 ESTRUTURA ORGANIZACIONAL POR FLUXOS:
 
-O Projeto GFauto segue uma metodologia profissional de organização baseada em **fluxos de trabalho**:
+Ajustado/atualizado em 11/06/2025 O Projeto GFauto segue uma metodologia profissional de organização baseada em **fluxos de trabalho**:
 
 ```
 GFauto/
