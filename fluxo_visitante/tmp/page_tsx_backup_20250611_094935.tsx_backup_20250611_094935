@@ -1,6 +1,6 @@
 // Caminho: /app/pagina-correta/page.tsx
 import { Metadata } from 'next';
-import HeroSectionCorreto from '../../fluxo_visitante/fluxo_visitante/components/visitante/HeroSectionCorreto';
+import HeroSectionCorreto from '../../components/visitante/HeroSectionCorreto';
 
 export const metadata: Metadata = {
   title: 'GFauto - Página Correta com Imagens',
