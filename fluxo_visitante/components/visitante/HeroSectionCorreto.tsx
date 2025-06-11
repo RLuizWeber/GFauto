@@ -34,203 +34,150 @@ const ESTADOS_BRASIL = [
   { sigla: 'TO', nome: 'Tocantins' }
 ];
 
-// Base de dados de cidades por estado
+// Base de dados de cidades por estado (principais cidades)
 const CIDADES_POR_ESTADO: { [key: string]: string[] } = {
-  'RS': [
-    'Porto Alegre', 'Caxias do Sul', 'Pelotas', 'Canoas', 'Santa Maria',
-    'Gravataí', 'Viamão', 'Novo Hamburgo', 'São Leopoldo', 'Rio Grande',
-    'Alvorada', 'Passo Fundo', 'Sapucaia do Sul', 'Uruguaiana', 'Santa Cruz do Sul',
-    'Cachoeirinha', 'Bagé', 'Bento Gonçalves', 'Erechim', 'Guaíba'
-  ],
-  'SP': [
-    'São Paulo', 'Guarulhos', 'Campinas', 'São Bernardo do Campo', 'Santo André',
-    'Osasco', 'Ribeirão Preto', 'Sorocaba', 'Santos', 'Mauá',
-    'São José dos Campos', 'Mogi das Cruzes', 'Diadema', 'Jundiaí', 'Carapicuíba'
-  ],
-  'RJ': [
-    'Rio de Janeiro', 'São Gonçalo', 'Duque de Caxias', 'Nova Iguaçu', 'Niterói',
-    'Belford Roxo', 'São João de Meriti', 'Campos dos Goytacazes', 'Petrópolis', 'Volta Redonda'
-  ],
-  'MG': [
-    'Belo Horizonte', 'Uberlândia', 'Contagem', 'Juiz de Fora', 'Betim',
-    'Montes Claros', 'Ribeirão das Neves', 'Uberaba', 'Governador Valadares', 'Ipatinga'
-  ]
+  'RS': ['Porto Alegre', 'Caxias do Sul', 'Pelotas', 'Canoas', 'Santa Maria'],
+  'SP': ['São Paulo', 'Guarulhos', 'Campinas', 'São Bernardo do Campo', 'Santo André'],
+  'RJ': ['Rio de Janeiro', 'São Gonçalo', 'Duque de Caxias', 'Nova Iguaçu', 'Niterói'],
+  'MG': ['Belo Horizonte', 'Uberlândia', 'Contagem', 'Juiz de Fora', 'Betim'],
+  'BA': ['Salvador', 'Feira de Santana', 'Vitória da Conquista', 'Camaçari', 'Itabuna'],
+  'PR': ['Curitiba', 'Londrina', 'Maringá', 'Ponta Grossa', 'Cascavel'],
+  'SC': ['Florianópolis', 'Joinville', 'Blumenau', 'São José', 'Criciúma'],
+  'GO': ['Goiânia', 'Aparecida de Goiânia', 'Anápolis', 'Rio Verde', 'Luziânia'],
+  'PE': ['Recife', 'Jaboatão dos Guararapes', 'Olinda', 'Caruaru', 'Petrolina'],
+  'CE': ['Fortaleza', 'Caucaia', 'Juazeiro do Norte', 'Maracanaú', 'Sobral']
 };
 
-// Especialidades disponíveis
-const ESPECIALIDADES = [
-  'Auto Elétricas',
-  'Auto Peças',
-  'Oficinas Mecânicas',
-  'Funilaria e Pintura',
-  'Pneus e Rodas',
-  'Som e Acessórios',
-  'Vidros Automotivos',
-  'Ar Condicionado Automotivo',
-  'Injeção Eletrônica',
-  'Suspensão e Freios'
+// Sugestões para o campo "O que procura?"
+const SUGESTOES_SERVICOS = [
+  'Oficina mecânica', 'Auto elétrica', 'Funilaria e pintura', 'Pneus e rodas',
+  'Autopeças', 'Concessionária', 'Lavagem automotiva', 'Ar condicionado automotivo',
+  'Alinhamento e balanceamento', 'Troca de óleo', 'Revisão completa', 'Freios',
+  'Suspensão', 'Motor', 'Câmbio', 'Farol quebrado', 'Para-brisa', 'Bateria'
 ];
 
-// Mapeamento inteligente de termos
-const MAPEAMENTO_BUSCA: { [key: string]: string } = {
-  'farol': 'Auto Elétricas',
-  'farol quebrado': 'Auto Elétricas',
-  'luz': 'Auto Elétricas',
-  'bateria': 'Auto Elétricas',
-  'elétrica': 'Auto Elétricas',
-  'eletrica': 'Auto Elétricas',
-  'peça': 'Auto Peças',
-  'peças': 'Auto Peças',
-  'pecas': 'Auto Peças',
-  'motor': 'Oficinas Mecânicas',
-  'mecânica': 'Oficinas Mecânicas',
-  'mecanica': 'Oficinas Mecânicas',
-  'funilaria': 'Funilaria e Pintura',
-  'pintura': 'Funilaria e Pintura',
-  'amassado': 'Funilaria e Pintura',
-  'pneu': 'Pneus e Rodas',
-  'pneus': 'Pneus e Rodas',
-  'roda': 'Pneus e Rodas',
-  'rodas': 'Pneus e Rodas',
-  'som': 'Som e Acessórios',
-  'radio': 'Som e Acessórios',
-  'rádio': 'Som e Acessórios',
-  'vidro': 'Vidros Automotivos',
-  'vidros': 'Vidros Automotivos',
-  'parabrisa': 'Vidros Automotivos',
-  'ar condicionado': 'Ar Condicionado Automotivo',
-  'ar': 'Ar Condicionado Automotivo',
-  'injeção': 'Injeção Eletrônica',
-  'injecao': 'Injeção Eletrônica',
-  'suspensão': 'Suspensão e Freios',
-  'suspensao': 'Suspensão e Freios',
-  'freio': 'Suspensão e Freios',
-  'freios': 'Suspensão e Freios'
-};
-
 export default function HeroSectionCorreto() {
-  const router = useRouter();
-  
-  // Estados do formulário
   const [estado, setEstado] = useState('');
   const [cidade, setCidade] = useState('');
-  const [especialidade, setEspecialidade] = useState('');
-  
-  // Estados para autocompletar
-  const [estadoSugestoes, setEstadoSugestoes] = useState<typeof ESTADOS_BRASIL>([]);
-  const [cidadeSugestoes, setCidadeSugestoes] = useState<string[]>([]);
-  const [especialidadeSugestoes, setEspecialidadeSugestoes] = useState<string[]>([]);
-  
-  // Estados para controle de exibição
-  const [mostrarEstadoSugestoes, setMostrarEstadoSugestoes] = useState(false);
-  const [mostrarCidadeSugestoes, setMostrarCidadeSugestoes] = useState(false);
-  const [mostrarEspecialidadeSugestoes, setMostrarEspecialidadeSugestoes] = useState(false);
-  
-  // Estado selecionado (sigla)
-  const [estadoSelecionado, setEstadoSelecionado] = useState('');
-  
-  // Função para filtrar estados
-  const filtrarEstados = (termo: string) => {
-    if (!termo) return [];
-    const termoLower = termo.toLowerCase();
-    return ESTADOS_BRASIL.filter(est => 
-      est.sigla.toLowerCase().includes(termoLower) ||
-      est.nome.toLowerCase().includes(termoLower)
-    );
-  };
-  
-  // Função para filtrar cidades
-  const filtrarCidades = (termo: string, estadoSigla: string) => {
-    if (!estadoSigla) return [];
-    const cidades = CIDADES_POR_ESTADO[estadoSigla] || [];
-    if (!termo) return cidades;
-    
-    const termoLower = termo.toLowerCase();
-    return cidades.filter(cidade => 
-      cidade.toLowerCase().includes(termoLower)
-    );
-  };
-  
-  // Função para filtrar especialidades
-  const filtrarEspecialidades = (termo: string) => {
-    if (!termo) return ESPECIALIDADES;
-    
-    const termoLower = termo.toLowerCase();
-    const especialidadeMapeada = MAPEAMENTO_BUSCA[termoLower];
-    if (especialidadeMapeada) {
-      return [especialidadeMapeada];
+  const [servico, setServico] = useState('');
+  const [sugestoesEstado, setSugestoesEstado] = useState<typeof ESTADOS_BRASIL>([]);
+  const [sugestoesCidade, setSugestoesCidade] = useState<string[]>([]);
+  const [sugestoesServico, setSugestoesServico] = useState<string[]>([]);
+  const [estadoSelecionado, setEstadoSelecionado] = useState<string>('');
+  const router = useRouter();
+
+  // Função para buscar estados
+  const buscarEstados = (termo: string) => {
+    if (termo.length === 0) {
+      setSugestoesEstado([]);
+      return;
     }
     
-    return ESPECIALIDADES.filter(esp => 
-      esp.toLowerCase().includes(termoLower)
+    const termoLower = termo.toLowerCase();
+    const resultados = ESTADOS_BRASIL.filter(estado => 
+      estado.nome.toLowerCase().includes(termoLower) || 
+      estado.sigla.toLowerCase().includes(termoLower)
     );
+    setSugestoesEstado(resultados);
   };
-  
-  // Handlers para mudanças nos campos
+
+  // Função para buscar cidades
+  const buscarCidades = (termo: string) => {
+    if (!estadoSelecionado || termo.length === 0) {
+      setSugestoesCidade([]);
+      return;
+    }
+    
+    const cidadesDoEstado = CIDADES_POR_ESTADO[estadoSelecionado] || [];
+    const termoLower = termo.toLowerCase();
+    const resultados = cidadesDoEstado.filter(cidade => 
+      cidade.toLowerCase().includes(termoLower)
+    );
+    setSugestoesCidade(resultados);
+  };
+
+  // Função para buscar serviços
+  const buscarServicos = (termo: string) => {
+    if (termo.length === 0) {
+      setSugestoesServico([]);
+      return;
+    }
+    
+    const termoLower = termo.toLowerCase();
+    const resultados = SUGESTOES_SERVICOS.filter(servico => 
+      servico.toLowerCase().includes(termoLower)
+    );
+    setSugestoesServico(resultados);
+  };
+
+  // Handlers para os campos
   const handleEstadoChange = (valor: string) => {
     setEstado(valor);
-    setEstadoSugestoes(filtrarEstados(valor));
-    setMostrarEstadoSugestoes(true);
+    buscarEstados(valor);
     
     // Limpar cidade quando estado muda
     setCidade('');
     setEstadoSelecionado('');
+    setSugestoesCidade([]);
   };
-  
+
   const handleCidadeChange = (valor: string) => {
     setCidade(valor);
-    if (estadoSelecionado) {
-      setCidadeSugestoes(filtrarCidades(valor, estadoSelecionado));
-      setMostrarCidadeSugestoes(true);
-    }
+    buscarCidades(valor);
   };
-  
-  const handleEspecialidadeChange = (valor: string) => {
-    setEspecialidade(valor);
-    setEspecialidadeSugestoes(filtrarEspecialidades(valor));
-    setMostrarEspecialidadeSugestoes(true);
+
+  const handleServicoChange = (valor: string) => {
+    setServico(valor);
+    buscarServicos(valor);
   };
-  
-  // Handlers para seleção de sugestões
+
+  // Selecionar estado
   const selecionarEstado = (estadoObj: typeof ESTADOS_BRASIL[0]) => {
     setEstado(`${estadoObj.sigla} - ${estadoObj.nome}`);
     setEstadoSelecionado(estadoObj.sigla);
-    setMostrarEstadoSugestoes(false);
-    setCidade('');
-    setCidadeSugestoes([]);
+    setSugestoesEstado([]);
+    setCidade(''); // Limpar cidade
   };
-  
+
+  // Selecionar cidade
   const selecionarCidade = (cidadeNome: string) => {
     setCidade(cidadeNome);
-    setMostrarCidadeSugestoes(false);
+    setSugestoesCidade([]);
   };
-  
-  const selecionarEspecialidade = (espNome: string) => {
-    setEspecialidade(espNome);
-    setMostrarEspecialidadeSugestoes(false);
+
+  // Selecionar serviço
+  const selecionarServico = (servicoNome: string) => {
+    setServico(servicoNome);
+    setSugestoesServico([]);
   };
-  
-  // Handler para busca
+
+  // Função de busca
   const handleBuscar = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!estadoSelecionado || !cidade || !especialidade) {
-      alert('Por favor, preencha todos os campos');
+    if (!estado || !cidade || !servico) {
+      alert('Por favor, preencha todos os campos antes de buscar.');
       return;
     }
-    
-    // Verificar se a cidade pertence ao estado
-    const cidadesDoEstado = CIDADES_POR_ESTADO[estadoSelecionado] || [];
-    if (!cidadesDoEstado.includes(cidade)) {
-      alert(`A cidade "${cidade}" não pertence ao estado selecionado. Por favor, escolha uma cidade válida.`);
-      return;
+
+    // Validar se cidade pertence ao estado selecionado
+    if (estadoSelecionado) {
+      const cidadesDoEstado = CIDADES_POR_ESTADO[estadoSelecionado] || [];
+      const cidadeValida = cidadesDoEstado.some(c => 
+        cidade.toLowerCase().includes(c.toLowerCase())
+      );
+      
+      if (!cidadeValida) {
+        alert(`A cidade "${cidade}" não foi encontrada no estado selecionado. Por favor, selecione uma cidade válida.`);
+        return;
+      }
     }
-    
+
     // Redirecionar para página de resultados
     const params = new URLSearchParams({
-      estado: estadoSelecionado,
+      estado: estadoSelecionado || estado,
       cidade: cidade,
-      especialidade: especialidade
+      servico: servico
     });
     
     router.push(`/resultados?${params.toString()}`);
@@ -239,22 +186,22 @@ export default function HeroSectionCorreto() {
   return (
     <div className="min-h-screen bg-white">
       
-      {/* Header Azul Sólido - Conforme Referência */}
+      {/* Header Azul Sólido com Logo e Textos */}
       <section className="bg-blue-600 text-white py-12 px-4">
         <div className="container mx-auto">
           <div className="flex flex-col lg:flex-row items-center justify-between">
             
-            {/* Logo Principal - 200px largura */}
+            {/* Logo Principal */}
             <div className="flex-shrink-0 mb-8 lg:mb-0">
               <img 
                 src="/images/fluxo_visitante/logo.png" 
                 alt="Pesquise o melhor lugar para o seu carro" 
-                className="h-auto"
+                className="h-auto max-w-full"
                 style={{ width: '200px' }}
               />
             </div>
             
-            {/* Textos do Header - Conforme Referência */}
+            {/* Textos do Header */}
             <div className="flex-1 lg:ml-12 text-center lg:text-right">
               <h1 className="text-4xl lg:text-5xl font-bold mb-4">
                 Bem Vindo!
@@ -267,7 +214,7 @@ export default function HeroSectionCorreto() {
         </div>
       </section>
 
-      {/* Seção Central - Duas Colunas Conforme Referência */}
+      {/* Seção Central - Duas Colunas */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -290,32 +237,32 @@ export default function HeroSectionCorreto() {
             {/* Coluna Direita - 3 Veículos LADO A LADO */}
             <div className="flex justify-center items-center gap-6">
               
-              {/* Moto Azul - 180px largura */}
+              {/* Moto Azul */}
               <div className="flex-shrink-0">
                 <img 
                   src="/images/fluxo_visitante/image001.jpg" 
                   alt="Moto" 
-                  className="h-auto rounded-lg shadow-md"
+                  className="h-auto max-w-full rounded-lg shadow-md"
                   style={{ width: '180px' }}
                 />
               </div>
               
-              {/* Carro Vermelho - 180px largura */}
+              {/* Carro Vermelho */}
               <div className="flex-shrink-0">
                 <img 
                   src="/images/fluxo_visitante/image003.jpg" 
                   alt="Carro Vermelho" 
-                  className="h-auto rounded-lg shadow-md"
+                  className="h-auto max-w-full rounded-lg shadow-md"
                   style={{ width: '180px' }}
                 />
               </div>
               
-              {/* Carro Branco - 180px largura */}
+              {/* Carro Branco */}
               <div className="flex-shrink-0">
                 <img 
                   src="/images/fluxo_visitante/image005.jpg" 
                   alt="Carro Branco" 
-                  className="h-auto rounded-lg shadow-md"
+                  className="h-auto max-w-full rounded-lg shadow-md"
                   style={{ width: '180px' }}
                 />
               </div>
@@ -324,7 +271,7 @@ export default function HeroSectionCorreto() {
         </div>
       </section>
 
-      {/* Tarja Verde com Cantos Arredondados - Conforme Referência */}
+      {/* Tarja Verde com Cantos Arredondados */}
       <section className="bg-green-500 py-12 px-4">
         <div className="container mx-auto">
           
@@ -335,11 +282,11 @@ export default function HeroSectionCorreto() {
             </h3>
           </div>
           
-          {/* Formulário de Busca com Cantos Arredondados */}
+          {/* Formulário de Busca */}
           <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-2xl p-8">
             <form onSubmit={handleBuscar} className="space-y-6">
               
-              {/* Três Campos na Mesma Linha - Conforme Referência */}
+              {/* Três Campos na Mesma Linha */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
                 {/* Campo Estado */}
@@ -352,29 +299,27 @@ export default function HeroSectionCorreto() {
                     id="estado"
                     value={estado}
                     onChange={(e) => handleEstadoChange(e.target.value)}
-                    onFocus={() => setMostrarEstadoSugestoes(true)}
-                    onBlur={() => setTimeout(() => setMostrarEstadoSugestoes(false), 200)}
                     placeholder="Ex: RS ou Rio Grande do Sul"
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
-                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    autoComplete="off"
                   />
                   
                   {/* Sugestões de Estados */}
-                  {mostrarEstadoSugestoes && estadoSugestoes.length > 0 && (
-                    <div className="absolute z-20 w-full mt-1 bg-white border-2 border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                      {estadoSugestoes.map((est) => (
+                  {sugestoesEstado.length > 0 && (
+                    <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                      {sugestoesEstado.map((estado, index) => (
                         <div
-                          key={est.sigla}
-                          onMouseDown={() => selecionarEstado(est)}
-                          className="px-4 py-3 hover:bg-green-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors"
+                          key={index}
+                          onClick={() => selecionarEstado(estado)}
+                          className="px-4 py-2 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0"
                         >
-                          <span className="font-semibold text-green-600">{est.sigla}</span> - {est.nome}
+                          <span className="font-semibold text-blue-600">{estado.sigla}</span> - {estado.nome}
                         </div>
                       ))}
                     </div>
                   )}
                 </div>
-
+                
                 {/* Campo Cidade */}
                 <div className="relative">
                   <label htmlFor="cidade" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -385,64 +330,53 @@ export default function HeroSectionCorreto() {
                     id="cidade"
                     value={cidade}
                     onChange={(e) => handleCidadeChange(e.target.value)}
-                    onFocus={() => {
-                      if (estadoSelecionado) {
-                        setCidadeSugestoes(filtrarCidades(cidade, estadoSelecionado));
-                        setMostrarCidadeSugestoes(true);
-                      }
-                    }}
-                    onBlur={() => setTimeout(() => setMostrarCidadeSugestoes(false), 200)}
-                    placeholder={estadoSelecionado ? "Digite sua cidade" : "Selecione um estado primeiro"}
-                    className={`w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors ${
-                      !estadoSelecionado ? 'bg-gray-100 cursor-not-allowed' : ''
-                    }`}
+                    placeholder={estadoSelecionado ? "Digite o nome da cidade" : "Selecione um estado primeiro"}
                     disabled={!estadoSelecionado}
-                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    autoComplete="off"
                   />
                   
                   {/* Sugestões de Cidades */}
-                  {mostrarCidadeSugestoes && cidadeSugestoes.length > 0 && (
-                    <div className="absolute z-20 w-full mt-1 bg-white border-2 border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                      {cidadeSugestoes.map((cid) => (
+                  {sugestoesCidade.length > 0 && (
+                    <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                      {sugestoesCidade.map((cidade, index) => (
                         <div
-                          key={cid}
-                          onMouseDown={() => selecionarCidade(cid)}
-                          className="px-4 py-3 hover:bg-green-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors"
+                          key={index}
+                          onClick={() => selecionarCidade(cidade)}
+                          className="px-4 py-2 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0"
                         >
-                          {cid}
+                          {cidade}
                         </div>
                       ))}
                     </div>
                   )}
                 </div>
-
-                {/* Campo O que Procura */}
+                
+                {/* Campo O que procura? */}
                 <div className="relative">
-                  <label htmlFor="especialidade" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="servico" className="block text-sm font-semibold text-gray-700 mb-2">
                     O que procura?
                   </label>
                   <input
                     type="text"
-                    id="especialidade"
-                    value={especialidade}
-                    onChange={(e) => handleEspecialidadeChange(e.target.value)}
-                    onFocus={() => setMostrarEspecialidadeSugestoes(true)}
-                    onBlur={() => setTimeout(() => setMostrarEspecialidadeSugestoes(false), 200)}
+                    id="servico"
+                    value={servico}
+                    onChange={(e) => handleServicoChange(e.target.value)}
                     placeholder="Ex: farol quebrado, auto elétrica"
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
-                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    autoComplete="off"
                   />
                   
-                  {/* Sugestões de Especialidades */}
-                  {mostrarEspecialidadeSugestoes && especialidadeSugestoes.length > 0 && (
-                    <div className="absolute z-20 w-full mt-1 bg-white border-2 border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                      {especialidadeSugestoes.map((esp) => (
+                  {/* Sugestões de Serviços */}
+                  {sugestoesServico.length > 0 && (
+                    <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                      {sugestoesServico.map((servico, index) => (
                         <div
-                          key={esp}
-                          onMouseDown={() => selecionarEspecialidade(esp)}
-                          className="px-4 py-3 hover:bg-green-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors"
+                          key={index}
+                          onClick={() => selecionarServico(servico)}
+                          className="px-4 py-2 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0"
                         >
-                          {esp}
+                          {servico}
                         </div>
                       ))}
                     </div>
@@ -450,11 +384,11 @@ export default function HeroSectionCorreto() {
                 </div>
               </div>
               
-              {/* Botão Buscar Serviços - Abaixo dos Campos */}
-              <div className="text-center pt-4">
+              {/* Botão de Busca */}
+              <div className="text-center">
                 <button
                   type="submit"
-                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-12 rounded-lg text-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
                 >
                   Buscar Serviços
                 </button>
