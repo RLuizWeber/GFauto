@@ -830,3 +830,30 @@ Motivo: Correção do fluxo de atualizações
 •
 Status: OBRIGATÓRIO - Fluxo oficial do projeto
 
+
+## 🧹 Limpeza Completa de Arquivos Obsoletos
+
+### Limpeza Realizada
+- **Data:** 11/06/2025 15:09
+- **Objetivo:** Eliminar arquivos e pastas obsoletos do projeto
+
+### Arquivos Removidos
+- ✅ **docs/README.md** - README duplicado obsoleto
+- ✅ **fluxo_visitante/README.md** - Notas temporárias de limpeza
+- ✅ **backup_ajustes_20250611_134258/** - Pasta de backup temporária
+- ✅ **GFauto/** - Pasta vazia desnecessária
+
+### Arquivos Preservados
+- ✅ **README.md** - Documentação principal
+- ✅ **public/images/README.md** - Organização de imagens
+- ✅ **scripts/db/README.md** - Instruções de banco
+- ✅ **scripts/db/README_API.md** - Documentação da API
+
+### Metodologia Aplicada
+- 💾 **Backup de segurança** criado antes da remoção
+- 🔍 **Verificação** de arquivos essenciais preservados
+- 📝 **Documentação** da limpeza realizada
+
+### Regra de Ouro
+**"Manter apenas arquivos essenciais. Remover obsoletos regularmente."**
+
