@@ -1,0 +1,35 @@
+# Arquivos e pastas que devem ser ignorados no build da Vercel
+
+# Pastas temporárias
+tmp/
+temp/
+backup/
+**/tmp/
+**/temp/
+**/backup/
+
+# Arquivos de backup
+*.backup
+*.backup.*
+*.bak
+*backup_*
+
+# Logs
+*.log
+logs/
+
+# Arquivos de desenvolvimento
+.env.local
+.env.development
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de editor
+*.swp
+*.swo
+*~
+
+# Pasta de scripts de correção
+corrigir/
