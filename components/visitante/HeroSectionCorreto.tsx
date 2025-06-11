@@ -3,6 +3,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+// Tipagem para o mapeamento
+type MapeamentoType = {
+  [key: string]: string;
+};
+
 export default function HeroSectionCorreto() {
   const [estado, setEstado] = useState('');
   const [cidade, setCidade] = useState('');
@@ -37,8 +42,8 @@ export default function HeroSectionCorreto() {
     'Seguros', 'Despachantes'
   ];
 
-  // Mapeamento inteligente
-  const mapeamento = {
+  // Mapeamento inteligente com tipagem correta
+  const mapeamento: MapeamentoType = {
     'farol quebrado': 'Auto Elétricas',
     'auto elétrica': 'Auto Elétricas',
     'elétrica': 'Auto Elétricas',
@@ -95,7 +100,7 @@ export default function HeroSectionCorreto() {
   const handleEspecialidadeChange = (value: string) => {
     setEspecialidade(value);
     
-    // Verificar mapeamento inteligente
+    // Verificar mapeamento inteligente com tipagem correta
     const mapeado = mapeamento[value.toLowerCase()];
     if (mapeado) {
       setEspecialidadeSugestoes([mapeado]);
@@ -133,12 +138,12 @@ export default function HeroSectionCorreto() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* HEADER AZUL - Conforme novo modelo */}
-      <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+      {/* HEADER AZUL - CONFORME ESPECIFICAÇÃO */}
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
         <div className="container mx-auto px-4 py-8">
-          <div className="flex flex-col lg:flex-row items-center justify-between">
-            {/* Logo à esquerda - 200px altura proporcional */}
-            <div className="mb-6 lg:mb-0">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+            {/* Logo à esquerda - 200px altura conforme especificado */}
+            <div className="flex-shrink-0">
               <img 
                 src="/images/fluxo_visitante/logo.png" 
                 alt="Pesquise o melhor lugar para o seu carro" 
@@ -146,10 +151,10 @@ export default function HeroSectionCorreto() {
               />
             </div>
             
-            {/* Textos à direita - Conforme especificado */}
-            <div className="text-center lg:text-right lg:ml-8">
+            {/* Textos à direita - EXATOS conforme AjustesSolicitados.txt */}
+            <div className="text-center lg:text-right flex-1">
               <h1 className="text-4xl lg:text-5xl font-bold mb-4">Bem Vindo!</h1>
-              <p className="text-lg lg:text-xl leading-relaxed max-w-2xl">
+              <p className="text-lg lg:text-xl leading-relaxed">
                 Acesse recursos exclusivos e informações detalhadas sobre serviços automotivos em sua região.
               </p>
             </div>
@@ -157,17 +162,17 @@ export default function HeroSectionCorreto() {
         </div>
       </div>
 
-      {/* SEÇÃO CENTRAL - Duas Colunas conforme especificado */}
+      {/* SEÇÃO CENTRAL - LAYOUT CONFORME ESPECIFICAÇÃO */}
       <div className="bg-white py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             
-            {/* Coluna Esquerda - Textos conforme AjustesSolicitados.txt */}
+            {/* Coluna Esquerda - Textos EXATOS */}
             <div className="text-center lg:text-left">
-              <h2 className="text-4xl lg:text-5xl font-bold text-blue-600 mb-6">
+              <h2 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-6">
                 Uma Proposta Ganha-Ganha
               </h2>
-              <h3 className="text-2xl lg:text-3xl text-blue-500 mb-8">
+              <h3 className="text-2xl lg:text-3xl text-gray-600 mb-8">
                 Em que todos os envolvidos ganham.
               </h3>
               <p className="text-lg text-gray-700 leading-relaxed">
@@ -175,27 +180,27 @@ export default function HeroSectionCorreto() {
               </p>
             </div>
 
-            {/* Coluna Direita - 3 Veículos (150px cada) */}
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-8">
+            {/* Coluna Direita - 3 VEÍCULOS LADO A LADO (150px cada) */}
+            <div className="flex flex-wrap justify-center lg:justify-end items-center gap-6">
               <div className="text-center">
                 <img 
                   src="/images/fluxo_visitante/image001.jpg" 
                   alt="Moto azul" 
-                  className="h-32 w-auto object-contain mx-auto mb-2"
+                  className="h-32 w-auto object-contain mx-auto"
                 />
               </div>
               <div className="text-center">
                 <img 
                   src="/images/fluxo_visitante/image003.jpg" 
                   alt="Carro vermelho" 
-                  className="h-32 w-auto object-contain mx-auto mb-2"
+                  className="h-32 w-auto object-contain mx-auto"
                 />
               </div>
               <div className="text-center">
                 <img 
                   src="/images/fluxo_visitante/image005.jpg" 
                   alt="Carro branco" 
-                  className="h-32 w-auto object-contain mx-auto mb-2"
+                  className="h-32 w-auto object-contain mx-auto"
                 />
               </div>
             </div>
@@ -203,15 +208,15 @@ export default function HeroSectionCorreto() {
         </div>
       </div>
 
-      {/* TARJA VERDE - Cantos arredondados conforme especificado */}
+      {/* TARJA VERDE COM CANTOS ARREDONDADOS - CONFORME ESPECIFICAÇÃO */}
       <div className="bg-green-500 py-12">
         <div className="container mx-auto px-4">
-          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-4xl mx-auto">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-5xl mx-auto">
             <h3 className="text-3xl font-bold text-center text-green-600 mb-8">
               Começar Agora
             </h3>
             
-            {/* 3 Campos na mesma linha - SEM dropdown conforme solicitado */}
+            {/* 3 CAMPOS NA MESMA LINHA - SEM DROPDOWN conforme especificado */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               
               {/* Campo Estado */}
@@ -224,7 +229,7 @@ export default function HeroSectionCorreto() {
                   value={estado}
                   onChange={(e) => handleEstadoChange(e.target.value)}
                   placeholder="Ex: RS ou Rio Grande do Sul"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none transition-colors"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none transition-colors text-gray-800"
                 />
                 {estadoSugestoes.length > 0 && (
                   <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1 max-h-40 overflow-y-auto shadow-lg">
@@ -232,7 +237,7 @@ export default function HeroSectionCorreto() {
                       <div
                         key={index}
                         onClick={() => selecionarEstado(sugestao)}
-                        className="px-4 py-2 hover:bg-green-100 cursor-pointer border-b border-gray-100 last:border-b-0"
+                        className="px-4 py-2 hover:bg-green-100 cursor-pointer border-b border-gray-100 last:border-b-0 text-gray-800"
                       >
                         {sugestao}
                       </div>
@@ -252,7 +257,7 @@ export default function HeroSectionCorreto() {
                   onChange={(e) => handleCidadeChange(e.target.value)}
                   placeholder={cidadeHabilitada ? "Digite sua cidade" : "Selecione um estado primeiro"}
                   disabled={!cidadeHabilitada}
-                  className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors ${
+                  className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors text-gray-800 ${
                     cidadeHabilitada 
                       ? 'border-gray-300 focus:border-green-500 bg-white' 
                       : 'border-gray-200 bg-gray-100 cursor-not-allowed'
@@ -264,7 +269,7 @@ export default function HeroSectionCorreto() {
                       <div
                         key={index}
                         onClick={() => selecionarCidade(sugestao)}
-                        className="px-4 py-2 hover:bg-green-100 cursor-pointer border-b border-gray-100 last:border-b-0"
+                        className="px-4 py-2 hover:bg-green-100 cursor-pointer border-b border-gray-100 last:border-b-0 text-gray-800"
                       >
                         {sugestao}
                       </div>
@@ -283,7 +288,7 @@ export default function HeroSectionCorreto() {
                   value={especialidade}
                   onChange={(e) => handleEspecialidadeChange(e.target.value)}
                   placeholder="Ex: farol quebrado, auto elétrica"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none transition-colors"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none transition-colors text-gray-800"
                 />
                 {especialidadeSugestoes.length > 0 && (
                   <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1 max-h-40 overflow-y-auto shadow-lg">
@@ -291,7 +296,7 @@ export default function HeroSectionCorreto() {
                       <div
                         key={index}
                         onClick={() => selecionarEspecialidade(sugestao)}
-                        className="px-4 py-2 hover:bg-green-100 cursor-pointer border-b border-gray-100 last:border-b-0"
+                        className="px-4 py-2 hover:bg-green-100 cursor-pointer border-b border-gray-100 last:border-b-0 text-gray-800"
                       >
                         {sugestao}
                       </div>
@@ -301,7 +306,7 @@ export default function HeroSectionCorreto() {
               </div>
             </div>
 
-            {/* Botão Buscar Serviços - Abaixo dos campos */}
+            {/* BOTÃO "BUSCAR SERVIÇOS" ABAIXO - conforme especificado */}
             <div className="text-center">
               <button
                 onClick={buscarServicos}
