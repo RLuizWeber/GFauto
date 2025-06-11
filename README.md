@@ -487,3 +487,34 @@ GFauto/
 - ✅ Tamanhos de imagens ajustados
 - ✅ Metodologia documentada
 
+
+## 🎨 CORREÇÃO DE LAYOUT - 2025-06-11 12:06:05
+
+### **IMPLEMENTAÇÃO CONFORME www.gfauto.com.br:**
+
+#### **LAYOUT CORRIGIDO:**
+- ✅ **Header azul** com logo à esquerda (200px) + textos à direita
+- ✅ **Seção central** em duas colunas:
+  - Coluna esquerda: Textos "Bem Vindo!" até "mais"
+  - Coluna direita: **3 veículos LADO A LADO** (180px cada)
+- ✅ **Tarja verde** com cantos arredondados
+- ✅ **3 campos na mesma linha** horizontal
+- ✅ **Botão "Buscar Serviços"** abaixo centralizado
+
+#### **TAMANHOS DAS IMAGENS ATUALIZADOS:**
+- 🖼️ **logo.png:** 200px de largura (altura proporcional)
+- 🖼️ **image001.jpg (moto azul):** 180px de largura (altura proporcional)
+- 🖼️ **image003.jpg (carro vermelho):** 180px de largura (altura proporcional)
+- 🖼️ **image005.jpg (carro branco):** 180px de largura (altura proporcional)
+
+#### **FUNCIONALIDADES PRESERVADAS:**
+- ✅ **Autocompletar** funcionando nos 3 campos
+- ✅ **Campo cidade** habilitando após selecionar estado
+- ✅ **Validação** impedindo erros de cidade/estado
+- ✅ **Redirecionamento** para /resultados após buscar
+
+#### **REFERÊNCIA VISUAL:**
+- 🎯 **Baseado em:** Print do www.gfauto.com.br
+- 🎯 **Especificações:** AjustesSolicitados.txt
+- 🎯 **Layout:** Responsivo e profissional
+
