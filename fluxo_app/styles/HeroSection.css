@@ -1,0 +1,58 @@
+/* Estilos para o componente HeroSection */
+
+/* Header com azul sólido e cantos arredondados */
+.hero-header {
+  background-color: #2563eb; /* azul-600 do Tailwind */
+  border-radius: 0.5rem;
+  padding: 3rem 1rem;
+}
+
+/* Container para os veículos lado a lado */
+.vehicles-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Estilo para cada veículo */
+.vehicle-item {
+  flex: 1;
+  max-width: 33%;
+}
+
+/* Imagem do veículo */
+.vehicle-image {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Tarja verde com cantos arredondados */
+.search-section {
+  background-color: #10b981; /* verde-500 do Tailwind */
+  border-radius: 0.5rem;
+  padding: 3rem 1rem;
+}
+
+/* Formulário de busca */
+.search-form {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+  .vehicles-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .vehicle-item {
+    max-width: 100%;
+  }
+}

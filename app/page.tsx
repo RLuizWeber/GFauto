@@ -1,16 +1,16 @@
 // Caminho: /app/page.tsx
-import BuscaForm from '../components/visitante/BuscaForm';
-import HeroSection from '../components/visitante/HeroSection';
+import { Metadata } from 'next';
+import HeroSectionCorreto from '../fluxo_app/components/HeroSectionCorreto';
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: 'GFauto - Serviços Automotivos',
+  description: 'Encontre os melhores serviços automotivos na sua região.',
+};
+
+export default function HomePage() {
   return (
     <main className="min-h-screen">
-      <HeroSection />
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <BuscaForm />
-        </div>
-      </div>
+      <HeroSectionCorreto />
     </main>
   );
 }
