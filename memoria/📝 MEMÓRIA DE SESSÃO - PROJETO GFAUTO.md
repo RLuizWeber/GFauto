@@ -6,6 +6,8 @@
 ## 🔍 RESUMO DO PROJETO
 O Projeto GFauto atualmente na página https://www.gfauto.com.br está sendo reestruturado e implementado no novo projeto iniciando e https://gfauto.vercel.app/ que tem como principal objetivo expor para visitantes da web anunciantes de produtos e serviços automotivos no Brasil. O visitante na página https://gfauto.verce.app irá buscar pelo Estado / Cidade / O que procura? e será levado para a "página de resultados" onde estarão os anunciantes do Estado/Cidade dele que corresponderem à especialidade da informação que o visitante incluiu no campo "O que procura?". Por outro lado teremos os Clientes/Anunciantes que serão divididos em duas categorias: "Cortesia" e "Premium" o "Cortesia" poderá figurar na "página de resultados" sem pagar com uma exposição simples, o "Premium" vai ser convidado a efetuar um pagamento escolhido e terá uma exposição privilegiada na "página de resultados".
 
+
+
 ## 📊 RESUMO DA SESSÃO DE HOJE (11/06/2025)
 
 ### 🎯 PRINCIPAIS REALIZAÇÕES:
