@@ -180,7 +180,7 @@ export default function HeroSectionCorreto() {
       <section className="my-12 text-center">
         <div className="container mx-auto px-4">
           <Image 
-            src="/fluxo_app/images/mc4.png" 
+            src="/fluxo_app/images/removed_duplicate.png" 
             alt="Conteúdo Futuro" 
             width={800} 
             height={400} 
@@ -193,7 +193,7 @@ export default function HeroSectionCorreto() {
 <section className="my-12 text-center">
         <div className="container mx-auto px-4">
           <Image 
-            src="/fluxo_app/images/mc4.png" 
+            src="/fluxo_app/images/removed_duplicate.png" 
             alt="Conteúdo Futuro" 
             width={800} 
             height={400} 
