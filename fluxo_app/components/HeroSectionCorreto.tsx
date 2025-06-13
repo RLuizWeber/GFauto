@@ -163,6 +163,19 @@ export default function HeroSectionCorreto() {
         </div>
       </section>
 
+      {/* Nova seção com espaço para conteúdo futuro */}
+      <section className="section-spacer">
+        <div className="container mx-auto px-4">
+          <Image 
+            src="/fluxo_app/images/mc4.png" 
+            alt="Conteúdo Futuro" 
+            width={800} 
+            height={400} 
+            className="mx-auto"
+          />
+        </div>
+      </section>
+
       {/* Seção de busca com fundo verde */}
 $NEW_SECTION_CONTENT
       <section className="search-section">
