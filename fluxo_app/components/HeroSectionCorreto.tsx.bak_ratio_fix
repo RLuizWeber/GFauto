@@ -102,7 +102,7 @@ export default function HeroSectionCorreto() {
                 src="/fluxo_app/images/logo.png" 
                 alt="GFauto Logo" 
                 width={200} 
-                 
+                height={80} 
                 className="h-auto"
               />
         
