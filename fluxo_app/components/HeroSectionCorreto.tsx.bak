@@ -170,7 +170,7 @@ $NEW_SECTION_CONTENT
           <h2 className="text-3xl font-bold text-white text-center mb-8">Começar Agora</h2>
           
           <form onSubmit={handleSubmit} className="search-form max-w-3xl mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               {/* Campo Estado */}
               <div className="relative">
                 <label htmlFor="estado" className="block text-gray-700 font-medium mb-2">Estado</label>
