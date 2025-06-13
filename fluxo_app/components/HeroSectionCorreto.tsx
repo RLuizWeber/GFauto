@@ -130,8 +130,8 @@ export default function HeroSectionCorreto() {
             </div>
             
             {/* Veículos lado a lado */}
-            <div className="md:w-1/2 vehicles-container">
-              <div className="vehicle-item">
+            <div className="md:w-1/2 flex flex-row flex-nowrap justify-center items-center gap-6">
+              <div className="w-1/3 flex-shrink-0">
                 <Image 
                   src="/fluxo_app/images/moto-azul.png" 
                   alt="Moto Azul" 
@@ -140,7 +140,7 @@ export default function HeroSectionCorreto() {
                   className="vehicle-image"
                 />
               </div>
-              <div className="vehicle-item">
+              <div className="w-1/3 flex-shrink-0">
                 <Image 
                   src="/fluxo_app/images/carro-vermelho.png" 
                   alt="Carro Vermelho" 
@@ -149,7 +149,7 @@ export default function HeroSectionCorreto() {
                   className="vehicle-image"
                 />
               </div>
-              <div className="vehicle-item">
+              <div className="w-1/3 flex-shrink-0">
                 <Image 
                   src="/fluxo_app/images/carro-branco.png" 
                   alt="Carro Branco" 
@@ -176,8 +176,31 @@ export default function HeroSectionCorreto() {
         </div>
       </section>
 
+      {/* Nova seção com espaço para conteúdo futuro */}
+      <section className="my-12 text-center">
+        <div className="container mx-auto px-4">
+          <Image 
+            src="/fluxo_app/images/mc4.png" 
+            alt="Conteúdo Futuro" 
+            width={800} 
+            height={400} 
+            className="mx-auto rounded-lg shadow-md"
+          />
+        </div>
+      </section>
+
       {/* Seção de busca com fundo verde */}
-$NEW_SECTION_CONTENT
+<section className="my-12 text-center">
+        <div className="container mx-auto px-4">
+          <Image 
+            src="/fluxo_app/images/mc4.png" 
+            alt="Conteúdo Futuro" 
+            width={800} 
+            height={400} 
+            className="mx-auto rounded-lg shadow-md"
+          />
+        </div>
+      </section>
       <section className="search-section">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-white text-center mb-8">Começar Agora</h2>

@@ -2,33 +2,15 @@
 
 /* Header com azul sólido e cantos arredondados */
 .hero-header {
-  margin: 2rem auto;
-  max-width: 1200px;
-  margin: 2rem auto;
-  max-width: 1200px;
-  max-width: 1280px; /* Equivalent to container mx-auto */
-  margin: 2rem auto;
   background-color: #2563eb; /* azul-600 do Tailwind */
-  border-radius: 0.5rem;
   padding: 3rem 1rem;
 }
 
 /* Container para os veículos lado a lado */
-.vehicles-container {
-  flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-}
+
 
 /* Estilo para cada veículo */
-.vehicle-item {
-  width: 30%;
-}
+
 
 /* Imagem do veículo */
 .vehicle-image {
@@ -55,17 +37,9 @@
 
 /* Responsividade para dispositivos móveis */
 @media (max-width: 768px) {
-  .vehicles-container {
-  flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  flex-wrap: nowrap;
-    flex-direction: column;
-    gap: 1rem;
-  }
   
-  .vehicle-item {
-    max-width: 100%;
-  }
+  
+  
 }
 
 /* Espaço entre seções */
