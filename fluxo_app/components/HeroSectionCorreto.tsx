@@ -96,12 +96,12 @@ export default function HeroSectionCorreto() {
   return (
     <>
       {/* Header com azul sólido e cantos arredondados */}
-      <section className="hero-header">
+      <section className="hero-header mx-auto max-w-screen-lg mb-8">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0">
               <Image 
-                src="/images/logo-gfauto.png" 
+                src="/fluxo_app/images/logo-gfauto.png" 
                 alt="GFauto Logo" 
                 width={200} 
                 height={80} 
@@ -133,7 +133,7 @@ export default function HeroSectionCorreto() {
             <div className="md:w-1/2 vehicles-container">
               <div className="vehicle-item">
                 <Image 
-                  src="/images/moto-azul.png" 
+                  src="/fluxo_app/images/moto-azul.png" 
                   alt="Moto Azul" 
                   width={180} 
                   height={120} 
@@ -142,7 +142,7 @@ export default function HeroSectionCorreto() {
               </div>
               <div className="vehicle-item">
                 <Image 
-                  src="/images/carro-vermelho.png" 
+                  src="/fluxo_app/images/carro-vermelho.png" 
                   alt="Carro Vermelho" 
                   width={180} 
                   height={120} 
@@ -151,7 +151,7 @@ export default function HeroSectionCorreto() {
               </div>
               <div className="vehicle-item">
                 <Image 
-                  src="/images/carro-branco.png" 
+                  src="/fluxo_app/images/carro-branco.png" 
                   alt="Carro Branco" 
                   width={180} 
                   height={120} 
@@ -164,6 +164,7 @@ export default function HeroSectionCorreto() {
       </section>
 
       {/* Seção de busca com fundo verde */}
+$NEW_SECTION_CONTENT
       <section className="search-section">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-white text-center mb-8">Começar Agora</h2>
