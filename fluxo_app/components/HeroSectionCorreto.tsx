@@ -100,7 +100,6 @@ export default function HeroSectionCorreto() {
         <div className="container mx-auto px-4">
               <Image 
                 src="/fluxo_app/images/logo.png" 
-                alt="GFauto Logo" 
                 width={180} 
                  
                 className="h-auto"
