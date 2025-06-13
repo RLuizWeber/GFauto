@@ -98,6 +98,14 @@ export default function HeroSectionCorreto() {
       {/* Header com azul sólido e cantos arredondados */}
       <section className="hero-header mx-auto max-w-screen-lg mb-8">
         <div className="container mx-auto px-4">
+              <Image 
+                src="/fluxo_app/images/logo.png" 
+                alt="GFauto Logo" 
+                width={200} 
+                height={80} 
+                className="h-auto"
+              />
+        
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0">
               <Image 
