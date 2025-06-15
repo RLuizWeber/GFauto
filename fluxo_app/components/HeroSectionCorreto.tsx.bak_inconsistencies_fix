@@ -174,8 +174,30 @@ export default function HeroSectionCorreto() {
       </section>
 
       {/* Nova seção com espaço para conteúdo futuro */}
+      <section className="my-12 text-center">
+        <div className="container mx-auto px-4">
+          <Image 
+            src="/fluxo_app/images/removed_duplicate.png" 
+            alt="Conteúdo Futuro" 
+            width={800} 
+            height={400} 
+            className="mx-auto rounded-lg shadow-md"
+          />
+        </div>
+      </section>
 
       {/* Seção de busca com fundo verde */}
+<section className="my-12 text-center">
+        <div className="container mx-auto px-4">
+          <Image 
+            src="/fluxo_app/images/removed_duplicate.png" 
+            alt="Conteúdo Futuro" 
+            width={800} 
+            height={400} 
+            className="mx-auto rounded-lg shadow-md"
+          />
+        </div>
+      </section>
       <section className="search-section">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-white text-center mb-8">Começar Agora</h2>
