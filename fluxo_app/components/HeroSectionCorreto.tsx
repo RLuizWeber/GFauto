@@ -130,7 +130,7 @@ export default function HeroSectionCorreto() {
             <div className="md:w-1/2 flex flex-row flex-nowrap justify-center items-center gap-6">
               <div className="w-1/3 flex-shrink-0">
                 <Image 
-                  src="/fluxo_app/images/moto-azul.png" 
+                  src="/fluxo_app/images/image001.jpg" 
                   alt="Moto Azul" 
                   width={180} 
                   height={120} 
@@ -139,7 +139,7 @@ export default function HeroSectionCorreto() {
               </div>
               <div className="w-1/3 flex-shrink-0">
                 <Image 
-                  src="/fluxo_app/images/carro-vermelho.png" 
+                  src="/fluxo_app/images/image003.jpg" 
                   alt="Carro Vermelho" 
                   width={180} 
                   height={120} 
@@ -148,7 +148,7 @@ export default function HeroSectionCorreto() {
               </div>
               <div className="w-1/3 flex-shrink-0">
                 <Image 
-                  src="/fluxo_app/images/carro-branco.png" 
+                  src="/fluxo_app/images/image005.jpg" 
                   alt="Carro Branco" 
                   width={180} 
                   height={120} 
