@@ -100,7 +100,7 @@ export default function HeroSectionCorreto() {
         <div className="container mx-auto px-4">
               <Image 
                 src="/fluxo_app/images/logo.png" 
-                width={180} alt="GFauto Logo" 
+                width={180} 
                  
                 className="h-auto"
             />
@@ -156,6 +156,7 @@ export default function HeroSectionCorreto() {
               </div>
             </div>
           </div>
+        </div>
       </section>
 
       {/* Nova seção com espaço para conteúdo futuro */}
