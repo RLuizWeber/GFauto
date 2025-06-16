@@ -110,6 +110,7 @@ export default function HeroSectionCorreto() {
               <p className="text-xl">Acesse recursos exclusivos e informações detalhadas sobre serviços automotivos em sua região.</p>
             </div>
           </div>
+        </div>
       </section>
 
       {/* Seção principal com texto e veículos lado a lado */}
