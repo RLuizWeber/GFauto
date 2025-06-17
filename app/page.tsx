@@ -1,3 +1,4 @@
+// Caminho : /app/page.tsx
 import { Metadata } from 'next';
 import HeroSectionCorreto from '../fluxo_app/components/HeroSectionCorreto';
 

@@ -1,3 +1,4 @@
+// W:\A_Weber\Pai\Hostmachine\gfauto\githubVercel\GFauto\fluxo_app/README_fluxo_app.md
 # 📱 FLUXO_APP - PÁGINA PRINCIPAL
 
 ## 📅 Última Atualização
@@ -5,7 +6,7 @@
 
 ## 👨‍💻 Responsáveis
 - **Weber:** Dono do Projeto GFauto
-- **Manus:** Sênior Analista, Desenvolvedor e Programador de Sistemas
+- **Desenvolvedor:** Sênior Analista, Desenvolvedor e Programador de Sistemas
 
 ## 🔍 VISÃO GERAL
 Este módulo contém todos os componentes e estilos da página principal do GFauto. A página principal é a porta de entrada do site, onde os visitantes podem buscar serviços automotivos por Estado, Cidade e tipo de serviço.
