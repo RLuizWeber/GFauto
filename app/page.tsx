@@ -1,4 +1,4 @@
-// Caminho : /app/page.tsx
+// Caminho ajustado: /app/page.tsx
 import { Metadata } from 'next';
 import HeroSectionCorreto from '../fluxo_app/components/HeroSectionCorreto';
 

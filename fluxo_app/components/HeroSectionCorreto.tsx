@@ -1,4 +1,4 @@
-// // Caminho: fluxo_app\components
+// // Caminho ajustado: fluxo_app\components
 
 'use client';
 
