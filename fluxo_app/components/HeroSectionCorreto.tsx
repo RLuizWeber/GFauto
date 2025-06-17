@@ -1,3 +1,5 @@
+// // Caminho: fluxo_app\components
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -91,7 +93,7 @@ export default function HeroSectionCorreto() {
     e.preventDefault();
     alert(`Buscando por ${busca} em ${cidade}, ${estadoSelecionado}`);
     // Aqui você pode redirecionar para a página de resultados
-  };
+  }
 
   return (
     <>
