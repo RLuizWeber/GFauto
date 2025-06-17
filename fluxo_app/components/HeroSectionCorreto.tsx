@@ -1,12 +1,10 @@
-// // Caminho ajustado: fluxo_app\components
-
 'use client';
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import '../styles/HeroSection.css';
 
-// Dados simulados de estados e cidades :
+// Dados simulados de estados e cidades - \GFauto\fluxo_app\components
 const ESTADOS = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
 
 const CIDADES_POR_ESTADO: { [key: string]: string[] } = {
@@ -102,9 +100,10 @@ export default function HeroSectionCorreto() {
         <div className="container mx-auto px-4">
               <Image 
                 src="/fluxo_app/images/logo.png" 
-                width={180} alt="GFauto Logo" 
+                width={180} 
                  
                 className="h-auto"
+                alt="GFauto Logo"
             />
        
             <div className="text-center md:text-right">
@@ -158,6 +157,7 @@ export default function HeroSectionCorreto() {
               </div>
             </div>
           </div>
+        </div>
       </section>
 
       {/* Nova seção com espaço para conteúdo futuro */}
