@@ -1,4 +1,6 @@
-// W:\A_Weber\Pai\Hostmachine\gfauto\githubVercel\GFauto\fluxo_app/README_fluxo_app.md
+// Caminho desse arquivo: W:/A_Weber/Pai/Hostmachine/gfauto/githubVercel/GFauto/fluxo_app
+O page.tsx na raíz /GFauto/app é a página index do Projeto GFauto. E na pasta /GFauto/fluxo_app estão /components/ e /styles necessários.Em /public/fluxo_app/images/ estão as imagens da index.
+
 # 📱 FLUXO_APP - PÁGINA PRINCIPAL
 
 ## 📅 Última Atualização
