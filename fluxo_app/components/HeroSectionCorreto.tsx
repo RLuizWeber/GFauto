@@ -133,7 +133,6 @@ export default function HeroSectionCorreto() {
                   src="/fluxo_app/images/image001.jpg" 
                   alt="Moto Azul" 
                   width={180} 
-                  height={120} 
                   className="vehicle-image"
                 />
               </div>
@@ -142,7 +141,6 @@ export default function HeroSectionCorreto() {
                   src="/fluxo_app/images/image003.jpg" 
                   alt="Carro Vermelho" 
                   width={180} 
-                  height={120} 
                   className="vehicle-image"
                 />
               </div>
@@ -151,7 +149,6 @@ export default function HeroSectionCorreto() {
                   src="/fluxo_app/images/image005.jpg" 
                   alt="Carro Branco" 
                   width={180} 
-                  height={120} 
                   className="vehicle-image"
                 />
               </div>
