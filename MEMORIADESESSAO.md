@@ -44,7 +44,17 @@ O Desenvolvedor tem que descrever com detalhes e precisão as informações em "
 • As dependências e precedências devem constar nos comentários de qualquer código gerado. Assim como nos READMEs correspondentes.
 Note que cada modulo tem seu próprio READEME complementar ao README_geral.md que fica na raiz do Projeto GFAUTO.
 
+POLÍTICA DE BACKUPS:
+• Localização: Todos os arquivos de backup devem ser salvos exclusivamente dentro da pasta "GFauto/backups/". Dentro desta pasta, a estrutura de diretórios do backup deve replicar fielmente a localização original do arquivo. Por exemplo, um backup de "fluxo_app/components/HeroSectionCorreto.tsx" deve ser salvo em "GFauto/backups/fluxo_app/components/HeroSectionCorreto.tsx.bak" (ou outro sufixo apropriado).
+• Identificação: A primeira linha de cada arquivo de backup deve conter um comentário claro explicando o propósito do backup e a data de sua criação.
+• Exclusão: Backups devem ser considerados temporários. Uma vez que a correção ou alteração associada ao backup esteja confirmada como funcionando corretamente e o backup não seja mais necessário, ele deve ser excluído do ambiente local e do repositório Git, sob orientação do Desenvolvedor.
+• Evitar Acúmulo: É crucial evitar o acúmulo de arquivos temporários e de backup para manter o projeto limpo e organizado.
 
+POLÍTICA DE CRIAÇÃO DE PASTAS:
+• Aprovação: A criação de qualquer nova pasta no projeto deve ter a concordância prévia do Weber.
+
+Uso do Repositório GitHub Público para Consulta:
+• O Desenvolvedor, utilizará o nosso repositório GitHub público sempre que necessário, tiver dúvidas, etc para consultar arquivos específicos e garantir a assertividade na implementação de códigos, evitando suposições.
 
 == Fim da
 ## Parte Permanente
