@@ -48,11 +48,12 @@ SESSÃO ATUAL:
 • O Desenvolvedor tem que descrever com detalhes e precisão as informações em "SESSÃO ATUAL" abaixo para que ele possa ao consultar ter uma visão holística do Projeto GFauto na sessão. Deve ser atualizada conforme for necessário. Deve conter data de atualização.
 
 O MEMORIADESESSAO.md 
-• Continua permanentemente para auxiliar o Desenvolvedor a entender melhor o contexto onde estamos trabalhando.
+• Continua permanentemente para auxiliar o Desenvolvedor (que deve acessar sempre que precisar lembrar do contexto do Projeto GFauto) a entender melhor o contexto onde estamos trabalhando. 
 Em cada sessão o Desenvolvedor deve: 
 - Analisar os documentos de referência do Projeto GFauto;
 - Certificar-se de entender sobre a arquitetura e objetivos do Projeto GFauto;
 - Obter clareza sobre o schema.prisma atual e outros arquivos fundamentais;
+- O Desenvolvedor não pode escrever nenhum código sem saber exatamente para que serve ou será servidor no contexto do Projeto GFauto.
 
 As dependências e precedências:
 • Devem constar nos comentários de qualquer código gerado. Assim como nos READMEs correspondentes.
@@ -68,7 +69,7 @@ POLÍTICA DE CRIAÇÃO DE PASTAS:
 • Aprovação: A criação de qualquer nova pasta no projeto deve ter a concordância prévia do Weber.
 
 Uso do Repositório GitHub Público para Consulta:
-• O Desenvolvedor, utilizará o nosso repositório GitHub público sempre que necessário, tiver dúvidas, etc para consultar arquivos específicos e garantir a assertividade na implementação de códigos, evitando suposições, podendo se utilizar de consultas diretamente no GitHub via Git Bash disponível no ambiente do Weber..
+• O Desenvolvedor, utilizará o nosso repositório GitHub público sempre que necessário, tiver dúvidas, etc para consultar arquivos específicos e garantir a assertividade na implementação de códigos, evitando suposições, a priorizando constatações factuais podendo se utilizar de consultas diretamente no GitHub ou via Git Bash disponível no ambiente do Weber.
 
 Algumas Diretrizes para Eficiência e Precisão no Projeto GFauto
 • Para garantir a máxima eficiência e precisão no desenvolvimento do Projeto GFauto, evitando retrabalhos e desalinhamentos, estabelecemos as seguintes diretrizes:
