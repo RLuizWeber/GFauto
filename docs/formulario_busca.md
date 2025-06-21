@@ -4,21 +4,23 @@
 
 O formulário de busca é um componente central do GFauto, permitindo que os usuários encontrem serviços automotivos com base em sua localização e necessidades específicas. O formulário consiste em três campos principais:
 
-1. **Estado**: Para selecionar o estado brasileiro
-2. **Cidade**: Para selecionar a cidade dentro do estado escolhido
-3. **Especialidade**: Para especificar o tipo de serviço automotivo desejado
+1. **Estado**: Para selecionar o estado brasileiro (base de dados: com os estados brasileiros)
+2. **Cidade**: Para selecionar a cidade dentro do estado escolhido (base de dados: com as cidades de cada estado.
+3. **Especialidade**: Para especificar o tipo de serviço automotivo desejado. (base de dados: 
+
+## verificar detalhamento completo no documento GFauto/Projeto_GFauto.docx no título: Fluxo_app (antigo do Visitante)
 
 ## Funcionalidades
 
 ### Digitação Livre
-- Todos os campos permitem digitação livre, sem restrições
-- Os usuários podem digitar qualquer texto nos campos, mesmo sem selecionar opções anteriores
+- Todos os campos permitem digitação livre, sem restrições e com sugestão de autocompletar conforme base de dados
+- Os usuários podem digitar qualquer texto nos campos, mesmo sem selecionar opções anteriores. Mas retornarão erro caso a opção desejada não seja encontrada na base de dados.
 
 ### Sugestões Inteligentes
 - As sugestões aparecem automaticamente ao clicar ou focar em qualquer campo
 - Para estados: sugere tanto siglas quanto nomes completos
 - Para cidades: sugere cidades do estado selecionado (ou todas as cidades)
-- Para especialidades: sugere da lista padrão de especialidades automotivas
+- Para especialidades: sugere da lista padrão de especialidades automotivas (conforme BD)
 
 ### Validação do Formulário
 - O botão "Buscar Serviços" só fica ativo quando todos os campos estão preenchidos
@@ -26,7 +28,7 @@ O formulário de busca é um componente central do GFauto, permitindo que os usu
 - Mensagens de erro específicas para cada campo não preenchido
 
 ### Lista de Especialidades
-O formulário inclui uma lista padrão de 57 especialidades automotivas comuns, incluindo:
+O formulário inclui inicialmente uma lista padrão de 57 especialidades automotivas comuns, incluindo:
 - Auto Elétricas
 - Mecânica Geral
 - Chapeação e Pintura

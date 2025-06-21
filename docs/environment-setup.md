@@ -1,3 +1,15 @@
+// caminho: GFauto\docs
+
+Nesta arquivo mantemos inscruções detalhadas:
+
+Como por exemplo:
+
+- Documentação dos caminhos exatos no "Meu Local" do Projeto GFauto.
+- Mapeamento entre caminhos do "Meu Local" e do repositório GitHub (https://github.com/RLuizWeber/GFauto.git). 
+- Lista de variáveis de ambientes necessárias.
+
+
+
 # Configuração do Ambiente de Desenvolvimento
 
 Este documento descreve como configurar o ambiente de desenvolvimento para o projeto GFauto.

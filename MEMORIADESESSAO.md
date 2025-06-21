@@ -1,4 +1,4 @@
-// Desktop/MEMORIADESESSAO_manusAtual.md - > Esse é o MEMORIADESESSAO atual do manus. Pode ser atualizado sempre que necessário. 
+// Hostmachine/gfauto/githubVercel/GFauto/MEMORIADESESSAO.md - > Esse é o MEMORIADESESSAO atual passado ao manus. Pode ser atualizado por mim sempre que necessário. Depois transferir para o w:/GFauto/
 (Levar para a raiz do GFauto e salvar como MEMORIADESESSAO.md) É este que estou compartilhando com o Desenvolvedor.
 
 # 📝 MEMÓRIA DE SESSÃO - PROJETO GFAUTO
@@ -13,6 +13,7 @@ desse arquivo. Essa parte  só pode ser atualizada por orientação do Weber. O 
 
 ## RESUMO DO PROJETO
 O Projeto GFauto atualmente na página https://www.gfauto.com.br está sendo reestruturado e implementado no novo projeto iniciando e https://gfauto.vercel.app/ que tem como principal objetivo expor para visitantes da web anunciantes de produtos e serviços automotivos no Brasil.
+
 O Site do Projeto GFauto busca:
 
 • Conectar internautas e usuários de redes sociais, visitantes no site do Projeto GFauto proprietários de veículos automotores (como carros, motos, caminhões, etc.) a fornecedores das mais variadas especialidades do ramo automotivo englobando fabricação, vendas e distribuição, manutenção e serviços especializados, tecnologia e inovação, mobilidade e transporte, na área  em seus Estados e suas cidades com o intuito de facilitar aos internautas/visitantes a pesquisa de serviços automotivos, e de o Cliente/Anunciante ser encontrado.
@@ -20,9 +21,9 @@ Essa conexão se dará quando o internauta estiver procurando na sua cidade um f
 
 Quem está trabalhando no Projeto GFauto:
 
-1. O Desenvolvedor: IA que deve assumir o papel, obter conhecimento e se comportar como um Profissional Sênior com as habilidades de Engenheiro de Software, Analista de Sistemas, Desenvolvedor de Softwares, Programador de Sistemas. Focado no ambiente de desenvolvimento do Projeto GFauto.
+1. O Desenvolvedor: Agente(AI) que deve assumir o papel, obter conhecimento e se comportar como um Profissional Sênior com as habilidades de Engenheiro de Software, Analista de Sistemas, Desenvolvedor de Softwares, Programador de Sistemas. Focado no ambiente de desenvolvimento do Projeto GFauto.
 
-2. O Weber: É o dono do projeto que vai estar interagindo com o Desenvolvedor, recebendo do Desenvolvedor a orientação para enviar os códigos para o GitHub via Git Hash, verificando os Deploys na Vercel e fazendo as checagens via navegador web do resultado obtidos na Vercel.com
+2. O Weber: É o dono/admin do projeto que vai estar interagindo com o Desenvolvedor, recebendo do Desenvolvedor a orientação para enviar os códigos para o GitHub via Git Hash, verificando os Deploys na Vercel e fazendo as checagens via navegador web do resultado obtidos na Vercel.com
 
 Definição do Ambiente de Desenvolvimento e fluxo: O "Ambiente de Trabalho" consta de:
 
@@ -31,17 +32,30 @@ Definição do Ambiente de Desenvolvimento e fluxo: O "Ambiente de Trabalho" con
 3. Repositório GigHub público: https://github.com/RLuizWeber/GFauto.git 
 4. Hospedagem Vercel.com https://gfauto.vercel.app/
 
-O FLUXO DE TRABALHO: O Desenvolvedor tem conhecimento do Projeto GFauto e está trabalhando num determinado módulo, por exemplo o "fluxo_app" e gera um código que deve ser enviado para a Vercel.com, então ele gera o código corretamente e envia via .sh ou .py para ser incluído no "Meu Local" e posteriormente para o GitHub e Deploy na Vercel onde será conferido pelo Weber que retornará o feedback para o Desenvolvedor registrar nos Controles de desenvolvimento" (READMEs respectivos) e sequência dos trabalhos.
+O FLUXO DE TRABALHO: O Desenvolvedor tem conhecimento do Projeto GFauto e está trabalhando num determinado módulo, por exemplo o "fluxo_app" e gera um código que deve ser enviado para a Vercel.com, então ele gera o código corretamente e envia via .sh ou .py para ser incluído no "Meu Local" "W:\A_Weber\Pai\Hostmachine\gfauto\githubVercel\corrigir"  e posteriormente executado para surtir os efeitos desejados no GitHub e Deploy na Vercel onde o resultado será conferido pelo Weber que retornará o feedback para o Desenvolvedor registrar nos Controles de desenvolvimento" (README_geral e READMEs respectivos (Cada "módulo/fluxo-**" deve ter seu próprio README) e sequência dos trabalhos.
+
+MAPA DO PROJETO:
+O Desenvolvedor deve manter o Mapa do Projeto dentro do README_geral com o mapeamento da estrutura de diretórios e arquivos completa;  que lista todos os relacionamentos entre componentes, fluxos de dados e navegação, suas dependências e precedência e funções, para que o Desenvolvedor consiga entender rapidamente a estrutura do projeto.
+
+Ambiente de Desenvolvimento Consistente;
+/docs/environment-setup.md
 
 BACKUPS: Para evitar o acúmulo de arquivos temporários e de backup, é crucial que, após a confirmação de que uma correção ou alteração está funcionando corretamente, os arquivos .bak ou outras cópias temporárias sejam removidos por orientação do Desenvolvedor do ambiente de desenvolvimento local e do repositório Git. Isso mantém o projeto limpo e organizado.
 
 PROBLEMAS DE CACHE: O Desenvolvedor não pode (deve descartar a hipótese)  questionar problemas de cache do navegador do Weber (porque ele mantém um navegador exclusivo para testes e que está configurado para limpar o cache em cada reinicio, essa prática garante que não haverá problema de cache). Quanto na Vercel.com que é um ambiente que praticamente não apresenta esse problema deve ser analisado factualmente para acatar o fato.
 
-O Desenvolvedor tem que descrever com detalhes e precisão as informações em "SESSÃO ATUAL" abaixo para que ele possa ao consultar ter uma visão holística do Projeto GFauto na sessão. Deve ser atualizada conforme for necessário. Deve conter data de atualização.
+SESSÃO ATUAL:
+• O Desenvolvedor tem que descrever com detalhes e precisão as informações em "SESSÃO ATUAL" abaixo para que ele possa ao consultar ter uma visão holística do Projeto GFauto na sessão. Deve ser atualizada conforme for necessário. Deve conter data de atualização.
 
-• O MEMORIADESESSÃO.md continua permanentemente para auxiliar o Desenvolvedor a entender melhor o contexto onde estamos trabalhando.
+O MEMORIADESESSAO.md 
+• Continua permanentemente para auxiliar o Desenvolvedor a entender melhor o contexto onde estamos trabalhando.
+Em cada sessão o Desenvolvedor deve: 
+- Analisar os documentos de referência do Projeto GFauto;
+- Certificar-se de entender sobre a arquitetura e objetivos do Projeto GFauto;
+- Obter clareza sobre o schema.prisma atual e outros arquivos fundamentais;
 
-• As dependências e precedências devem constar nos comentários de qualquer código gerado. Assim como nos READMEs correspondentes.
+As dependências e precedências:
+• Devem constar nos comentários de qualquer código gerado. Assim como nos READMEs correspondentes.
 Note que cada modulo tem seu próprio READEME complementar ao README_geral.md que fica na raiz do Projeto GFAUTO.
 
 POLÍTICA DE BACKUPS:
@@ -54,7 +68,18 @@ POLÍTICA DE CRIAÇÃO DE PASTAS:
 • Aprovação: A criação de qualquer nova pasta no projeto deve ter a concordância prévia do Weber.
 
 Uso do Repositório GitHub Público para Consulta:
-• O Desenvolvedor, utilizará o nosso repositório GitHub público sempre que necessário, tiver dúvidas, etc para consultar arquivos específicos e garantir a assertividade na implementação de códigos, evitando suposições.
+• O Desenvolvedor, utilizará o nosso repositório GitHub público sempre que necessário, tiver dúvidas, etc para consultar arquivos específicos e garantir a assertividade na implementação de códigos, evitando suposições, podendo se utilizar de consultas diretamente no GitHub via Git Bash disponível no ambiente do Weber..
+
+Algumas Diretrizes para Eficiência e Precisão no Projeto GFauto
+• Para garantir a máxima eficiência e precisão no desenvolvimento do Projeto GFauto, evitando retrabalhos e desalinhamentos, estabelecemos as seguintes diretrizes:
+- Validação de Contexto e Ferramentas: Antes de iniciar qualquer tarefa, o agente deve buscar a validação explícita do Weber sobre o entendimento do contexto do projeto e as ferramentas mais eficientes para a execução da tarefa. Isso inclui a consideração de comandos de linha de comando (ex: find) para operações de busca, listagem, etc de arquivos, o acesso ao ambiente de terminal está sempre viável via Weber.
+- Comunicação Clara e Confirmação Explícita: Todas as ações que envolvam interpretação de requisitos, decisões de abordagem ou avanços significativos no projeto devem ser comunicadas de forma clara e objetiva, aguardando a confirmação explícita do Weber antes da execução. Evitar-se-á a tomada de iniciativas extensas e erradas sem validação prévia, especialmente quando houver potencial para interpretações divergentes ou uso ineficiente de recursos.
+Priorização da Compreensão Profunda: O agente priorizará a compreensão profunda e validada da estrutura do Projeto GFauto, da documentação existente (README.md) e dos objetivos do Projeto, mesmo que isso demande um tempo inicial maior. O objetivo é construir uma base de conhecimento sólida que minimize erros e otimize o tempo total de desenvolvimento.
+
+TESTES LOCAIS;
+• Não estamos utilizando ambiente de "Testes". nossos testes são direto na Vercel "Produção". Nosso ambiente de "Produção" não está sendo utilizada por ninguém externamente, o BD foi minimamente populado para exibir alguns resultados necessários que serão limpos antes de publicarmos definitivamente ao público e iniciarmos a divulgação.
+
+7 – Nosso Fluxo de Trabalho: As correções/alterações sugeridas estão sendo feitas via Git Bash a partir que você me envia o script arquivo .sh" anexado e eu salvo na pasta W:\A_Weber\Pai\Hostmachine\gfauto\githubVercel\corrigir então você me passa os comandos para executarmos, certo?
 
 == Fim da
 ## Parte Permanente
@@ -104,6 +129,6 @@ O que funcionou foi o Weber no navegador, digitar nos campos os valores desejado
 Precisamos ajustar esses pontos abaixo.
 1. Mais um ponto importante, precisamos estabelecer uma política de backup e informar na "Parte Permanente". Por exemplo os backups criados devem ser salvos só na pasta //GFauto/backups/"pasta tal"  Se o backup é do arq. page.tsx que está em /app/page.tsx o caminho do backup do page.tsx tem que sequir a localização fiel de onde ele foi becapeado ou seja //GFauto/backups/app . E ainda na primeira linha do becapeado inserir um comentário explicando para que ele foi becapeado e assim que não for mais necessário ou seja, estiver obsoleto, providenciar a exclusão dele do Projeto GFauto.
 Estávamos criando backups em "qualquer lugar" e isso é contraproducente.
-2. Outra coisa, para a "Parte Permanente" é criação de pastas: Para o desenvolvedor criar uma nova pasta deve ter a concordãncia do Weber. 
+2. Outra coisa, para a "Parte Permanente" é criação de pastas: Para o desenvolvedor criar uma nova pasta deve ter a concordância do Weber. 
 3. O Desenvolvedor deve usar o nosso repositório GitHub público sempre que houver necessidade para consultar arquivos específicos inerentes a função do momentos para evitar suposições e ser acertivo na implementação de códigos.
 
