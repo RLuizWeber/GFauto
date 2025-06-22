@@ -1,8 +1,8 @@
-// HeroSectionCorreto.tsx - Versão Modificada com Redirecionamento
+// HeroSectionCorreto.tsx - Versão Final com Rodapé
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation'; // ADICIONADO: Import do useRouter
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import '../styles/HeroSection.css';
 
@@ -17,7 +17,7 @@ const CIDADES_POR_ESTADO: { [key: string]: string[] } = {
 };
 
 export default function HeroSectionCorreto() {
-  const router = useRouter(); // ADICIONADO: Inicialização do router
+  const router = useRouter();
   const [estado, setEstado] = useState('');
   const [estadoSelecionado, setEstadoSelecionado] = useState('');
   const [cidade, setCidade] = useState('');
@@ -89,7 +89,6 @@ export default function HeroSectionCorreto() {
     setBusca(e.target.value);
   };
 
-  // MODIFICADO: Função handleSubmit com redirecionamento
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -252,6 +251,43 @@ export default function HeroSectionCorreto() {
           </form>
         </div>
       </section>
+
+      {/* Rodapé baseado em www.gfauto.com.br */}
+      <footer className="footer-section">
+        <div className="footer-container">
+          <div className="footer-column">
+            <h3 className="footer-title">GFauto</h3>
+            <ul className="footer-links">
+              <li><a href="/">Home</a></li>
+              <li><a href="/projeto156">Projeto 156</a></li>
+              <li><a href="/radares">Radares</a></li>
+              <li><a href="/anuncie">Anuncie</a></li>
+              <li><a href="/atualize">Atualize Seus Dados</a></li>
+            </ul>
+          </div>
+          
+          <div className="footer-column">
+            <h3 className="footer-title">Contato</h3>
+            <ul className="footer-links">
+              <li><a href="/whatsapp">WhatsApp</a></li>
+              <li><a href="/contato">Fale Conosco</a></li>
+            </ul>
+          </div>
+          
+          <div className="footer-column">
+            <h3 className="footer-title">Redes Sociais</h3>
+            <ul className="footer-links">
+              <li><a href="/twitter">Twitter</a></li>
+              <li><a href="/facebook">Facebook</a></li>
+              <li><a href="/instagram">Instagram</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div className="footer-copyright">
+          <p>Direitos Reservados - GFauto - 2001-2025</p>
+        </div>
+      </footer>
     </>
   );
 }
