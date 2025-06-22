@@ -32,6 +32,9 @@ DEFINIÇÃO DO AMBIENTE DE DESENVOLVIMENTO E FLUXO: O "AMBIENTE DE TRABALHO" CON
 3. Repositório GigHub público: https://github.com/RLuizWeber/GFauto.git 
 4. Hospedagem Vercel.com https://gfauto.vercel.app/
 
+OBRIGATÓRIO:
+Antes de o Desenvolvedor fazer qualquer alteração em qualquer Módulo/fluxo deve obter o conhecimento do respectivo README
+
 O FLUXO DE TRABALHO: O Desenvolvedor tem conhecimento do Projeto GFauto e está trabalhando num determinado módulo, por exemplo o "fluxo_app" e gera um código que deve ser enviado para a Vercel.com, então ele gera o código corretamente e envia via .sh ou .py para ser incluído no "Meu Local" "W:\A_Weber\Pai\Hostmachine\gfauto\githubVercel\corrigir"  e posteriormente executado para surtir os efeitos desejados no GitHub e Deploy na Vercel onde o resultado será conferido pelo Weber que retornará o feedback para o Desenvolvedor registrar nos Controles de desenvolvimento" (README_geral e READMEs respectivos (Cada "módulo/fluxo-**" deve ter seu próprio README) e sequência dos trabalhos.
 
 MAPA DO PROJETO:
