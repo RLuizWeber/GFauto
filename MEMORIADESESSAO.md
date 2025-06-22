@@ -71,6 +71,14 @@ POLÍTICA DE CRIAÇÃO DE PASTAS:
 USO DO REPOSITÓRIO GITHUB PÚBLICO PARA CONSULTA::
 • O Desenvolvedor, utilizará o nosso repositório GitHub público sempre que necessário, tiver dúvidas, etc para consultar arquivos específicos e garantir a assertividade na implementação de códigos, evitando suposições, e priorizando constatações factuais podendo se utilizar de consultas diretamente no GitHub ou via Git Bash disponível no ambiente do Weber.
 
+ANÁLISE E PRESERVAÇÃO DE COMPONENTES EXISTENTES:
+Antes de qualquer alteração ou substituição de um arquivo de código existente, especialmente componentes de UI (User Interface) como HeroSectionCorreto.tsx, o Desenvolvedor DEVE realizar uma análise exaustiva do conteúdo do arquivo original. Esta análise tem como objetivo:
+Identificar e compreender todas as funcionalidades e componentes presentes no arquivo, mesmo que não estejam diretamente relacionados à tarefa atual.
+Garantir a preservação de funcionalidades essenciais (como rodapés, cabeçalhos, componentes globais, etc.) que não devem ser removidas ou alteradas sem uma decisão explícita e validada pelo Weber.
+Priorizar a modificação incremental em vez da substituição completa, sempre que possível, para minimizar o risco de introduzir regressões ou remover funcionalidades existentes.
+Utilizar o histórico do Git e arquivos de backup (_old.tsx, _old.js, etc.) como fontes primárias para entender o estado anterior do código e identificar funcionalidades a serem preservadas ou reintegradas.
+Esta diretriz reforça a importância da leitura atenta do código existente como fator decisivo para a eficiência e a qualidade do trabalho, evitando retrabalhos e garantindo a integridade do projeto GFauto.
+
 ALGUMAS DIRETRIZES OBRIGATÓRIAS PARA OBTER EFICIÊNCIA E PRECISÃO NO DESENVOLVIMENTO E IMPLANTAÇÃO DO PROJETO GFAUTO:
 
 ✅ Prompt básico ideal para o Desenvolvedor:
