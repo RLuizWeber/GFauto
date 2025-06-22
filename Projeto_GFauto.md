@@ -222,7 +222,6 @@ Projeção de Crescimento
 •	Conversão para assinantes: 2-5% dos visitantes
 •	Receita mensal estimada após 12 meses: R$ 10.000 - R$ 30.000
 
-
 Requisitos de Hospedagem
 •	Hospedagem recomendada: Vercel (otimizada para Next.js) com deploy automático via GitHub
 •	Alternativas: AWS, Google Cloud, Microsoft Azure, Netlify ou DigitalOcean
@@ -303,7 +302,6 @@ Arquitetura e Tecnologias
 •	Pontos para atenção futura: Autenticação de usuários na aplicação, autorização detalhada, proteção contra vulnerabilidades web comuns (XSS, CSRF), rate limiting.
 
 
-
 Fontes de Receita
 3. Uma das principais fontes de monetização, além das outras, é os anunciantes pagando para figurar nas páginas das cidades dentro de suas especialidades. Esse valor é bem pequeno mas existindo muitas possibilidades por cidade resultaria numa arrecadação significativa.
 
@@ -371,7 +369,7 @@ Essas informações irão para o BD imediatamente pois esse anúncio deverá fig
 
 
 
-Itens obrigatórios (*)
+Itens obrigatórios (*) As duas páginas seguintes podem ser melhor entendidas a partir da imagem Projeto_GFauto.jpg em GFauto/
 Preencha todos os Campos 
 Nome da Empresa:	Auto Peças Carrão	*(caixa para o Nome)
 
