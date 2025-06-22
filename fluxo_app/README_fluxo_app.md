@@ -66,7 +66,7 @@ Armazena os arquivos CSS que definem a aparência visual dos componentes:
 
 1. **Header com Logo e Boas-vindas:**
    - Seção `header-top` contendo logo e texto de boas-vindas
-   - Logo localizado em `/public/images/logo.png`
+   - Logo localizado em `/public/fluxo_app/images/logo.png` (250px de largura e altura proporcional)
    - Texto de apresentação do GFauto
 
 2. **Seção da Proposta Ganha-Ganha:**
@@ -114,9 +114,9 @@ const handleSubmit = (event: React.FormEvent) => {
 
 ### Estrutura Organizacional das Imagens
 
-As imagens utilizadas pelo módulo `fluxo_app` estão organizadas conforme a estrutura explícita definida em `/public/images/`:
+As imagens utilizadas pelo módulo `fluxo_app` estão organizadas conforme a estrutura explícita definida em `/public/fluxo_app/images/`:
 
-**Localização Principal:** `/public/images/`
+**Localização Principal:** `/public/fluxo_app/images/`
 
 **Filosofia de Organização:**
 - **Princípio:** Cada pasta indica claramente ONDE a imagem é usada no sistema
@@ -124,14 +124,14 @@ As imagens utilizadas pelo módulo `fluxo_app` estão organizadas conforme a est
 
 **Imagens Específicas do HeroSectionCorreto:**
 
-1. **Logo:** `/public/images/logo.png`
+1. **Logo:** `/public/fluxo_app/images/logo.png`
    - Utilizado no cabeçalho do componente
-   - Dimensões: 150x150 pixels
+   - Dimensões: 250px de largura com altura proporcional
 
 2. **Imagens de Veículos:**
-   - `/public/images/image001.jpg` - Carro
-   - `/public/images/image003.jpg` - Moto  
-   - `/public/images/image005.jpg` - SUV
+   - `/public/fluxo_app/images/image001.jpg` - Carro
+   - `/public/fluxo_app/images/image003.jpg` - Moto  
+   - `/public/fluxo_app/images/image005.jpg` - SUV
    - Dimensões: 180px de largura com altura proporcional
 
 **Convenções de Nomenclatura:**
