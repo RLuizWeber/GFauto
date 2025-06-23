@@ -48,19 +48,71 @@ Antes de o Desenvolvedor fazer qualquer alteração em qualquer Módulo/fluxo de
 ### Estrutura Modular por Páginas
 O projeto segue uma estrutura modular organizada por páginas/fluxos: (Obs.: Falta o Desenvolvedor ajustar considerando o ambiente GitHub)
 
-```
-GFauto/
-├── app/                      # Páginas do Next.js
-│   └── page.tsx              # Página principal (raiz do site)
-├── fluxo_app/                # Módulo da página principal
-│   ├── components/           # Componentes específicos
-│   ├── styles/               # Estilos específicos
-│   └── README_fluxo_app.md             # Documentação específica
-├── fluxo_anunciante/         # Módulo da página do anunciante
-├── fluxo_admin/              # Módulo do painel administrativo
-├── backups/                  # Backups e exclusões
-│   └── exclusoes/            # Arquivos excluídos organizados por data
-└── README_geral.md                 # Documentação geral do projeto
+G# 23/06/25
+ESTRUTURA DE PASTAS fonte: GFauto/Estrutura_de_PASTAS.md
+
+## EXISTENTE 
+
+| **COLUNA A:** EXISTE HOJE 		+ COMENTÁRIOS |
+
+### **📁 RAIZ DO PROJETO**
+| **Existente no GitHub** (atua-   		|  ** + Comentários**
+| lizado na data) X  
+
+| `GFauto/` 											| 
+| `├── app/` 										|  Pasta principal do Next.js |
+| `├── backups/` 								|  Conforme política do MEMORIADESESSAO |
+| `├── components/` 							|  Componentes globais |
+| `├── docs/` 										|  Documentação |
+| `├── lib/` 											|  Bibliotecas e utilitários |
+| `├── memoria/` 								|  Arquivos de memória |
+| `├── prisma/` 									|  Configuração do banco |
+| `├── public/` 									|  Arquivos estáticos |
+| `├── MEMORIADESESSAO.md` 	| 
+| `├── Projeto_GFauto.md` 				| 
+
+### **📁 MÓDULOS/FLUXOS**
+| **Existente** | **Ideal + Comentários** |
+|---------------|-------------------------|
+| `├── fluxo_app/` 								| 
+| `├── fluxo_cliente_anunciante/` 		| 
+| `├── fluxo_pag_de_resultados/` 		| 
+| `├── fluxo_pagto/` 							| 
+| `├── fluxo_painel_admin/` 				| 
+| `├── fluxo_plano/` 							| 
+| `├── fluxo_visitante/` 						| 
+
+### **📁 ESTRUTURA DO FLUXO_APP (DETALHADA)**
+| **Existente** | **Ideal + Comentários** |
+
+| `fluxo_app/` 										|  
+| `├── components/` 							|  
+| `├── styles/` 									|  
+| `├── types/` 									| Para definições TypeScript específicas
+| `├── utils/`     									| Para utilitários específicos do fluxo |
+| `├── README_fluxo_app.md` 		|  
+
+### **📁 ESTRUTURA DE IMAGENS**
+| **Existente** | **Ideal + Comentários** |
+
+| `public/fluxo_app/images/`				| Localização principal |
+| `├── image001.jpg` 						| Moto Azul |
+| `├── image003.jpg` 						| Carro Vermelho |
+| `├── image005.jpg` 						| SUV Branca |
+| `├── logo.png` 								| Logo GFauto
+| `├── mc4.png` 								| Mascote Manda Chuva |
+
+### **📁 ESTRUTURA IDEAL PARA OUTROS FLUXOS**
+| **Padrão Recomendado** 				| **Comentários** |
+
+| `fluxo_[nome]/` 									| **Estrutura padrão para todos os fluxos** |
+| `├── components/` 							| Componentes específicos do fluxo |
+| `├── styles/` 									| Estilos específicos do fluxo |
+| `├── types/` 									| Definições TypeScript |
+| `├── utils/` 										| Utilitários específicos |
+| `├── README_fluxo_[nome].md` 	| Documentação obrigatória |
+
+---
 ```
 
 ## 📝 REGRAS DO PROJETO

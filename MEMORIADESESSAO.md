@@ -46,7 +46,7 @@ Antes de o Desenvolvedor fazer qualquer alteração em qualquer Módulo/fluxo de
 O FLUXO DE TRABALHO: O Desenvolvedor tem conhecimento do Projeto GFauto e está trabalhando num determinado módulo/fluxo, por exemplo o "fluxo_app" e gera um código que deve ser enviado para a Vercel.com, então ele gera o código corretamente e envia via .sh ou .py para ser incluído no "Meu Local" "W:\A_Weber\Pai\Hostmachine\gfauto\githubVercel\corrigir"  e posteriormente executado para surtir os efeitos desejados no GitHub e Deploy na Vercel onde o resultado será conferido pelo Weber que retornará o feedback para o Desenvolvedor registrar nos Controles de desenvolvimento" (README_geral e READMEs respectivos (Cada "módulo/fluxo-**" deve ter seu próprio README) e sequência dos trabalhos.
 
 MAPA DO PROJETO:
-O Desenvolvedor deve manter o Mapa do Projeto dentro do README_geral com o mapeamento da estrutura de diretórios e arquivos completa;  que lista todos os relacionamentos entre componentes, fluxos de dados e navegação, suas dependências e precedência e funções, para que o Desenvolvedor consiga entender rapidamente a estrutura do projeto.
+O Desenvolvedor mantém o Mapa do Projeto dentro do README_geral e em "GFauto/Estrutura_de_PASTAS".md com o mapeamento da estrutura de diretórios e arquivos completa;  que lista todos os relacionamentos entre componentes, fluxos de dados e navegação, suas dependências e precedência e funções, para que o Desenvolvedor consiga entender rapidamente a estrutura do projeto. 
 
 AMBIENTE DE DESENVOLVIMENTO CONSISTENTE:
 /docs/environment-setup.md

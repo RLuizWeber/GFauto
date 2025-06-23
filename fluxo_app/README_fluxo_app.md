@@ -44,7 +44,7 @@ O módulo `fluxo_app` implementa o redirecionamento para a página de resultados
 
 ## Estrutura de Alto Nível
 
-O `fluxo_app` é composto pelas seguintes subpastas e arquivos principais:
+O `fluxo_app` é composto pelas seguintes subpastas e arquivos principais: E pertence a GFauto/Estrutura_de_PASTAS.md 
 
 ### components/
 Contém os blocos de construção reutilizáveis da interface do usuário, incluindo:
