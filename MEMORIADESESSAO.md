@@ -71,6 +71,10 @@ POLÍTICA DE BACKUPS:
 POLÍTICA DE CRIAÇÃO DE PASTAS:
 • Aprovação: A criação de qualquer nova pasta no projeto deve ter a concordância prévia do Weber.
 
+POLÍTICA DE IMAGENS DO PROJETO GFauto
+• As imagens estarão sempre em public/
+Seguindo a lógica de exemplo: GFauto/public/fluxo_app/images/ todas as imagens do fluxo_app. 
+
 USO DO REPOSITÓRIO GITHUB PÚBLICO PARA CONSULTA::
 • O Desenvolvedor, utilizará o nosso repositório GitHub público sempre que necessário, tiver dúvidas, etc para consultar arquivos específicos e garantir a assertividade na implementação de códigos, evitando suposições, e priorizando constatações factuais podendo se utilizar de consultas diretamente no GitHub ou via Git Bash disponível no ambiente do Weber.
 
