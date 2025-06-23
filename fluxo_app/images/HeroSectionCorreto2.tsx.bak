@@ -247,7 +247,7 @@ export default function HeroSectionCorreto() {
         </div>
       </section>
 
-      {/* Rodapé completo com todos os URLs reais do www.gfauto.com.br */}
+      {/* Rodapé com URLs reais do www.gfauto.com.br */}
       <footer className="footer-section">
         <div className="footer-container">
           <div className="footer-column">
@@ -264,17 +264,17 @@ export default function HeroSectionCorreto() {
           <div className="footer-column">
             <h3 className="footer-title">Contato</h3>
             <ul className="footer-links">
-              <li><a href="https://wa.me/5500000000000">WhatsApp</a></li>
-              <li><a href="https://www.gfauto.com.br/aa_anuncio/form_contato.html">Fale Conosco</a></li>
+              <li><a href="/whatsapp">WhatsApp</a></li>
+              <li><a href="/contato">Fale Conosco</a></li>
             </ul>
           </div>
           
           <div className="footer-column">
             <h3 className="footer-title">Redes Sociais</h3>
             <ul className="footer-links">
-              <li><a href="https://twitter.com/Projeto_156">Twitter</a></li>
-              <li><a href="https://www.gfauto.com.br/#">Facebook</a></li>
-              <li><a href="https://www.gfauto.com.br/#">Instagram</a></li>
+              <li><a href="/twitter">Twitter</a></li>
+              <li><a href="/facebook">Facebook</a></li>
+              <li><a href="/instagram">Instagram</a></li>
             </ul>
           </div>
         </div>
