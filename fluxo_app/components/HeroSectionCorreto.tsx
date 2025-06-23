@@ -6,13 +6,82 @@ import { useRouter } from 'next/navigation'; // ADICIONADO: Import do useRouter
 import Image from 'next/image';
 import '../styles/HeroSection.css';
 
-// Dados simulados de estados e cidades = \GFauto\fluxo_app\components
-const ESTADOS = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
+// Base de dados de estados brasileiros - MELHORADO: Dados mais completos
+const ESTADOS_BRASIL = [
+  { sigla: 'AC', nome: 'Acre' },
+  { sigla: 'AL', nome: 'Alagoas' },
+  { sigla: 'AP', nome: 'Amapá' },
+  { sigla: 'AM', nome: 'Amazonas' },
+  { sigla: 'BA', nome: 'Bahia' },
+  { sigla: 'CE', nome: 'Ceará' },
+  { sigla: 'DF', nome: 'Distrito Federal' },
+  { sigla: 'ES', nome: 'Espírito Santo' },
+  { sigla: 'GO', nome: 'Goiás' },
+  { sigla: 'MA', nome: 'Maranhão' },
+  { sigla: 'MT', nome: 'Mato Grosso' },
+  { sigla: 'MS', nome: 'Mato Grosso do Sul' },
+  { sigla: 'MG', nome: 'Minas Gerais' },
+  { sigla: 'PA', nome: 'Pará' },
+  { sigla: 'PB', nome: 'Paraíba' },
+  { sigla: 'PR', nome: 'Paraná' },
+  { sigla: 'PE', nome: 'Pernambuco' },
+  { sigla: 'PI', nome: 'Piauí' },
+  { sigla: 'RJ', nome: 'Rio de Janeiro' },
+  { sigla: 'RN', nome: 'Rio Grande do Norte' },
+  { sigla: 'RS', nome: 'Rio Grande do Sul' },
+  { sigla: 'RO', nome: 'Rondônia' },
+  { sigla: 'RR', nome: 'Roraima' },
+  { sigla: 'SC', nome: 'Santa Catarina' },
+  { sigla: 'SP', nome: 'São Paulo' },
+  { sigla: 'SE', nome: 'Sergipe' },
+  { sigla: 'TO', nome: 'Tocantins' }
+];
 
+// Base de dados de cidades por estado - MELHORADO: Mais cidades
 const CIDADES_POR_ESTADO: { [key: string]: string[] } = {
-  'SP': ['São Paulo', 'Campinas', 'Guarulhos', 'Santos', 'São Bernardo do Campo'],
-  'RJ': ['Rio de Janeiro', 'Niterói', 'São Gonçalo', 'Duque de Caxias', 'Nova Iguaçu'],
-  'MG': ['Belo Horizonte', 'Uberlândia', 'Contagem', 'Juiz de Fora', 'Betim'],
+  'RS': [
+    'Porto Alegre', 'Caxias do Sul', 'Pelotas', 'Canoas', 'Santa Maria',
+    'Gravataí', 'Viamão', 'Novo Hamburgo', 'São Leopoldo', 'Rio Grande',
+    'Alvorada', 'Passo Fundo', 'Sapucaia do Sul', 'Uruguaiana', 'Santa Cruz do Sul',
+    'Cachoeirinha', 'Bagé', 'Bento Gonçalves', 'Erechim', 'Guaíba'
+  ],
+  'SP': [
+    'São Paulo', 'Guarulhos', 'Campinas', 'São Bernardo do Campo', 'Santo André',
+    'Osasco', 'Ribeirão Preto', 'Sorocaba', 'Santos', 'Mauá',
+    'São José dos Campos', 'Mogi das Cruzes', 'Diadema', 'Jundiaí', 'Carapicuíba'
+  ],
+  'RJ': [
+    'Rio de Janeiro', 'São Gonçalo', 'Duque de Caxias', 'Nova Iguaçu', 'Niterói',
+    'Belford Roxo', 'São João de Meriti', 'Campos dos Goytacazes', 'Petrópolis', 'Volta Redonda'
+  ],
+  'MG': [
+    'Belo Horizonte', 'Uberlândia', 'Contagem', 'Juiz de Fora', 'Betim',
+    'Montes Claros', 'Ribeirão das Neves', 'Uberaba', 'Governador Valadares', 'Ipatinga'
+  ],
+  'BA': [
+    'Salvador', 'Feira de Santana', 'Vitória da Conquista', 'Camaçari', 'Itabuna',
+    'Juazeiro', 'Lauro de Freitas', 'Ilhéus', 'Jequié', 'Teixeira de Freitas'
+  ],
+  'PR': [
+    'Curitiba', 'Londrina', 'Maringá', 'Ponta Grossa', 'Cascavel',
+    'São José dos Pinhais', 'Foz do Iguaçu', 'Colombo', 'Guarapuava', 'Paranaguá'
+  ],
+  'PE': [
+    'Recife', 'Jaboatão dos Guararapes', 'Olinda', 'Caruaru', 'Petrolina',
+    'Paulista', 'Cabo de Santo Agostinho', 'Camaragibe', 'Garanhuns', 'Vitória de Santo Antão'
+  ],
+  'CE': [
+    'Fortaleza', 'Caucaia', 'Juazeiro do Norte', 'Maracanaú', 'Sobral',
+    'Crato', 'Itapipoca', 'Maranguape', 'Iguatu', 'Quixadá'
+  ],
+  'SC': [
+    'Joinville', 'Florianópolis', 'Blumenau', 'São José', 'Criciúma',
+    'Chapecó', 'Itajaí', 'Lages', 'Jaraguá do Sul', 'Palhoça'
+  ],
+  'GO': [
+    'Goiânia', 'Aparecida de Goiânia', 'Anápolis', 'Rio Verde', 'Luziânia',
+    'Águas Lindas de Goiás', 'Valparaíso de Goiás', 'Trindade', 'Formosa', 'Novo Gama'
+  ]
   // Adicione mais estados e cidades conforme necessário
 };
 
@@ -25,49 +94,109 @@ export default function HeroSectionCorreto() {
   const [sugestoesEstados, setSugestoesEstados] = useState<string[]>([]);
   const [sugestoesCidades, setSugestoesCidades] = useState<string[]>([]);
 
-  // Filtrar estados com base na entrada do usuário
-  useEffect(() => {
-    if (estado.trim() !== '') {
-      const estadosFiltrados = ESTADOS.filter(e =>
-        e.toLowerCase().includes(estado.toLowerCase())
-      );
-      setSugestoesEstados(estadosFiltrados);
-    } else {
+  // MELHORADO: Função para buscar estados por sigla ou nome
+  const buscarEstados = (termo: string) => {
+    if (!termo || termo.length < 1) {
       setSugestoesEstados([]);
+      return;
     }
-  }, [estado]);
 
-  // Filtrar cidades com base no estado selecionado e entrada do usuário
-  useEffect(() => {
-    if (cidade.trim() !== '') {
+    const termoLower = termo.toLowerCase();
+    const estadosEncontrados = ESTADOS_BRASIL.filter(estado =>
+      estado.sigla.toLowerCase().includes(termoLower) ||
+      estado.nome.toLowerCase().includes(termoLower)
+    );
+
+    setSugestoesEstados(estadosEncontrados.map(e => e.sigla));
+  };
+
+  // MELHORADO: Função para buscar cidades
+  const buscarCidades = (termo: string) => {
+    if (!termo || termo.length < 2) {
       setSugestoesCidades([]);
       return;
     }
 
-    // Agora permitimos buscar cidades mesmo sem estado selecionado
+    const termoLower = termo.toLowerCase();
+    let cidadesEncontradas: string[] = [];
+
     if (estadoSelecionado) {
       // Se um estado foi selecionado, filtramos apenas as cidades desse estado
       const cidadesDoEstado = CIDADES_POR_ESTADO[estadoSelecionado] || [];
-      const cidadesFiltradas = cidadesDoEstado.filter(c =>
-        c.toLowerCase().includes(cidade.toLowerCase())
+      cidadesEncontradas = cidadesDoEstado.filter(cidade =>
+        cidade.toLowerCase().includes(termoLower)
       );
-      setSugestoesCidades(cidadesFiltradas);
     } else {
       // Se nenhum estado foi selecionado, buscamos em todas as cidades
-      const todasCidades: string[] = [];
       Object.values(CIDADES_POR_ESTADO).forEach(cidades => {
-        todasCidades.push(...cidades);
+        const cidadesFiltradas = cidades.filter(cidade =>
+          cidade.toLowerCase().includes(termoLower)
+        );
+        cidadesEncontradas.push(...cidadesFiltradas);
       });
-
-      const cidadesFiltradas = todasCidades.filter(c =>
-        c.toLowerCase().includes(cidade.toLowerCase())
-      );
-      setSugestoesCidades(cidadesFiltradas);
     }
+
+    setSugestoesCidades(cidadesEncontradas.slice(0, 10)); // Limitar a 10 sugestões
+  };
+
+  // MELHORADO: Função para detectar estado automaticamente
+  const detectarEstado = (valor: string) => {
+    const valorLower = valor.toLowerCase();
+    
+    // Buscar por sigla exata
+    const estadoPorSigla = ESTADOS_BRASIL.find(estado =>
+      estado.sigla.toLowerCase() === valorLower
+    );
+    
+    if (estadoPorSigla) {
+      return estadoPorSigla.sigla;
+    }
+    
+    // Buscar por nome completo
+    const estadoPorNome = ESTADOS_BRASIL.find(estado =>
+      estado.nome.toLowerCase() === valorLower
+    );
+    
+    if (estadoPorNome) {
+      return estadoPorNome.sigla;
+    }
+    
+    // Buscar por nome parcial
+    const estadoParcial = ESTADOS_BRASIL.find(estado =>
+      estado.nome.toLowerCase().includes(valorLower) && valorLower.length > 2
+    );
+    
+    if (estadoParcial) {
+      return estadoParcial.sigla;
+    }
+    
+    return '';
+  };
+
+  // Filtrar estados com base na entrada do usuário
+  useEffect(() => {
+    buscarEstados(estado);
+  }, [estado]);
+
+  // Filtrar cidades com base no estado selecionado e entrada do usuário
+  useEffect(() => {
+    buscarCidades(cidade);
   }, [cidade, estadoSelecionado]);
 
-  const handleEstadoChange = (value: string) => {
-    setEstado(value);
+  // MELHORADO: Handler para mudança de estado com detecção automática
+  const handleEstadoChange = (valor: string) => {
+    setEstado(valor);
+    
+    // Detectar estado automaticamente
+    const estadoDetectado = detectarEstado(valor);
+    if (estadoDetectado) {
+      setEstadoSelecionado(estadoDetectado);
+      setSugestoesEstados([]);
+      setCidade(''); // Limpar cidade quando estado muda
+    } else {
+      setEstadoSelecionado('');
+      setCidade('');
+    }
   };
 
   const handleEstadoSelect = (value: string) => {
@@ -89,10 +218,10 @@ export default function HeroSectionCorreto() {
     setBusca(e.target.value);
   };
 
-  // MODIFICADO: Função handleSubmit com redirecionamento
+  // MODIFICADO: Função handleSubmit com redirecionamento melhorado
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validação básica dos campos
     if (!estado.trim() || !cidade.trim() || !busca.trim()) {
       alert('Por favor, preencha todos os campos antes de buscar.');
@@ -101,9 +230,9 @@ export default function HeroSectionCorreto() {
 
     // Construir a URL de redirecionamento com os parâmetros de busca
     const searchParams = new URLSearchParams({
-      estado: estado.trim(),
+      estado: estadoSelecionado || estado.trim(),
       cidade: cidade.trim(),
-      busca: busca.trim()
+      especialidade: busca.trim()
     });
 
     // Redirecionar para a página de resultados
@@ -137,31 +266,33 @@ export default function HeroSectionCorreto() {
           <p className="section-description">
             Encontre os melhores serviços para seu veículo na sua cidade. Pesquise oficinas, autopeças, concessionárias e muito mais.
           </p>
-          
-          {/* Imagens dos veículos */}
-          <div className="vehicles-grid">
-            <Image
-              src="/fluxo_app/images/image003.jpg"
-              alt="Motocicleta"
-              width={180}
-              height={120}
-              className="vehicle-image"
-            />
-            <Image
-              src="/fluxo_app/images/image001.jpg"
-              alt="Carro Vermelho"
-              width={180}
-              height={120}
-              className="vehicle-image"
-            />
-            <Image
-              src="/fluxo_app/images/image005.jpg"
-              alt="SUV Prata"
-              width={180}
-              height={120}
-              className="vehicle-image"
-            />
-          </div>
+        </div>
+      </section>
+
+      {/* Imagens dos veículos */}
+      <section className="vehicles-grid">
+        <div className="container mx-auto px-4">
+          <Image
+            src="/fluxo_app/images/image003.jpg"
+            alt="Carro Vermelho"
+            width={180}
+            height={120}
+            className="vehicle-image"
+          />
+          <Image
+            src="/fluxo_app/images/image001.jpg"
+            alt="Carro Vermelho"
+            width={180}
+            height={120}
+            className="vehicle-image"
+          />
+          <Image
+            src="/fluxo_app/images/image005.jpg"
+            alt="SUV Prata"
+            width={180}
+            height={120}
+            className="vehicle-image"
+          />
         </div>
       </section>
 
@@ -178,120 +309,112 @@ export default function HeroSectionCorreto() {
         </div>
       </section>
 
-      {/* Seção Começar Agora com faixa verde */}
-      <section className="comecar-agora-section">
-        <div className="container mx-auto px-4">
-          <h2 className="comecar-title">Começar Agora</h2>
+      {/* CORRIGIDO: Tarja Verde com Cantos Arredondados */}
+      <section className="bg-green-500 py-12 px-4">
+        <div className="container mx-auto">
+          {/* Título da Seção */}
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-bold text-white mb-4">
+              Começar Agora
+            </h3>
+          </div>
           
-          <form onSubmit={handleSubmit} className="busca-form">
-            <div className="form-group">
-              <label htmlFor="estado" className="form-label">Estado:</label>
-              <input
-                type="text"
-                id="estado"
-                value={estado}
-                onChange={(e) => handleEstadoChange(e.target.value)}
-                placeholder="Digite o estado"
-                className="form-input"
-                autoComplete="off"
-              />
-              {sugestoesEstados.length > 0 && (
-                <ul className="suggestions-list">
-                  {sugestoesEstados.map((sugestao, index) => (
-                    <li
-                      key={index}
-                      onClick={() => handleEstadoSelect(sugestao)}
-                      className="suggestion-item"
-                    >
-                      {sugestao}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+          {/* CORRIGIDO: Formulário de Busca com Cantos Arredondados */}
+          <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-2xl p-8">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              
+              {/* CORRIGIDO: Três Campos na Mesma Linha SEM dropdown */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                {/* Campo Estado */}
+                <div className="relative">
+                  <label htmlFor="estado" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Estado
+                  </label>
+                  <input
+                    type="text"
+                    id="estado"
+                    value={estado}
+                    onChange={(e) => handleEstadoChange(e.target.value)}
+                    placeholder="Ex: RS ou Rio Grande do Sul"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                    autoComplete="off"
+                  />
+                  {/* Sugestões de Estados */}
+                  {sugestoesEstados.length > 0 && (
+                    <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1 max-h-40 overflow-y-auto shadow-lg">
+                      {sugestoesEstados.map((sugestao, index) => (
+                        <li
+                          key={index}
+                          onClick={() => handleEstadoSelect(sugestao)}
+                          className="px-4 py-2 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+                        >
+                          {sugestao}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
 
-            <div className="form-group">
-              <label htmlFor="cidade" className="form-label">Cidade:</label>
-              <input
-                type="text"
-                id="cidade"
-                value={cidade}
-                onChange={(e) => handleCidadeChange(e.target.value)}
-                placeholder="Digite o nome da cidade"
-                className="form-input"
-                autoComplete="off"
-              />
-              {sugestoesCidades.length > 0 && (
-                <ul className="suggestions-list">
-                  {sugestoesCidades.map((sugestao, index) => (
-                    <li
-                      key={index}
-                      onClick={() => handleCidadeSelect(sugestao)}
-                      className="suggestion-item"
-                    >
-                      {sugestao}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+                {/* Campo Cidade */}
+                <div className="relative">
+                  <label htmlFor="cidade" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Cidade
+                  </label>
+                  <input
+                    type="text"
+                    id="cidade"
+                    value={cidade}
+                    onChange={(e) => handleCidadeChange(e.target.value)}
+                    placeholder="Digite o nome da cidade"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                    autoComplete="off"
+                  />
+                  {/* Sugestões de Cidades */}
+                  {sugestoesCidades.length > 0 && (
+                    <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1 max-h-40 overflow-y-auto shadow-lg">
+                      {sugestoesCidades.map((sugestao, index) => (
+                        <li
+                          key={index}
+                          onClick={() => handleCidadeSelect(sugestao)}
+                          className="px-4 py-2 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+                        >
+                          {sugestao}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
 
-            <div className="form-group">
-              <label htmlFor="busca" className="form-label">O que procura?</label>
-              <input
-                type="text"
-                id="busca"
-                value={busca}
-                onChange={handleBuscaChange}
-                placeholder="Ex: oficina, autopeças..."
-                className="form-input"
-                autoComplete="off"
-              />
-            </div>
+                {/* Campo O que procura */}
+                <div className="relative">
+                  <label htmlFor="busca" className="block text-sm font-semibold text-gray-700 mb-2">
+                    O que procura?
+                  </label>
+                  <input
+                    type="text"
+                    id="busca"
+                    value={busca}
+                    onChange={handleBuscaChange}
+                    placeholder="Ex: oficina, autopeças, concessionária"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                  />
+                </div>
+              </div>
 
-            <button type="submit" className="buscar-button">
-              Buscar Serviços
-            </button>
-          </form>
+              {/* Botão de Busca */}
+              <div className="text-center">
+                <button 
+                  type="submit" 
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
+                >
+                  Buscar Serviços
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </section>
-
-      {/* Rodapé completo com todos os URLs reais do www.gfauto.com.br */}
-      <footer className="footer-section">
-        <div className="footer-container">
-          <div className="footer-column">
-            <h3 className="footer-title">GFauto</h3>
-            <ul className="footer-links">
-              <li><a href="https://www.gfauto.com.br/index1.html">Home</a></li>
-              <li><a href="https://www.gfauto.com.br/156/156.html">Projeto 156</a></li>
-              <li><a href="https://www.gfauto.com.br/guiasfacil.html">Radares</a></li>
-              <li><a href="https://www.gfauto.com.br/aa_anuncio/form_anuncio.html">Anuncie</a></li>
-              <li><a href="https://www.gfauto.com.br/aa_anuncio/form_atualiza.html">Atualize Seus Dados</a></li>
-            </ul>
-          </div>
-          
-          <div className="footer-column">
-            <h3 className="footer-title">Contato</h3>
-            <ul className="footer-links">
-              <li><a href="https://wa.me/5500000000000">WhatsApp</a></li>
-              <li><a href="https://www.gfauto.com.br/aa_anuncio/form_contato.html">Fale Conosco</a></li>
-            </ul>
-          </div>
-          
-          <div className="footer-column">
-            <h3 className="footer-title">Redes Sociais</h3>
-            <ul className="footer-links">
-              <li><a href="https://twitter.com/Projeto_156">Twitter</a></li>
-              <li><a href="https://www.gfauto.com.br/#">Facebook</a></li>
-              <li><a href="https://www.gfauto.com.br/#">Instagram</a></li>
-            </ul>
-          </div>
-        </div>
-        
-        <div className="footer-copyright">
-          <p>Direitos Reservados - GFauto - 2001-2025</p>
-        </div>
-      </footer>
     </>
   );
 }

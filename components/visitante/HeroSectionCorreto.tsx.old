@@ -1,3 +1,5 @@
+// Este arquivo foi utilizado para corrigir erros que tinha no GFauto/fluxo_app/components/HeroSectionCorreto.tsx como faixa verde, campos (Estado, Cidade e O que Procura?), etc. por isso está (.old) depois pode ser deletado.
+
 'use client';
 
 import { useState } from 'react';
