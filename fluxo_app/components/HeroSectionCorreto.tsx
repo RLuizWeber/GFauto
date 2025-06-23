@@ -247,17 +247,17 @@ export default function HeroSectionCorreto() {
         </div>
       </section>
 
-      {/* Rodapé baseado em www.gfauto.com.br */}
+      {/* Rodapé com URLs reais do www.gfauto.com.br */}
       <footer className="footer-section">
         <div className="footer-container">
           <div className="footer-column">
             <h3 className="footer-title">GFauto</h3>
             <ul className="footer-links">
-              <li><a href="/">Home</a></li>
-              <li><a href="/projeto156">Projeto 156</a></li>
-              <li><a href="/radares">Radares</a></li>
-              <li><a href="/anuncie">Anuncie</a></li>
-              <li><a href="/atualize">Atualize Seus Dados</a></li>
+              <li><a href="https://www.gfauto.com.br/index1.html">Home</a></li>
+              <li><a href="https://www.gfauto.com.br/156/156.html">Projeto 156</a></li>
+              <li><a href="https://www.gfauto.com.br/guiasfacil.html">Radares</a></li>
+              <li><a href="https://www.gfauto.com.br/aa_anuncio/form_anuncio.html">Anuncie</a></li>
+              <li><a href="https://www.gfauto.com.br/aa_anuncio/form_atualiza.html">Atualize Seus Dados</a></li>
             </ul>
           </div>
           
@@ -286,4 +286,3 @@ export default function HeroSectionCorreto() {
     </>
   );
 }
-
