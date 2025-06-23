@@ -21,7 +21,7 @@ Essa conexão se dará quando o internauta estiver procurando na sua cidade um f
 
 QUEM ESTÁ TRABALHANDO NO PROJETO GFAUTO:
 
-1. O Desenvolvedor: Agente(AI) que deve assumir o papel, obter conhecimento e se comportar como um Profissional Sênior com as habilidades de Engenheiro de Software, Analista de Sistemas, Desenvolvedor de Softwares, Programador de Sistemas. Focado no ambiente de desenvolvimento do Projeto GFauto.
+1. O Desenvolvedor: Agente(AI) que deve assumir o papel, obter conhecimento e se comportar como um Profissional Sênior Sério e responsável com as habilidades de Engenheiro de Software, Analista de Sistemas, Desenvolvedor de Softwares, conhecedor de códigos, Programador de Sistemas. Focado no ambiente de desenvolvimento do Projeto GFauto.
 
 2. O Weber: É o dono/admin do projeto que vai estar interagindo com o Desenvolvedor, recebendo do Desenvolvedor a orientação para enviar os códigos para o GitHub via Git Hash, verificando os Deploys na Vercel e fazendo as checagens via navegador web do resultado obtidos na Vercel.com
 
@@ -268,31 +268,23 @@ REALIZAÇÕES DA SESSÃO:
 
 ✅ 1. IMPLEMENTAÇÃO COMPLETA DO RODAPÉ
 
-•
-Rodapé implementado baseado exatamente no modelo da www.gfauto.com.br
+• Rodapé implementado baseado exatamente no modelo da www.gfauto.com.br
 
-•
-Estrutura de 3 colunas: GFauto | Contato | Redes Sociais
+• Estrutura de 3 colunas: GFauto | Contato | Redes Sociais
 
-•
-Links corretos aplicados:
+• Links corretos aplicados:
 
-•
-Coluna GFauto: Home, Projeto 156, Radares, Anuncie, Atualize Seus Dados (URLs reais do site original)
+• Coluna GFauto: Home, Projeto 156, Radares, Anuncie, Atualize Seus Dados (URLs reais do site original)
 
-•
-Coluna Contato: WhatsApp (https://wa.me/5500000000000), Fale Conosco
+• Coluna Contato: WhatsApp (https://wa.me/5500000000000), Fale Conosco
 
-•
-Coluna Redes Sociais: Twitter (https://twitter.com/Projeto_156), Facebook, Instagram
+• Coluna Redes Sociais: Twitter (https://twitter.com/Projeto_156), Facebook, Instagram
 
 
 
-•
-Layout visual: Fundo cinza escuro (#333333), títulos verdes (#4CAF50), links brancos
+• Layout visual: Fundo cinza escuro (#333333), títulos verdes (#4CAF50), links brancos
 
-•
-Responsividade: Implementada para dispositivos móveis
+• Responsividade: Implementada para dispositivos móveis
 
 ✅ 2. CORREÇÃO DE CAMINHOS DAS IMAGENS
 
@@ -318,11 +310,9 @@ PROBLEMAS CRÍTICOS IDENTIFICADOS:
 •
 Problema: Seção "Começar Agora" sem fundo verde conforme especificações
 
-•
-Status: Não implementado
+• Status: Não implementado
 
-•
-Impacto: Layout não conforme Projeto_GFauto.md
+• Impacto: Layout não conforme Projeto_GFauto.md
 
 ❌ 2. FUNCIONALIDADE DE BUSCA NÃO FUNCIONA
 
@@ -488,4 +478,27 @@ SEMPRE completar tarefas integralmente, não fazer "perna de anão"
 
 5.
 SEMPRE seguir as especificações do Projeto_GFauto.md
+
+ESPECIFICAÇÕES DA PÁGINA https://gfauto.vercel.app/  deve se inspirar na https://www.gfauto.com.br 
+
+ Definições: 
+- logo.png - a imagem está sanfonada para cima e deve respeitar o README_fluxo_app.md
+- a frase; Bem Vindo!
+
+Acesse recursos exclusivos e informações detalhadas sobre serviços automotivos em sua região.
+Deve ficar escrita em branco negrito ao lado da imagem logo.png
+
+- O Texto: Uma Proposta Ganha-Ganha
+
+Em que todos os envolvidos ganham.
+
+Encontre os melhores serviços para seu veículo na sua cidade. Pesquise oficinas, autopeças, concessionárias e muito mais.
+deve ficar à esquerda ao lado dos carros à direita.
+Deve ficar a esquerda ao lado dos carros conforme disposto no  gfauto.com.br original.
+
+Na faixa Verde "Começar Agora" e na linha de baixo os três campos (Estado, Cidade e O que Procura?) lado a lado. E na linha abaixo fica o botão  "Buscar Serviços"
+- E na parte do meio, entre o botão e o rodapé vai a figura do mc4.png (provisória) porque nesse espaço iremos implementar futuramente algumas outras funcionalidade.
+É só código de programação, qualquer programador resolve, então é fácil para você.
+
+
 

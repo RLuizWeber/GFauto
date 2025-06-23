@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'; // ADICIONADO: Import do useRouter
 import Image from 'next/image';
 import '../styles/HeroSection.css';
 
-// Base de dados de estados brasileiros - MELHORADO: Dados mais completos
+// Dados simulados de estados e cidades = \GFauto\fluxo_app\components
 const ESTADOS_BRASIL = [
   { sigla: 'AC', nome: 'Acre' },
   { sigla: 'AL', nome: 'Alagoas' },
@@ -37,7 +37,6 @@ const ESTADOS_BRASIL = [
   { sigla: 'TO', nome: 'Tocantins' }
 ];
 
-// Base de dados de cidades por estado - MELHORADO: Mais cidades
 const CIDADES_POR_ESTADO: { [key: string]: string[] } = {
   'RS': [
     'Porto Alegre', 'Caxias do Sul', 'Pelotas', 'Canoas', 'Santa Maria',
@@ -94,7 +93,7 @@ export default function HeroSectionCorreto() {
   const [sugestoesEstados, setSugestoesEstados] = useState<string[]>([]);
   const [sugestoesCidades, setSugestoesCidades] = useState<string[]>([]);
 
-  // MELHORADO: Função para buscar estados por sigla ou nome
+  // Função para buscar estados por sigla ou nome
   const buscarEstados = (termo: string) => {
     if (!termo || termo.length < 1) {
       setSugestoesEstados([]);
@@ -110,7 +109,7 @@ export default function HeroSectionCorreto() {
     setSugestoesEstados(estadosEncontrados.map(e => e.sigla));
   };
 
-  // MELHORADO: Função para buscar cidades
+  // Função para buscar cidades
   const buscarCidades = (termo: string) => {
     if (!termo || termo.length < 2) {
       setSugestoesCidades([]);
@@ -121,6 +120,7 @@ export default function HeroSectionCorreto() {
     let cidadesEncontradas: string[] = [];
 
     if (estadoSelecionado) {
+      // Agora permitimos buscar cidades mesmo sem estado selecionado
       // Se um estado foi selecionado, filtramos apenas as cidades desse estado
       const cidadesDoEstado = CIDADES_POR_ESTADO[estadoSelecionado] || [];
       cidadesEncontradas = cidadesDoEstado.filter(cidade =>
@@ -139,7 +139,7 @@ export default function HeroSectionCorreto() {
     setSugestoesCidades(cidadesEncontradas.slice(0, 10)); // Limitar a 10 sugestões
   };
 
-  // MELHORADO: Função para detectar estado automaticamente
+  // Função para detectar estado automaticamente
   const detectarEstado = (valor: string) => {
     const valorLower = valor.toLowerCase();
     
@@ -183,7 +183,7 @@ export default function HeroSectionCorreto() {
     buscarCidades(cidade);
   }, [cidade, estadoSelecionado]);
 
-  // MELHORADO: Handler para mudança de estado com detecção automática
+  // Handler para mudança de estado com detecção automática
   const handleEstadoChange = (valor: string) => {
     setEstado(valor);
     
@@ -218,7 +218,7 @@ export default function HeroSectionCorreto() {
     setBusca(e.target.value);
   };
 
-  // MODIFICADO: Função handleSubmit com redirecionamento melhorado
+  // MODIFICADO: Função handleSubmit com redirecionamento
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -244,87 +244,75 @@ export default function HeroSectionCorreto() {
       {/* Header com azul sólido e cantos arredondados */}
       <section className="hero-header">
         <div className="container mx-auto px-4">
-          <Image
-            src="/fluxo_app/images/logo.png"
-            alt="GFauto Logo"
-            width={250}
-            height={250}
-            className="logo-image"
-          />
-          <h1 className="hero-title">Bem Vindo!</h1>
-          <p className="hero-subtitle">
-            Acesse recursos exclusivos e informações detalhadas sobre serviços automotivos em sua região.
-          </p>
+          <div className="header-content">
+            <Image
+              src="/fluxo_app/images/logo.png"
+              alt="GFauto Logo"
+              width={250}
+              height={250}
+              className="logo-image"
+            />
+            <div className="header-text">
+              <h1 className="hero-title">Bem Vindo!</h1>
+              <p className="hero-subtitle">
+                Acesse recursos exclusivos e informações detalhadas sobre serviços automotivos em sua região.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Seção Uma Proposta Ganha-Ganha */}
       <section className="ganha-ganha-section">
         <div className="container mx-auto px-4">
-          <h2 className="section-title">Uma Proposta Ganha-Ganha</h2>
-          <h3 className="section-subtitle">Em que todos os envolvidos ganham.</h3>
-          <p className="section-description">
-            Encontre os melhores serviços para seu veículo na sua cidade. Pesquise oficinas, autopeças, concessionárias e muito mais.
-          </p>
+          <div className="ganha-ganha-content">
+            <div className="ganha-ganha-text">
+              <h2 className="section-title">Uma Proposta Ganha-Ganha</h2>
+              <h3 className="section-subtitle">Em que todos os envolvidos ganham.</h3>
+              <p className="section-description">
+                Encontre os melhores serviços para seu veículo na sua cidade. Pesquise oficinas, autopeças, concessionárias e muito mais.
+              </p>
+            </div>
+            <div className="vehicles-grid">
+              <Image
+                src="/fluxo_app/images/image003.jpg"
+                alt="Carro Vermelho"
+                width={180}
+                className="vehicle-image"
+              />
+              <Image
+                src="/fluxo_app/images/image001.jpg"
+                alt="Carro Vermelho"
+                width={180}
+                className="vehicle-image"
+              />
+              <Image
+                src="/fluxo_app/images/image005.jpg"
+                alt="SUV Prata"
+                width={180}
+                className="vehicle-image"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Imagens dos veículos */}
-      <section className="vehicles-grid">
-        <div className="container mx-auto px-4">
-          <Image
-            src="/fluxo_app/images/image003.jpg"
-            alt="Carro Vermelho"
-            width={180}
-            height={120}
-            className="vehicle-image"
-          />
-          <Image
-            src="/fluxo_app/images/image001.jpg"
-            alt="Carro Vermelho"
-            width={180}
-            height={120}
-            className="vehicle-image"
-          />
-          <Image
-            src="/fluxo_app/images/image005.jpg"
-            alt="SUV Prata"
-            width={180}
-            height={120}
-            className="vehicle-image"
-          />
-        </div>
-      </section>
-
-      {/* Mascote */}
-      <section className="mascot-section">
-        <div className="container mx-auto px-4 text-center">
-          <Image
-            src="/fluxo_app/images/mc4.png"
-            alt="Mascote GFauto - Manda Chuva"
-            width={250}
-            height={250}
-            className="mascot-image mx-auto"
-          />
-        </div>
-      </section>
-
-      {/* CORRIGIDO: Tarja Verde com Cantos Arredondados */}
-      <section className="bg-green-500 py-12 px-4">
+      {/* Seção Verde "Começar Agora" */}
+      <section className="comecar-agora-section">
         <div className="container mx-auto">
           {/* Título da Seção */}
           <div className="text-center mb-8">
-            <h3 className="text-3xl font-bold text-white mb-4">
+            <h3 className="comecar-agora-title">
               Começar Agora
             </h3>
           </div>
           
-          {/* CORRIGIDO: Formulário de Busca com Cantos Arredondados */}
-          <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-2xl p-8">
-            <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Formulário de Busca com Cantos Arredondados */}
+          <div className="busca-form-container">
+            <form onSubmit={handleSubmit} className="busca-form">
               
-              {/* CORRIGIDO: Três Campos na Mesma Linha SEM dropdown */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Três Campos na Mesma Linha */}
+              <div className="form-grid">
                 
                 {/* Campo Estado */}
                 <div className="relative">
@@ -415,7 +403,54 @@ export default function HeroSectionCorreto() {
           </div>
         </div>
       </section>
+
+      {/* Mascote */}
+      <section className="mascot-section">
+        <div className="container mx-auto px-4 text-center">
+          <Image
+            src="/fluxo_app/images/mc4.png"
+            alt="Mascote GFauto - Manda Chuva"
+            width={250}
+            height={250}
+            className="mascot-image mx-auto"
+          />
+        </div>
+      </section>
+
+      {/* Rodapé */}
+      <footer className="footer">
+        <div className="container mx-auto px-4">
+          <div className="footer-content">
+            <div className="footer-column">
+              <h4 className="footer-title">Sobre o GFauto</h4>
+              <ul className="footer-links">
+                <li><a href="/sobre">Quem Somos</a></li>
+                <li><a href="/como-funciona">Como Funciona</a></li>
+                <li><a href="/contato">Contato</a></li>
+              </ul>
+            </div>
+            <div className="footer-column">
+              <h4 className="footer-title">Para Empresas</h4>
+              <ul className="footer-links">
+                <li><a href="/anunciar">Anunciar Serviços</a></li>
+                <li><a href="/planos">Planos e Preços</a></li>
+                <li><a href="/suporte">Suporte</a></li>
+              </ul>
+            </div>
+            <div className="footer-column">
+              <h4 className="footer-title">Legal</h4>
+              <ul className="footer-links">
+                <li><a href="/termos">Termos de Uso</a></li>
+                <li><a href="/privacidade">Política de Privacidade</a></li>
+                <li><a href="/cookies">Política de Cookies</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p>&copy; 2024 GFauto. Todos os direitos reservados.</p>
+          </div>
+        </div>
+      </footer>
     </>
   );
 }
-
