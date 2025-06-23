@@ -19,6 +19,14 @@ Essa conexão se dará quando o internauta estiver procurando na sua cidade um f
 3. Repositório GigHub público: https://github.com/RLuizWeber/GFauto.git 
 4. Hospedagem Vercel.com https://gfauto.vercel.app/
 
+## 🚀 TECNOLOGIAS UTILIZADAS
+- **Frontend:** Next.js, React, TailwindCSS: Framework de desenvolvimento web 
+- **Backend:** Prisma
+- **Hospedagem:** Vercel.com
+- **Autenticação:** Senha forte e 2FA para painel admin
+- **Resend:** Plataforma de envio de e-mails
+- **Mercado Pago** Plataforma de pagamentos digitais
+
 Importante Obs.: Todas as páginas do domínio www.gfauto.com.br mostradas nesse documento são apenas ilustrativas.
 
 ## Estrutura do site: (fazer os ajustes necessários)

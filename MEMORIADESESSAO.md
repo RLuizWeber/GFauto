@@ -33,10 +33,9 @@ DEFINIÇÃO DO AMBIENTE DE DESENVOLVIMENTO E FLUXO: O "AMBIENTE DE TRABALHO" CON
 4. Hospedagem Vercel.com https://gfauto.vercel.app/
 
 ## 🚀 TECNOLOGIAS UTILIZADAS
-- **Frontend:** Next.js, React, TailwindCSS
+- **Frontend:** Next.js, React, TailwindCSS: Framework de desenvolvimento web 
 - **Backend:** Prisma
-- **Hospedagem:** Vercel
-- **Next.js:** Framework de desenvolvimento web 
+- **Hospedagem:** Vercel.com
 - **Autenticação:** Senha forte e 2FA para painel admin
 - **Resend:** Plataforma de envio de e-mails
 - **Mercado Pago** Plataforma de pagamentos digitais
