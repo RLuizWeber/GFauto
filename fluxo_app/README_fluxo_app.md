@@ -1,14 +1,14 @@
 // Caminho desse arquivo: W:/A_Weber/Pai/Hostmachine/gfauto/githubVercel/GFauto/fluxo_app
 ** Este arquivo tem que ser referenciado e referenciar o GFauto/README_geral.md
 
-Leitura obrigatória: Leia todo o conteúdo desse README para obter um entendimento abrangente do fluxo_app/ e facilitar em atualizações de códigos de arquivos existentes e eventuais novos códigos.
+Desenvolvedor, Leitura obrigatória: Leia com bastante atenção todo o conteúdo desse README para obter um entendimento abrangente do fluxo_app/ e facilitar em atualizações de códigos de arquivos existentes e eventuais novos códigos.
 Após a leitura total e com bastante atenção deste README_fluxo_app.md/ o Desenvolvedor verá que está num mundo tão pequeno que será quase impossível cometer erros. Por esse motivo deve ser continuamente atualizado.
 
 O page.tsx na raíz /GFauto/app é a página index do Projeto GFauto. 
 
 # README_fluxo_app.md
 
-Este documento fornece uma visão geral abrangente do módulo `fluxo_app` do Projeto GFauto. Ele engloba os componentes, estilos e lógicas que governam a experiência do usuário visitante, desde a interação inicial na página principal até a visualização dos resultados de busca.
+Este documento fornece uma visão geral abrangente do módulo `fluxo_app` do Projeto GFauto. Ele engloba os componentes, estilos e lógicas que governam a experiência do usuário visitante, desde a interação inicial na página principal até a visualização dos resultados de busca
 
 ## Propósito Principal do Módulo
 
