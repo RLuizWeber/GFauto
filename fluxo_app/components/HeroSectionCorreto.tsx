@@ -1,21 +1,23 @@
+// HeroSectionCorreto.tsx - Versão Modificada com Redirecionamento
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'; // ADICIONADO: Import do useRouter
 import Image from 'next/image';
 import '../styles/HeroSection.css';
 
-// Dados simulados de estados e cidades
+// Dados simulados de estados e cidades = \GFauto\fluxo_app\components
 const ESTADOS = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
 
 const CIDADES_POR_ESTADO: { [key: string]: string[] } = {
   'SP': ['São Paulo', 'Campinas', 'Guarulhos', 'Santos', 'São Bernardo do Campo'],
   'RJ': ['Rio de Janeiro', 'Niterói', 'São Gonçalo', 'Duque de Caxias', 'Nova Iguaçu'],
   'MG': ['Belo Horizonte', 'Uberlândia', 'Contagem', 'Juiz de Fora', 'Betim'],
+  // Adicione mais estados e cidades conforme necessário
 };
 
 export default function HeroSectionCorreto() {
-  const router = useRouter();
+  const router = useRouter(); // ADICIONADO: Inicialização do router
   const [estado, setEstado] = useState('');
   const [estadoSelecionado, setEstadoSelecionado] = useState('');
   const [cidade, setCidade] = useState('');
@@ -42,13 +44,16 @@ export default function HeroSectionCorreto() {
       return;
     }
 
+    // Agora permitimos buscar cidades mesmo sem estado selecionado
     if (estadoSelecionado) {
+      // Se um estado foi selecionado, filtramos apenas as cidades desse estado
       const cidadesDoEstado = CIDADES_POR_ESTADO[estadoSelecionado] || [];
       const cidadesFiltradas = cidadesDoEstado.filter(c =>
         c.toLowerCase().includes(cidade.toLowerCase())
       );
       setSugestoesCidades(cidadesFiltradas);
     } else {
+      // Se nenhum estado foi selecionado, buscamos em todas as cidades
       const todasCidades: string[] = [];
       Object.values(CIDADES_POR_ESTADO).forEach(cidades => {
         todasCidades.push(...cidades);
@@ -84,20 +89,24 @@ export default function HeroSectionCorreto() {
     setBusca(e.target.value);
   };
 
+  // MODIFICADO: Função handleSubmit com redirecionamento
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Validação básica dos campos
     if (!estado.trim() || !cidade.trim() || !busca.trim()) {
       alert('Por favor, preencha todos os campos antes de buscar.');
       return;
     }
 
+    // Construir a URL de redirecionamento com os parâmetros de busca
     const searchParams = new URLSearchParams({
       estado: estado.trim(),
       cidade: cidade.trim(),
       busca: busca.trim()
     });
 
+    // Redirecionar para a página de resultados
     router.push(`/resultados?${searchParams.toString()}`);
   };
 
@@ -286,3 +295,4 @@ export default function HeroSectionCorreto() {
     </>
   );
 }
+
