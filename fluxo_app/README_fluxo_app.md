@@ -84,23 +84,29 @@ Armazena os arquivos CSS que definem a aparência visual dos componentes:
    
    ✅ IMPLEMENTAÇÃO COMPLETA DO RODAPÉ
 • Rodapé implementado baseado exatamente no modelo da www.gfauto.com.br
-• Estrutura de 3 colunas: GFauto | Contato | Redes Sociais
+• Estrutura de 4 colunas: GFauto | Contato | Redes Sociais | Legal
 • Links corretos aplicados a aplicar:
-• Coluna GFauto:
+1 • Coluna GFauto:
 Home, https://www.gfauto.com.br/
 Projeto 156, https://www.gfauto.com.br/156/156.html
 Radares, https://www.gfauto.com.br/guiasfacil.html
 Anuncie, https://www.gfauto.com.br/aa_anuncio/form_anuncio.html
 Atualize Seus Dados, https://www.gfauto.com.br/aa_anuncio/form_atualiza.html
-• Coluna Contato:
+2 • Coluna Contato:
 WhatsApp, https://wa.me/5500000000000 
 Fale Conosco, https://www.gfauto.com.br/aa_anuncio/form_contato.html
-• Coluna Redes Sociais:
+Anunciar Serviços, (deixar sem link, depois vemos para que página vai servir)
+Planos e Preços, (deixar sem link e assim que a página Plano (fluxo_plano) estiver pronta colocamos o link dela)
+3 • Coluna Redes Sociais:
 Twitter, https://twitter.com/Projeto_156
 Facebook, https://www.gfauto.com.br/#
 Instagram, https://www.gfauto.com.br/#
 • Layout visual: Fundo cinza escuro (#333333), títulos verdes (#4CAF50), links brancos
 • Responsividade: Implementada para dispositivos móveis
+4 • Legal:
+Termos de Uso, (Link mais tarde)
+Política de Privacidade, (Link mais tarde)
+Política de Cookies. (Link mais tarde)
 
 **Alterações Recentes (Junho de 2025):**
 

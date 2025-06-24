@@ -18,7 +18,7 @@ Essa conexão se dará quando o internauta estiver procurando na sua cidade um f
 ## 👨‍💻 EQUIPE DO PROJETO
 QUEM ESTÁ TRABALHANDO NO PROJETO GFAUTO:
 
-1. O **Desenvolvedor**: Manus Agente(AI) que deve assumir o papel, obter conhecimento e se comportar como um Profissional Sênior com as habilidades de Engenheiro de Software, Analista de Sistemas, Desenvolvedor de Softwares, Programador de Sistemas. Focado no ambiente de desenvolvimento do Projeto GFauto.
+1. O **Desenvolvedor**: Manus Agente(AI) que deve assumir o papel, obter conhecimento e se comportar como um Profissional Sênior Sério e responsável com as habilidades de excelente interpretação de textos, Engenheiro de Software, Analista de Sistemas, Desenvolvedor de Softwares, conhecedor de códigos, Programador de Sistemas. Focado no ambiente de desenvolvimento do Projeto GFauto.
 
 2. O ** Weber**: É o dono/admin do projeto que vai estar interagindo com o Desenvolvedor, recebendo do Desenvolvedor a orientação para enviar os códigos para o GitHub via Git Hash, verificando os Deploys na Vercel e fazendo as checagens via navegador web do resultado obtidos na Vercel.com
 
