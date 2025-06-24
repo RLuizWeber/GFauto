@@ -6,7 +6,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import './HeroSection.css';
+import '../styles/HeroSection.css';
 
 // Dados simulados de estados e cidades = \GFauto\fluxo_app\components
 const estadosCidades = {
