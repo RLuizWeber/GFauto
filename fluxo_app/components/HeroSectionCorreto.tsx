@@ -1,12 +1,11 @@
-// HeroSectionCorreto.tsx - Versão Atualizada SEM Rodapé
+// HeroSectionCorreto.tsx - Versão Definitiva com Tailwind CSS
 // Localização: GFauto/fluxo_app/components/HeroSectionCorreto.tsx
-// O rodapé agora é um componente global em components/global/Footer.tsx
+// VERSÃO FINAL: Sem rodapé (componente global), com Tailwind CSS exclusivamente
 
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import '../styles/HeroSection.css';
 
 // Dados simulados de estados e cidades = \GFauto\fluxo_app\components
 const estadosCidades = {
@@ -177,21 +176,22 @@ const HeroSectionCorreto: React.FC = () => {
   }, []);
 
   return (
-    <div className="hero-container">
+    <div className="min-h-screen bg-gray-50">
       {/* Header com Logo e Boas-vindas */}
-      <section className="header-top">
-        <div className="container">
-          <div className="header-content">
-            <div className="logo-section">
+      <section className="bg-gradient-to-r from-blue-400 to-blue-600 py-12 px-4">
+        <div className="container mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div className="mb-6 md:mb-0">
               <img 
                 src="/fluxo_app/images/logo.png" 
                 alt="GFauto Logo" 
-                className="logo"
+                className="w-64 h-auto"
+                style={{ width: '250px' }}
               />
             </div>
-            <div className="welcome-section">
-              <h1 className="welcome-title">Bem Vindo!</h1>
-              <p className="welcome-subtitle">
+            <div className="text-center md:text-right">
+              <h1 className="text-4xl font-bold text-white mb-4">Bem Vindo!</h1>
+              <p className="text-xl text-white font-semibold">
                 Acesse recursos exclusivos e informações detalhadas sobre serviços automotivos em sua região.
               </p>
             </div>
@@ -200,54 +200,57 @@ const HeroSectionCorreto: React.FC = () => {
       </section>
 
       {/* Seção da Proposta Ganha-Ganha */}
-      <section className="proposta-section">
-        <div className="container">
-          <div className="proposta-content">
-            <div className="proposta-text">
-              <h2 className="proposta-title">Uma Proposta Ganha-Ganha</h2>
-              <h3 className="proposta-subtitle">Em que todos os envolvidos ganham.</h3>
-              <p className="proposta-description">
+      <section className="py-16 px-4 bg-white">
+        <div className="container mx-auto">
+          <div className="flex flex-col lg:flex-row items-center justify-between">
+            <div className="lg:w-1/2 mb-8 lg:mb-0">
+              <h2 className="text-4xl font-bold text-blue-600 mb-4">Uma Proposta Ganha-Ganha</h2>
+              <h3 className="text-2xl font-semibold text-gray-700 mb-6">Em que todos os envolvidos ganham.</h3>
+              <p className="text-lg text-gray-600 leading-relaxed">
                 Encontre os melhores serviços para seu veículo na sua cidade. 
                 Pesquise oficinas, autopeças, concessionárias e muito mais.
               </p>
             </div>
-            <div className="proposta-images">
-              <img src="/fluxo_app/images/image001.jpg" alt="Moto Azul" className="vehicle-image" />
-              <img src="/fluxo_app/images/image003.jpg" alt="Carro Vermelho" className="vehicle-image" />
-              <img src="/fluxo_app/images/image005.jpg" alt="SUV Branca" className="vehicle-image" />
+            <div className="lg:w-1/2 flex justify-center space-x-4">
+              <img src="/fluxo_app/images/image001.jpg" alt="Moto Azul" className="w-32 h-24 object-cover rounded-lg shadow-md" />
+              <img src="/fluxo_app/images/image003.jpg" alt="Carro Vermelho" className="w-32 h-24 object-cover rounded-lg shadow-md" />
+              <img src="/fluxo_app/images/image005.jpg" alt="SUV Branca" className="w-32 h-24 object-cover rounded-lg shadow-md" />
             </div>
           </div>
         </div>
       </section>
 
       {/* Seção Começar Agora com Faixa Verde */}
-      <section className="search-section">
-        <div className="container">
+      <section className="bg-green-500 py-12 px-4">
+        <div className="container mx-auto">
           <div className="text-center mb-8">
-            <h3 className="search-title">Começar Agora</h3>
+            <h3 className="text-3xl font-bold text-white mb-4">Começar Agora</h3>
+            <p className="text-xl text-white font-semibold">Uma Proposta Ganha-Ganha</p>
+            <p className="text-lg text-white">Em que todos os envolvidos ganham.</p>
           </div>
           
-          <div className="search-form">
-            <form onSubmit={handleSubmit} className="busca-form">
-              <div className="form-grid">
+          <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-2xl p-8">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Campo Estado */}
-                <div className="form-group" onClick={(e) => e.stopPropagation()}>
-                  <label htmlFor="estado" className="form-label">Estado</label>
+                <div className="relative" onClick={(e) => e.stopPropagation()}>
+                  <label htmlFor="estado" className="block text-sm font-medium text-gray-700 mb-2">Estado</label>
                   <input
                     type="text"
                     id="estado"
                     value={estado}
                     onChange={(e) => handleEstadoChange(e.target.value)}
                     placeholder="Ex: RS ou Rio Grande do Sul"
-                    className="form-input"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                     autoComplete="off"
+                    style={{ appearance: 'none', WebkitAppearance: 'none' }}
                   />
                   {mostrarSugestoesEstado && sugestoesEstado.length > 0 && (
-                    <div className="sugestoes">
+                    <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto">
                       {sugestoesEstado.map((sugestao, index) => (
                         <div
                           key={index}
-                          className="sugestao-item"
+                          className="px-4 py-2 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0"
                           onClick={() => selecionarEstado(sugestao)}
                         >
                           {sugestao}
@@ -258,23 +261,24 @@ const HeroSectionCorreto: React.FC = () => {
                 </div>
 
                 {/* Campo Cidade */}
-                <div className="form-group" onClick={(e) => e.stopPropagation()}>
-                  <label htmlFor="cidade" className="form-label">Cidade</label>
+                <div className="relative" onClick={(e) => e.stopPropagation()}>
+                  <label htmlFor="cidade" className="block text-sm font-medium text-gray-700 mb-2">Cidade</label>
                   <input
                     type="text"
                     id="cidade"
                     value={cidade}
                     onChange={(e) => handleCidadeChange(e.target.value)}
                     placeholder="Digite o nome da cidade"
-                    className="form-input"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                     autoComplete="off"
+                    style={{ appearance: 'none', WebkitAppearance: 'none' }}
                   />
                   {mostrarSugestoesCidade && sugestoesCidade.length > 0 && (
-                    <div className="sugestoes">
+                    <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto">
                       {sugestoesCidade.map((sugestao, index) => (
                         <div
                           key={index}
-                          className="sugestao-item"
+                          className="px-4 py-2 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0"
                           onClick={() => selecionarCidade(sugestao)}
                         >
                           {sugestao}
@@ -285,23 +289,27 @@ const HeroSectionCorreto: React.FC = () => {
                 </div>
 
                 {/* Campo O que procura */}
-                <div className="form-group">
-                  <label htmlFor="oqueProcura" className="form-label">O que procura?</label>
+                <div>
+                  <label htmlFor="oqueProcura" className="block text-sm font-medium text-gray-700 mb-2">O que procura?</label>
                   <input
                     type="text"
                     id="oqueProcura"
                     value={oqueProcura}
                     onChange={(e) => setOqueProcura(e.target.value)}
                     placeholder="Ex: oficina, autopeças, concessionária"
-                    className="form-input"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                     autoComplete="off"
+                    style={{ appearance: 'none', WebkitAppearance: 'none' }}
                   />
                 </div>
               </div>
 
               {/* Botão de busca */}
-              <div className="button-container">
-                <button type="submit" className="search-button">
+              <div className="text-center">
+                <button 
+                  type="submit" 
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
+                >
                   Buscar Serviços
                 </button>
               </div>
@@ -311,15 +319,14 @@ const HeroSectionCorreto: React.FC = () => {
       </section>
 
       {/* Seção do Mascote */}
-      <section className="mascote-section">
-        <div className="container">
-          <div className="mascote-container">
-            <img 
-              src="/fluxo_app/images/mc4.png" 
-              alt="Mascote GFauto" 
-              className="mascote-image"
-            />
-          </div>
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="container mx-auto text-center">
+          <img 
+            src="/fluxo_app/images/mc4.png" 
+            alt="Mascote GFauto" 
+            className="mx-auto"
+            style={{ width: '250px', height: 'auto' }}
+          />
         </div>
       </section>
     </div>
