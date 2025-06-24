@@ -1,11 +1,12 @@
-// HeroSectionCorreto.tsx - Versão Corrigida com Tailwind CSS e Rodapé
+// HeroSectionCorreto.tsx - Versão Modificada com Redirecionamento
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'; // ADICIONADO: Import do useRouter
 import Image from 'next/image';
+import '../styles/HeroSection.css';
 
-// Dados simulados de estados e cidades
+// Dados simulados de estados e cidades = \GFauto\fluxo_app\components
 const ESTADOS_BRASIL = [
   { sigla: 'AC', nome: 'Acre' },
   { sigla: 'AL', nome: 'Alagoas' },
@@ -80,10 +81,11 @@ const CIDADES_POR_ESTADO: { [key: string]: string[] } = {
     'Goiânia', 'Aparecida de Goiânia', 'Anápolis', 'Rio Verde', 'Luziânia',
     'Águas Lindas de Goiás', 'Valparaíso de Goiás', 'Trindade', 'Formosa', 'Novo Gama'
   ]
+  // Adicione mais estados e cidades conforme necessário
 };
 
 export default function HeroSectionCorreto() {
-  const router = useRouter();
+  const router = useRouter(); // ADICIONADO: Inicialização do router
   const [estado, setEstado] = useState('');
   const [estadoSelecionado, setEstadoSelecionado] = useState('');
   const [cidade, setCidade] = useState('');
@@ -118,11 +120,14 @@ export default function HeroSectionCorreto() {
     let cidadesEncontradas: string[] = [];
 
     if (estadoSelecionado) {
+      // Agora permitimos buscar cidades mesmo sem estado selecionado
+      // Se um estado foi selecionado, filtramos apenas as cidades desse estado
       const cidadesDoEstado = CIDADES_POR_ESTADO[estadoSelecionado] || [];
       cidadesEncontradas = cidadesDoEstado.filter(cidade =>
         cidade.toLowerCase().includes(termoLower)
       );
     } else {
+      // Se nenhum estado foi selecionado, buscamos em todas as cidades
       Object.values(CIDADES_POR_ESTADO).forEach(cidades => {
         const cidadesFiltradas = cidades.filter(cidade =>
           cidade.toLowerCase().includes(termoLower)
@@ -131,13 +136,14 @@ export default function HeroSectionCorreto() {
       });
     }
 
-    setSugestoesCidades(cidadesEncontradas.slice(0, 10));
+    setSugestoesCidades(cidadesEncontradas.slice(0, 10)); // Limitar a 10 sugestões
   };
 
   // Função para detectar estado automaticamente
   const detectarEstado = (valor: string) => {
     const valorLower = valor.toLowerCase();
     
+    // Buscar por sigla exata
     const estadoPorSigla = ESTADOS_BRASIL.find(estado =>
       estado.sigla.toLowerCase() === valorLower
     );
@@ -146,6 +152,7 @@ export default function HeroSectionCorreto() {
       return estadoPorSigla.sigla;
     }
     
+    // Buscar por nome completo
     const estadoPorNome = ESTADOS_BRASIL.find(estado =>
       estado.nome.toLowerCase() === valorLower
     );
@@ -154,6 +161,7 @@ export default function HeroSectionCorreto() {
       return estadoPorNome.sigla;
     }
     
+    // Buscar por nome parcial
     const estadoParcial = ESTADOS_BRASIL.find(estado =>
       estado.nome.toLowerCase().includes(valorLower) && valorLower.length > 2
     );
@@ -165,22 +173,26 @@ export default function HeroSectionCorreto() {
     return '';
   };
 
+  // Filtrar estados com base na entrada do usuário
   useEffect(() => {
     buscarEstados(estado);
   }, [estado]);
 
+  // Filtrar cidades com base no estado selecionado e entrada do usuário
   useEffect(() => {
     buscarCidades(cidade);
   }, [cidade, estadoSelecionado]);
 
+  // Handler para mudança de estado com detecção automática
   const handleEstadoChange = (valor: string) => {
     setEstado(valor);
     
+    // Detectar estado automaticamente
     const estadoDetectado = detectarEstado(valor);
     if (estadoDetectado) {
       setEstadoSelecionado(estadoDetectado);
       setSugestoesEstados([]);
-      setCidade('');
+      setCidade(''); // Limpar cidade quando estado muda
     } else {
       setEstadoSelecionado('');
       setCidade('');
@@ -206,42 +218,43 @@ export default function HeroSectionCorreto() {
     setBusca(e.target.value);
   };
 
+  // MODIFICADO: Função handleSubmit com redirecionamento
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validação básica dos campos
     if (!estado.trim() || !cidade.trim() || !busca.trim()) {
       alert('Por favor, preencha todos os campos antes de buscar.');
       return;
     }
 
+    // Construir a URL de redirecionamento com os parâmetros de busca
     const searchParams = new URLSearchParams({
       estado: estadoSelecionado || estado.trim(),
       cidade: cidade.trim(),
       especialidade: busca.trim()
     });
 
+    // Redirecionar para a página de resultados
     router.push(`/resultados?${searchParams.toString()}`);
   };
 
   return (
     <>
-      {/* Header com azul sólido */}
-      <section className="bg-gradient-to-r from-blue-400 to-blue-600 py-12 px-4">
-        <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="mb-6 md:mb-0">
-              <Image
-                src="/fluxo_app/images/logo.png"
-                alt="GFauto Logo"
-                width={250}
-                height={250}
-                className="w-64 h-auto"
-                style={{ width: '250px' }}
-              />
-            </div>
-            <div className="text-center md:text-right">
-              <h1 className="text-4xl font-bold text-white mb-4">Bem Vindo!</h1>
-              <p className="text-xl text-white font-semibold">
+      {/* Header com azul sólido e cantos arredondados */}
+      <section className="hero-header">
+        <div className="container mx-auto px-4">
+          <div className="header-content">
+            <Image
+              src="/fluxo_app/images/logo.png"
+              alt="GFauto Logo"
+              width={250}
+              height={250}
+              className="logo-image"
+            />
+            <div className="header-text">
+              <h1 className="hero-title">Bem Vindo!</h1>
+              <p className="hero-subtitle">
                 Acesse recursos exclusivos e informações detalhadas sobre serviços automotivos em sua região.
               </p>
             </div>
@@ -250,40 +263,34 @@ export default function HeroSectionCorreto() {
       </section>
 
       {/* Seção Uma Proposta Ganha-Ganha */}
-      <section className="py-16 px-4 bg-white">
-        <div className="container mx-auto">
-          <div className="flex flex-col lg:flex-row items-center justify-between">
-            <div className="lg:w-1/2 mb-8 lg:mb-0">
-              <h2 className="text-4xl font-bold text-blue-600 mb-4">Uma Proposta Ganha-Ganha</h2>
-              <h3 className="text-2xl font-semibold text-gray-700 mb-6">Em que todos os envolvidos ganham.</h3>
-              <p className="text-lg text-gray-600 leading-relaxed">
+      <section className="ganha-ganha-section">
+        <div className="container mx-auto px-4">
+          <div className="ganha-ganha-content">
+            <div className="ganha-ganha-text">
+              <h2 className="section-title">Uma Proposta Ganha-Ganha</h2>
+              <h3 className="section-subtitle">Em que todos os envolvidos ganham.</h3>
+              <p className="section-description">
                 Encontre os melhores serviços para seu veículo na sua cidade. Pesquise oficinas, autopeças, concessionárias e muito mais.
               </p>
             </div>
-            <div className="lg:w-1/2 flex justify-center space-x-4">
+            <div className="vehicles-grid">
               <Image
                 src="/fluxo_app/images/image003.jpg"
                 alt="Carro Vermelho"
                 width={180}
-                height={120}
-                className="w-32 h-24 object-cover rounded-lg shadow-md"
-                style={{ width: '180px' }}
+                className="vehicle-image"
               />
               <Image
                 src="/fluxo_app/images/image001.jpg"
-                alt="Moto Azul"
+                alt="Carro Vermelho"
                 width={180}
-                height={120}
-                className="w-32 h-24 object-cover rounded-lg shadow-md"
-                style={{ width: '180px' }}
+                className="vehicle-image"
               />
               <Image
                 src="/fluxo_app/images/image005.jpg"
                 alt="SUV Prata"
                 width={180}
-                height={120}
-                className="w-32 h-24 object-cover rounded-lg shadow-md"
-                style={{ width: '180px' }}
+                className="vehicle-image"
               />
             </div>
           </div>
@@ -291,15 +298,21 @@ export default function HeroSectionCorreto() {
       </section>
 
       {/* Seção Verde "Começar Agora" */}
-      <section className="bg-green-500 py-12 px-4">
+      <section className="comecar-agora-section">
         <div className="container mx-auto">
+          {/* Título da Seção */}
           <div className="text-center mb-8">
-            <h3 className="text-3xl font-bold text-white mb-4">Começar Agora</h3>
+            <h3 className="comecar-agora-title">
+              Começar Agora
+            </h3>
           </div>
           
-          <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-2xl p-8">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Formulário de Busca com Cantos Arredondados */}
+          <div className="busca-form-container">
+            <form onSubmit={handleSubmit} className="busca-form">
+              
+              {/* Três Campos na Mesma Linha */}
+              <div className="form-grid">
                 
                 {/* Campo Estado */}
                 <div className="relative">
@@ -314,8 +327,8 @@ export default function HeroSectionCorreto() {
                     placeholder="Ex: RS ou Rio Grande do Sul"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                     autoComplete="off"
-                    style={{ appearance: 'none', WebkitAppearance: 'none' }}
                   />
+                  {/* Sugestões de Estados */}
                   {sugestoesEstados.length > 0 && (
                     <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1 max-h-40 overflow-y-auto shadow-lg">
                       {sugestoesEstados.map((sugestao, index) => (
@@ -344,8 +357,8 @@ export default function HeroSectionCorreto() {
                     placeholder="Digite o nome da cidade"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                     autoComplete="off"
-                    style={{ appearance: 'none', WebkitAppearance: 'none' }}
                   />
+                  {/* Sugestões de Cidades */}
                   {sugestoesCidades.length > 0 && (
                     <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1 max-h-40 overflow-y-auto shadow-lg">
                       {sugestoesCidades.map((sugestao, index) => (
@@ -373,11 +386,11 @@ export default function HeroSectionCorreto() {
                     onChange={handleBuscaChange}
                     placeholder="Ex: oficina, autopeças, concessionária"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
-                    style={{ appearance: 'none', WebkitAppearance: 'none' }}
                   />
                 </div>
               </div>
 
+              {/* Botão de Busca */}
               <div className="text-center">
                 <button 
                   type="submit" 
@@ -392,65 +405,52 @@ export default function HeroSectionCorreto() {
       </section>
 
       {/* Mascote */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="container mx-auto text-center">
+      <section className="mascot-section">
+        <div className="container mx-auto px-4 text-center">
           <Image
             src="/fluxo_app/images/mc4.png"
             alt="Mascote GFauto - Manda Chuva"
             width={250}
             height={250}
-            className="mx-auto"
-            style={{ width: '250px', height: 'auto' }}
+            className="mascot-image mx-auto"
           />
         </div>
       </section>
 
       {/* Rodapé */}
-      <footer className="bg-gray-800 text-white py-12">
+      <footer className="footer">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h4 className="text-lg font-semibold mb-4 text-green-400">Sobre o GFauto</h4>
-              <ul className="space-y-2">
-                <li><a href="/home" className="text-gray-300 hover:text-white transition-colors">Home</a></li>
-                <li><a href="/projeto-156" className="text-gray-300 hover:text-white transition-colors">Projeto 156</a></li>
-                <li><a href="/radares" className="text-gray-300 hover:text-white transition-colors">Radares</a></li>
-                <li><a href="/anuncie" className="text-gray-300 hover:text-white transition-colors">Anuncie</a></li>
-                <li><a href="/atualize-seus-dados" className="text-gray-300 hover:text-white transition-colors">Atualize Seus Dados</a></li>
+          <div className="footer-content">
+            <div className="footer-column">
+              <h4 className="footer-title">Sobre o GFauto</h4>
+              <ul className="footer-links">
+                <li><a href="/sobre">Quem Somos</a></li>
+                <li><a href="/como-funciona">Como Funciona</a></li>
+                <li><a href="/contato">Contato</a></li>
               </ul>
             </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4 text-green-400">Contato</h4>
-              <ul className="space-y-2">
-                <li><a href="https://wa.me/5551999999999" className="text-gray-300 hover:text-white transition-colors">WhatsApp</a></li>
-                <li><a href="/fale-conosco" className="text-gray-300 hover:text-white transition-colors">Fale Conosco</a></li>
-                <li><a href="/anunciar-servicos" className="text-gray-300 hover:text-white transition-colors">Anunciar Serviços</a></li>
-                <li><a href="/planos-e-precos" className="text-gray-300 hover:text-white transition-colors">Planos e Preços</a></li>
+            <div className="footer-column">
+              <h4 className="footer-title">Para Empresas</h4>
+              <ul className="footer-links">
+                <li><a href="/anunciar">Anunciar Serviços</a></li>
+                <li><a href="/planos">Planos e Preços</a></li>
+                <li><a href="/suporte">Suporte</a></li>
               </ul>
             </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4 text-green-400">Redes Sociais</h4>
-              <ul className="space-y-2">
-                <li><a href="https://twitter.com/gfauto" className="text-gray-300 hover:text-white transition-colors">Twitter</a></li>
-                <li><a href="https://facebook.com/gfauto" className="text-gray-300 hover:text-white transition-colors">Facebook</a></li>
-                <li><a href="https://instagram.com/gfauto" className="text-gray-300 hover:text-white transition-colors">Instagram</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4 text-green-400">Legal</h4>
-              <ul className="space-y-2">
-                <li><a href="/termos-de-uso" className="text-gray-300 hover:text-white transition-colors">Termos de Uso</a></li>
-                <li><a href="/politica-de-privacidade" className="text-gray-300 hover:text-white transition-colors">Política de Privacidade</a></li>
-                <li><a href="/politica-de-cookies" className="text-gray-300 hover:text-white transition-colors">Política de Cookies</a></li>
+            <div className="footer-column">
+              <h4 className="footer-title">Legal</h4>
+              <ul className="footer-links">
+                <li><a href="/termos">Termos de Uso</a></li>
+                <li><a href="/privacidade">Política de Privacidade</a></li>
+                <li><a href="/cookies">Política de Cookies</a></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-            <p className="text-gray-400">Direitos Reservados - GFauto - 2001-2025</p>
+          <div className="footer-bottom">
+            <p>&copy; 2024 GFauto. Todos os direitos reservados.</p>
           </div>
         </div>
       </footer>
     </>
   );
 }
-
