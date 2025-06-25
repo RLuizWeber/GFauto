@@ -1,4 +1,4 @@
-// HeroSectionCorreto.tsx - Versão Modificada com Redirecionamento
+// HeroSectionCorreto.tsx - Versão Modificada até antes de separar a logo.png 20px da margem.
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -248,8 +248,8 @@ export default function HeroSectionCorreto() {
             <Image
               src="/fluxo_app/images/logo.png"
               alt="GFauto Logo"
-              width={250}
-              height={250}
+              width={200}
+              height={200}
               className="logo-image"
             />
             <div className="header-text">
@@ -416,41 +416,6 @@ export default function HeroSectionCorreto() {
           />
         </div>
       </section>
-
-      {/* Rodapé */}
-      <footer className="footer">
-        <div className="container mx-auto px-4">
-          <div className="footer-content">
-            <div className="footer-column">
-              <h4 className="footer-title">Sobre o GFauto</h4>
-              <ul className="footer-links">
-                <li><a href="/sobre">Quem Somos</a></li>
-                <li><a href="/como-funciona">Como Funciona</a></li>
-                <li><a href="/contato">Contato</a></li>
-              </ul>
-            </div>
-            <div className="footer-column">
-              <h4 className="footer-title">Para Empresas</h4>
-              <ul className="footer-links">
-                <li><a href="/anunciar">Anunciar Serviços</a></li>
-                <li><a href="/planos">Planos e Preços</a></li>
-                <li><a href="/suporte">Suporte</a></li>
-              </ul>
-            </div>
-            <div className="footer-column">
-              <h4 className="footer-title">Legal</h4>
-              <ul className="footer-links">
-                <li><a href="/termos">Termos de Uso</a></li>
-                <li><a href="/privacidade">Política de Privacidade</a></li>
-                <li><a href="/cookies">Política de Cookies</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <p>&copy; 2024 GFauto. Todos os direitos reservados.</p>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }

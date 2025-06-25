@@ -1,4 +1,4 @@
-// HeroSectionCorreto.tsx - Versão Modificada com Redirecionamento
+// HeroSectionCorreto.tsx - Versão Modificada até antes de separar a logo.png 20px da margem.
 'use client';
 
 import { useState, useEffect } from 'react';
