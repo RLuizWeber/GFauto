@@ -416,41 +416,6 @@ export default function HeroSectionCorreto() {
           />
         </div>
       </section>
-
-//      {/* Rodapé */}
-//    <footer className="footer">
-//        <div className="container mx-auto px-4">
-//          <div className="footer-content">
-//            <div className="footer-column">
-//              <h4 className="footer-title">Sobre o GFauto</h4>
-//              <ul className="footer-links">
-//                <li><a href="/sobre">Quem Somos</a></li>
-//                <li><a href="/como-funciona">Como Funciona</a></li>
-//                <li><a href="/contato">Contato</a></li>
-//              </ul>
-//            </div>
-//            <div className="footer-column">
-//              <h4 className="footer-title">Para Empresas</h4>
-//              <ul className="footer-links">
-//                <li><a href="/anunciar">Anunciar Serviços</a></li>
-//                <li><a href="/planos">Planos e Preços</a></li>
-//                <li><a href="/suporte">Suporte</a></li>
-//              </ul>
-//            </div>
-//            <div className="footer-column">
-//              <h4 className="footer-title">Legal</h4>
-//              <ul className="footer-links">
-//                <li><a href="/termos">Termos de Uso</a></li>
-//                <li><a href="/privacidade">Política de Privacidade</a></li>
-//                <li><a href="/cookies">Política de Cookies</a></li>
-//              </ul>
-//            </div> 
-//          </div>
-//          <div className="footer-bottom">
-//            <p>&copy; 2024 GFauto. Todos os direitos reservados.</p>
-//          </div>
-//        </div>
-//      </footer>
     </>
   );
 }
