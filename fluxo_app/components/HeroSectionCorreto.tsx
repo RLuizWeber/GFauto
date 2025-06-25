@@ -248,8 +248,8 @@ export default function HeroSectionCorreto() {
             <Image
               src="/fluxo_app/images/logo.png"
               alt="GFauto Logo"
-              width={250}
-              height={250}
+              width={200}
+              height={200}
               className="logo-image"
             />
             <div className="header-text">
