@@ -248,8 +248,8 @@ export default function HeroSectionCorreto() {
             <Image
               src="/fluxo_app/images/logo.png"
               alt="GFauto Logo"
-              width={200}
-              height={200}
+              width={180}
+              height={180}
 	// alterado de className="logo-image" para a linha abaixo		  
               className="logo-image ml-5"
             />
