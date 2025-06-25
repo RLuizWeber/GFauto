@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; // ADICIONADO: Import do useRouter
 import Image from 'next/image';
+import '../styles/HeroSection.css';
 
 // Dados simulados de estados e cidades = \GFauto\fluxo_app\components
 const ESTADOS_BRASIL = [
