@@ -1,4 +1,4 @@
-// GFauto/fluxo_app/components/HeroSectionCorreto.tsx - Versão Modificada até antes de ajustar o espaço acima e abaixo de logo.png.
+// GFauto/fluxo_app/components/HeroSectionCorreto.tsx - Versão Modificada até depois de ajustar o espaço acima e abaixo de logo.png.
 'use client';
 
 import { useState, useEffect } from 'react';

@@ -1,4 +1,4 @@
-/* GFauto/fluxo_app/styles/HeroSection.css - Versão Modificada até antes de ajustar o espaço acima e abaixo de logo.png. */
+/* GFauto/fluxo_app/styles/HeroSection.css - Versão Modificada até depois de ajustar o espaço acima e abaixo de logo.png. */
 
 /* Header com logo e texto lado a lado */
 .hero-header {
@@ -19,7 +19,7 @@
   width: 180px;
   height: auto;
   flex-shrink: 0;
-  margin-left: 20px
+  margin-left: 40px
 }
 
 .header-text {
