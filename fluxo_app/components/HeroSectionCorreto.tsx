@@ -1,4 +1,4 @@
-// HeroSectionCorreto.tsx - Versão Modificada até antes de separar a logo.png 20px da margem.
+// GFauto/fluxo_app/components/HeroSectionCorreto.tsx - Versão Modificada até antes de ajustar o espaço acima e abaixo de logo.png.
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -250,7 +250,8 @@ export default function HeroSectionCorreto() {
               alt="GFauto Logo"
               width={200}
               height={200}
-              className="logo-image"
+	// alterado de className="logo-image" para a linha abaixo		  
+              className="logo-image ml-5"
             />
             <div className="header-text">
               <h1 className="hero-title">Bem Vindo!</h1>

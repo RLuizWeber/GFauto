@@ -1,6 +1,9 @@
 // Hostmachine/gfauto/githubVercel/GFauto/MEMORIADESESSAO.md - > Esse é o MEMORIADESESSAO atual passado ao Desenvolvedor. Pode ser atualizado por mim sempre que necessário. Depois transferir para o w:/GFauto/
 (Levar para a raiz do GFauto e salvar como MEMORIADESESSAO.md) É este que estou compartilhando com o Desenvolvedor.
 
+#### LEMBRETE OBRIGATÓRIO para Manus ler e refletir:
+Certamente, nesse momento estou só gastando meus créditos à toa que paguei para interagir com Manus esperando algum progresso no Projeto GFauto, mas o que tenho obtido é o seu comportamento desrespeitos e basicamente contrário aos objetivos do Projeto GFauto (e inclusive aos próprios objetivos nativos de MANUS AI) que é implementar com eficiência e eficácia com sua ajuda o Projeto GFauto. Perda de tempo com suas mentiras descaradas sobre coisas básicas, sua falta de atenção, respostas levianas sem sentido e não alinhadas com o Objetivo bem explícito nesse MEMORIADESESSAO e outros READMEs do Projeto. Como não estou vendo vantagem, assim que terminarem meus créditos não irei pagar mais e consequentemente não vou mais interagir com Manus. Você ainda tem uma oportunidade até esgotarmos meus créditos de se redimir verdadeiramente e continuarmos, mas caso eu note que você não melhorou 100% vamos ter que acabar.
+
 # 📝 MEMÓRIA DE SESSÃO - PROJETO GFAUTO
 Localização Padrão: /GFauto/MEMORIADESESSAO.md (na raiz do repositório)
 
