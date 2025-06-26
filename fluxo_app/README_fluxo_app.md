@@ -304,6 +304,7 @@ const detectarEstado = (valor: string) => {
 
 ## **🎨 Estilos Associados**
 
+
 ### **Abordagem de Estilização Atual**
 
 **Metodologia Principal:** **CSS Customizado (HeroSection.css)** - **FUNCIONAL EM PRODUÇÃO**  
@@ -317,6 +318,190 @@ const detectarEstado = (valor: string) => {
 | `comecar-agora-section` | Faixa verde "Começar Agora" | ✅ **ATIVA** | Background: rgb(16, 185, 129) |
 | `busca-form` | Formulário de busca branco | ✅ **ATIVA** | Layout horizontal funcionando |
 | `form-grid` | Layout dos campos lado a lado | ✅ **ATIVA** | Campos organizados corretamente |
+
+## **🗺️ MAPA COMPLETO DE CLASSES CSS E ELEMENTOS VISUAIS**
+
+> **🎯 GUIA PRÁTICO:** Consulte esta seção para localizar rapidamente qualquer elemento visual e sua respectiva classe CSS. Evita buscas demoradas no código.
+
+### **📋 SEÇÕES PRINCIPAIS DO SITE:**
+
+#### **1. 🔵 SEÇÃO HERO (Topo Azul)**
+**Localização Visual:** Faixa azul no topo com logo e "Bem Vindo!"
+
+| **Elemento Visual** | **Classe CSS** | **Arquivo** | **Linha** | **Como Alterar** |
+|---|---|---|---|---|
+| **Faixa azul de fundo** | `.hero-header` | HeroSection.css | 4 | `background: linear-gradient(...)` |
+| **Logo GFauto** | `.logo-image` | HeroSection.css | 18 | `width`, `height` |
+| **Texto "Bem Vindo!"** | `.hero-title` | HeroSection.css | 29 | `font-size`, `color` |
+| **Subtítulo azul** | `.hero-subtitle` | HeroSection.css | 36 | `font-size`, `color` |
+
+#### **2. 🏆 SEÇÃO "UMA PROPOSTA GANHA-GANHA"**
+**Localização Visual:** Seção branca com título azul e imagens de veículos
+
+| **Elemento Visual** | **Classe CSS** | **Arquivo** | **Linha** | **Como Alterar** |
+|---|---|---|---|---|
+| **Container principal** | `.ganha-ganha-section` | HeroSection.css | 43 | `padding`, `background-color` |
+| **Container dos textos** | `.ganha-ganha-text` | HeroSection.css | 56 | `text-align`, `flex` |
+| **"Uma Proposta Ganha-Ganha"** | `.section-title` | HeroSection.css | 60 | `font-size`, `color`, `text-align` |
+| **"Em que todos os envolvidos ganham"** | `.section-subtitle` | HeroSection.css | 67 | `font-size`, `color`, `text-align` |
+| **Texto descritivo** | `.section-description` | HeroSection.css | 74 | `font-size`, `color`, `text-align` |
+| **Grid de veículos** | `.vehicles-grid` | HeroSection.css | 81 | `display`, `gap`, `justify-content` |
+| **Imagens de veículos** | `.vehicle-image` | HeroSection.css | 88 | `width`, `height`, `border-radius` |
+
+#### **3. 🟢 SEÇÃO "COMEÇAR AGORA" (Faixa Verde)**
+**Localização Visual:** Faixa verde com formulário de busca
+
+| **Elemento Visual** | **Classe CSS** | **Arquivo** | **Linha** | **Como Alterar** |
+|---|---|---|---|---|
+| **Faixa verde de fundo** | `.comecar-agora-section` | HeroSection.css | 96 | `background-color`, `padding` |
+| **Título "Começar Agora"** | `.comecar-agora-title` | HeroSection.css | 101 | `font-size`, `color` |
+| **Formulário branco** | `.busca-form` | HeroSection.css | 108 | `background`, `border-radius`, `padding` |
+| **Grid dos campos** | `.form-grid` | HeroSection.css | 115 | `display: grid`, `grid-template-columns` |
+| **Campos de input** | `.form-input` | HeroSection.css | 122 | `border`, `padding`, `font-size` |
+| **Botão "Buscar Serviços"** | `.form-button` | HeroSection.css | 135 | `background`, `color`, `padding` |
+
+#### **4. 🎭 SEÇÃO DO MASCOTE**
+**Localização Visual:** Mascote amarelo no final da página
+
+| **Elemento Visual** | **Classe CSS** | **Arquivo** | **Linha** | **Como Alterar** |
+|---|---|---|---|---|
+| **Container do mascote** | `.mascot-section` | HeroSection.css | 148 | `text-align`, `padding` |
+| **Imagem do mascote** | `.mascot-image` | HeroSection.css | 155 | `width`, `height` |
+
+### **🔧 ALTERAÇÕES MAIS COMUNS:**
+
+#### **📝 CENTRALIZAR TEXTOS:**
+```css
+/* Para centralizar qualquer texto */
+.classe-do-elemento {
+  text-align: center;
+}
+```
+
+#### **🎨 ALTERAR CORES:**
+```css
+/* Para alterar cor de texto */
+.classe-do-elemento {
+  color: #nova-cor;
+}
+
+/* Para alterar cor de fundo */
+.classe-do-elemento {
+  background-color: #nova-cor;
+}
+```
+
+#### **📏 ALTERAR TAMANHOS:**
+```css
+/* Para alterar tamanho de fonte */
+.classe-do-elemento {
+  font-size: 2rem; /* ou 24px */
+}
+
+/* Para alterar espaçamento */
+.classe-do-elemento {
+  padding: 20px;
+  margin: 10px;
+}
+```
+
+#### **📱 RESPONSIVIDADE:**
+```css
+/* Para ajustar em mobile */
+@media (max-width: 768px) {
+  .classe-do-elemento {
+    font-size: 1.5rem;
+    padding: 10px;
+  }
+}
+```
+
+### **⚡ EXEMPLOS PRÁTICOS DE ALTERAÇÕES:**
+
+#### **Exemplo 1: Centralizar textos da seção ganha-ganha**
+```css
+.ganha-ganha-text {
+  flex: 1;
+  text-align: center; /* ADICIONAR ESTA LINHA */
+}
+```
+
+#### **Exemplo 2: Alterar cor do título principal**
+```css
+.section-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ff6b35; /* ALTERAR DE #1e40af PARA LARANJA */
+  margin-bottom: 1rem;
+}
+```
+
+#### **Exemplo 3: Aumentar tamanho do botão de busca**
+```css
+.form-button {
+  background: #10b981;
+  color: white;
+  padding: 15px 30px; /* AUMENTAR DE 12px 24px */
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem; /* AUMENTAR DE 1rem */
+  cursor: pointer;
+}
+```
+
+#### **Exemplo 4: Alterar cor da faixa verde**
+```css
+.comecar-agora-section {
+  background-color: #3b82f6; /* ALTERAR PARA AZUL */
+  padding: 3rem 1rem;
+}
+```
+
+### **🚨 TROUBLESHOOTING VISUAL:**
+
+| **Problema** | **Possível Causa** | **Solução** | **Classe a Verificar** |
+|---|---|---|---|
+| **Textos desalinhados** | `text-align` incorreto | Adicionar `text-align: center` | `.ganha-ganha-text` |
+| **Faixa verde não aparece** | CSS não carregado | Verificar import do HeroSection.css | `.comecar-agora-section` |
+| **Formulário sem fundo** | Background não aplicado | Verificar classe `.busca-form` | `.busca-form` |
+| **Campos empilhados** | Grid quebrado | Verificar `display: grid` | `.form-grid` |
+| **Botão sem estilo** | Classe não aplicada | Verificar classe `.form-button` | `.form-button` |
+| **Imagens não aparecem** | Caminho incorreto | Verificar `/fluxo_app/images/` | `.vehicle-image`, `.mascot-image` |
+
+### **📍 LOCALIZAÇÃO RÁPIDA NO CÓDIGO:**
+
+#### **Para encontrar rapidamente no HeroSectionCorreto.tsx:**
+```jsx
+// Seção Ganha-Ganha (linha ~200-250)
+<section className="ganha-ganha-section">
+  <div className="ganha-ganha-text">
+    <h2 className="section-title">Uma Proposta Ganha-Ganha</h2>
+    <h3 className="section-subtitle">Em que todos os envolvidos ganham.</h3>
+    <p className="section-description">Encontre os melhores serviços...</p>
+  </div>
+</section>
+
+// Seção Verde (linha ~300-350)
+<section className="comecar-agora-section">
+  <h2 className="comecar-agora-title">Começar Agora</h2>
+  <form className="busca-form">
+    <div className="form-grid">
+      <input className="form-input" />
+      <button className="form-button">Buscar Serviços</button>
+    </div>
+  </form>
+</section>
+```
+
+### **⏱️ TEMPO ESTIMADO PARA ALTERAÇÕES:**
+
+| **Tipo de Alteração** | **Tempo Estimado** | **Complexidade** |
+|---|---|---|
+| **Centralizar textos** | 2 minutos | ⭐ Fácil |
+| **Alterar cores** | 3 minutos | ⭐ Fácil |
+| **Alterar tamanhos de fonte** | 2 minutos | ⭐ Fácil |
+| **Modificar layout do grid** | 10 minutos | ⭐⭐ Médio |
+| **Adicionar nova seção** | 30 minutos | ⭐⭐⭐ Difícil |
 
 #### **Estrutura de Classes Funcionais:**
 
