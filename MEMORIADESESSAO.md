@@ -28,12 +28,16 @@ SEMPRE:
 • Verificar informações no GitHub antes de dar instruções
 • Basear respostas em evidências concretas, não em suposições
 • Ser preciso com números de linhas e código exato
+• Confirmar existência de arquivos e caminhos antes de referenciar
+• Ler e interpretar correta e completamente o contexto antes de responder
 
 NUNCA:
 • Assumir que arquivos existem sem verificar
 • Dar instruções baseadas em "memória" ou suposições
 • Inventar conteúdo de arquivos
 • Insistir em informações incorretas quando questionado
+• Dar instruções baseadas em memória falha
+• Insistir em caminhos ou arquivos inexistentes
 
 RESULTADO ESPERADO:
 PROGRESSO CONSTANTE E EFICIENTE - "Andar só para a frente"
@@ -227,6 +231,23 @@ TESTES LOCAIS;
 
 7 – Nosso Fluxo de Trabalho: As correções/alterações sugeridas estão sendo feitas via Git Bash a partir que você me envia o script arquivo ".sh" ou ".py" anexado e eu salvo na pasta W:\A_Weber\Pai\Hostmachine\gfauto\githubVercel\corrigir então você me passa os comandos para executarmos, certo?
 
+## 📝 APRENDIZADOS IMPORTANTES:
+
+### 4. **"É FÁCIL ANDAR SÓ PARA A FRENTE"** (25/06/2025)
+
+**Lição Crítica:** Após 10 passos para trás, conseguimos andar 1 para a frente. É fácil andar só para a frente quando seguimos o comportamento correto.
+
+**Comportamento Correto:**
+- Analisar arquivos reais fornecidos pelo usuário
+- Verificar informações no GitHub antes de dar instruções  
+- Basear respostas em evidências concretas, não suposições
+- Ser preciso com números de linhas e código exato
+
+**Resultado:**
+**PROGRESSO CONSTANTE E EFICIENTE** - sem passos para trás
+
+**Aplicação:** Esta diretriz deve ser seguida em TODAS as futuras interações do Projeto GFauto.
+
 == Fim da
 ## Parte Permanente
  do arquivo, só atualizar por orientação do Weber
@@ -300,7 +321,6 @@ LIÇÕES APRENDIDAS PARA O DESENVOLVEDOR:
 ESPECIFICAÇÕES DA PÁGINA https://gfauto.vercel.app/  deve se inspirar na https://www.gfauto.com.br 
  
 A imagem logo.png no navegador do computador está colada na margem esquerda, deve ficar a peno menos 20px da margem
-
 
 - O Texto: Uma Proposta Ganha-Ganha
 

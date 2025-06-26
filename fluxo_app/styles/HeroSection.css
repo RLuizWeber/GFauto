@@ -1,4 +1,4 @@
-/* GFauto/fluxo_app/styles/HeroSection.css - Versão Modificada até depois de ajustar o espaço acima e abaixo de logo.png. */
+/* GFauto/fluxo_app/styles/HeroSection.css - Versão Modificada até depois de ajustar a centralização do texto ganha-ganha al lado dos carros. */
 
 /* Header com logo e texto lado a lado */
 .hero-header {
@@ -55,6 +55,7 @@
 
 .ganha-ganha-text {
   flex: 1;
+  text-align: center;
 }
 
 .section-title {

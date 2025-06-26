@@ -112,8 +112,52 @@ ESTRUTURA DE PASTAS fonte: GFauto/Estrutura_de_PASTAS.md
 | `├── utils/` 										| Utilitários específicos |
 | `├── README_fluxo_[nome].md` 	| Documentação obrigatória |
 
----
+## **📚 DOCUMENTAÇÃO DOS MÓDULOS/FLUXOS**
+
+> **🎯 CENTRAL DE NAVEGAÇÃO:** Cada módulo/fluxo possui documentação detalhada própria. Consulte os READMEs específicos para informações completas sobre implementação, estrutura e manutenção.
+
+### **📖 READMEs Disponíveis:**
+
+| **Módulo/Fluxo** 						| **Status** 			| **README** 												| **Propósito** 																		| **Última Atualização** |
+|---|---|---|---|---|
+| **fluxo_app** 								| ✅ **Ativo** 		| [`README_fluxo_app.md`](fluxo_app/README_fluxo_app.md) | Interface inicial e formulário de busca 	| 26/06/2025 |
+| **fluxo_cliente_anunciante** 	| 🔄 **Planejado** | `README_fluxo_cliente_anunciante.md` 	| Área do cliente anunciante 													| A definir |
+| **fluxo_pag_de_resultados** 	| 🔄 **Planejado** | `README_fluxo_pag_de_resultados.md` 	| Página de resultados de busca 											| A definir |
+| **fluxo_pagto** 							| 🔄 **Planejado** | `README_fluxo_pagto.md` 							| Sistema de pagamentos 														| A definir |
+| **fluxo_painel_admin** 				| 🔄 **Planejado** | `README_fluxo_painel_admin.md` 				| Painel administrativo 															| A definir |
+| **fluxo_plano** 							| 🔄 **Planejado** | `README_fluxo_plano.md` 							| Gestão de planos 																	| A definir |
+| **fluxo_visitante** 						| 🔄 **Planejado** | `README_fluxo_visitante.md` 						| Experiência do visitante 														| A definir |
+
+### **🔗 Referenciamento Bidirecional:**
+
+- **Do README_geral.md → READMEs específicos:** Esta tabela referencia todos os módulos
+- **Dos READMEs específicos → README_geral.md:** Cada README específico deve referenciar este documento
+
+### **📋 Padrão de Nomenclatura:**
+
 ```
+GFauto/
+├── fluxo_app/
+│   └── README_fluxo_app.md
+├── fluxo_cliente_anunciante/
+│   └── README_fluxo_cliente_anunciante.md
+├── fluxo_pag_de_resultados/
+│   └── README_fluxo_pag_de_resultados.md
+└── [outros módulos]/
+    └── README_[nome_do_modulo].md
+```
+
+### **🎯 Como Usar Esta Documentação:**
+
+1. **Para visão geral:** Consulte este README_geral.md
+2. **Para detalhes específicos:** Acesse o README do módulo correspondente
+3. **Para desenvolvimento:** Leia OBRIGATORIAMENTE o README específico antes de alterar qualquer código
+4. **Para troubleshooting:** Use o "Guia de Referência Rápida" de cada módulo
+
+### **⚠️ OBRIGATÓRIO:**
+
+> **Antes de fazer qualquer alteração em qualquer Módulo/fluxo, o Desenvolvedor DEVE obter o conhecimento do respectivo README específico. Caso ainda não exista deve criá-lo e se existir mas está em branco deve desenvolvê-lo**
+
 
 ## 📝 REGRAS DO PROJETO
 
