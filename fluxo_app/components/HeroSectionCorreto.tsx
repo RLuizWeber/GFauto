@@ -317,7 +317,7 @@ export default function HeroSectionCorreto() {
                 
                 {/* Campo Estado */}
                 <div className="relative">
-                  <label htmlFor="estado" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="estado" className="form-label">
                     Estado
                   </label>
                   <input
@@ -347,7 +347,7 @@ export default function HeroSectionCorreto() {
 
                 {/* Campo Cidade */}
                 <div className="relative">
-                  <label htmlFor="cidade" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="cidade" className="form-label">
                     Cidade
                   </label>
                   <input
@@ -377,7 +377,7 @@ export default function HeroSectionCorreto() {
 
                 {/* Campo O que procura */}
                 <div className="relative">
-                  <label htmlFor="busca" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="busca" className="form-label">
                     O que procura?
                   </label>
                   <input
