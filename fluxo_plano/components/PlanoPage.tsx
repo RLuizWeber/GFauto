@@ -86,12 +86,12 @@ const PlanoPage = () => {
                     <span className="check-icon">✓</span>
                     <span>Formulário para atualizar informações</span>
                   </li>
-                  <li className="funcionalidade-item nao-incluido">
-                    <span className="check-icon">✓</span>
+                  <li className="funcionalidade-item nao-incluido"> // item nao-incluido fica ( ✗ )
+                    <span className="check-icon">✗</span>           // sinal ✗ antes de </span>
                     <span>Foto da fachada ou cartão de visitas</span>
                   </li>
-                  <li className="funcionalidade-item incluido">
-                    <span className="check-icon">✓</span>
+                  <li className="funcionalidade-item incluido">  // item incluido => fica ( ✓ )
+                    <span className="check-icon">✓</span>     // sinal ✓ antes de </span>
                     <span>Atualização de dados pelo próprio anunciante</span>
                   </li>
                   <li className="funcionalidade-item nao-incluido">
