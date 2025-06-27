@@ -177,18 +177,15 @@ const PlanoPage = () => {
           </div>
 
           {/* Gatilho Mental */}
-          <div className="roi-section">
-            <div className="roi-card">
-              <h3 className="roi-titulo">💰 Retorno Garantido</h3>
-              <p className="roi-texto">
-                Se você conseguir <strong>apenas 1 cliente no ano</strong>, 
-                o investimento já estará <strong>mais do que pago</strong>.
-              </p>
-              <div className="roi-calculo">
-                <span>1 serviço = R$ 100+ | Investimento = R$ 36/ano</span>
-              </div>
-            </div>
-          </div>
+         <div className="roi-section">
+			<div className="roi-card">
+				<h3 className="roi-titulo">💰 Retorno Garantido</h3>
+					<p className="roi-texto">
+						Se você conseguir <strong>apenas 1 cliente no ano</strong>,
+						o investimento já estará <strong>mais do que pago</strong>.
+					</p>
+				</div>
+			</div>
         </div>
       </section>
 
