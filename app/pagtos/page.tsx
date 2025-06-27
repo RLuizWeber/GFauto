@@ -1,31 +1,49 @@
-import PagtoPage from '../../fluxo_pagto/components/PagtoPage';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Pagamento - GFauto | Finalizar Assinatura do Plano Premium',
-  description: 'Finalize o pagamento do seu plano Premium GFauto de forma segura. Aceite cartão de crédito, PIX e boleto bancário.',
-  keywords: 'pagamento gfauto, plano premium, cartão crédito, pix, boleto, assinatura',
-  openGraph: {
-    title: 'Pagamento - GFauto',
-    description: 'Finalize o pagamento do seu plano Premium de forma segura e comece a anunciar hoje mesmo.',
-    url: 'https://gfauto.vercel.app/pagtos',
-    siteName: 'GFauto',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Pagamento - GFauto',
-    description: 'Finalize o pagamento do seu plano Premium de forma segura.',
-  },
+  title: 'Pagamento - GFauto | Em Desenvolvimento',
+  description: 'Página de pagamento em desenvolvimento.',
   robots: {
-    index: false, // Página de pagamento não deve ser indexada
+    index: false,
     follow: false,
-  },
-  alternates: {
-    canonical: 'https://gfauto.vercel.app/pagtos',
   },
 };
 
 export default function PagtosPage() {
-  return <PagtoPage />;
+  return (
+    <div style={{ 
+      padding: '4rem 2rem', 
+      textAlign: 'center',
+      minHeight: '60vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      fontFamily: 'Inter, sans-serif'
+    }}>
+      <h1 style={{ 
+        fontSize: '2rem', 
+        marginBottom: '1rem',
+        color: '#1f2937'
+      }}>
+        Página de Pagamento
+      </h1>
+      <p style={{ 
+        fontSize: '1.1rem',
+        color: '#6b7280',
+        marginBottom: '2rem'
+      }}>
+        Em desenvolvimento...
+      </p>
+      <div style={{
+        background: '#f3f4f6',
+        padding: '1rem',
+        borderRadius: '8px',
+        color: '#374151',
+        fontSize: '0.9rem'
+      }}>
+        Esta página será implementada no fluxo_pagto
+      </div>
+    </div>
+  );
 }

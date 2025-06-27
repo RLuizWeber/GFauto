@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import './PlanoPage.css';
+import '../styles/PlanoPage.css';
 
 const PlanoPage = () => {
   const [planoSelecionado, setPlanoSelecionado] = useState<string | null>(null);
