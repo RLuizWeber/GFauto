@@ -14,10 +14,16 @@ ESTRUTURA DE PASTAS
 | `├── backups/` 								|  Conforme política do MEMORIADESESSAO |
 | `├── components/` 							|  Componentes globais |
 | `├── docs/` 										|  Documentação |
+| `├── GFauto/` 									| 
 | `├── lib/` 											|  Bibliotecas e utilitários |
 | `├── memoria/` 								|  Arquivos de memória |
+| `├── node_modules` 						| 
 | `├── prisma/` 									|  Configuração do banco |
 | `├── public/` 									|  Arquivos estáticos |
+| `├── scripts/` 									| 
+| `├── tmp/` 										|
+| `├── utils/` 										|
+| `├── gfauto-repo/` 							|
 | `├── MEMORIADESESSAO.md` 	| 
 | `├── Projeto_GFauto.md` 				| 
 
@@ -42,6 +48,13 @@ ESTRUTURA DE PASTAS
 | `├── utils/`     									| Para utilitários específicos do fluxo |
 | `├── README_fluxo_app.md` 		|  
 
+| `fluxo_plano/` 									|  
+| `├── components/` 							|  
+| `├── styles/` 									|  
+| `├── types/` 									| Para definições TypeScript específicas
+| `├── utils/`     									| Para utilitários específicos do fluxo |
+| `├── README_fluxo_plano.md` 	|  
+
 ### **📁 ESTRUTURA DE IMAGENS**
 | **Existente** | **Ideal + Comentários** |
 
@@ -50,6 +63,12 @@ ESTRUTURA DE PASTAS
 | `├── image003.jpg` 						| Carro Vermelho |
 | `├── image005.jpg` 						| SUV Branca |
 | `├── logo.png` 								| Logo GFauto
+| `├── mc4.png` 								| Mascote Manda Chuva |
+
+| `public/fluxo_plano/images/`				| Localização principal |
+| `├── carrao.jpg` 								| arte anúncio "Auto Peças Carrão" |
+| `├── logo_gf.png` 							| Logo GF |
+| `├── mas.jpg` 									| arte anúncio "Mas Auto Peças" |
 | `├── mc4.png` 								| Mascote Manda Chuva |
 
 ### **📁 ESTRUTURA IDEAL PARA OUTROS FLUXOS**

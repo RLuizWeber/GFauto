@@ -64,7 +64,7 @@ const PlanoPage = () => {
                 <h3 className="plano-titulo">Plano Cortesia</h3>
                 <div className="plano-preco">
                   <span className="preco-valor">Gratuito</span>
-                  <span className="preco-periodo">Para sempre</span>
+                  <span className="preco-periodo">Enquanto existirmos</span>
                 </div>
               </div>
 
@@ -82,7 +82,7 @@ const PlanoPage = () => {
                     <span className="check-icon">✓</span>
                     <span>Dados básicos da empresa</span>
                   </li>
-                  <li className="funcionalidade-item incluido">
+                  <li className="funcionalidade-item nao-incluido">
                     <span className="check-icon">✓</span>
                     <span>Formulário para atualizar informações</span>
                   </li>

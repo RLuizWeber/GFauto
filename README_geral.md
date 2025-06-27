@@ -118,15 +118,15 @@ ESTRUTURA DE PASTAS fonte: GFauto/Estrutura_de_PASTAS.md
 
 ### **📖 READMEs Disponíveis:**
 
-| **Módulo/Fluxo** 						| **Status** 			| **README** 												| **Propósito** 																		| **Última Atualização** |
+| **Módulo/Fluxo** 						| **Status** 				| **README** 												| **Propósito** 																		| **Última Atualização** |
 |---|---|---|---|---|
-| **fluxo_app** 								| ✅ **Ativo** 		| [`README_fluxo_app.md`](fluxo_app/README_fluxo_app.md) | Interface inicial e formulário de busca 	| 26/06/2025 |
-| **fluxo_cliente_anunciante** 	| 🔄 **Planejado** | `README_fluxo_cliente_anunciante.md` 	| Área do cliente anunciante 													| A definir |
-| **fluxo_pag_de_resultados** 	| 🔄 **Planejado** | `README_fluxo_pag_de_resultados.md` 	| Página de resultados de busca 											| A definir |
-| **fluxo_pagto** 							| 🔄 **Planejado** | `README_fluxo_pagto.md` 							| Sistema de pagamentos 														| A definir |
-| **fluxo_painel_admin** 				| 🔄 **Planejado** | `README_fluxo_painel_admin.md` 				| Painel administrativo 															| A definir |
-| **fluxo_plano** 							| 🔄 **Planejado** | `README_fluxo_plano.md` 							| Gestão de planos 																	| A definir |
-| **fluxo_visitante** 						| 🔄 **Planejado** | `README_fluxo_visitante.md` 						| Experiência do visitante 														| A definir |
+| **fluxo_app** 								| ✅ **Funcionando**| `fluxo_app/README_fluxo_app.md) 			| Interface inicial e formulário de busca 									| 26/06/2025 |
+| **fluxo_cliente_anunciante** 	| 🔄 **Planejado** 	| `README_fluxo_cliente_anunciante.md` 	| Área do cliente anunciante 													| A definir |
+| **fluxo_pag_de_resultados** 	| 🔄 **Planejado** 	| `README_fluxo_pag_de_resultados.md` 	| Página de resultados de busca 											| A definir |
+| **fluxo_pagto** 							| 🔄 **Planejado** 	| `README_fluxo_pagto.md` 							| Sistema de pagamentos 														| A definir |
+| **fluxo_painel_admin** 				| 🔄 **Planejado** 	| `README_fluxo_painel_admin.md` 			| Painel administrativo 															| A definir |
+| **fluxo_plano** 							| ✅ **Funcionando**| `README_fluxo_plano.md` 							| Gestão de planos 																	| A definir |
+| **fluxo_visitante** 						| 🔄 **Planejado** 	| `README_fluxo_visitante.md` 					| Experiência do visitante 														| A definir |
 
 ### **🔗 Referenciamento Bidirecional:**
 

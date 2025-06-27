@@ -4,26 +4,21 @@
 **Referência obrigatória:** Este arquivo deve referenciar e ser referenciado pelo `GFauto/README_geral.md`  
 **Caminho GitHub:** https://github.com/RLuizWeber/GFauto/tree/main/fluxo_plano
 
----
-
 ## 📍 **GUIA DE REFERÊNCIA RÁPIDA - FLUXO_PLANO**
 
 > **🧭 GPS DO CÓDIGO:** Consulte esta seção PRIMEIRO antes de buscar no GitHub. Resolve 90% das dúvidas instantaneamente.
 
----
-
 ## 🚀 **ACESSO RÁPIDO - ONDE ESTÁ CADA COISA:**
 
-| **Preciso de...** | **Arquivo/Caminho** | **Função** | **Última Modificação** |
+| **Preciso de...** 								| **Arquivo/Caminho** 									| **Função** 									| **Última Modificação** |
 |---|---|---|---|
-| **Componente principal** | `fluxo_plano/components/PlanoPage.tsx` | Página de planos e conversão | A ser criado |
-| **Estilos funcionais** | `fluxo_plano/styles/PlanoPage.css` | CSS customizado NECESSÁRIO | A ser criado |
-| **Footer global** | `components/global/Footer.tsx` | Rodapé em todas as páginas | yesterday |
-| **Layout principal** | `app/layout.tsx` | Estrutura base + Footer | yesterday |
-| **Imagens do módulo** | `public/fluxo_plano/images/` | Logos + mascote + showcase | stable |
-| **Configuração CSS** | `tailwind.config.js` + `app/globals.css` | Configurações globais | stable |
-
----
+| **Componente principal** 				| `fluxo_plano/components/PlanoPage.tsx` 	| Página de planos e conversão 		| ✅ IMPLEMENTADO |
+| **Estilos da página de planos** 	| `fluxo_plano/styles/PlanoPage.css` 				| CSS customizado NECESSÁRIO	| ✅ IMPLEMENTADO |
+| **Footer global** 								| `components/global/Footer.tsx` 					| Rodapé em todas as páginas 		| 26/06/2025 |
+| **Layout principal** 						| `app/layout.tsx` 											| Estrutura base + Footer 				| 26/06/2025 |
+| **Imagens do módulo** 					| `public/fluxo_plano/images/` 						| Logos + mascote + showcase 		| stable |
+| **Configuração CSS** 					| `tailwind.config.js` + `app/globals.css` 			| Configurações globais 					| stable |
+| **Rota da página** 							| `app/planos/page.tsx` 									| Ponto de entrada da página 			| ✅ FUNCIONANDO em produção |
 
 ## ⚡ **RESPOSTAS INSTANTÂNEAS - DÚVIDAS COMUNS:**
 
@@ -36,8 +31,6 @@
 | **Planos lado a lado empilhados?** | **Verificar classe `.planos-grid`** | CSS customizado controla layout |
 | **Valores dos planos?** | **Hardcoded temporário, depois Painel Admin** | 1 ano: R$ 36, 2 anos: R$ 60, 3 anos: R$ 75 |
 | **Autocompletar não funciona?** | **Não se aplica ao fluxo_plano** | Funcionalidade específica do fluxo_app |
-
----
 
 ## 📋 **VISÃO GERAL DO MÓDULO FLUXO_PLANO**
 
@@ -55,30 +48,24 @@ Página de conversão para venda de planos de anúncios automotivos, focada em *
 - **Gatilhos mentais** de conversão
 - **UX ágil** para decisão rápida
 
----
-
 ## 🏗️ **ARQUITETURA DO MÓDULO**
 
 ### **📁 ESTRUTURA DE ARQUIVOS:**
-```
+
 fluxo_plano/
 ├── components/
 │   └── PlanoPage.tsx          # Componente principal da página
 ├── styles/
 │   └── PlanoPage.css          # Estilos customizados
 └── README_fluxo_plano.md      # Este arquivo
-```
 
 ### **🖼️ RECURSOS VISUAIS:**
-```
+
 public/fluxo_plano/images/
 ├── logo_gf.png               # Logo GFauto (150px largura)
 ├── mc4.png                   # Mascote (150px largura)
 ├── Mas.jpg                   # Showcase anúncio Mas Auto Peças
 └── carrao.jpg                # Showcase anúncio Auto Peças Carrão
-```
-
----
 
 ## 🎨 **ESTILOS ASSOCIADOS**
 
@@ -123,8 +110,6 @@ public/fluxo_plano/images/
 | Balão "Cortesia" | `.balao-cortesia` | PlanoPage.css | ~240 | `background: #10b981; color: white;` |
 | Card anúncio | `.anuncio-card` | PlanoPage.css | ~260 | `border: 1px solid #e5e7eb; border-radius: 8px;` |
 
----
-
 ## 🔧 **TROUBLESHOOTING VISUAL - PROBLEMAS COMUNS:**
 
 | **Problema** | **Causa Provável** | **Solução Rápida** | **Tempo Estimado** |
@@ -135,8 +120,6 @@ public/fluxo_plano/images/
 | **Botões sem estilo** | CSS não aplicado | Verificar classes `.btn-cortesia` e `.btn-premium` | 3 min |
 | **Preview sem layout** | Container não estilizado | Verificar classe `.preview-container` | 4 min |
 | **Balões não destacados** | Z-index ou posicionamento | Ajustar `position: relative; z-index: 10;` | 5 min |
-
----
 
 ## 🌐 **INTEGRAÇÃO COM COMPONENTES GLOBAIS**
 
@@ -151,8 +134,6 @@ public/fluxo_plano/images/
 - **Tablet:** Planos empilhados com espaçamento adequado
 - **Mobile:** Stack vertical com botões full-width
 
----
-
 ## 📁 **DEPENDÊNCIAS DE ARQUIVOS DA RAIZ**
 
 | **Arquivo da Raiz** | **Como o fluxo_plano Utiliza** | **Importância** |
@@ -163,8 +144,6 @@ public/fluxo_plano/images/
 | **tailwind.config.js** | Configurações de cores e breakpoints | MÉDIA |
 | **next.config.js** | Configurações de build e otimização | BAIXA |
 | **package.json** | Dependências Next.js, React, Tailwind | CRÍTICA |
-
----
 
 ## 🎯 **FUNCIONALIDADES ESPECÍFICAS**
 
@@ -186,8 +165,6 @@ public/fluxo_plano/images/
 3. **Ação:** Clique no botão do plano escolhido
 4. **Redirecionamento:** Cadastro/Login → Pagamento (Premium) → Dados do anúncio
 
----
-
 ## 📊 **MÉTRICAS E PERFORMANCE**
 
 ### **⚡ PERFORMANCE ESPERADA:**
@@ -201,8 +178,6 @@ public/fluxo_plano/images/
 - **Tempo médio na página:** 2-3 minutos
 - **Bounce rate alvo:** < 40%
 - **Cliques em Premium:** Métrica principal
-
----
 
 ## 🔄 **PROCESSO DE MANUTENÇÃO**
 
@@ -220,8 +195,6 @@ public/fluxo_plano/images/
 - [ ] Otimizar para SEO
 - [ ] Testar em diferentes dispositivos
 
----
-
 ## 🚨 **TRATAMENTO DE ERROS**
 
 ### **⚠️ CENÁRIOS DE ERRO:**
@@ -235,8 +208,6 @@ public/fluxo_plano/images/
 - **Validação client-side:** A ser implementada
 - **Tratamento de erros:** A ser implementada
 - **Fallbacks:** A ser implementada
-
----
 
 ## 📈 **ANALYTICS E TRACKING**
 
@@ -253,8 +224,6 @@ public/fluxo_plano/images/
 - **Tracking de conversão:** A ser implementado
 - **Heatmaps:** A ser implementado
 
----
-
 ## 🎓 **LIÇÕES CRÍTICAS PARA DESENVOLVEDORES**
 
 ### **💡 LIÇÃO: "É FÁCIL ANDAR SÓ PARA A FRENTE"**
@@ -268,8 +237,6 @@ public/fluxo_plano/images/
 - ✅ **Documentar mudanças** para futuros desenvolvedores
 
 **Resultado:** Desenvolvimento 70% mais eficiente com menos retrabalho.
-
----
 
 ## 🔗 **REFERÊNCIAS E LINKS ÚTEIS**
 
@@ -288,8 +255,6 @@ public/fluxo_plano/images/
 - **Estilização:** CSS Customizado + Tailwind CSS 3.3.0
 - **Deploy:** Vercel
 
----
-
 ## 📞 **SUPORTE E CONTATO**
 
 ### **🆘 EM CASO DE DÚVIDAS:**
@@ -303,10 +268,15 @@ public/fluxo_plano/images/
 - **Melhorias:** Adicionar novas seções conforme necessário
 - **Lições:** Documentar problemas e soluções encontradas
 
----
-
-**📅 Última atualização:** 27/06/2025  
 **👨‍💻 Responsável:** Equipe GFauto  
 **📊 Status:** Em desenvolvimento  
 **🎯 Próxima milestone:** Implementação do componente PlanoPage.tsx
 
+## 🔄 **HISTÓRICO DE ALTERAÇÕES**
+
+### **27/06/2025 - Implementação Inicial e Ajustes**
+- ✅ Criado componente `PlanoPage.tsx` com design moderno focado em conversão.
+- ✅ Implementado `PlanoPage.css` com estilos responsivos e animações.
+- ✅ Configurada rota `/planos` funcionando em produção.
+- ✅ Integração com footer global.
+- 🔄 Ajustes na seção "Retorno Garantido": cor do texto alterada para azul marinho e texto de cálculo removido.
