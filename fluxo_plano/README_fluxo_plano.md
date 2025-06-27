@@ -110,6 +110,31 @@ public/fluxo_plano/images/
 | Balão "Cortesia" | `.balao-cortesia` | PlanoPage.css | ~240 | `background: #10b981; color: white;` |
 | Card anúncio | `.anuncio-card` | PlanoPage.css | ~260 | `border: 1px solid #e5e7eb; border-radius: 8px;` |
 
+#### Alterar sinais / imagem dos anúncios / 
+na linha 89 do fluxo_plano/components/PlanoPage.tsx (ou procurar pelo texto ao lado do sinal na página web.
+// item nao-incluido fica ( ✗ ) Vermelho
+// sinal ✗ antes de </span>
+
+// item incluido fica ( ✓ ) Verde
+// sinal ✓ antes de </span>
+===============================
+// para imagem dos anúncios são dois locais: .anuncio-imagem e .anuncio-content
+.anuncio-imagem img {
+  width: 200px;  // largura da imagem
+  height: 160px;  // altura da imagem
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.anuncio-content {
+  display: grid;
+  grid-template-columns: 220px 1fr auto; // coluna no grid (para acomodar a imagem maior)
+  gap: 0.5rem; // Gap entre colunas
+  padding: 1.5rem;
+  align-items: center;
+}
+================================
+
 ## 🔧 **TROUBLESHOOTING VISUAL - PROBLEMAS COMUNS:**
 
 | **Problema** | **Causa Provável** | **Solução Rápida** | **Tempo Estimado** |
