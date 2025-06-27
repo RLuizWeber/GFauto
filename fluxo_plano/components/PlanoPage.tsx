@@ -82,11 +82,11 @@ const PlanoPage = () => {
                     <span className="check-icon">✓</span>
                     <span>Dados básicos da empresa</span>
                   </li>
-                  <li className="funcionalidade-item nao-incluido">
+                  <li className="funcionalidade-item incluido">
                     <span className="check-icon">✓</span>
                     <span>Formulário para atualizar informações</span>
                   </li>
-                  <li className="funcionalidade-item incluido">
+                  <li className="funcionalidade-item nao-incluido">
                     <span className="check-icon">✓</span>
                     <span>Foto da fachada ou cartão de visitas</span>
                   </li>
