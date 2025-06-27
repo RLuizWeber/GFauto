@@ -415,14 +415,16 @@
   grid-template-columns: 220px 1fr auto;
   gap: 0.5rem;
   padding: 1.5rem;
-  align-items: center;
+  align-items: flex-start;
+  min-height: 180px;
 }
 
 .anuncio-imagem img {
   width: 200px;
   height: 160px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 8px;
+  background: #f8fafc;
 }
 
 .anuncio-info h4 {
