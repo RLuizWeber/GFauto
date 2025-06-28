@@ -131,6 +131,7 @@ na linha 89 do fluxo_plano/components/PlanoPage.tsx (ou procurar pelo texto ao l
   grid-template-columns: 220px 1fr auto; // coluna no grid (para acomodar a imagem maior)
   gap: 0.5rem; // Gap entre colunas
   padding: 1.5rem;
+  align-items: flex-start;
   align-items: center;
 }
 ================================

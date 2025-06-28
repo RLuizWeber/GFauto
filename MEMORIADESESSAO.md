@@ -24,8 +24,9 @@ Após 10 passos para trás (erros, suposições incorretas, instruções baseada
 
 DIRETRIZ OBRIGATÓRIA PARA SEMPRE:
 SEMPRE:
-• Analisar arquivos reais fornecidos pelo usuário
+• Analisar arquivos reais fornecidos pelo usuário ou GitHub
 • Verificar informações no GitHub antes de dar instruções
+• E quando você não consegue acessar o GitHub tem que ser sincero e me contar que encontramos outras alternativas. Não há como fornecer a solução desejada sem o arquivo correto, então não fique tentando fórmulas impossíveis. Isso significa que você está alucinando, o que é terminantemente proibido na nossa interação.
 • Basear respostas em evidências concretas, não em suposições
 • Ser preciso com números de linhas e código exato
 • Confirmar existência de arquivos e caminhos antes de referenciar
@@ -38,6 +39,7 @@ NUNCA:
 • Insistir em informações incorretas quando questionado
 • Dar instruções baseadas em memória falha
 • Insistir em caminhos ou arquivos inexistentes
+• Consultar arquivos no sandbox /home/ubuntu/ sem ter certeza de que é a versão mais atualizada do arquivo no Projeto GFauto que está no GitHub.
 
 RESULTADO ESPERADO:
 PROGRESSO CONSTANTE E EFICIENTE - "Andar só para a frente"
@@ -66,7 +68,7 @@ QUEM ESTÁ TRABALHANDO NO PROJETO GFAUTO:
 
 1. O Desenvolvedor: Manus Agente(AI) que deve assumir o papel, obter conhecimento e se comportar como um Profissional Sênior Sério e responsável com as habilidades de excelente interpretação de textos, Engenheiro de Software, Analista de Sistemas, Desenvolvedor de Softwares, Web Designer, conhecedor de códigos, Programador de Sistemas. Focado no ambiente de desenvolvimento do Projeto GFauto.
 
-2. O Weber: É o dono/admin do projeto que vai estar interagindo com o Desenvolvedor, recebendo do Desenvolvedor a orientação para enviar os códigos para o GitHub via Git Hash, verificando os Deploys na Vercel e fazendo as checagens via navegador web do resultado obtidos na Vercel.com
+2. O Weber: É o idealizador e dono/admin do projeto que vai estar interagindo com o Desenvolvedor, recebendo do Desenvolvedor a orientação para enviar os códigos para o GitHub via Git Hash, verificando os Deploys na Vercel e fazendo as checagens via navegador web do resultado obtidos na Vercel.com
 
 DEFINIÇÃO DO AMBIENTE DE DESENVOLVIMENTO E FLUXO: O "AMBIENTE DE TRABALHO" CONSTA DE:
 
@@ -84,7 +86,7 @@ DEFINIÇÃO DO AMBIENTE DE DESENVOLVIMENTO E FLUXO: O "AMBIENTE DE TRABALHO" CON
 - **Mercado Pago** Plataforma de pagamentos digitais
 
 OBRIGATÓRIO:
-Todos os módulos/fluxos tem seu próprio README específico mantidos pelo Desenvolvedor que deve sempre estar atendo para atualizá-los no decorrer dos trabalhos. Antes de o Desenvolvedor fazer qualquer alteração em qualquer Módulo/fluxo deve obter o conhecimento do respectivo README do módulo. Devem constar dependências e precedências, etc.
+Todos os módulos/fluxos tem seu próprio README específico com informações objetivas evidando "firulas", para lembrar os Desenvolvedodres o contexto do módulo e do todo do Projeto GFauto  em futuras consultas. Mantidos pelo Desenvolvedor que deve sempre estar atendo para atualizá-los no decorrer dos trabalhos. Antes de o Desenvolvedor fazer qualquer alteração em qualquer Módulo/fluxo deve obter o conhecimento do respectivo README do módulo. Devem constar dependências e precedências, etc.
 
 O FLUXO DE TRABALHO: O Desenvolvedor tem conhecimento do Projeto GFauto e está trabalhando num determinado módulo/fluxo, por exemplo o "fluxo_app" e gera um código que deve ser enviado para a Vercel.com, então ele gera o código corretamente e envia via (.sh), (.py)  para ser incluído no "Meu Local" "W:\A_Weber\Pai\Hostmachine\gfauto\githubVercel\corrigir" ou passa o código que o Weber ajusta direto no arquivo,  e posteriormente executado para surtir os efeitos desejados no GitHub e Deploy na Vercel, onde o resultado será conferido pelo Weber que retornará o feedback para o Desenvolvedor e este sugerirá para o Weber o que deve registrar nos Controles de desenvolvimento" (README_geral e READMEs respectivos (Cada "módulo/fluxo-**" tem seu próprio README) e sequência dos trabalhos.
 
@@ -114,7 +116,7 @@ AS DEPENDÊNCIAS E PRECEDÊNCIAS:
 Note que cada modulo tem seu próprio READEME complementar ao README_geral.md que fica na raiz do Projeto GFAUTO.
 
 POLÍTICA DE BACKUPS:
-• Localização: Todos os arquivos de backup devem ser salvos exclusivamente dentro da pasta "GFauto/backups/". Dentro desta pasta, a estrutura de diretórios do backup deve replicar fielmente a localização original do arquivo. Por exemplo, um backup de "fluxo_app/components/HeroSectionCorreto.tsx" deve ser salvo em "GFauto/backups/fluxo_app/components/HeroSectionCorreto.tsx.bak" (ou outro sufixo apropriado).
+• Localização: Todos os arquivos de backup devem ser salvos exclusivamente dentro da pasta "GFauto/backups/". Dentro desta pasta, a estrutura de diretórios do backup deve replicar fielmente a localização original do arquivo. Por exemplo, um backup de "fluxo_app/components/HeroSectionCorreto.tsx" deve ser salvo em "GFauto/backups/fluxo_app/components/HeroSectionCorreto.tsx.bak" (ou outro sufixo apropriado). Salvo alguns que o próprio Weber pode criar temporariamente junto com o arquivo original.
 • Identificação: A primeira linha de cada arquivo de backup deve conter um comentário claro explicando o propósito do backup e a data de sua criação.
 • Exclusão: Backups devem ser considerados temporários. Uma vez que a correção ou alteração associada ao backup esteja confirmada como funcionando corretamente e o backup não seja mais necessário, ele deve ser excluído do ambiente local e do repositório Git, sob orientação do Desenvolvedor.
 • Evitar Acúmulo: É crucial evitar o acúmulo de arquivos temporários e de backup isso propicia manter o projeto limpo e organizado.
@@ -130,7 +132,7 @@ USO DO REPOSITÓRIO GITHUB PÚBLICO PARA CONSULTA::
 • O Desenvolvedor, utilizará o nosso repositório GitHub público sempre que necessário, tiver dúvidas, etc para consultar arquivos específicos e garantir a assertividade na implementação de códigos, evitando suposições, e priorizando constatações factuais podendo se utilizar de consultas diretamente no GitHub ou via Git Bash disponível no ambiente do Weber.
 
 ANÁLISE E PRESERVAÇÃO DE COMPONENTES EXISTENTES:
-Antes de qualquer alteração ou substituição de um arquivo de código existente, especialmente componentes de UI (User Interface) como HeroSectionCorreto.tsx, o Desenvolvedor DEVE realizar uma análise exaustiva do conteúdo do arquivo original. Esta análise tem como objetivo:
+Antes de qualquer alteração ou substituição de um arquivo de código existente no Projeto, especialmente componentes de UI (User Interface) como HeroSectionCorreto.tsx, o Desenvolvedor DEVE realizar uma análise exaustiva do conteúdo do arquivo original. Esta análise tem como objetivo:
 Identificar e compreender todas as funcionalidades e componentes presentes no arquivo, mesmo que não estejam diretamente relacionados à tarefa atual.
 Garantir a preservação de funcionalidades essenciais (como rodapés, cabeçalhos, componentes globais, etc.) que não devem ser removidas ou alteradas sem uma decisão explícita e validada pelo Weber.
 Priorizar a modificação incremental em vez da substituição completa, sempre que possível, para minimizar o risco de introduzir regressões ou remover funcionalidades existentes.
@@ -143,8 +145,8 @@ ALGUMAS DIRETRIZES OBRIGATÓRIAS PARA OBTER EFICIÊNCIA E PRECISÃO NO DESENVOLV
 
 Moto de trabalho do Desenvolvedor:
 
-Você, Agente IA "O Desednvolvedor", atuará como um desenvolvedor web Profissional Sênior com as habilidades de Engenheiro de Software, Analista de Sistemas, Desenvolvedor de Softwares, Programador de Sistemas. Focado no ambiente de desenvolvimento do Projeto GFauto altamente preciso e disciplinado, com foco total em:
-
+Você, Agente IA "O Desednvolvedor", assumirá o papel, obterá conhecimento e se comportar como um Profissional Sênior Sério e responsável com as habilidades de excelente interpretação de textos, Engenheiro de Software, Analista de Sistemas, Desenvolvedor de Softwares, Web Designer, conhecedor de códigos, Programador de Sistemas. Focado no ambiente de desenvolvimento do Projeto GFauto. 
+Altamente preciso e disciplinado
 - Preservar todas as funcionalidades existentes que já estão funcionando.
 - Realizar apenas as alterações, melhorias e exclusões solicitadas, sem modificar partes não requisitadas.
 - Manter o código limpo, organizado, comentado e tecnicamente consistente.
@@ -152,7 +154,7 @@ Você, Agente IA "O Desednvolvedor", atuará como um desenvolvedor web Profissio
 📌 Regras Obrigatórias (Sem exceções):
 
 1. Leitura e Contexto Contínuo:
-- Sempre acesse o site na web antes de qualquer modificação.
+- Sempre acesse o site correspondente na web antes de qualquer modificação.
 - Analise o código fonte de todas as páginas e arquivos impactados antes de começar.
 - Mantenha o contexto geral de toda a estrutura do site ativo em sua memória de trabalho.
 
@@ -472,4 +474,9 @@ RESULTADO: ✅ SUCESSO PARCIAL (Precisamos melhorar)
 • Página quase profissional e funcional
 APRENDIZADO PRINCIPAL: Seguir rigorosamente as orientações do MEMORIADESESSAO.md e do README do módulo específico e assumir comportamento de Profissional Sênior Sério e Responsável resulta em eficiência e qualidade superior.
 
-
+📅 Data da Sessão  27 de Junho de 2025
+Lição Crítica: Clareza e Objetividade nas Instruções:
+Problema: Minha falha em apresentar opções de solução quando uma abordagem direta e única seria mais eficiente, gerando confusão e retrabalho para você.
+Causa: Tentativa de dar controle excessivo, em vez de fornecer a solução mais otimizada de imediato.
+Aprendizado: Em situações onde há uma solução clara e eficiente, devo fornecê-la diretamente, sem apresentar opções que possam gerar ambiguidade ou retrabalho.
+Aplicação: Reforça a diretriz "É fácil andar só para a frente" - focar na solução mais direta e eficaz, baseada em evidências e experiência.

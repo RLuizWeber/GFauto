@@ -4,8 +4,6 @@
 **Referência obrigatória:** Este arquivo deve referenciar e ser referenciado pelo `GFauto/README_geral.md`  
 **Caminho GitHub:** `https://github.com/RLuizWeber/GFauto/tree/main/fluxo_app`
 
----
-
 ## **📍 GUIA DE REFERÊNCIA RÁPIDA - FLUXO_APP**
 
 > **🎯 GPS DO CÓDIGO:** Consulte esta seção PRIMEIRO antes de buscar no GitHub. Resolve 90% das dúvidas instantaneamente.
@@ -62,15 +60,11 @@ fluxo_app/components/HeroSectionCorreto.tsx
 | **Footer Global** | ✅ Funcionando | 4 colunas visíveis | 26/06/2025 11:16 |
 | **Autocompletar** | ✅ Funcionando | Estados/cidades brasileiras | 26/06/2025 11:16 |
 
----
-
 ## **📋 AVISO CRÍTICO PARA DESENVOLVEDORES:**
 
 > **Leitura obrigatória:** Leia com bastante atenção todo o conteúdo deste README para obter um entendimento abrangente do `fluxo_app/` e facilitar atualizações de códigos de arquivos existentes e eventuais novos códigos.
 > 
 > **Após a leitura total e com bastante atenção deste README_fluxo_app.md, o Desenvolvedor verá que está num mundo tão pequeno que será quase impossível cometer erros. Por esse motivo deve ser continuamente atualizado.**
-
----
 
 ## **🎯 LIÇÃO CRÍTICA: "É FÁCIL ANDAR SÓ PARA A FRENTE"**
 
@@ -84,13 +78,9 @@ fluxo_app/components/HeroSectionCorreto.tsx
 ### **🚀 RESULTADO GARANTIDO:**
 **PROGRESSO CONSTANTE E EFICIENTE** - sem passos para trás, sem retrabalho, sem frustração do usuário.
 
----
-
 # README_fluxo_app.md
 
 Este documento fornece uma visão geral abrangente do módulo `fluxo_app` do Projeto GFauto. Ele engloba os componentes, estilos e lógicas que governam a experiência do usuário visitante, desde a interação inicial na página principal até a captura de dados para busca de veículos.
-
----
 
 ## **📊 STATUS E INFORMAÇÕES TÉCNICAS**
 
@@ -105,8 +95,6 @@ Este documento fornece uma visão geral abrangente do módulo `fluxo_app` do Pro
 | **Arquivos Principais** | 7 arquivos (3 componentes + 2 estilos + 1 README + 1 backup) |
 | **Metodologia CSS** | **CSS Customizado (HeroSection.css) - PRINCIPAL** |
 
----
-
 ## **🎯 Propósito Principal do Módulo**
 
 O módulo `fluxo_app` é responsável por gerenciar a experiência inicial do usuário visitante no site GFauto.com.br. Ele é responsável por:
@@ -116,8 +104,6 @@ O módulo `fluxo_app` é responsável por gerenciar a experiência inicial do us
 - **Autocompletar Inteligente:** Sistema de sugestões para estados e cidades brasileiras
 - **Detecção Automática:** Identificação de estado baseado na cidade selecionada
 - **Integração com Layout Global:** Trabalha em conjunto com o Footer global do sistema
-
----
 
 ## **🌐 Integração com Componentes Globais**
 
@@ -130,9 +116,8 @@ O módulo `fluxo_app` é responsável por gerenciar a experiência inicial do us
 - **Estilos:** Arquivo próprio `Footer.css` com tema baseado no site original
 - **Status em Produção:** ✅ Funcionando - verificado em https://gfauto.vercel.app/
 
----
-
 ## **🔗 Relação com a Estrutura Principal do Projeto**
+Está em GFauto/Projeto_GFauto.md
 
 ### **Integração com Página Principal (app/page.tsx)**
 
@@ -160,8 +145,6 @@ O módulo `fluxo_app` está integrado com a página principal do Next.js atravé
 | **fluxo_pag_de_resultados** | Dependência | Receberá parâmetros de busca do fluxo_app |
 | **components/global** | Utilização | Compartilha o Footer global |
 
----
-
 ## **📁 Dependências de Arquivos da Raiz**
 
 ### **Arquivos de Layout Utilizados:**
@@ -173,8 +156,6 @@ O módulo `fluxo_app` está integrado com a página principal do Next.js atravé
 - **`package.json`** - Dependências do projeto (Next.js 14.0.4, React 18, Tailwind 3.3.0)
 - **`tailwind.config.js`** - Configuração do Tailwind CSS (secundário)
 - **`next.config.js`** - Configuração do Next.js para otimizações
-
----
 
 ## **📁 Estrutura de Alto Nível**
 
@@ -197,12 +178,10 @@ O `fluxo_app` é composto pelas seguintes subpastas e arquivos principais e pert
 **Tamanho total:** Aproximadamente 25 KB  
 **Status:** **ESSENCIAL E FUNCIONAL**
 
-| **Arquivo** | **Propósito** | **Tamanho** | **Status** | **Última Modificação** |
+| **Arquivo** 						| **Propósito** 										| **Tamanho** | **Status** 									| **Última Modificação** |
 |---|---|---|---|---|
-| `HeroSection.css` | **CSS customizado NECESSÁRIO** | ~15 KB | ✅ **ATIVO EM PRODUÇÃO** | 2 hours ago |
-| `HeroSection.css1.bak` | Backup dos estilos | ~10 KB | Backup | 2 hours ago |
-
----
+| `HeroSection.css` 			| **CSS customizado NECESSÁRIO** | ~15 KB 			| ✅ **ATIVO EM PRODUÇÃO**	| 2 hours ago 		|
+| `HeroSection.css1.bak` 	| Backup dos estilos 								| ~10 KB 			| Backup 											| 2 hours ago |
 
 ## **🧩 Componentes Chave e Suas Funções Detalhadas**
 
@@ -269,8 +248,6 @@ const detectarEstado = (valor: string) => {
    - Elementos: Image component do Next.js
    - Funcionalidades: Otimização automática de imagem
 
----
-
 ## **🎨 Recursos de Imagem e Localização**
 
 ### **Estrutura Organizacional das Imagens**
@@ -287,23 +264,20 @@ const detectarEstado = (valor: string) => {
 
 ### **Imagens Específicas do Módulo:**
 
-| **Arquivo** | **Propósito** | **Dimensões** | **Tamanho** | **Formato** | **Uso no Código** |
+| **Arquivo** 			| **Propósito** 									| **Dimensões** 	| **Tamanho** | **Formato** | **Uso no Código** |
 |---|---|---|---|---|---|
-| `mc4.png` | Mascote GFauto principal | 250x250px | ~25 KB | PNG | `src="/fluxo_app/images/mc4.png"` |
-| `image001.jpg` | Imagem de veículo para showcase | 800x600px | ~350 KB | JPG | Galeria de veículos |
-| `image003.jpg` | Imagem de veículo para galeria | 800x600px | ~380 KB | JPG | Showcase principal |
-| `image005.jpg` | Imagem de veículo para destaque | 800x600px | ~420 KB | JPG | Banner promocional |
-| `logo.png` | Logo principal do GFauto | 200x80px | ~15 KB | PNG | Header/branding |
+| `mc4.png` 				| Mascote GFauto principal 				| 250x250px 			| ~25 KB 			| PNG 				| `src="/fluxo_app/images/mc4.png"` |
+| `image001.jpg` 		| Imagem de veículo para showcase 	| 800x600px 			| ~350 KB 		| JPG 				| Galeria de veículos |
+| `image003.jpg` 		| Imagem de veículo para galeria 		| 800x600px 			| ~380 KB		| JPG 				| Showcase principal |
+| `image005.jpg` 		| Imagem de veículo para destaque 	| 800x600px 			| ~420 KB 		| JPG 				| Banner promocional |
+| `logo.png` 				| Logo principal do GFauto 					| 200x80px				| ~15 KB 			| PNG 				| Header/branding |
 
 ### **Convenções de Nomenclatura:**
-- **Formato de pastas:** `fluxo_app/images/` (específico do módulo)
+- **Formato de pastas:** `public/fluxo_app/images/` (específico do módulo)
 - **Exemplos:** `mc4.png` (mascote), `image001.jpg` (veículos numerados)
 - **Proibições:** espaços, caracteres especiais, CamelCase
 
----
-
 ## **🎨 Estilos Associados**
-
 
 ### **Abordagem de Estilização Atual**
 
@@ -570,8 +544,6 @@ https://gfauto.vercel.app/_next/static/css/52c2d3b766ebb95e.css
 |---|---|---|---|
 | `HeroSection.css` | `tailwindcss` | CSS customizado tem prioridade | ✅ **RESOLVIDO** |
 
----
-
 ## **🔄 Fluxo de Navegação e Interação**
 
 ### **Jornada do Usuário no Módulo fluxo_app:**
@@ -608,8 +580,6 @@ https://gfauto.vercel.app/_next/static/css/52c2d3b766ebb95e.css
 | **Google Analytics** | ❌ **Não implementado** | Não há GA ou similar configurado |
 | **Métricas de Conversão** | 🔄 **Planejado** | Será implementado em fase posterior |
 
----
-
 ## **🗺️ Mapa de Dependências**
 
 ### **Este módulo DEPENDE de:**
@@ -635,8 +605,6 @@ https://gfauto.vercel.app/_next/static/css/52c2d3b766ebb95e.css
 | **HeroSection.css** | **TODA A APLICAÇÃO** | **Testes visuais completos** | **4-6 horas** |
 | **Interface do formulário** | app/page.tsx | Testes de integração | 2-4 horas |
 | **Dados de estados/cidades** | Autocompletar | Testes de funcionalidade | 1-2 horas |
-
----
 
 ## **🔧 Guia de Troubleshooting**
 
@@ -708,8 +676,6 @@ https://gfauto.vercel.app/_next/static/css/52c2d3b766ebb95e.css
 | **Next.js DevTools** | Built-in | Debug de roteamento e performance | Verificar otimizações de imagem |
 | **CSS Inspector** | DevTools > Elements | Verificar estilos aplicados | Confirmar classes CSS ativas |
 
----
-
 ## **📋 Checklist de Desenvolvimento**
 
 ### **Antes de Alterar Qualquer Arquivo:**
@@ -753,8 +719,6 @@ https://gfauto.vercel.app/_next/static/css/52c2d3b766ebb95e.css
 - [ ] Atualizei versão do documento
 - [ ] Notifiquei equipe sobre mudanças importantes
 
----
-
 ## **📊 Métricas e Performance**
 
 ### **Métricas de Performance (VERIFICADAS EM PRODUÇÃO):**
@@ -782,8 +746,6 @@ https://gfauto.vercel.app/_next/static/css/52c2d3b766ebb95e.css
 | **Vercel Analytics** | Métricas de produção | Contínuo | Desenvolvedor |
 | **Manual Testing** | Verificação visual | Semanal | RLuizWeber |
 
----
-
 ## **🔐 Segurança e Compliance**
 
 ### **Medidas de Segurança Implementadas:**
@@ -800,8 +762,6 @@ https://gfauto.vercel.app/_next/static/css/52c2d3b766ebb95e.css
 |---|---|---|---|
 | **LGPD** | ✅ Conforme | Não coleta dados pessoais | 01/07/2025 |
 | **WCAG 2.1** | 🔄 Em progresso | Testes de acessibilidade | 30/06/2025 |
-
----
 
 ## **🧪 Testes e Qualidade**
 
@@ -822,8 +782,6 @@ https://gfauto.vercel.app/_next/static/css/52c2d3b766ebb95e.css
 | **Duplicação de Código** | 3% | SonarQube | < 5% |
 | **Dívida Técnica** | 2h | SonarQube | < 4h |
 
----
-
 ## **📚 Consistência com MEMORIADESESSAO.md**
 
 Esta documentação segue rigorosamente as diretrizes da "Parte Permanente" do `MEMORIADESESSAO.md`, especialmente:
@@ -834,8 +792,6 @@ Esta documentação segue rigorosamente as diretrizes da "Parte Permanente" do `
 - **Comunicação Clara:** Informações organizadas e acessíveis para futuras consultas
 - **Priorização da Compreensão Profunda:** Base de conhecimento sólida para minimizar erros
 - **Lição "É fácil andar só para a frente":** Comportamento correto para progresso constante baseado em evidências
-
----
 
 ## **📝 Notas de Manutenção**
 
@@ -874,8 +830,6 @@ Esta documentação segue rigorosamente as diretrizes da "Parte Permanente" do `
 | **Versões Manuais** | /backups/ local | Antes de mudanças grandes | 6 meses |
 | **Verificação Produção** | Screenshots + logs | Semanal | 3 meses |
 
----
-
 ## **📞 Contatos e Suporte**
 
 ### **Equipe Responsável:**
@@ -901,8 +855,6 @@ Esta documentação segue rigorosamente as diretrizes da "Parte Permanente" do `
 **Versão do Documento:** 3.0.0 - Documentação com Guia de Referência Rápida e CSS customizado como metodologia principal  
 **Próxima Revisão Programada:** 02 de Julho de 2025  
 **Última Verificação em Produção:** 26 de Junho de 2025 às 11:16
-
----
 
 > **Importante:** Este README.md deve ser continuamente atualizado conforme novas alterações ou componentes forem adicionados/modificados no módulo `fluxo_app`, garantindo que reflita sempre o estado atual e completo do sistema. **SEMPRE verificar o site em produção antes de fazer alterações.**
 

@@ -114,6 +114,8 @@ Fluxos / Módulos  (Além do README_geral na raíz, Cada fluxo_/Módulo contém 
 			-
 		- utils
 
+Estrutura de pastas: em GFauto/Estrutura_de_PASTAS.md
+
 Organização dos arquivos README.md 
 Objetivo: é que o Desenvolvedor perca o menor tempo possível buscando o que precisa lendo eles. 
 Índice: Todos devem conter um índice no início informativo do conteúdo facilitando a localização da busca. As informações contidas no README obrigatoriamente devem estar no índice.
