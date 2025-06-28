@@ -41,7 +41,7 @@
 
 /* Seção Uma Proposta Ganha-Ganha */
 .ganha-ganha-section {
-  padding: 3rem 0 1rem 0;
+  padding: 3rem 0 0.5rem 0;
   background-color: #f8fafc;
 }
 
@@ -96,7 +96,7 @@
 /* Seção Verde "Começar Agora" */
 .comecar-agora-section {
   background-color: #10b981;
-  padding: 1rem 0.5rem;
+  padding: 0.5rem 0.5rem;
 }
 
 .comecar-agora-title {
