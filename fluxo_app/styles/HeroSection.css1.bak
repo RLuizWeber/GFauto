@@ -1,4 +1,4 @@
-/* GFauto/fluxo_app/styles/HeroSection.css - Versão Modificada até depois de ajustar a centralização do texto ganha-ganha al lado dos carros. */
+/* GFauto/fluxo_app/styles/HeroSection.css - Versão Modificada até primeiro ajuste das margens da tarja verde. */
 
 /* Header com logo e texto lado a lado */
 .hero-header {
@@ -96,7 +96,7 @@
 /* Seção Verde "Começar Agora" */
 .comecar-agora-section {
   background-color: #10b981;
-  padding: 3rem 1rem;
+  padding: 1rem 0.5rem;
 }
 
 .comecar-agora-title {
@@ -122,19 +122,48 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  align-items: center; /* ADICIONAR */
 }
 
 /* Grid dos campos - 3 colunas no desktop */
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr 1fr; /* ALTERAR */
   gap: 1.5rem;
+  justify-items: center; /* ADICIONAR */
+  max-width: 800px; /* ADICIONAR */
+  margin: 0 auto; /* ADICIONAR */
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .form-grid {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    justify-items: stretch;
   }
+}
+
+.form-button {
+  background: #10b981;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 200px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Estilo dos labels dos campos */
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  text-align: center;
 }
 
 /* Seção do mascote */

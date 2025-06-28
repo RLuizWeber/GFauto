@@ -1,4 +1,4 @@
-/* GFauto/fluxo_app/styles/HeroSection.css - Versão Modificada até depois de ajustar a centralização do botão "Buscar Serviços". */
+/* GFauto/fluxo_app/styles/HeroSection.css - Versão Modificada até primeiro ajuste das margens da tarja verde. */
 
 /* Header com logo e texto lado a lado */
 .hero-header {
@@ -41,7 +41,7 @@
 
 /* Seção Uma Proposta Ganha-Ganha */
 .ganha-ganha-section {
-  padding: 3rem 0;
+  padding: 3rem 0 1rem 0;
   background-color: #f8fafc;
 }
 
@@ -104,7 +104,7 @@
   font-weight: bold;
   color: white;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 /* Container do formulário com fundo branco */

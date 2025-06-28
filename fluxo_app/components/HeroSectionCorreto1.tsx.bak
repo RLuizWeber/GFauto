@@ -1,4 +1,4 @@
-// GFauto/fluxo_app/components/HeroSectionCorreto.tsx - Versão Modificada até depois de ajustar o botão "Buscar Serviços" ao centro.
+// GFauto/fluxo_app/components/HeroSectionCorreto.tsx - Versão Modificada até primeiro ajuste das margens da tarja verde..
 'use client';
 
 import { useState, useEffect } from 'react';

@@ -1,4 +1,4 @@
-// GFauto/fluxo_app/components/HeroSectionCorreto.tsx - Versão Modificada até depois de ajustar o botão "Buscar Serviços" ao centro.
+// GFauto/fluxo_app/components/HeroSectionCorreto.tsx - Versão Modificada até primeiro ajuste das margens da tarja verde..
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -302,7 +302,7 @@ export default function HeroSectionCorreto() {
       <section className="comecar-agora-section">
         <div className="container mx-auto">
           {/* Título da Seção */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-2">
             <h3 className="comecar-agora-title">
               Começar Agora
             </h3>
