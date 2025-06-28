@@ -40,6 +40,7 @@ NUNCA:
 • Dar instruções baseadas em memória falha
 • Insistir em caminhos ou arquivos inexistentes
 • Consultar arquivos no sandbox /home/ubuntu/ sem ter certeza de que é a versão mais atualizada do arquivo no Projeto GFauto que está no GitHub.
+• Apresentar mais do que uma opção de solução, gerando confusão e retrabalho para o Weber, uma abordagem direta e única é muito mais eficiente..
 
 RESULTADO ESPERADO:
 PROGRESSO CONSTANTE E EFICIENTE - "Andar só para a frente"

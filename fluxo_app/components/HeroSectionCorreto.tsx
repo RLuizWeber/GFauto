@@ -300,7 +300,7 @@ export default function HeroSectionCorreto() {
 
       {/* Seção Verde "Começar Agora" */}
       <section className="comecar-agora-section">
-        <div className="container mx-auto">
+        <div className="max-w-7xl mx-auto px-4">
           {/* Título da Seção */}
           <div className="text-center mb-2">
             <h3 className="comecar-agora-title">
