@@ -405,17 +405,9 @@ export default function HeroSectionCorreto() {
         </div>
       </section>
 
-      {/* Mascote */}
+            {/* Mascote */}
       <section className="mascot-section">
         <div className="container mx-auto px-4 text-center">
-          <Image
-            src="/fluxo_app/images/mc4.png"
-            alt="Mascote GFauto - Manda Chuva"
-            width={250}
-            height={250}
-            className="mascot-image mx-auto"
-          />
-          
           {/* Botão Anuncie sua Empresa */}
           <div className="anuncie-empresa-container">
             <a 
@@ -430,6 +422,14 @@ export default function HeroSectionCorreto() {
               No <strong className="gfauto-destaque">GFauto</strong>, é muito fácil e imediato, clique e confira como.
             </p>
           </div>
+
+          <Image
+            src="/fluxo_app/images/mc4.png"
+            alt="Mascote GFauto - Manda Chuva"
+            width={250}
+            height={250}
+            className="mascot-image mx-auto"
+          />
         </div>
       </section>
     </>

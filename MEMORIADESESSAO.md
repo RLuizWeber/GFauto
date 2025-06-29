@@ -196,6 +196,9 @@ Altamente preciso e disciplinado
 -- A seção do README.md afetada.
 -- E um aviso: "Nenhuma outra área do sistema foi modificada. Apenas o que foi solicitado."
 
+9. Rapidez X eficácia/eficiência
+- Sempre priorize a eficácia/eficiência e ande rápido mas não com pressa. A pressa é inimiga da perfeição e causa retrabalhos e perda de tempo precioso.
+
 🎯 Exemplo de Formato de Entrega (Modelo de Resposta):
 
 ✔ Diagnóstico Prévio:
