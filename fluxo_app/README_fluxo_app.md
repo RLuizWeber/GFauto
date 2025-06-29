@@ -40,6 +40,37 @@
 | **Campos sem sugestões** | Verificar console para erros JavaScript | 3 min |
 | **Layout quebrado mobile** | Verificar responsividade no HeroSection.css | 5 min |
 
+### **🔧 GUIA DE TROUBLESHOOTING AVANÇADO
+
+### **⚠️ ARMADILHA: ESPAÇAMENTO EXCESSIVO ENTRE SEÇÕES**
+
+**Sintoma:** Espaço vertical maior que o esperado entre a seção "Uma Proposta Ganha-Ganha" e a seção "Começar Agora".
+
+**Causa Raiz:** A soma do `padding-bottom` da `.ganha-ganha-section` com o `padding-top` da `.comecar-agora-section` resultava em um espaçamento acumulado. Estilos padrão do navegador ou do Tailwind também podem contribuir.
+
+**Solução (28/06/2025):**
+Para reduzir o espaçamento pela metade (de 2rem para 1rem total):
+
+**Arquivo:** `fluxo_app/styles/HeroSection.css`
+
+```css
+/* Ajuste do padding inferior da seção superior */
+.ganha-ganha-section {
+  padding: 3rem 0 0.5rem 0; /* Antes: 1rem */
+}
+
+/* Ajuste do padding superior da seção inferior */
+.comecar-agora-section {
+  padding: 0.5rem 0.5rem; /* Antes: 1rem */
+}
+
+/* Garantir que o título não tenha margin-top padrão */
+.comecar-agora-title {
+  margin-top: 0; /* Adicionado para zerar */
+}
+
+```
+
 ### **🔗 CONEXÕES CRÍTICAS - DEPENDÊNCIAS DIRETAS:**
 
 ```

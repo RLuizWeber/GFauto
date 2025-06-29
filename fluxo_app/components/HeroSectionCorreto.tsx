@@ -1,4 +1,4 @@
-// GFauto/fluxo_app/components/HeroSectionCorreto.tsx - Versão Modificada até primeiro ajuste das margens da tarja verde..
+// GFauto/fluxo_app/components/HeroSectionCorreto.tsx - Versão Modificada até ANTES do botão "Anuncie sua Empresa" ..
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -415,6 +415,21 @@ export default function HeroSectionCorreto() {
             height={250}
             className="mascot-image mx-auto"
           />
+          
+          {/* Botão Anuncie sua Empresa */}
+          <div className="anuncie-empresa-container">
+            <a 
+              href="https://www.gfauto.com.br/aa_anuncio/form_anuncio.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="anuncie-empresa-button"
+            >
+              Anuncie sua Empresa
+            </a>
+            <p className="anuncie-empresa-text">
+              No <strong className="gfauto-destaque">GFauto</strong>, é muito fácil e imediato, clique e confira como.
+            </p>
+          </div>
         </div>
       </section>
     </>

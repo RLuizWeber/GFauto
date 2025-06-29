@@ -481,3 +481,27 @@ Problema: Minha falha em apresentar opções de solução quando uma abordagem d
 Causa: Tentativa de dar controle excessivo, em vez de fornecer a solução mais otimizada de imediato.
 Aprendizado: Em situações onde há uma solução clara e eficiente, devo fornecê-la diretamente, sem apresentar opções que possam gerar ambiguidade ou retrabalho.
 Aplicação: Reforça a diretriz "É fácil andar só para a frente" - focar na solução mais direta e eficaz, baseada em evidências e experiência.
+
+📅 Data da Sessão  28 de Junho de 2025
+
+### **🚨 LIÇÃO CRÍTICA: PROBLEMA DE ESPAÇAMENTO COM TAILWIND CSS (28/06/2025)**
+
+**Contexto:** Redução de espaçamento excessivo acima da seção "Começar Agora" na página principal (`fluxo_app`).
+
+**Problema:** O espaçamento visual de 32px (2rem) persistia mesmo após ajustes iniciais de `padding`.
+
+**Causa Raiz Identificada:**
+- **Soma de Paddings:** O espaçamento era a soma do `padding-bottom` da seção `.ganha-ganha-section` (1rem) com o `padding-top` da seção `.comecar-agora-section` (1rem).
+- **Interação com Tailwind CSS:** Classes Tailwind padrão ou a própria natureza da cascata de estilos estavam contribuindo para o espaçamento, exigindo uma abordagem mais precisa.
+
+**Solução Aplicada (no `GFauto/fluxo_app/styles/HeroSection.css`):**
+1.  **`.ganha-ganha-section`:** `padding: 3rem 0 1rem 0;` foi alterado para `padding: 3rem 0 0.5rem 0;` (reduzindo o padding inferior).
+2.  **`.comecar-agora-section`:** `padding: 1rem 0.5rem;` foi alterado para `padding: 0.5rem 0.5rem;` (reduzindo o padding superior).
+3.  **`.comecar-agora-title`:** Adicionado `margin-top: 0;` para zerar qualquer margem superior padrão que pudesse estar contribuindo.
+
+**Resultado:** O espaçamento total foi reduzido de 32px (2rem) para 16px (1rem), atingindo o objetivo de reduzir pela metade.
+
+**Aprendizado/Prevenção:**
+- **Investigar e considerar a soma de espaçamentos** de elementos adjacentes (`padding-bottom` da seção superior + `padding-top` da seção inferior).
+- **Investigar a cascata de estilos:** Em casos de persistência de espaçamento, verificar se há `margin` ou `padding` padrão de navegadores/frameworks (como Tailwind) que precisam ser explicitamente zerados.
+- **Documentar "armadilhas":** Anotar interações complexas entre CSS customizado e frameworks (de preferência tentar evitar utilizar isso) para referência futura e evitar retrabalho.

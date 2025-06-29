@@ -178,6 +178,46 @@
   height: auto;
 }
 
+/* Container do botão "Anuncie sua Empresa" */
+.anuncie-empresa-container {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+/* Botão "Anuncie sua Empresa" */
+.anuncie-empresa-button {
+  display: inline-block;
+  background-color: #10b981;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.anuncie-empresa-button:hover {
+  background-color: #059669;
+  text-decoration: none;
+  color: white;
+}
+
+/* Texto explicativo */
+.anuncie-empresa-text {
+  font-size: 1rem;
+  color: #374151;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Destaque da palavra "GFauto" */
+.gfauto-destaque {
+  color: #1e40af;
+  font-weight: bold;
+}
+
 /* Rodapé */
 .footer {
   background-color: #1f2937;
