@@ -120,7 +120,7 @@ export default function HeroSectionCorreto() {
     let cidadesEncontradas: string[] = [];
 
     if (estadoSelecionado) {
-      // Agora permitimos buscar cidades mesmo sem estado selecionado
+      // Agora permitimos buscar cidades mesmo sem estado selecionado (Vamos rever/corrigir isso: Só pode selecionar cidade se pertencer ao Estado e se não existir Estado Selecionado o campo cidade não estará habilitado e contendo a mensagem "selecione um Estado primeiro" assim que o Estado tiver sido informado o campo Cidade exibe a mensagem "Selecione a Cidade". O botão "Buscar Serviços" só estará habilitado quando os três campos (Estado, Cidade e "O que procura?") estiverem preenchidos.
       // Se um estado foi selecionado, filtramos apenas as cidades desse estado
       const cidadesDoEstado = CIDADES_POR_ESTADO[estadoSelecionado] || [];
       cidadesEncontradas = cidadesDoEstado.filter(cidade =>

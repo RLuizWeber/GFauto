@@ -89,7 +89,7 @@ DEFINIÇÃO DO AMBIENTE DE DESENVOLVIMENTO E FLUXO: O "AMBIENTE DE TRABALHO" CON
 OBRIGATÓRIO:
 Todos os módulos/fluxos tem seu próprio README específico com informações objetivas evidando "firulas", para lembrar os Desenvolvedodres o contexto do módulo e do todo do Projeto GFauto  em futuras consultas. Mantidos pelo Desenvolvedor que deve sempre estar atendo para atualizá-los no decorrer dos trabalhos. Antes de o Desenvolvedor fazer qualquer alteração em qualquer Módulo/fluxo deve obter o conhecimento do respectivo README do módulo. Devem constar dependências e precedências, etc.
 
-O FLUXO DE TRABALHO: O Desenvolvedor tem conhecimento do Projeto GFauto e está trabalhando num determinado módulo/fluxo, por exemplo o "fluxo_app" e gera um código que deve ser enviado para a Vercel.com, então ele gera o código corretamente e envia via (.sh), (.py)  para ser incluído no "Meu Local" "W:\A_Weber\Pai\Hostmachine\gfauto\githubVercel\corrigir" ou passa o código que o Weber ajusta direto no arquivo,  e posteriormente executado para surtir os efeitos desejados no GitHub e Deploy na Vercel, onde o resultado será conferido pelo Weber que retornará o feedback para o Desenvolvedor e este sugerirá para o Weber o que deve registrar nos Controles de desenvolvimento" (README_geral e READMEs respectivos (Cada "módulo/fluxo-**" tem seu próprio README) e sequência dos trabalhos.
+O FLUXO DE TRABALHO: O Desenvolvedor tem conhecimento do Projeto GFauto e está trabalhando num determinado módulo/fluxo, por exemplo o "fluxo_app" (ou outro existente) e gera um código que deve ser enviado para a Vercel.com, então ele gera o código corretamente e envia via (.sh), (.py)  para ser incluído no "Meu Local" "W:\A_Weber\Pai\Hostmachine\gfauto\githubVercel\corrigir" ou passa o código que o Weber ajusta direto no arquivo,  e posteriormente executado para surtir os efeitos desejados no GitHub e Deploy na Vercel, onde o resultado será conferido pelo Weber que retornará o feedback para o Desenvolvedor e este sugerirá para o Weber o que deve registrar nos Controles de desenvolvimento" (README_geral e READMEs respectivos (Cada "módulo/fluxo-**" tem seu próprio README) e sequência dos trabalhos.
 
 MAPA DO PROJETO:
 O Desenvolvedor dá manutenção ao Mapa do Projeto dentro do README_geral e em "GFauto/Estrutura_de_PASTAS".md enviando as alterações do momento para o Weber atualizar no "Meu Local" com o mapeamento da estrutura de diretórios e arquivos completa;  que lista todos os relacionamentos entre componentes, fluxos de dados e navegação, suas dependências e precedência e funções, para que o eventual Desenvolvedor consiga entender rapidamente a estrutura do projeto. 
@@ -314,7 +314,7 @@ PLANO PARA CONCLUIR A PÁGINA:
 
 
 PRÓXIMOS PASSOS IMEDIATOS:
-1. Consultar README_fluxo_app.md antes de qualquer alteração
+1. Consultar README_fluxo_app.md ou outro específico em que estivermos trabalhando antes de qualquer alteração
 
 
 LIÇÕES APRENDIDAS PARA O DESENVOLVEDOR:

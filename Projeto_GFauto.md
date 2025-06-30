@@ -1,133 +1,11 @@
-## Objetivo do Projeto GFauto:
-“RESUMO DO PROJETO GFauto”
+// Este será eliminado
 
-O Projeto GFauto atualmente na página https://www.gfauto.com.br está sendo reestruturado e implementado no novo projeto iniciando e https://gfauto.vercel.app/ que tem como principal objetivo expor para visitantes da web anunciantes de produtos e serviços automotivos no Brasil.
-O Site do Projeto GFauto busca:
-- Conectar internautas e usuários de redes sociais, visitantes no site do Projeto GFauto proprietários de veículos automotores (como carros, motos, caminhões, etc.) a fornecedores das mais variadas especialidades do ramo automotivo englobando fabricação, vendas e distribuição, manutenção e serviços especializados, tecnologia e inovação, mobilidade e transporte, na área  em seus Estados e suas cidades com o intuito de facilitar aos internautas/visitantes a pesquisa de serviços automotivos, e de o Cliente/Anunciante ser encontrado. 
-Essa conexão se dará quando o internauta estiver procurando na sua cidade um fornecedor para um problema a ser resolvido no veículo dele. Ele vai informar o “Estado” e a “Cidade” onde ele está e “O que procura?” e então será levado para uma página de resultados da especialidade na cidade dele onde estarão figurando os fornecedores para o caso “O que procura?” que ele informou. Por outro lado teremos os Clientes/Anunciantes que serão divididos em duas categorias: "Cortesia" e "Premium" o "Cortesia" poderá figurar na "página de resultados" sem pagar com uma exposição simples, o "Premium" vai ser convidado a efetuar um pagamento escolhido e terá uma exposição privilegiada na "página de resultados".
 
-## Quem está trabalhando no Projeto GFauto:
-
-1. O Desenvolvedor: Agente(AI) que deve assumir o papel, obter conhecimento e se comportar como um Profissional Sênior com as habilidades de Engenheiro de Software, Analista de Sistemas, Desenvolvedor de Softwares, Programador de Sistemas. Focado no ambiente de desenvolvimento do Projeto GFauto.
-
-2. O Weber: É o dono/administrador do projeto que vai estar interagindo com o Desenvolvedor, recebendo do Desenvolvedor a orientação para enviar os códigos para o GitHub via Git Hash, verificando os Deploys na Vercel e fazendo as checagens via navegador web do resultado obtidos na Vercel.com
-
-## Definição do Ambiente de Desenvolvimento e fluxo: O "Ambiente de Trabalho" consta de:
-
-1. Sandbox do Desenvolvedor;
-2. "Meu Local" a máquina windows do Weber; W:\GFauto
-3. Repositório GigHub público: https://github.com/RLuizWeber/GFauto.git 
-4. Hospedagem Vercel.com https://gfauto.vercel.app/
-
-## 🚀 TECNOLOGIAS UTILIZADAS
-- **Frontend:** Next.js, React, TailwindCSS: Framework de desenvolvimento web 
-- **Backend:** Prisma
-- **Hospedagem:** Vercel.com
-- **Autenticação:** Senha forte e 2FA para painel admin
-- **Resend:** Plataforma de envio de e-mails
-- **Mercado Pago** Plataforma de pagamentos digitais
-
-Importante Obs.: Todas as páginas do domínio www.gfauto.com.br mostradas nesse documento são apenas ilustrativas.
-
-## Estrutura do site: (fazer os ajustes necessários)
-
-- GFauto
-	- .git
-	- .mercadoPago
-	- .next
-	- .recend
-	- .vercel
-	- pag_painelAdmin
-	- 
-Fluxos / Módulos  (Além do README_geral na raíz, Cada fluxo_/Módulo contém o seu README.md específico onde estarão informadas as dependências, precedências e outras informações pertinentes ao módulo)
-	- GFauto
-		- .git
-		- .next
-		- .vercel
-		- app
-			- admin
-			- anuncio
-			- api
-			- pagina-correta
-			- resultados
-			README_app.md
-		- backups
-			-
-			-
-			README_backups.md
-		- componentes
-			- visitantes
-		- docs
-			-
-			-
-		- fluxo_app
-			- componentes
-			- images
-			- styles
-			README_app.md
-		- fluxo_cliente_anunciante
-			- 
-			-
-		- fluxo_pag_de_resultados
-			- 
-			-
-		- fluxo_pagto
-			- 
-			-
-		- fluxo_painel_admin
-			-
-			-
-		- fluxo_plano
-			- 
-			-
-		- fluxo_visitante
-			- app
-				- anuncio
-				- api
-				- resultados
-			- componentes
-				- visitante
-			- docs
-			- lib
-			- prisma
-			- utils
-		- lib
-			README_lib.md
-		- memoria
-		- node_modules
-		- prisma
-			- migrations
-			README_prisma.md
-		- public
-			- 
-			-
-		- scripts
-			- db
-				- backups
-				popular_banco_via_api.html
-				popular_fornecedores_autoeletricas.js
-				popular_fornecedores_autoeletricas.sql
-				README.md
-				README_API.md
-		- tmp
-			- 
-			-
-		- utils
-
-Estrutura de pastas: em GFauto/Estrutura_de_PASTAS.md
-
-Organização dos arquivos README.md 
-Objetivo: é que o Desenvolvedor perca o menor tempo possível buscando o que precisa lendo eles. 
-Índice: Todos devem conter um índice no início informativo do conteúdo facilitando a localização da busca. As informações contidas no README obrigatoriamente devem estar no índice.
-- README_geral.md (GFauto/): que passa informações gerais e aponta para READMEs específicos (salvo em seu próprio fluxo/módulo) por página. 
-- README_Dependencias_entre_arquivos.md: referenciado no README_geral.md pode ser salvo em (W:\A_Weber\Pai\Hostmachine\gfauto\githubVercel\GFauto\docs) os endereços informados devem ser precisos e completos partindo da página principal, no caso GFauto.
 
 Plano de Modernização do Site GFauto.com.br
 Análise da Situação Atual
 O site GFauto.com.br apresenta uma estrutura e design a ser melhorado. O site é voltado para o setor automotivo. Propõe uma abordagem "ganha-ganha" para proprietários de veículos e fornecedores automotivos.
 Pontos Críticos Identificados:
-•	Falta de estratégias de monetização eficientes
-•	Experiência do usuário comprometida
 Plano de Modernização
 1. Redesenho Completo da Plataforma
 1.1 Tecnologia Base
@@ -280,7 +158,7 @@ Principais vantagens da Vercel:
 •	Escalabilidade automática conforme o tráfego
 •	Ferramentas de análise de performance integradas
 
-1.	Plano Pro ($20/mês)
+1.	Plano Pro ($36/mês)
 •	Recomendado
 •	Domínios personalizados ilimitados
 •	Equipes de até 10 membros
@@ -296,21 +174,22 @@ Arquitetura e Tecnologias
 •	Banco de Dados: Vercel Postgres com Prisma ORM.
 •	Hospedagem: Vercel (com deploy automático via GitHub).
 •	APIs Externas Integradas:
-•	Resend: Para envio de e-mails transacionais (domínio gfauto.com.br verificado).
-•	Mercado Pago: Para processamento de pagamentos (Ok).
+	•	Resend: Para envio de e-mails transacionais (domínio gfauto.com.br verificado).
+	•	Mercado Pago: Para processamento de pagamentos (Ok).
+
 2.	Progresso Atual:
 •	Projeto Next.js no GitHub (RLuizWeber/GFauto) com deploy na Vercel (https://gfauto.vercel.app) .
 •	Conexão com Vercel Postgres via Prisma estabelecida.
 •	Modelo Advertiser definido no schema.prisma e migrações aplicadas.
 •	Rotas de API funcionais:
-•	/api/send-email (Resend).
-•	/api/create-payment (Mercado Pago).
+	•	/api/send-email (Resend).
+	•	/api/create-payment (Mercado Pago).
 •	Variáveis de ambiente para chaves de API e URLs base configuradas e funcionando na Vercel.
+
 3.	Segurança (Considerações Iniciais):
 •	Uso de PATs para GitHub e variáveis de ambiente seguras na Vercel.
 •	SSL fornecido pela Vercel.
 •	Pontos para atenção futura: Autenticação de usuários na aplicação, autorização detalhada, proteção contra vulnerabilidades web comuns (XSS, CSRF), rate limiting.
-
 
 Fontes de Receita
 3. Uma das principais fontes de monetização, além das outras, é os anunciantes pagando para figurar nas páginas das cidades dentro de suas especialidades. Esse valor é bem pequeno mas existindo muitas possibilidades por cidade resultaria numa arrecadação significativa.
@@ -318,10 +197,8 @@ Fontes de Receita
 Objetivo do Projeto GFauto
 Ação que irá aplicar as técnicas mais modernas da  análise, desenvolvimento e engenharia de softwares, marketing e administração visando melhorar e aperfeiçoar esse serviço. Transformando-se em uma aplicação web com Next.js, hospedada na Vercel, com funcionalidades de gerenciamento e integrações com serviços de terceiros, visando uma plataforma robusta e escalável.
 
-
-
-Fluxo_app (antigo do Visitante)                                                                      
-O primeiro foco da página inicial(01): https://www.gfauto.com.br  para o visitante é em "Começar Agora - Escolha o Estado" ou seja o “Fluxo_app” o que vai ao encontro do slogam; que consta na figura: “logo.png” no cabeçalho “Pesquise o melhor local para o seu carro”. Ao preencher os campos “Estado” (26 opções), “Cidade” (5.500 opções),  e “O que Procura?” (opções indeterminadas inicialmente) ele vai clicar no botão “Buscar Serviços” 
+Fluxo_app (antigo do fluxo_visitante)                                                                      
+O primeiro foco da página inicial(01): https://www.gfauto.com.br  para o visitante é em "Começar Agora" ou seja o “Fluxo_app” o que vai ao encontro do slogam; que consta na figura: “logo.png” no cabeçalho “Pesquise o melhor local para o seu carro”. Ao preencher os campos “Estado” (26 opções), “Cidade” (5.500 opções),  e “O que Procura?” (opções pré-determinadas inicialmente) e então ele vai clicar no botão “Buscar Serviços” 
 - Atualmente hospedado na hostmach.com  está funcionando assim:
 Em www.gfauto.com.br na sessão “Começar Agora” ao Clicar em “Escolha o Estado” abre um DropDown e o visitante clica no Estado desejado, no caso de escolher RS é mostrado para ele esta página(02): https://www.gfauto.com.br/estado/es_rs.htm onde vai estar na página do RS e deverá escolher uma cidade desejada por ele (ex. Passo Fundo) e então ao clicar na cidade desejada é levado para esta página(03): https://www.gfauto.com.br/estado/passo_fundo.htm onde lhe é mostrado algumas opções de Especialidades Automotivas na cidade de Passo Fundo que entre as quais ele pode escolher aquela especialidade que ele está buscando, caso ele clique em qualquer uma delas vai encontrar uma disposição tipo esta página(04): Página de Resultados https://www.gfauto.com.br/autoeletricas/autoeletricas.htm caso tenha clicado em “Auto Elétricas” na página anterior. E isso ocorre com todas as outras especialidade.
 - Mas como estamos trabalhando com banco de dados precisamos mudar isso:
