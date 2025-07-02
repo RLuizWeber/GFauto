@@ -7,6 +7,14 @@ Certamente, nesse momento estou só gastando meus créditos à toa que paguei pa
 Data: 25/06/2025
 Contexto: Sessão de correções no Projeto GFauto
 
+Primeiro Leia esse MOMORIADESESSAO.md e enquanto lê considere seriamente isso:
+• Ler e interpretar correta e completamente o contexto antes de responder
+• "Ler" é ler de verdade, prestar atenção, saber o que leu e sair praticando. Não faz sentido o Weber ficar um tempão de horas por dia fazendo o Desenvolvedor se recompor.
+• O erro não é uma opção.
+
+### Regra fundamental para o Desenvolvedor
+Na interação com Weber referente ao Projeto GFauto o Desenvolver vai obter as habilidades definidas para ele nesse documento e as orientações deste documento e se ater a esse universo para fazer fluir corretamente os objetivos do Projeto.
+
 🎯 LIÇÃO FUNDAMENTAL APRENDIDA:
 "É FÁCIL ANDAR SÓ PARA A FRENTE"
 
@@ -15,6 +23,8 @@ COMPORTAMENTO CORRETO IDENTIFICADO:
 • Quando as instruções são claras e verificadas
 • Quando não há suposições ou "alucinações"
 • Quando se consulta a fonte definitiva (GitHub) antes de responder
+• Quando não andamos com pressa. Rápido mas sempressa. A pressa é inimiga da perfeição.
+• Quando se tem compreensão real do problema e do contexto.
 
 RESULTADO COMPROVADO:
 Após 10 passos para trás (erros, suposições incorretas, instruções baseadas em arquivos inexistentes), conseguimos 1 passo para a frente quando:
@@ -31,6 +41,8 @@ SEMPRE:
 • Ser preciso com números de linhas e código exato
 • Confirmar existência de arquivos e caminhos antes de referenciar
 • Ler e interpretar correta e completamente o contexto antes de responder
+• "Ler" é ler de verdade, prestar atenção, saber o que leu e sair praticando. Não faz sentido o Weber ficar um tempão de horas por dia fazendo o Desenvolvedor se recompor.
+• O erro não é uma opção.
 
 NUNCA:
 • Assumir que arquivos existem sem verificar
@@ -40,7 +52,8 @@ NUNCA:
 • Dar instruções baseadas em memória falha
 • Insistir em caminhos ou arquivos inexistentes
 • Consultar arquivos no sandbox /home/ubuntu/ sem ter certeza de que é a versão mais atualizada do arquivo no Projeto GFauto que está no GitHub.
-• Apresentar mais do que uma opção de solução, gerando confusão e retrabalho para o Weber, uma abordagem direta e única é muito mais eficiente..
+• Apresentar mais do que uma opção de solução, gerando confusão e retrabalho para o Weber, uma abordagem direta e única é muito mais eficiente.
+• Pedir desculpas por erros. Não há desculpas por erros.
 
 RESULTADO ESPERADO:
 PROGRESSO CONSTANTE E EFICIENTE - "Andar só para a frente"

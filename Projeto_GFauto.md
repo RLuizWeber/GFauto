@@ -1,5 +1,5 @@
 // Este será eliminado
-
+#### Estamos eliminando o Projeto_GFauto.docx primeiro, depois passamos daqui para o README_geral.md
 
 
 Plano de Modernização do Site GFauto.com.br
@@ -199,13 +199,10 @@ Ação que irá aplicar as técnicas mais modernas da  análise, desenvolvimento
 
 Fluxo_app (antigo do fluxo_visitante)                                                                      
 O primeiro foco da página inicial(01): https://www.gfauto.com.br  para o visitante é em "Começar Agora" ou seja o “Fluxo_app” o que vai ao encontro do slogam; que consta na figura: “logo.png” no cabeçalho “Pesquise o melhor local para o seu carro”. Ao preencher os campos “Estado” (26 opções), “Cidade” (5.500 opções),  e “O que Procura?” (opções pré-determinadas inicialmente) e então ele vai clicar no botão “Buscar Serviços” 
-- Atualmente hospedado na hostmach.com  está funcionando assim:
-Em www.gfauto.com.br na sessão “Começar Agora” ao Clicar em “Escolha o Estado” abre um DropDown e o visitante clica no Estado desejado, no caso de escolher RS é mostrado para ele esta página(02): https://www.gfauto.com.br/estado/es_rs.htm onde vai estar na página do RS e deverá escolher uma cidade desejada por ele (ex. Passo Fundo) e então ao clicar na cidade desejada é levado para esta página(03): https://www.gfauto.com.br/estado/passo_fundo.htm onde lhe é mostrado algumas opções de Especialidades Automotivas na cidade de Passo Fundo que entre as quais ele pode escolher aquela especialidade que ele está buscando, caso ele clique em qualquer uma delas vai encontrar uma disposição tipo esta página(04): Página de Resultados https://www.gfauto.com.br/autoeletricas/autoeletricas.htm caso tenha clicado em “Auto Elétricas” na página anterior. E isso ocorre com todas as outras especialidade.
-- Mas como estamos trabalhando com banco de dados precisamos mudar isso:
-Em vez dos DropDown para o Estado, depois para a Cidade e depois clicar na Especialidade vamos fazer ele chegar na página 04 desejada de uma forma muito mais inteligente, eficiente e rápida:
-Então O “Começar Agora” será seguido de:
-Informe o Estado: (campo para o Estado).  Informe a Cidade: (campo para a Cidade). O que procura? (campo para a busca) 
--01 Informe o Estado: pode ser digitado (e um dispositivo autocompletar) as opções serão as siglas dos estados e/ou os nomes completos aí deixo por sua conta definir como. Lembrando que precisamos que seja muito fácil para o Visitante. Nesse campo só será possível avançar para o próximo campo de o valor conferir com os constantes (estados do Brasil) no BD.
+
+#### ATÉ AQUI, ok com Projeto_GFauto.docx (Estamos eliminando o Projeto_GFauto.docx primeiro, depois passamos daqui para o README_geral.md
+
+-01 Informe o Estado: pode ser digitado (e um dispositivo autocompletar) as opções serão as siglas dos estados e/ou os nomes completos aí deixo por sua conta definir como. Lembrando que precisamos que seja muito fácil para o Visitante. Nesse campo só será possível avançar para o próximo campo se o valor conferir com os constantes (estados do Brasil) no BD.
 -02 Informe a Cidade: mais ou menos a mesma lógica (autocompletar) no entanto a cidade tem que corresponder ao estado solicitado, considerando que temos o mesmo nome de cidade replicado em mais de um Estado. Aqui também só será possível avançar para o próximo campo se o valor conferir com os constantes (cidades por estado no Brasil) no BD.
 -03 O que procura?: Então ao saber o Estado e a Cidade o sistema vai buscar a Especialidade que o Visitante está buscando na cidade dele. E isso abre uma discussão interessante que precisamos fazer que é o tipo de busca. Ex.: O Visitante pode informar(digitar com ajuda do autocompletar): farol quebrado, o que vamos entregar para ele? Auto Elétricas, Revendas de Auto Peças? Ele pode também digitar direto Auto Elétrica e isso ficará mais fácil. Aqui só será possível avançar para o próximo campo (botão) se o valor conseguir identificar uma “Especialidade” que confira com as constantes no BD. 
 Por isso precisamos:
