@@ -1,4 +1,4 @@
-// Este será eliminado
+// Este será eliminado ficará o README_geral.md
 #### Estamos eliminando o Projeto_GFauto.docx primeiro, depois passamos daqui para o README_geral.md
 
 

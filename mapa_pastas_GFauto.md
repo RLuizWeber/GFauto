@@ -1,4 +1,4 @@
-# 📂 Mapa de Pastas e Arquivos
+# 📂 Mapa de Pastas e Arquivos Projeto GFauto
 
 - 📁 unzipped_gfauto_zip/
 - │   ├── 📁 GFauto-/
