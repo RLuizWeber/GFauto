@@ -2,7 +2,7 @@ import './globals.css';
 import localFont from 'next/font/local';
 import Footer from "../components/global/Footer";
 
-// Configure a fonte Geist Sans - correto
+// Configure a fonte Geist Sans = gfauto/githubVercel/GFauto/app/layout.tsx
 const geistSans = localFont({
   src: [
     {
