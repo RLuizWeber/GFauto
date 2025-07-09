@@ -2,152 +2,132 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../../lib/prisma';
 
 export async function GET(request: NextRequest) {
+  const debugInfo: any = {
+    steps: [],
+    errors: [],
+    success: false,
+    timestamp: new Date().toISOString()
+  };
+
   try {
-    console.log('[TEST-DB] Iniciando teste de conexão...');
+    // PASSO 1: Verificar Variáveis de Ambiente
+    debugInfo.steps.push('STEP 1: ENV VARS');
+    console.log('=== STEP 1: ENV VARS ===');
     
-    // Teste 1: Conexão básica
-    const startTime = Date.now();
-    await prisma.$connect();
-    const connectTime = Date.now() - startTime;
-    console.log(`[TEST-DB] Conexão estabelecida em ${connectTime}ms`);
+    const databaseUrlExists = !!process.env.DATABASE_URL;
+    const nodeEnv = process.env.NODE_ENV;
+    const databaseUrlLength = process.env.DATABASE_URL?.length || 0;
     
-    // Teste 2: Query simples
-    const queryStartTime = Date.now();
-    const result = await prisma.$queryRaw`SELECT current_database(), current_user, version()`;
-    const queryTime = Date.now() - queryStartTime;
-    console.log(`[TEST-DB] Query executada em ${queryTime}ms`);
+    console.log('DATABASE_URL exists:', databaseUrlExists);
+    console.log('DATABASE_URL length:', databaseUrlLength);
+    console.log('NODE_ENV:', nodeEnv);
     
-    // Teste 3: Contar registros das tabelas principais
-    const counts = await Promise.all([
-      prisma.advertiser.count(),
-      prisma.anuncio.count(),
-      prisma.payment.count()
-    ]);
-    
-    // Teste 4: Verificar schema
-    const tables = await prisma.$queryRaw`
-      SELECT table_name 
-      FROM information_schema.tables 
-      WHERE table_schema = 'public' 
-      ORDER BY table_name
-    `;
-    
-    const response = {
-      status: 'success',
-      message: 'Conexão com banco de dados funcionando perfeitamente',
-      timestamp: new Date().toISOString(),
-      performance: {
-        connectionTime: `${connectTime}ms`,
-        queryTime: `${queryTime}ms`,
-        totalTime: `${Date.now() - startTime}ms`
-      },
-      database: {
-        info: result,
-        tables: tables,
-        counts: {
-          advertisers: counts[0],
-          anuncios: counts[1],
-          payments: counts[2]
-        }
-      },
-      environment: {
-        nodeEnv: process.env.NODE_ENV,
-        databaseUrl: process.env.DATABASE_URL ? 'Configurada ✅' : 'Não configurada ❌',
-        vercelRegion: process.env.VERCEL_REGION || 'Local'
-      }
+    debugInfo.step1 = {
+      databaseUrlExists,
+      databaseUrlLength,
+      nodeEnv,
+      status: databaseUrlExists ? 'SUCCESS' : 'ERROR'
     };
     
-    console.log('[TEST-DB] Teste concluído com sucesso:', response);
-    
-    return NextResponse.json(response, { status: 200 });
-    
-  } catch (error) {
-    console.error('[TEST-DB ERROR]', error);
-    
-    const errorResponse = {
-      status: 'error',
-      message: 'Erro na conexão com banco de dados',
-      timestamp: new Date().toISOString(),
-      error: {
-		name: error instanceof Error ? error.name : 'Unknown',
-		message: error instanceof Error ? error.message : String(error),
-		code: (error as any)?.code || 'UNKNOWN',
-		stack: process.env.NODE_ENV === 'development' && error instanceof Error ? error.stack : undefined
-},
-
-      environment: {
-        nodeEnv: process.env.NODE_ENV,
-        databaseUrl: process.env.DATABASE_URL ? 'Configurada ✅' : 'Não configurada ❌',
-        vercelRegion: process.env.VERCEL_REGION || 'Local'
-      }
-    };
-    
-    return NextResponse.json(errorResponse, { status: 500 });
-    
-  } finally {
-    await prisma.$disconnect();
-    console.log('[TEST-DB] Conexão encerrada');
-  }
-}
-
-// Método POST para testes mais avançados
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { testType = 'basic' } = body;
-    
-    console.log(`[TEST-DB] Executando teste: ${testType}`);
-    
-    await prisma.$connect();
-    
-    let testResult;
-    
-    switch (testType) {
-      case 'connection':
-        testResult = await prisma.$queryRaw`SELECT 1 as test`;
-        break;
-        
-      case 'tables':
-        testResult = await prisma.$queryRaw`
-          SELECT 
-            schemaname,
-            tablename,
-            tableowner
-          FROM pg_tables 
-          WHERE schemaname = 'public'
-        `;
-        break;
-        
-      case 'performance':
-        const start = Date.now();
-        await prisma.advertiser.findMany({ take: 1 });
-        await prisma.anuncio.findMany({ take: 1 });
-        await prisma.payment.findMany({ take: 1 });
-        const end = Date.now();
-        testResult = { executionTime: `${end - start}ms` };
-        break;
-        
-      default:
-        testResult = { message: 'Tipo de teste não reconhecido' };
+    if (!databaseUrlExists) {
+      debugInfo.errors.push('DATABASE_URL não encontrada nas variáveis de ambiente');
+      throw new Error('DATABASE_URL não configurada');
     }
+
+    // PASSO 2: Verificar Import do Prisma
+    debugInfo.steps.push('STEP 2: PRISMA IMPORT');
+    console.log('=== STEP 2: PRISMA IMPORT ===');
     
+    const prismaType = typeof prisma;
+    const hasPrismaConnect = typeof prisma.$connect === 'function';
+    
+    console.log('Prisma type:', prismaType);
+    console.log('Has $connect method:', hasPrismaConnect);
+    
+    debugInfo.step2 = {
+      prismaType,
+      hasPrismaConnect,
+      status: (prismaType === 'object' && hasPrismaConnect) ? 'SUCCESS' : 'ERROR'
+    };
+    
+    if (prismaType !== 'object' || !hasPrismaConnect) {
+      debugInfo.errors.push('Prisma não foi importado corretamente ou não tem métodos necessários');
+      throw new Error('Falha no import do Prisma');
+    }
+
+    // PASSO 3: Verificar Conexão
+    debugInfo.steps.push('STEP 3: CONNECTION');
+    console.log('=== STEP 3: CONNECTION ===');
+    
+    await prisma.$connect();
+    console.log('Connection successful');
+    
+    debugInfo.step3 = {
+      status: 'SUCCESS',
+      message: 'Conexão estabelecida com sucesso'
+    };
+
+    // PASSO 4: Verificar Query Simples
+    debugInfo.steps.push('STEP 4: SIMPLE QUERY');
+    console.log('=== STEP 4: SIMPLE QUERY ===');
+    
+    const result = await prisma.$queryRaw`SELECT 1 as test, NOW() as current_time`;
+    console.log('Query result:', result);
+    
+    debugInfo.step4 = {
+      status: 'SUCCESS',
+      result,
+      message: 'Query executada com sucesso'
+    };
+
+    // PASSO 5: Verificar Desconexão
+    debugInfo.steps.push('STEP 5: DISCONNECT');
+    console.log('=== STEP 5: DISCONNECT ===');
+    
+    await prisma.$disconnect();
+    console.log('Disconnection successful');
+    
+    debugInfo.step5 = {
+      status: 'SUCCESS',
+      message: 'Desconexão realizada com sucesso'
+    };
+
+    debugInfo.success = true;
+
     return NextResponse.json({
       status: 'success',
-      testType,
-      result: testResult,
+      message: 'Conexão com banco de dados bem-sucedida - Todos os passos executados',
+      database: 'conectado',
+      debug: debugInfo,
       timestamp: new Date().toISOString()
     });
-    
+
   } catch (error) {
-    console.error('[TEST-DB POST ERROR]', error);
+    console.error('Error in debug flow:', error);
     
+    const errorInfo = {
+      name: error instanceof Error ? error.name : 'Unknown',
+      message: error instanceof Error ? error.message : String(error),
+      stack: process.env.NODE_ENV === 'development' && error instanceof Error ? error.stack : undefined
+    };
+    
+    debugInfo.errors.push(errorInfo);
+
     return NextResponse.json({
-  status: 'error',
-  message: error instanceof Error ? error.message : String(error),
-  timestamp: new Date().toISOString()
-}, { status: 500 });
-    
-  } finally {
-    await prisma.$disconnect();
+      status: 'error',
+      message: 'Erro na conexão com banco de dados',
+      debug: debugInfo,
+      error: {
+        name: errorInfo.name,
+        message: errorInfo.message,
+        code: (error as any)?.code || 'UNKNOWN',
+        stack: errorInfo.stack
+      },
+      environment: {
+        nodeEnv: process.env.NODE_ENV,
+        databaseUrl: process.env.DATABASE_URL ? 'Configurada' : 'Não configurada'
+      },
+      timestamp: new Date().toISOString()
+    }, { status: 500 });
   }
 }
