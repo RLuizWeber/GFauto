@@ -144,10 +144,10 @@ export async function POST(request: NextRequest) {
     console.error('[TEST-DB POST ERROR]', error);
     
     return NextResponse.json({
-      status: 'error',
-      message: error.message,
-      timestamp: new Date().toISOString()
-    }, { status: 500 });
+  status: 'error',
+  message: error instanceof Error ? error.message : String(error),
+  timestamp: new Date().toISOString()
+}, { status: 500 });
     
   } finally {
     await prisma.$disconnect();
