@@ -71,11 +71,12 @@ export async function GET(request: NextRequest) {
       message: 'Erro na conexão com banco de dados',
       timestamp: new Date().toISOString(),
       error: {
-        name: error.name,
-        message: error.message,
-        code: error.code || 'UNKNOWN',
-        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
-      },
+		name: error instanceof Error ? error.name : 'Unknown',
+		message: error instanceof Error ? error.message : String(error),
+		code: (error as any)?.code || 'UNKNOWN',
+		stack: process.env.NODE_ENV === 'development' && error instanceof Error ? error.stack : undefined
+},
+
       environment: {
         nodeEnv: process.env.NODE_ENV,
         databaseUrl: process.env.DATABASE_URL ? 'Configurada ✅' : 'Não configurada ❌',
