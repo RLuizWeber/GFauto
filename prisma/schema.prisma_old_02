@@ -16,23 +16,13 @@ datasource db {
 }
 
 model Advertiser {
-  id           String    @id @default(cuid())
-  email        String    @unique
-  name         String?   // Nome do responsável
-  telefone     String?   // Celular de contato
-  empresa      String?   // Nome fantasia
-  razaoSocial  String?   // Razão social
-  cnpj         String?   // CNPJ da empresa
-  endereco     String?   // Endereço completo
-  cidade       String?   // Cidade
-  estado       String?   // Estado
-  cep          String?   // CEP
-  cargo        String?   // Cargo do responsável
-  senha        String?   // Hash da senha
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  payments     Payment[] // Relação com Pagamentos
-  anuncios     Anuncio[] // Relação com Anuncios
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  payments  Payment[] // Relação com Pagamentos
+  anuncios  Anuncio[] // Relação com Anuncios
 }
 
 // Enum para os status possíveis de um Pagamento, alinhados com o Mercado Pago e uso interno

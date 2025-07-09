@@ -1,310 +1,187 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
-import bcrypt from 'bcryptjs'
+import { NextRequest, NextResponse } from 'next/server';
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
 
-/**
- * API de Cadastro - Projeto GFauto
- * 
- * Funcionalidades:
- * - Cadastro completo de anunciantes (Cortesia e Premium)
- * - Validação rigorosa de todos os campos obrigatórios
- * - Validação de formatos brasileiros (CNPJ, CPF, CEP, celular)
- * - Hash seguro de senhas com bcrypt
- * - Verificação de e-mail único
- * - Preparação para envio de e-mail de verificação via Resend
- * 
- * Fluxo:
- * - Recebe dados do CadastroForm.tsx
- * - Valida todos os campos
- * - Cria registro no banco via Prisma
- * - Retorna ID para redirecionamento
- * 
- * Baseado em: README_fluxo_cadastro.md
- */
+const prisma = new PrismaClient();
 
-const prisma = new PrismaClient()
-
-interface CadastroData {
-  // Dados Básicos da Empresa (todos obrigatórios)
-  nomeRazaoSocial: string
-  nomeFantasia: string
-  cnpj: string
-  pessoaResponsavel: string
-  cpf: string
-  celContato: string
-  endereco: string
-  bairro: string
-  cep: string
-  cidade: string
-  estado: string
-  cargo: string
-  
-  // Dados de Acesso
-  email: string
-  senha: string
-  
-  // Plano escolhido
-  plano: string
-}
-
-/**
- * Valida formato de CNPJ (XX.XXX.XXX/XXXX-XX)
- */
+// Função para validar CNPJ .
 function validarCNPJ(cnpj: string): boolean {
-  const cnpjRegex = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/
-  return cnpjRegex.test(cnpj)
+  cnpj = cnpj.replace(/[^\d]/g, '');
+  
+  if (cnpj.length !== 14) return false;
+  if (/^(\d)\1{13}$/.test(cnpj)) return false;
+  
+  let soma = 0;
+  let peso = 2;
+  
+  for (let i = 11; i >= 0; i--) {
+    soma += parseInt(cnpj.charAt(i)) * peso;
+    peso = peso === 9 ? 2 : peso + 1;
+  }
+  
+  let resto = soma % 11;
+  let digito1 = resto < 2 ? 0 : 11 - resto;
+  
+  if (parseInt(cnpj.charAt(12)) !== digito1) return false;
+  
+  soma = 0;
+  peso = 2;
+  
+  for (let i = 12; i >= 0; i--) {
+    soma += parseInt(cnpj.charAt(i)) * peso;
+    peso = peso === 9 ? 2 : peso + 1;
+  }
+  
+  resto = soma % 11;
+  let digito2 = resto < 2 ? 0 : 11 - resto;
+  
+  return parseInt(cnpj.charAt(13)) === digito2;
 }
 
-/**
- * Valida formato de CPF (XXX.XXX.XXX-XX)
- */
+// Função para validar CPF
 function validarCPF(cpf: string): boolean {
-  const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/
-  return cpfRegex.test(cpf)
+  cpf = cpf.replace(/[^\d]/g, '');
+  
+  if (cpf.length !== 11) return false;
+  if (/^(\d)\1{10}$/.test(cpf)) return false;
+  
+  let soma = 0;
+  for (let i = 0; i < 9; i++) {
+    soma += parseInt(cpf.charAt(i)) * (10 - i);
+  }
+  
+  let resto = soma % 11;
+  let digito1 = resto < 2 ? 0 : 11 - resto;
+  
+  if (parseInt(cpf.charAt(9)) !== digito1) return false;
+  
+  soma = 0;
+  for (let i = 0; i < 10; i++) {
+    soma += parseInt(cpf.charAt(i)) * (11 - i);
+  }
+  
+  resto = soma % 11;
+  let digito2 = resto < 2 ? 0 : 11 - resto;
+  
+  return parseInt(cpf.charAt(10)) === digito2;
 }
 
-/**
- * Valida formato de CEP (XXXXX-XXX)
- */
-function validarCEP(cep: string): boolean {
-  const cepRegex = /^\d{5}-\d{3}$/
-  return cepRegex.test(cep)
-}
-
-/**
- * Valida formato de celular ((XX) XXXXX-XXXX)
- */
-function validarCelular(celular: string): boolean {
-  const celularRegex = /^\(\d{2}\) \d{5}-\d{4}$/
-  return celularRegex.test(celular)
-}
-
-/**
- * Valida formato de e-mail
- */
+// Função para validar e-mail
 function validarEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  return emailRegex.test(email)
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
 }
 
-/**
- * Valida força da senha conforme especificações:
- * - Mínimo 8 caracteres
- * - 1 maiúscula, 1 minúscula, 1 caractere especial [* # & $ ( ! ]
- */
+// Função para validar força da senha
 function validarSenha(senha: string): boolean {
-  if (senha.length < 8) return false
-  
-  const temMaiuscula = /[A-Z]/.test(senha)
-  const temMinuscula = /[a-z]/.test(senha)
-  const temEspecial = /[*#&$(!]/.test(senha)
-  
-  return temMaiuscula && temMinuscula && temEspecial
+  // Mínimo 8 caracteres, pelo menos 1 maiúscula, 1 minúscula, 1 número e 1 especial
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return regex.test(senha);
 }
 
-/**
- * Valida todos os campos obrigatórios
- */
-function validarCamposObrigatorios(data: CadastroData): string[] {
-  const erros: string[] = []
-
-  // Validar campos obrigatórios básicos
-  if (!data.nomeRazaoSocial?.trim()) erros.push('Nome/Razão Social é obrigatório')
-  if (!data.nomeFantasia?.trim()) erros.push('Nome de Fantasia é obrigatório')
-  if (!data.cnpj?.trim()) erros.push('CNPJ é obrigatório')
-  if (!data.pessoaResponsavel?.trim()) erros.push('Pessoa Responsável é obrigatória')
-  if (!data.cpf?.trim()) erros.push('CPF é obrigatório')
-  if (!data.celContato?.trim()) erros.push('Celular de Contato é obrigatório')
-  if (!data.endereco?.trim()) erros.push('Endereço da Empresa é obrigatório')
-  if (!data.bairro?.trim()) erros.push('Bairro é obrigatório')
-  if (!data.cep?.trim()) erros.push('CEP é obrigatório')
-  if (!data.cidade?.trim()) erros.push('Cidade é obrigatória')
-  if (!data.estado?.trim()) erros.push('Estado é obrigatório')
-  if (!data.cargo?.trim()) erros.push('Seu Cargo é obrigatório')
-  if (!data.email?.trim()) erros.push('E-mail é obrigatório')
-  if (!data.senha?.trim()) erros.push('Senha é obrigatória')
-
-  // Validar formatos específicos
-  if (data.cnpj && !validarCNPJ(data.cnpj)) {
-    erros.push('CNPJ deve estar no formato XX.XXX.XXX/XXXX-XX')
-  }
-  
-  if (data.cpf && !validarCPF(data.cpf)) {
-    erros.push('CPF deve estar no formato XXX.XXX.XXX-XX')
-  }
-  
-  if (data.cep && !validarCEP(data.cep)) {
-    erros.push('CEP deve estar no formato XXXXX-XXX')
-  }
-  
-  if (data.celContato && !validarCelular(data.celContato)) {
-    erros.push('Celular deve estar no formato (XX) XXXXX-XXXX')
-  }
-  
-  if (data.email && !validarEmail(data.email)) {
-    erros.push('E-mail inválido')
-  }
-  
-  if (data.senha && !validarSenha(data.senha)) {
-    erros.push('Senha deve ter 8+ caracteres, 1 maiúscula, 1 minúscula e 1 caractere especial (* # & $ ( ! )')
-  }
-
-  return erros
-}
-
-/**
- * Envia e-mail de verificação via Resend
- * TODO: Implementar integração com Resend.com
- */
-async function enviarEmailVerificacao(email: string, nome: string, advertiserId: string): Promise<boolean> {
-  try {
-    // TODO: Implementar envio via Resend
-    // const response = await fetch('/api/send-email', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //     to: email,
-    //     subject: 'Confirme seu e-mail - GFauto',
-    //     template: 'email-verificacao',
-    //     data: { nome, advertiserId }
-    //   })
-    // })
-    
-    console.log(`E-mail de verificação enviado para: ${email}`)
-    return true
-  } catch (error) {
-    console.error('Erro ao enviar e-mail de verificação:', error)
-    return false
-  }
-}
-
-/**
- * POST /api/cadastro
- * Cria novo cadastro de anunciante
- */
 export async function POST(request: NextRequest) {
   try {
-    const body: CadastroData = await request.json()
+    const body = await request.json();
     
-    console.log('Recebendo dados de cadastro:', {
-      email: body.email,
-      plano: body.plano,
-      cidade: body.cidade,
-      estado: body.estado
-    })
-
-    // Validar todos os campos obrigatórios
-    const errosValidacao = validarCamposObrigatorios(body)
-    if (errosValidacao.length > 0) {
-      return NextResponse.json(
-        { 
-          message: 'Dados inválidos',
-          errors: errosValidacao
-        },
-        { status: 400 }
-      )
+    // Validação dos campos obrigatórios
+    const camposObrigatorios = [
+      'email', 'senha', 'nomeResponsavel', 'cpf', 'celContato',
+      'razaoSocial', 'nomeFantasia', 'cnpj', 'endereco', 'bairro',
+      'cep', 'cidade', 'estado', 'cargo', 'plano'
+    ];
+    
+    for (const campo of camposObrigatorios) {
+      if (!body[campo] || body[campo].toString().trim() === '') {
+        return NextResponse.json(
+          { error: `Campo obrigatório: ${campo}` },
+          { status: 400 }
+        );
+      }
     }
-
+    
+    // Validações específicas
+    if (!validarEmail(body.email)) {
+      return NextResponse.json(
+        { error: 'E-mail inválido' },
+        { status: 400 }
+      );
+    }
+    
+    if (!validarSenha(body.senha)) {
+      return NextResponse.json(
+        { error: 'Senha deve ter pelo menos 8 caracteres, incluindo maiúscula, minúscula, número e caractere especial' },
+        { status: 400 }
+      );
+    }
+    
+    if (!validarCPF(body.cpf)) {
+      return NextResponse.json(
+        { error: 'CPF inválido' },
+        { status: 400 }
+      );
+    }
+    
+    if (!validarCNPJ(body.cnpj)) {
+      return NextResponse.json(
+        { error: 'CNPJ inválido' },
+        { status: 400 }
+      );
+    }
+    
     // Verificar se e-mail já existe
-    const existingUser = await prisma.advertiser.findUnique({
+    const emailExistente = await prisma.advertiser.findUnique({
       where: { email: body.email.toLowerCase().trim() }
-    })
-
-    if (existingUser) {
+    });
+    
+    if (emailExistente) {
       return NextResponse.json(
-        { message: 'Este e-mail já está cadastrado. Deseja fazer login?' },
-        { status: 400 }
-      )
+        { error: 'E-mail já cadastrado' },
+        { status: 409 }
+      );
     }
-
-    // Hash da senha com bcrypt
-    const saltRounds = 12 // Segurança alta
-    const hashedPassword = await bcrypt.hash(body.senha, saltRounds)
-
-    // Criar advertiser no banco de dados
-    const advertiser = await prisma.advertiser.create({
+    
+    // Hash da senha
+    const senhaHash = await bcrypt.hash(body.senha, 12);
+    
+    // Criar anunciante
+    const novoAnunciante = await prisma.advertiser.create({
       data: {
         // Dados básicos
         email: body.email.toLowerCase().trim(),
-        nome: body.nomeRazaoSocial.trim(),
-        empresa: body.nomeFantasia.trim(),
+        name: body.nomeResponsavel.trim(),
         telefone: body.celContato.trim(),
-        endereco: body.endereco.trim(),
+        empresa: body.nomeFantasia.trim(),
+        razaoSocial: body.razaoSocial.trim(),
+        cnpj: body.cnpj.replace(/[^\d]/g, ''),
+        endereco: `${body.endereco.trim()}, ${body.bairro.trim()}`,
         cidade: body.cidade.trim(),
         estado: body.estado.trim(),
-        cep: body.cep.trim(),
-        cnpj: body.cnpj.trim(),
-        pessoaResponsavel: body.pessoaResponsavel.trim(),
-        cpf: body.cpf.trim(),
-        celContato: body.celContato.trim(),
+        cep: body.cep.replace(/[^\d]/g, ''),
         cargo: body.cargo.trim(),
-        
-        // Dados de acesso
-        senha: hashedPassword,
-        
-        // Configurações
-        planoEscolhido: body.plano,
-        emailVerificado: false, // Será true após verificação
-        
-        // Timestamps automáticos via Prisma
-        createdAt: new Date(),
-        updatedAt: new Date()
+        senha: senhaHash
       }
-    })
-
-    console.log('Advertiser criado com sucesso:', {
-      id: advertiser.id,
-      email: advertiser.email,
-      plano: advertiser.planoEscolhido
-    })
-
-    // Enviar e-mail de verificação
-    const emailEnviado = await enviarEmailVerificacao(
-      advertiser.email,
-      advertiser.nome || advertiser.empresa || 'Anunciante',
-      advertiser.id
-    )
-
-    if (!emailEnviado) {
-      console.warn('Falha no envio do e-mail de verificação para:', advertiser.email)
-    }
-
-    // Retornar sucesso com ID para redirecionamento
-    return NextResponse.json({
-      id: advertiser.id,
-      message: 'Cadastro criado com sucesso',
-      emailVerificacaoEnviado: emailEnviado,
-      proximoPasso: body.plano === 'premium' ? 'pagamento' : 'criar-anuncio'
-    }, { status: 201 })
-
-  } catch (error) {
-    console.error('Erro ao criar cadastro:', error)
+    });
     
-    // Verificar se é erro de constraint do Prisma
-    if (error instanceof Error && error.message.includes('Unique constraint')) {
-      return NextResponse.json(
-        { message: 'E-mail já cadastrado' },
-        { status: 400 }
-      )
-    }
+    // Determinar próximo passo baseado no plano
+    const proximoPasso = body.plano === 'premium' ? 'pagamento' : 'criar-anuncio';
+    
+    // Log de segurança
+    console.log(`[CADASTRO] Novo anunciante criado: ${novoAnunciante.id} - ${body.email} - Plano: ${body.plano}`);
+    
+    return NextResponse.json({
+      id: novoAnunciante.id,
+      message: 'Cadastro criado com sucesso',
+      proximoPasso: proximoPasso
+    }, { status: 201 });
+    
+  } catch (error) {
+    console.error('[CADASTRO ERROR]', error);
     
     return NextResponse.json(
-      { message: 'Erro interno do servidor. Tente novamente.' },
+      { error: 'Erro interno do servidor' },
       { status: 500 }
-    )
+    );
   } finally {
-    // Fechar conexão Prisma
-    await prisma.$disconnect()
+    await prisma.$disconnect();
   }
-}
-
-/**
- * GET /api/cadastro
- * Endpoint para verificar status ou buscar dados (futuro)
- */
-export async function GET(request: NextRequest) {
-  return NextResponse.json(
-    { message: 'Endpoint de cadastro ativo' },
-    { status: 200 }
-  )
 }
