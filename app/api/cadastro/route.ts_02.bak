@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '../../../lib/prisma';
+import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+
+const prisma = new PrismaClient();
 
 // Função para validar CNPJ .
 function validarCNPJ(cnpj: string): boolean {
@@ -144,30 +146,19 @@ export async function POST(request: NextRequest) {
     // Criar anunciante
     const novoAnunciante = await prisma.advertiser.create({
       data: {
-        // === DADOS BÁSICOS (CADASTRO SIMPLES) ===
+        // Dados básicos
         email: body.email.toLowerCase().trim(),
-        nomeResponsavel: body.nomeResponsavel.trim(),
-        cpf: body.cpf.replace(/[^\d]/g, ''),
-        celContato: body.celContato.trim(),
-        senha: senhaHash,
-        planoEscolhido: body.plano,
-        
-        // === DADOS DA EMPRESA (CONCLUSÃO DO CADASTRO) ===
+        name: body.nomeResponsavel.trim(),
+        telefone: body.celContato.trim(),
+        empresa: body.nomeFantasia.trim(),
         razaoSocial: body.razaoSocial.trim(),
-        nomeFantasia: body.nomeFantasia.trim(),
         cnpj: body.cnpj.replace(/[^\d]/g, ''),
-        cargo: body.cargo.trim(),
-        
-        // === ENDEREÇO DA EMPRESA ===
-        enderecoEmpresa: `${body.endereco.trim()}, ${body.bairro.trim()}`,
-        bairro: body.bairro.trim(),
+        endereco: `${body.endereco.trim()}, ${body.bairro.trim()}`,
         cidade: body.cidade.trim(),
         estado: body.estado.trim(),
         cep: body.cep.replace(/[^\d]/g, ''),
-        
-        // === CONTROLE DO SISTEMA ===
-        emailVerificado: false,
-        statusCadastro: "cadastro_simples"
+        cargo: body.cargo.trim(),
+        senha: senhaHash
       }
     });
     
@@ -190,5 +181,7 @@ export async function POST(request: NextRequest) {
       { error: 'Erro interno do servidor' },
       { status: 500 }
     );
+  } finally {
+    await prisma.$disconnect();
   }
 }
