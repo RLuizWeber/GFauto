@@ -16,46 +16,23 @@ datasource db {
 }
 
 model Advertiser {
-  id                String    @id @default(cuid())
-  
-  // === DADOS BÁSICOS (CADASTRO SIMPLES) ===
-  email             String    @unique
-  nomeResponsavel   String    // Nome do responsável pelo anúncio (era 'name')
-  cpf               String    // CPF do responsável (NOVO)
-  celContato        String    // Celular principal de contato (era 'telefone')
-  senha             String    // Hash bcrypt da senha
-  planoEscolhido    String    // 'cortesia', 'premium_1ano', 'premium_2anos', 'premium_3anos' (NOVO)
-  
-  // === DADOS DA EMPRESA (CONCLUSÃO DO CADASTRO) ===
-  razaoSocial       String?   // Razão social (MANTIDO)
-  nomeFantasia      String?   // Nome comercial da empresa (era 'empresa')
-  cnpj              String?   // CNPJ da empresa (MANTIDO)
-  cargo             String?   // Cargo do responsável (MANTIDO)
-  
-  // === ENDEREÇO DA EMPRESA ===
-  enderecoEmpresa   String?   // Rua, número e complemento (era 'endereco')
-  bairro            String?   // Bairro da empresa (NOVO)
-  cep               String?   // CEP (MANTIDO)
-  cidade            String?   // Cidade (MANTIDO)
-  estado            String?   // Estado (MANTIDO)
-  
-  // === DADOS DO ANÚNCIO ===
-  especialidade     String?   // Especialidade da empresa (NOVO)
-  slogan            String?   // Slogan da empresa (NOVO)
-  descricao         String?   // Descrição dos serviços (NOVO)
-  celContato2       String?   // Segundo celular (opcional) (NOVO)
-  imagemUrl         String?   // URL da imagem da empresa (NOVO)
-  nomeParaAnuncio   String?   // 'razaoSocial' ou 'nomeFantasia' - escolha do usuário (NOVO)
-  
-  // === CONTROLE DO SISTEMA ===
-  emailVerificado   Boolean   @default(false) // (NOVO)
-  statusCadastro    String    @default("cadastro_simples") // (NOVO)
-  createdAt         DateTime  @default(now()) // (MANTIDO)
-  updatedAt         DateTime  @updatedAt // (MANTIDO)
-  
-  // === RELACIONAMENTOS (MANTIDOS) ===
-  payments          Payment[] // Relação com Pagamentos
-  anuncios          Anuncio[] // Relação com Anuncios
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String?   // Nome do responsável
+  telefone     String?   // Celular de contato
+  empresa      String?   // Nome fantasia
+  razaoSocial  String?   // Razão social
+  cnpj         String?   // CNPJ da empresa
+  endereco     String?   // Endereço completo
+  cidade       String?   // Cidade
+  estado       String?   // Estado
+  cep          String?   // CEP
+  cargo        String?   // Cargo do responsável
+  senha        String?   // Hash da senha
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  payments     Payment[] // Relação com Pagamentos
+  anuncios     Anuncio[] // Relação com Anuncios
 }
 
 // Enum para os status possíveis de um Pagamento, alinhados com o Mercado Pago e uso interno
