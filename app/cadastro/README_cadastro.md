@@ -1,3 +1,4 @@
+// Local desse arquivo: GFauto/app/cadastro
 # README_fluxo_cadastro.md (ok)
 
 **Módulo de Cadastro e Autenticação - Projeto GFauto**  

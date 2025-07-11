@@ -3,36 +3,30 @@
 ## 📋 INFORMAÇÕES GERAIS
 
 ### **Provedor:** Neon PostgreSQL
+- **Projeto:** neon-teal-rlw
 - **Host:** ep-black-darkness-aciwknn2-pooler.sa-east-1.aws.neon.tech
 - **Database:** neondb
 - **User:** neondb_owner
 - **Região:** sa-east-1 (São Paulo)
 - **SSL:** Obrigatório (sslmode=require)
+- **Status:** ✅ **FUNCIONANDO** - Conexão estabelecida com sucesso
 
 ### **Strings de Conexão:**
 
-#### **Para Prisma (Produção):**
+#### **Para Prisma (Produção/Aplicação):**
 ```
-- **POSTGRES_URL**
-URL ( x ): jdbc:postgresql://ep-black-darkness-aciwknn2-pooler.sa-east-1.aws.neon.tech:5432/neondb
-
-Manus                                 - postgresql://neondb_owner:[SENHA] @ep-black-darkness-aciwknn2-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
-Minha anotação no Excel   - postgres://neondb_owner:[SENHA]    @ep-black-darkness-aciwknn2-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require
-Vercel                                 - postgres://neondb_owner:[SENHA]    @ep-black-darkness-aciwknn2-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require
-Usuário: neondb_owner | Propriedades do driver:  sslmode: require
-
+postgresql://neondb_owner:[SENHA]@ep-black-darkness-aciwknn2-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require
 ```
 
-- **DATABASE_URL**
-URL ( x ): jdbc:postgresql://ep-black-darkness-aciwknn2-pooler.sa-east-1.aws.neon.tech:5432/neondb
-
-Minha anotação no Excel   - postgresql://neondb_owner:[SENHA]@ep-black-darkness-aciwknn2-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require
-Vercel                                 - postgresql://neondb_owner:[SENHA]@ep-black-darkness-aciwknn2-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require
-Usuário: neondb_owner | Propriedades do driver:  sslmode: require
-#### **Para DBeaver (Desenvolvimento):**
+#### **Para DBeaver (Desenvolvimento/Administração):**
 ```
 jdbc:postgresql://ep-black-darkness-aciwknn2-pooler.sa-east-1.aws.neon.tech:5432/neondb
 ```
+
+#### **Variações de String (Referência):**
+- **Neon Console (Completa):**	`postgresql://neondb_owner:[SENHA]@ep-black-darkness-aciwknn2-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require`
+- **Vercel DATABASE_URL:**		`postgresql://neondb_owner:[SENHA]@ep-black-darkness-aciwknn2-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require`
+- **Vercel POSTGRES_URL:**		`postgres://neondb_owner:[SENHA]@ep-black-darkness-aciwknn2-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require`
 
 ## 🔧 CONFIGURAÇÃO ATUAL
 
@@ -44,35 +38,65 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+generator client {
+  provider = "prisma-client-js"
+}
 ```
 
 #### **2. `lib/prisma.ts`**
-- Configuração centralizada do PrismaClient
-- Instância global para evitar múltiplas conexões
-- **CORREÇÃO APLICADA:** Remover condição de "produção" que impede instância global (não removida ainda)
+```typescript
+import { PrismaClient } from '@prisma/client'
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined
+}
+
+const prisma = globalForPrisma.prisma ?? new PrismaClient()
+
+// CORREÇÃO APLICADA: Instância global para todos os ambientes
+globalForPrisma.prisma = prisma
+
+export { prisma }
+```
 
 #### **3. `next.config.js`**
-- **CORREÇÃO APLICADA:** Adicionado `serverComponentsExternalPackages: ['@prisma/client']`
+```javascript
+const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+  experimental: {
+    turboDeps: true,
+  },
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
+  distDir: '.next',
+  // CORREÇÃO APLICADA: Suporte ao Prisma em produção
+  serverComponentsExternalPackages: ['@prisma/client'],
+}
 
-## 🚨 PROBLEMAS IDENTIFICADOS E SOLUÇÕES
+module.exports = nextConfig
+```
+
+## 🚨 PROBLEMAS RESOLVIDOS
 
 ### **PROBLEMA PRINCIPAL: DATABASE_URL não encontrada na Vercel**
 
-#### **Causa Raiz:**
-- Variável DATABASE_URL configurada no ambiente do Team
-- Projeto GFauto executa no ambiente específico do projeto
-- Ambientes são isolados
+#### **Causa Raiz Identificada:**
+- ✅ Variável DATABASE_URL estava configurada apenas no ambiente do Team
+- ✅ Projeto GFauto executa no ambiente específico do projeto
+- ✅ Ambientes são isolados na Vercel
 
 #### **Solução Aplicada:**
-1. Identificar que DATABASE_URL deve ser criada no ambiente específico do projeto GFauto
-2. Usar valor da POSTGRES_URL existente no projeto
-3. Configurar para Production, Preview e Development
+1. ✅ **Criada DATABASE_URL** no ambiente específico do projeto GFauto
+2. ✅ **Usado valor correto** da string de conexão do Neon
+3. ✅ **Configurada para** Production, Preview e Development
+4. ✅ **Redeploy realizado** para aplicar mudanças
 
 ### **Configurações da Vercel:**
 
-#### **Environment Variables (Projeto GFauto):**
-- **POSTGRES_URL:** ✅ Existente
-- **DATABASE_URL:** ❌ Ausente (PROBLEMA IDENTIFICADO)
+#### **Environment Variables (Projeto GFauto) - ATUALIZADAS:**
+- **DATABASE_URL:** ✅ **CRIADA E FUNCIONANDO** (147 caracteres)
+- **POSTGRES_URL:** ✅ Existente (mas com senha diferente)
 - **Múltiplas POSTGRES_*:** ✅ Configuradas
 
 #### **Build Configuration:**
@@ -87,9 +111,19 @@ datasource db {
 
 ## 📊 ESTRUTURA DO BANCO
 
-### **Tabelas Principais:**
+### **Tabelas Existentes (Verificadas via DBeaver):**
+1. **_prisma_migrations** - Controle de migrações do Prisma
+2. **Payment** - Pagamentos
+3. **Anuncio** - Anúncios
+4. **estados** - Estados brasileiros
+5. **cidades** - Cidades brasileiras
+6. **especialidades** - Especialidades profissionais
+7. **rotacao_premium** - Rotação de anúncios premium
+8. **especialidades_disponiveis** - Especialidades disponíveis
+9. **imagens_anuncio** - Imagens dos anúncios
+10. **Advertiser** - Anunciantes
 
-#### **User (Usuários)**
+### **Tabela User (Planejada/Schema):**
 ```sql
 - id: String (Primary Key)
 - email: String (Unique)
@@ -111,41 +145,102 @@ datasource db {
 ## 🔍 TESTES E VALIDAÇÃO
 
 ### **API de Teste:** `/api/test-db`
-- **Função:** Validar conexão com banco
-- **Status Atual:** Implementada com debug completo
-- **Fluxo de Verificação:**
-  1. Verificar variáveis de ambiente
-  2. Verificar import do Prisma
-  3. Estabelecer conexão
-  4. Executar query de teste
-  5. Desconectar
+- **URL:** `https://gfauto.vercel.app/api/test-db`
+- **Status:** ✅ **FUNCIONANDO PERFEITAMENTE**
+- **Última Verificação:** 10/07/2025
 
-### **Logs de Debug Implementados:**
-- Verificação de DATABASE_URL
-- Validação do PrismaClient
-- Teste de conectividade
-- Execução de queries
+#### **Fluxo de Verificação Implementado:**
+1. ✅ **STEP 1: ENV VARS** - Verificar se DATABASE_URL existe (147 chars)
+2. ✅ **STEP 2: PRISMA IMPORT** - Validar import do PrismaClient
+3. ✅ **STEP 3: CONNECTION** - Estabelecer conexão com banco
+4. ✅ **STEP 4: SIMPLE QUERY** - Executar query de teste
+5. ✅ **STEP 5: DISCONNECT** - Desconectar do banco
+
+#### **Resposta de Sucesso:**
+```json
+{
+  "status": "success",
+  "message": "Conexão com banco de dados bem-sucedida - Todos os passos executados",
+  "database": "conectado",
+  "debug": {
+    "step1": {
+      "databaseUrlExists": true,
+      "databaseUrlLength": 147,
+      "nodeEnv": "production",
+      "status": "SUCCESS"
+    },
+    "step2": {
+      "prismaType": "object",
+      "hasPrismaConnect": true,
+      "status": "SUCCESS"
+    }
+    // ... demais steps com SUCCESS
+  }
+}
+```
 
 ## 📝 PRÓXIMOS PASSOS
 
-1. **Resolver configuração DATABASE_URL na Vercel**
-2. **Testar conexão via API test-db**
-3. **Implementar APIs de cadastro e autenticação**
-4. **Configurar migrações do Prisma**
-5. **Documentar procedures e queries específicas**
+1. ✅ ~~Resolver configuração DATABASE_URL na Vercel~~ **CONCLUÍDO**
+2. ✅ ~~Testar conexão via API test-db~~ **CONCLUÍDO**
+3. 🔄 **Implementar APIs de cadastro e autenticação**
+4. 🔄 **Configurar migrações do Prisma para tabela User**
+5. 🔄 **Documentar procedures e queries específicas**
+6. 🔄 **Remover código de debug da API test-db (opcional)**
 
 ## 🔐 SEGURANÇA
 
 ### **Configurações SSL:**
-- **sslmode=require:** Obrigatório
-- **channel_binding=require:** Proteção adicional contra man-in-the-middle
+- **sslmode=require:** Obrigatório para todas as conexões
+- **channel_binding=require:** Proteção adicional contra man-in-the-middle (opcional)
 
 ### **Credenciais:**
-- Senhas armazenadas com hash bcrypt
-- Variáveis de ambiente protegidas
-- Conexões sempre via SSL
+- ✅ Senhas armazenadas com hash bcrypt (planejado)
+- ✅ Variáveis de ambiente protegidas na Vercel
+- ✅ Conexões sempre via SSL/TLS
+- ✅ Acesso restrito por usuário e senha
+
+### **Ambientes:**
+- **Desenvolvimento:** DBeaver com acesso direto
+- **Produção:** Vercel com variáveis de ambiente seguras
+- **Backup:** Gerenciado automaticamente pelo Neon
+
+## 🛠️ COMANDOS ÚTEIS
+
+### **Prisma:**
+```bash
+# Gerar cliente Prisma
+npx prisma generate
+
+# Aplicar migrações
+npx prisma migrate dev
+
+# Visualizar banco
+npx prisma studio
+
+# Reset do banco (cuidado!)
+npx prisma migrate reset
+```
+
+### **Conexão via psql:**
+```bash
+psql "postgresql://neondb_owner:[SENHA]@ep-black-darkness-aciwknn2-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require"
+```
+
+## 📞 SUPORTE E CONTATOS
+
+### **Neon Console:**
+- **URL:** `https://console.neon.tech`
+- **Projeto:** neon-teal-rlw
+- **Plano:** Free Tier
+
+### **Vercel Dashboard:**
+- **URL:** `https://vercel.com/robinson-luiz-webers-projects/gfauto`
+- **Environment Variables:** Settings → Environment Variables
 
 ---
-**Última Atualização:** 09/07/2025
-**Status:** Em configuração - Problema de DATABASE_URL identificado
+**Última Atualização:** 10/07/2025  
+**Status:** ✅ **FUNCIONANDO** - Conexão estabelecida e testada com sucesso  
+**Responsável:** Equipe de Desenvolvimento GFauto  
+**Próxima Revisão:** Após implementação das APIs de cadastro
 
