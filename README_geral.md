@@ -143,16 +143,16 @@ O projeto segue uma estrutura modular organizada por páginas seguindo App Route
 | `├── MEMORIADESESSAO.md` 	| 
 | `├── README_geral.md` 				| 
 
-### **📁 MÓDULOS/"FLUXOS"** (a verificar, ver o que pode aproveitar e depois excluir.
+### **📁 MÓDULOS/"FLUXOS"** (a verificar, ver o que pode aproveitar e depois excluir. - Tem módulos (terão que migrar) e que ainda estão em GFauto/ e gfauto-repo e os definitivos estão em GFauto/app/
 | **Existente** | **Ideal + Comentários** |
 |---------------|-------------------------|
 | `GFauto/` 										| 
 | `├── app/`
-	| `├── fluxo_app/` 						| (conferir se não precisa mudar de nome: retirar o fluxo_)
+| `├── fluxo_app/` 			| (conferir se não precisa mudar de nome: retirar o fluxo_)
 	| `├── anunciante/` 					| 
 	| `├── resultados/` 					| 
 	| `├── pagtos/` 							| 
-	| `├── fluxo_painel_admin/` 		| 
+	| `├── fluxo_painel_admin/` 		| acho que está em gfauto-repo (conferir)
 	| `├── planos/` 							| 
 	| `├── visitante/` 						|
 
@@ -255,6 +255,7 @@ Objetivo: é que o Desenvolvedor perca o menor tempo possível buscando o que pr
 - **gfauto-repo/mapa_pastas_gfauto_repo.md** - estrutura de pastas do GFauto
 - **GFauto/plano_maior.md** - estrutura de pastas do GFauto
 - **GFauto/README_next.js.md** - estrutura oficial do GFauto
+- **PostGres_DB.md** - Configuração Banco de Dados, executa no ambiente específico
 
 ### **📋 Padrão de Nomenclatura:**
 

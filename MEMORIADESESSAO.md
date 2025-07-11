@@ -397,6 +397,123 @@ Se apontar para algo importante → precisamos analisar melhor
 Se apontar para outro repositório que não conhecemos → devemos investigar mais
 
 Só uma observação: Esse tipo de decisão apressada é que fez você criar um monte de bagunça. Por isso peço que você não tome decisões precipitadas. As vezes pareço estar sendo chato, mas é apenas "cuidadoso". Precisamos evitar que no futuro estejamos fazendo esse tipo de retrabalho que estamos realizando agora
+
+# ANOTAÇÕES DA SESSÃO - 09/07/2025
+
+## 🎯 PROBLEMA PRINCIPAL IDENTIFICADO
+
+### **Erro de Conexão com Banco de Dados**
+- **Sintoma:** API test-db retornando "DATABASE_URL não configurada"
+- **Causa Raiz:** DATABASE_URL configurada no ambiente do Team, mas projeto executa no ambiente específico
+- **Status:** IDENTIFICADO, aguardando correção
+
+## 🔍 INVESTIGAÇÃO REALIZADA
+
+### **Arquivos Analisados:**
+1. **`GFauto/lib/prisma.ts`** - Corrigido (removida condição de produção)
+2. **`GFauto/app/api/test-db/route.ts`** - Implementado debug completo
+3. **`GFauto/next.config.js`** - Adicionado serverComponentsExternalPackages
+4. **`GFauto/prisma/schema.prisma`** - Verificado (correto)
+
+### **Configurações Verificadas:**
+- **package.json:** Scripts postinstall e prebuild corretos
+- **vercel.json:** Build command correto
+- **Variáveis Vercel:** Identificado problema de escopo
+
+## 🚨 DESCOBERTA CRUCIAL
+
+### **Ambientes da Vercel:**
+- **Team Environment:** Tem DATABASE_URL configurada
+- **Project Environment:** NÃO tem DATABASE_URL (só POSTGRES_*)
+- **Problema:** Projeto executa no ambiente específico, não no team
+
+### **Solução Identificada:**
+1. Criar DATABASE_URL no ambiente específico do projeto GFauto
+2. Usar valor da POSTGRES_URL existente
+3. Configurar para Production, Preview, Development
+
+## 📋 CORREÇÕES APLICADAS
+
+### **1. `lib/prisma.ts` - Linha 8:**
+```typescript
+// ANTES (problemático):
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+
+// DEPOIS (correto):
+globalForPrisma.prisma = prisma;
+```
+
+### **2. `next.config.js` - Adicionado:**
+```javascript
+serverComponentsExternalPackages: ['@prisma/client'],
+```
+
+### **3. `test-db/route.ts` - Implementado debug completo:**
+- Verificação de variáveis de ambiente
+- Validação do import do Prisma
+- Teste de conexão e queries
+- Logs detalhados para diagnóstico
+
+## 🔧 COMANDOS EXECUTADOS
+
+```bash
+npx prisma generate  # Executado com sucesso
+git add next.config.js
+git commit -m "Fix: Adiciona serverComponentsExternalPackages para Prisma"
+git push origin main  # Deploy Ready
+```
+
+## 📊 RESULTADO DO DEBUG
+
+### **API test-db Response:**
+```json
+{
+  "status": "error",
+  "debug": {
+    "step1": {
+      "databaseUrlExists": false,  // PROBLEMA CONFIRMADO
+      "databaseUrlLength": 0,
+      "nodeEnv": "production",
+      "status": "ERROR"
+    }
+  }
+}
+```
+
+## 🎯 PRÓXIMOS PASSOS (PARA AMANHÃ)
+
+### **AÇÃO IMEDIATA:**
+1. **Acessar ambiente específico do projeto GFauto na Vercel**
+2. **Criar variável DATABASE_URL** usando valor da POSTGRES_URL
+3. **Testar API test-db** para confirmar resolução
+4. **Continuar implementação das funcionalidades**
+
+### **ARQUIVOS PARA INCLUIR NO MEMORIADESESSAO.md:**
+- Esta anotação completa
+- Documentação do banco atualizada
+- Contexto do problema de ambientes da Vercel
+
+## 💡 LIÇÕES APRENDIDAS
+
+1. **Ambientes da Vercel são isolados** (Team vs Project)
+2. **DATABASE_URL deve estar no ambiente específico do projeto**
+3. **Debug sistemático é essencial** para identificar problemas
+4. **Configuração do next.config.js** pode afetar imports do Prisma
+
+## 📝 OBSERVAÇÕES IMPORTANTES
+
+- **Weber expressou frustração** com a demora na resolução
+- **Problema era de configuração**, não de código
+- **Solução identificada** mas não aplicada ainda
+- **Documentação atualizada** para facilitar continuidade
+
+---
+**Data:** 09/07/2025
+**Status:** Problema identificado, aguardando aplicação da solução
+**Próxima Sessão:** Aplicar correção da DATABASE_URL e continuar desenvolvimento
+
+
+
 ===================================
 
 Próximos passos: (Ver GFauto/app/cadastro/README_cadastro.md)

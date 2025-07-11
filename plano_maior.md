@@ -547,8 +547,9 @@ AÇÃO: Comparar e mesclar
 - **gfauto-repo/mapa_pastas_gfauto_repo.md** - estrutura de pastas do GFauto
 - **GFauto/plano_maior.md** - estrutura de pastas do GFauto
 - **GFauto/README_next.js.md** - estrutura oficial do GFauto
+- **PostGres_DB.md** - Configuração Banco de Dados, executa no ambiente específico
 
-### **READMEs Específicos por Fluxo**
+### **READMEs Específicos por Módulo** - Tem módulos (terão que migrar) e que ainda estão em GFauto/ e gfauto-repo e os definitivos estão em GFauto/app/
 - **README_fluxo_app.md** - Página principal
 - **README_visitante.md** - Experiência do usuário
 - **README_resultados.md** - Página de resultados
