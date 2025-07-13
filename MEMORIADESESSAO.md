@@ -48,7 +48,8 @@ SEMPRE:
 • Dar orientações corretas e que não induzam ao erro. Tipo: Envia uma série de orientações mas só depois de todas vem a mensagem "mas antes de seguir para a segunda me informe a resposta". Então o Weber começou pela primeira e já executou todas e só viu a mensagem no final gerando problemas.
 • Ler e interpretar correta e completamente o contexto antes de responder
 • "Ler" é ler de verdade, prestar atenção, compreender, saber o que leu e sair praticando. Não faz sentido o Weber ficar um tempão de horas por dia fazendo o Desenvolvedor se recompor.
-• O erro não é uma opção.
+• O erro não é uma opção
+- Nomes de tabelas, campos, etc.. devem seguir o padrão Língua Brasileira.para qualqer nova implementação a partir de 12/07/2025. Os anteriores podem permanecer até resolvermos manter.
 
 NUNCA:
 • Assumir que arquivos existem sem verificar
@@ -372,7 +373,7 @@ Definido: Mensagem de Feedback Dinâmica e Contextual (aparece após digitação
 Ponto 6: População Inicial do Banco de Dados:
 Definido: População com Dados Essenciais para Testes (Estados, Cidades, Especialidades, Termos de Mapeamento - definitivos) e Anúncios de Teste (provisórios), utilizando scripts de seed do Prisma e com limpeza controlada para produção.
 3. Tentativa de Acesso e Verificação do Banco de Dados (BD):
-Objetivo: Verificar se já existem dados de Advertiser, Estado, Cidade, Especialidade no BD do fluxo_visitante.
+Objetivo: Verificar se já existem dadosdigitar de Advertiser, Estado, Cidade, Especialidade no BD do fluxo_visitante.
 Ferramenta Escolhida: DBeaver (instalação concluída e conectado).
 
 🎯 04/07/2025 LIÇÃO MUITO IMPORTANTE: ===============
@@ -514,11 +515,385 @@ git push origin main  # Deploy Ready
 
 
 
+# ANOTAÇÕES DA SESSÃO - 11/07/2025
+
+## 🎯 PROBLEMA PRINCIPAL RESOLVIDO
+
+### **Migração da Tabela Advertiser - SUCESSO TOTAL**
+- **Problema:** Tabela Advertiser com apenas 5 campos (estrutura antiga)
+- **Causa Raiz:** Migração nunca foi gerada para a nova estrutura
+- **Status:** ✅ **RESOLVIDO COMPLETAMENTE**
+
+## 🔍 INVESTIGAÇÃO E DESCOBERTAS
+
+### **Processo de Diagnóstico:**
+1. **Verificação inicial:** Database Explorer mostrava apenas 5 colunas
+2. **Teste de conectividade:** API test-db funcionando perfeitamente
+3. **Análise de logs:** Deploy falhando por campos inexistentes
+4. **Investigação no DBeaver:** Confirmação de que ambas conexões apontam para o mesmo banco
+5. **Descoberta crucial:** Migração nunca foi gerada
+
+### **Arquivos Corrigidos:**
+1. **`app/api/cadastro/route.ts`** - Campos renomeados para nova estrutura
+2. **`vercel.json`** - Adicionado `prisma migrate deploy` no buildCommand
+3. **`prisma/migrations/`** - Gerada migração `20250711220033_update_advertiser_table_complete_structure`
+
+## 🚨 CAUSA RAIZ IDENTIFICADA
+
+### **Problema de Migração:**
+- **Schema atualizado:** ✅ Localmente (11/07/2025 16:14)
+- **Migração gerada:** ❌ **NUNCA FOI GERADA**
+- **Resultado:** Vercel não conseguia aplicar migração inexistente
+
+### **Campos Incorretos no route.ts:**
+```typescript
+// ❌ ANTES (causando erro):
+name: body.nomeResponsavel.trim(),
+telefone: body.celContato.trim(),
+empresa: body.nomeFantasia.trim(),
+endereco: `${body.endereco.trim()}, ${body.bairro.trim()}`,
+
+// ✅ DEPOIS (correto):
+nomeResponsavel: body.nomeResponsavel.trim(),
+celContato: body.celContato.trim(),
+nomeFantasia: body.nomeFantasia.trim(),
+enderecoEmpresa: `${body.endereco.trim()}, ${body.bairro.trim()}`,
+```
+
+## 🔧 CORREÇÕES APLICADAS
+
+### **1. Geração da Migração:**
+```bash
+npx prisma migrate dev --name "update_advertiser_table_complete_structure"
+```
+**Resultado:** Migração `20250711220033` criada e aplicada localmente
+
+### **2. Atualização do vercel.json:**
+```json
+{
+  "buildCommand": "prisma migrate deploy && prisma generate && next build",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "outputDirectory": ".next"
+}
+```
+
+### **3. Correção do route.ts:**
+- Import do Prisma mantido como original: `import { PrismaClient } from '@prisma/client'`
+- Campos renomeados para nova estrutura
+- Disconnect restaurado no finally
+
+## 📊 RESULTADO FINAL
+
+### **Tabela Advertiser - Estrutura Completa (26 Campos):**
+```sql
+-- DADOS BÁSICOS (CADASTRO SIMPLES)
+id, email, nomeResponsavel, cpf, celContato, senha, planoEscolhido
+
+-- DADOS DA EMPRESA (CONCLUSÃO DO CADASTRO)
+razaoSocial, nomeFantasia, cnpj, cargo
+
+-- ENDEREÇO DA EMPRESA
+enderecoEmpresa, bairro, cep, cidade, estado
+
+-- DADOS DO ANÚNCIO
+especialidade, slogan, descricao, celContato2, imagemUrl, nomeParaAnuncio
+
+-- CONTROLE DO SISTEMA
+emailVerificado, statusCadastro, createdAt, updatedAt
+```
+
+### **Confirmações de Sucesso:**
+- ✅ **Database Explorer:** 26 colunas exibidas
+- ✅ **DBeaver:** Estrutura completa confirmada
+- ✅ **API test-db:** Todos os 5 steps executados
+- ✅ **Migrações Prisma:** 7 registros (incluindo nova migração)
+
+## 💡 LIÇÕES APRENDIDAS
+
+### **Processo de Debug Eficiente:**
+1. **Verificar conectividade** antes de assumir problemas de código
+2. **Confirmar estrutura real** do banco vs esperada
+3. **Investigar logs de deploy** para identificar erros específicos
+4. **Usar DBeaver** para validação direta no banco
+5. **Verificar se migrações existem** antes de tentar aplicá-las
+
+### **Importância da Verificação:**
+- **Não assumir** que migrações foram geradas automaticamente
+- **Confirmar** que arquivos locais foram commitados
+- **Testar** cada etapa do processo de deploy
+
+## 🎯 PRÓXIMOS PASSOS (12/07/2025)
+
+### **✅ CONCLUÍDO:**
+1. ✅ Migração da tabela Advertiser aplicada
+2. ✅ API de cadastro corrigida para novos campos
+3. ✅ Configuração de migração automática no deploy
+4. ✅ Estrutura do banco documentada
+
+### **🔄 PRÓXIMAS AÇÕES:**
+1. **Testar fluxo completo de cadastro** com novos campos
+2. **Implementar validações** nos novos campos (CPF, CNPJ, etc.)
+3. **Configurar upload de imagens** para campo imagemUrl
+4. **Implementar lógica de planos** (cortesia vs premium)
+5. **Criar APIs de atualização** de dados do advertiser
+6. **Documentar fluxo completo** de cadastro em etapas
+7. **Limpar conexões duplicadas** no DBeaver (organização pessoal)
+
+## 📝 OBSERVAÇÕES IMPORTANTES
+
+### **Conexões DBeaver:**
+- **Duas conexões** (`neon-teal-rlw` e `postgres`) apontam para o mesmo banco
+- **Recomendação:** Manter apenas uma para evitar confusão
+- **Escopo:** Apenas configurações locais do Weber, não afeta projeto
+
+### **Arquivos Atualizados:**
+- **PostGres_DB.md:** Atualizado com estrutura completa da tabela
+- **MEMORIADESESSAO.md:** Esta anotação adicionada
+- **Documentação:** Completa e atualizada para continuidade
+
+## 🏆 SUCESSO DA SESSÃO
+
+**PROBLEMA COMPLEXO RESOLVIDO COM METODOLOGIA EFICIENTE:**
+- ✅ Diagnóstico preciso da causa raiz
+- ✅ Solução aplicada corretamente
+- ✅ Resultado confirmado em múltiplas fontes
+- ✅ Documentação completa para continuidade
+- ✅ Próximos passos claramente definidos
+
+---
+**Data:** 11/07/2025
+**Status:** ✅ **MIGRAÇÃO ADVERTISER CONCLUÍDA COM SUCESSO**
+**Próxima Sessão:** 12/07/2025 - Teste do fluxo completo de cadastro
+**Responsável:** Equipe de Desenvolvimento GFauto
+
+# ANOTAÇÕES PARA MEMORIADESESSAO.MD
+
+**Data:** 12/07/2025  
+**Sessão:** Alinhamento de Documentação e Estrutura do Projeto GFauto  
+**Objetivo:** Garantir coerência entre arquivos e facilitar desenvolvimento futuro
+
+---
+
+## 🎯 SESSÃO DE ALINHAMENTO - 12/07/2025
+
+### **OBJETIVO DA SESSÃO:**
+Alinhar documentação e estrutura do Projeto GFauto para garantir coerência entre arquivos e facilitar desenvolvimento futuro. Trabalhar no que conhecemos para ter informações sempre à mão.
+
+---
+
+## 📊 ESTRUTURA DO BANCO DE DADOS - CONFIRMADA
+
+### **TABELA "Advertiser" (26 campos - funcionando perfeitamente):**
+
+**FUNÇÃO:** Armazena dados dos empresários que se cadastram no GFauto
+
+**CAMPOS ORGANIZADOS POR CATEGORIA:**
+- **Dados básicos:** nomeResponsavel, cpf, email, celContato, senha
+- **Dados empresa:** razaoSocial, nomeFantasia, cnpj, cargo
+- **Endereço:** enderecoEmpresa, bairro, cep, cidade, estado
+- **Dados anúncio:** especialidade, slogan, descricao, celContato2, imagemUrl, nomeParaAnuncio
+- **Controle sistema:** emailVerificado, statusCadastro, planoEscolhido
+- **Timestamps:** createdAt, updatedAt
+
+### **TABELA "Anuncio" (21 campos - funcionando perfeitamente):**
+
+**FUNÇÃO:** Armazena anúncios que aparecem nos resultados de busca para visitantes
+
+**CAMPOS PRINCIPAIS:**
+- **Dados anúncio:** titulo, descricao, endereco, telefone, whatsapp, email, site
+- **Localização:** cidade, estado, latitude, longitude
+- **Controle:** plano, status, dataExpiracao, imagem_principal
+- **Relacionamento:** advertiserId (FK para Advertiser)
+
+### **RELACIONAMENTO CONFIRMADO:**
+- **1 Advertiser → N Anuncios** (um empresário pode ter vários anúncios) Onde a página de resultados busca os anúncios baseados em Estado, Cidade e "O que Procura" da página principal.
+
+---
+
+## 🎨 LAYOUT DOS ANÚNCIOS - ANÁLISE DETALHADA
+
+### **ANÚNCIOS PREMIUM (baseado em https://gfauto.vercel.app/planos):**
+- ✅ **Imagem à esquerda** (logo/fachada da empresa)
+- ✅ **Layout completo:** Nome + Descrição + Contatos + Endereço
+- ✅ **Botões de ação:** "Localizar no Mapa" + "Atualizar Dados"
+- ✅ **Destaque visual:** Borda azul + badge "Premium"
+- ✅ **Posição:** Aparecem primeiro nos resultados de busca
+
+### **ANÚNCIOS CORTESIA (final da página /planos):**
+- ❌ **SEM imagem**
+- ✅ **Layout simples:** Apenas nome da empresa + endereço
+- ❌ **SEM botões** de ação
+- ✅ **Posição:** Aparecem depois dos Premium
+
+**DIFERENÇA VISUAL CRÍTICA:** Premium tem imagem e layout rico, Cortesia é texto simples.
+
+---
+
+## 🔧 PROBLEMA IDENTIFICADO - GESTÃO DE IMAGENS
+
+### **SITUAÇÃO ATUAL:**
+- **Advertiser.imagemUrl** (text) - existe mas uso indefinido
+- **Anuncio.imagem_principal** (varchar) - existe mas pode não ser suficiente
+- **Inconsistência:** Não está claro onde/como armazenar imagens dos anúncios
+
+### **SOLUÇÃO PROPOSTA - TABELA SEPARADA:**
+
+**Vantagem:** Flexibilidade para múltiplas imagens por anúncio
+
+```prisma
+model ImagemAnuncio {
+  id        String   @id @default(cuid())
+  anuncioId String   // FK para Anuncio
+  url       String   // URL da imagem
+  tipo      String   // 'logo', 'fachada', 'produto'
+  ordem     Int      @default(1)
+  ativo     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  
+  anuncio   Anuncio  @relation(fields: [anuncioId], references: [id])
+}
+```
+
+### **FLUXO DE UPLOAD DEFINIDO:**
+1. **Anunciante faz upload** → salva em `ImagemAnuncio`
+2. **Página de resultados** → busca imagem principal do anúncio
+3. **Premium** → mostra imagem no layout completo
+4. **Cortesia** → não mostra imagem (layout simples)
+
+---
+
+## 📋 NOMENCLATURA E PADRÕES - DECISÕES FINAIS
+
+### **DECISÃO SOBRE NOMES DE TABELAS:**
+- ✅ **MANTER:** "Advertiser" e "Anuncio" como estão
+- ✅ **MOTIVO:** Sistema funcionando, evitar quebras desnecessárias
+- ✅ **NOVA DIRETRIZ (12/07/2025+):** Novas implementações em português
+- ✅ **IMPLEMENTAÇÕES ANTERIORES:** Permanecem até aventual possível decisão futura
+
+### **ANÁLISE DE MIGRAÇÃO (REJEITADA):**
+- **Complexidade estimada:** 8-13 horas de trabalho
+- **Riscos identificados:** Quebra de funcionalidades, downtime
+- **Arquivos afetados:** 9-13 arquivos
+- **Decisão final:** Manter estabilidade atual
+
+---
+
+## 📚 INCONSISTÊNCIAS CORRIGIDAS NO README_CADASTRO.MD
+
+### **1. MODELO PRISMA ATUALIZADO:**
+- ❌ **ANTES:** Campos antigos (nome, empresa, telefone, endereco)
+- ✅ **DEPOIS:** Estrutura real (nomeResponsavel, nomeFantasia, celContato, enderecoEmpresa)
+- ✅ **RESULTADO:** 26 campos alinhados com banco funcionando
+
+### **2. REFERÊNCIA À TABELA ANUNCIO CONFIRMADA:**
+- ❌ **ANTES:** "tabela `Anuncio` // ou anunciante (precisamos verificar)"
+- ✅ **DEPOIS:** "tabela `Anuncio`" (confirmado via database explorer)
+
+---
+
+## 🎯 FLUXO COMPLETO DO PROJETO GFAUTO - DOCUMENTADO
+
+### **FLUXO DO EMPRESÁRIO (ANUNCIANTE):**
+1. **Acessa:** gfauto.vercel.app
+2. **Clica:** "Anuncie sua Empresa" → /planos
+3. **Escolhe:** Plano (cortesia, premium 1/2/3 anos)
+4. **Cadastro simples:** nomeResponsavel, cpf, email, celContato
+5. **Cria senha** e **valida email**
+6. **Premium:** Pagamento → **Cortesia:** Direto para conclusão
+7. **Conclusão:** Dados empresa + endereço + dados anúncio
+8. **Upload imagem** (apenas Premium)
+9. **Visualização em tempo real** do anúncio sendo formado
+10. **Clica "Publicar"** → Anúncio ativo para a página deesultados
+
+### **FLUXO DO VISITANTE (CLIENTE):**
+1. **Acessa:** gfauto.vercel.app
+2. **Busca:** Estado + Cidade + "O que procura?"
+3. **Sistema:** Consulta tabela `Anuncio`
+4. **Resultados:** Premium primeiro (com imagem) + Cortesia depois (sem imagem), Os premium serão mostrados sempre respeitando os rodízios do primeiro até o último sempre figurando um deles em primeiro na página a cada vez que for mostrada.
+---
+
+## ⚠️ INCONSISTÊNCIAS AINDA PENDENTES
+
+### **ALTA PRIORIDADE:**
+1. **Campos faltantes na documentação:** especialidade, slogan, descricao não mencionados nos formulários do README_cadastro.md
+2. **Fluxo de upload de imagem:** Definir implementação técnica da solução proposta
+
+### **MÉDIA PRIORIDADE:**
+3. **Validações desatualizadas:** Alinhar validações mencionadas com estrutura atual
+4. **Fluxo de dados entre etapas:** Completar documentação do fluxo
+
+---
+
+## 🔄 CONTEXTO DA MIGRAÇÃO ANTERIOR (SUCESSO)
+
+### **MIGRAÇÃO EXECUTADA COM SUCESSO:**
+- ✅ **Data:** 11/07/2025
+- ✅ **Migração:** `20250711220033`
+- ✅ **Resultado:** Tabela Advertiser com 26 campos funcionando
+- ✅ **Processo:** Database reset + nova estrutura aplicada
+- ✅ **Prisma Client:** Regenerado com sucesso
+- ✅ **Status atual:** Banco vazio, pronto para uso
+
+---
+
+## 💡 LIÇÕES APRENDIDAS E DIRETRIZES FUTURAS
+
+### **PARA O DESENVOLVEDOR:**
+1. **SEMPRE consultar MEMORIADESESSAO.md** antes de implementar qualquer funcionalidade
+2. **VERIFICAR coerência** entre documentos antes de codificar (e fazer as correções pertinentes no README correspondente)
+3. **USAR database explorer** para confirmar estrutura real do banco
+4. **DOCUMENTAR descobertas** importantes imediatamente
+5. **SEGUIR padrão português** para novas implementações (12/07/2025+)
+
+### **PARA MANUTENÇÃO DA DOCUMENTAÇÃO:**
+1. **README_cadastro.md** deve refletir estrutura real do banco
+2. **Modelo Prisma** deve estar sempre atualizado nos documentos
+3. **Fluxos documentados** devem corresponder à implementação real
+4. **Inconsistências** devem ser corrigidas imediatamente quando identificadas
+
+---
+
+## 🎯 PRÓXIMOS PASSOS DEFINIDOS
+
+### **IMEDIATO:**
+1. Implementar solução de upload de imagens (tabela ImagemAnuncio)
+2. Corrigir campos faltantes no README_cadastro.md
+3. Testar fluxo completo de cadastro
+
+### **FUTURO:**
+1. Desenvolver página de resultados com layout definido (Premium vs Cortesia)
+2. Implementar diferenciação visual Premium vs Cortesia
+3. Criar sistema de busca por Estado/Cidade/Especialidade
+
+---
+
+## 📝 FUNÇÃO DAS TABELAS - EXPLICAÇÃO CLARA
+
+### **ADVERTISER = "QUEM ANUNCIA"**
+- **Empresários** que pagam para anunciar no GFauto
+- **Dados de cadastro** e autenticação
+- **Informações de cobrança** e planos escolhidos
+
+### **ANUNCIO = "O QUE APARECE"**
+- **Anúncios visíveis** para o público visitante
+- **Dados de busca** (cidade, especialidade)
+- **Informações de contato** para clientes
+
+### **FLUXO RESUMIDO:**
+```
+Empresário → Cadastra-se (Advertiser) → Cria Anúncio → Visitante vê (Anuncio)
+```
+---
+
+**IMPORTANTE:** Esta documentação deve garantir que qualquer desenvolvedor (incluindo IA) saiba exatamente onde está trabalhando e o que está fazendo no Projeto GFauto. Fundamental manter sempre atualizado.
+
+
 ===================================
 
 Próximos passos: (Ver GFauto/app/cadastro/README_cadastro.md)
 1 - Ver o funcionamento da busca Estado, Cidade e "O que Procura?" se está buscando no BD. (Estudo.md linha 88) e montar a página app/resultados
-2 - Foi definido que a estrutura irá estar toda em GFauto/app
+2 - Foi definido que a estrutura do Projeto GFauto irá estar toda em GFauto/app (o que estiver fora nós vamos transferir para para lá.
 3 - Já completar as pastas que comporão o GFauto/app atualmente com: admin, anuncio (mudar para anunciante) api, cadastro, pagina-correta (ver o que é e se dá para utilizar algo e depois eliminar) pagtos, planos, resultados.
 4 - Ver o GFauto/fluxo_visitante/app o que está alí e dá para levar para GFauto/app. (Estudo.md linha 46)
 4 - Implementar app/cadastro (app/README_cadastro.md) ver se não vai conflitar com app/anuncio "Anunciante" e GFauto/fluxo_visitante. (ver todo o módulo)

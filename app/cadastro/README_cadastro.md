@@ -20,12 +20,12 @@ O **app/cadastro** é responsável por gerenciar todo o processo de cadastro de 
 - Redirecionamento inteligente baseado no plano escolhido
 - *conclusão do cadastro* para Cortesia e para Premium → Publicar
 - Gestão de sessões de usuário
-
+  
 ---
 
-## 🔄 FLUXO DE CADASTRO
+## 🔄 FLUXO DE CADASTRO  // Ver
 
-2. **Fluxo do Anunciante**
+2. **Fluxo do Anunciante** // Ver
 Planos → Cadastro Simples (+ plano) → Criar Senha → Validar E-mail → Conclusão Cadastro → Anúncio em Tempo Real → Publicar
    - Orígem: https://gfauto.vercel.app/   (após clicar em "Anuncie sua Empresa" vai para "planos" https://gfauto.vercel.app/planos qualquer dos planos escolhidos, 1 ano, 2 anos e 3 anos vai para o "cadastro simples" levando a informação do plano clicado para saber quanto vai pagar e segue o fluxo.)
    - Escolha do Plano (**Premium** → *cadastro simples* (nome do responsável, cpf, principal e-mail e Celular de Contato) e login → pagtos (com a informação do valor do Plano vai para o pagamento → *conclusão do cadastro* (Razão Social, Nome de Fantasia, CNPJ, nome do responsável (já vem preenchido do cadastro simples), cpf (também já vem preenchido) Celular de Contato (também já vem preenchido), Endereço da Empresa, Bairro, CEP, Cidade, Estado, Seu Cargo), inserir imagem).  → *criação e ativação (botão "Publicar") do anúncio* (deve ser na mesma página *conclusão do cadastro* pois o anúncio vai sendo preenchido conforme o anunciante informa os dados da *conclusão do cadastro*.  | **Cortesia** → *cadastro simples* (nome do responsável, cpf, principal e-mail e telefone) e login → *conclusão do cadastro* (Razão Social, Nome de Fantasia, CNPJ, nome do responsável (já vem preenchido do cadastro simples), cpf (também já vem preenchido) Celular de Contato (também já vem preenchido), Endereço da Empresa, Bairro, CEP, Cidade, Estado, Seu Cargo) criação e ativação (botão "publicar") do anúncio)
@@ -157,7 +157,7 @@ URL: https://gfauto.vercel.app/cadastro?plano=premium&anos=2
 ### **ETAPA 7: PUBLICAÇÃO**
 **Processo:**
 - ✅ Clique no botão "Publicar" (verde negrito)
-- ✅ Anúncio criado na tabela `Anuncio`
+- ✅ Anúncio criado na tabela `Anuncio`  // ou anunciante (precisamos verificar)
 - ✅ Status alterado para "anuncio_ativo"
 - ✅ Anúncio aparece nos resultados de busca
 
@@ -169,9 +169,9 @@ URL: https://gfauto.vercel.app/cadastro?plano=premium&anos=2
 
 ## 🗃️ ESTRUTURA DO BANCO DE DADOS
 
-### **TABELA ADVERTISER (ATUALIZADA)**
+### **TABELA ADVERTISER (ATUALIZADA)** 
 ```sql
-CREATE TABLE "Advertiser" (
+CREATE TABLE "Advertiser" 
   id                TEXT PRIMARY KEY,
   
   -- DADOS BÁSICOS (Cadastro Simples)
@@ -328,28 +328,47 @@ Página Principal → "Anuncie sua Empresa" → Página de Planos → Escolha do
 #### **PARTE 3: Criando o Anúncio
 - **Novo Anúncio** O "Cortesia" depois do cadastro e logado já vai para "Criar Anúncio" e o "premium" depois do pagamento já vai para "Criar Anúncio", ambos quando chegare na página "Criar Anúncio" ela já estará preenchida com os dados do cadastro faltando (slogam, especialidade, descrição, etc.) ele completar e ver seu anúncio enquanto completa, até clicar em "publicar"
 
-### **Modelo Prisma (Advertiser):** (conferir com Estrutura de Dados e FLUXO COMPLETO DE CADASTRO)
+### **Modelo Prisma (Advertiser):** (Estrutura atual funcionando - 26 campos)
 ```prisma
 model Advertiser {
   id                String    @id @default(cuid())
+  
+  // === DADOS BÁSICOS (CADASTRO SIMPLES) ===
   email             String    @unique
-  nome              String?   // Nome/Razão Social
-  empresa           String?   // Nome de Fantasia
-  telefone          String?   // Cel. de Contato
-  endereco          String?
-  cidade            String?
-  estado            String?
-  cep               String?
-  cnpj              String?
-  pessoaResponsavel String?
-  cpf               String?
-  celContato        String?
-  cargo             String?
-  senha             String    // Hash bcrypt
-  planoEscolhido    String?   // 'cortesia' ou 'premium'
+  nomeResponsavel   String    // Nome do responsável pelo anúncio
+  cpf               String    // CPF do responsável
+  celContato        String    // Celular principal de contato
+  senha             String    // Hash bcrypt da senha
+  planoEscolhido    String    // 'cortesia', 'premium_1ano', 'premium_2anos', 'premium_3anos'
+  
+  // === DADOS DA EMPRESA (CONCLUSÃO DO CADASTRO) ===
+  razaoSocial       String?   // Razão social
+  nomeFantasia      String?   // Nome comercial da empresa
+  cnpj              String?   // CNPJ da empresa
+  cargo             String?   // Cargo do responsável
+  
+  // === ENDEREÇO DA EMPRESA ===
+  enderecoEmpresa   String?   // Rua, número e complemento
+  bairro            String?   // Bairro da empresa
+  cep               String?   // CEP
+  cidade            String?   // Cidade
+  estado            String?   // Estado
+  
+  // === DADOS DO ANÚNCIO ===
+  especialidade     String?   // Especialidade da empresa
+  slogan            String?   // Slogan da empresa
+  descricao         String?   // Descrição dos serviços
+  celContato2       String?   // Segundo celular (opcional)
+  imagemUrl         String?   // URL da imagem da empresa
+  nomeParaAnuncio   String?   // 'razaoSocial' ou 'nomeFantasia' - escolha do usuário
+  
+  // === CONTROLE DO SISTEMA ===
   emailVerificado   Boolean   @default(false)
+  statusCadastro    String    @default("cadastro_simples")
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
+  
+  // === RELACIONAMENTOS ===
   payments          Payment[]
   anuncios          Anuncio[]
 }
@@ -431,12 +450,12 @@ Conteúdo:
 
 #### **CORTESIA:**
 ```
-/cadastro → Validação E-mail → /anuncio/criar?advertiser_id={id}
+/cadastro → Validação E-mail → /anuncio/criar?advertiser_id={id} 
 ```
 
 #### **PREMIUM:**
 ```
-/cadastro → Validação E-mail → /pagamento?advertiser_id={id} → /anuncio/criar?advertiser_id={id}
+/cadastro → Validação E-mail → /pagamento?advertiser_id={id} → /anuncio/criar?advertiser_id={id} // mudar para anunciante_id
 ```
 
 ### **Usuários Existentes (Login):**
@@ -525,11 +544,11 @@ Ação: Destacar campo com erro
 ## 🔄 INTEGRAÇÃO COM OUTROS FLUXOS
 
 ### **app/pagtos:**
-- Recebe `advertiser_id` após cadastro premium
+- Recebe `advertiser_id` após cadastro premium  
 - Processa pagamento antes de criar anúncio
 
-### **app/anunciante:**
-- Recebe `advertiser_id` após cadastro/pagamento
+### **app/anunciante:** // ou cadastro
+- Recebe `advertiser_id` após cadastro/pagamento  /
 - Cria anúncio vinculado ao anunciante
 
 ### **fluxo_email:** (verificar onde vai ficar na estrutura)

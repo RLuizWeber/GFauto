@@ -44,7 +44,7 @@ O Projeto GFauto é uma plataforma web que conecta proprietários de veículos a
 ### **🔍 Descoberta Crítica**
 Através da análise do banco de dados via DBeaver, identificamos que o Projeto GFauto **NÃO É UM PROJETO NOVO**, mas sim um **SISTEMA EM TESTE** populado com dados fictícios:
 
-#### **Dados Existentes no Banco:** (rever dados para confirmar)
+#### **Dados Existentes no Banco:** // rever dados para confirmar parece que não tem nada disso e a estrutura também falta tabelas.
 - **Advertiser:** 24.000 registros (anunciantes)
 - **Anuncio:** 48.000 registros (anúncios)
 - **Payment:** 32.000 registros (pagamentos)
@@ -83,6 +83,8 @@ Gfauto/app/
 - **fluxo_painel_admin:** Painel administrativo (descobrir onde está e migrar para app/)
 - **planos:** Gestão de planos de anúncios
 - **fluxo_visitante:** Experiência do usuário visitante (esse tem que migrar para app/)
+
+- Nomes de tabelas, campos, etc.. devem seguir o padrão Língua Brasileira.para qualqer nova implementação a partir de 12/07/2025. Os anteriores podem permanecer até resolvermos manter.
 
 ---
 

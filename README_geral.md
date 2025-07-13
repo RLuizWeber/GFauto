@@ -82,6 +82,7 @@ A Estrutura de Pastas pode ser encontrada em:
 
 ### Estrutura Modular por Páginas
 O projeto segue uma estrutura modular organizada por páginas seguindo App Router: (Obs.: Verificar e ajustar conforme GFauto/README_next.js.md)
+- Nomes de tabelas, campos, etc.. devem seguir o padrão Língua Brasileira.para qualqer nova implementação a partir de 12/07/2025. Os anteriores podem permanecer até resolvermos manter.
 
 ## EXISTENTE, Obrigatório: (Verificar e se ajustar ao GFauto/README_next.js.md)
 

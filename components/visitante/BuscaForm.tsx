@@ -150,7 +150,7 @@ export default function BuscaForm() {
   // Validar o formulário sempre que os campos mudarem
   useEffect(() => {
     // Formulário é válido quando todos os campos têm conteúdo
-    const isValid = estado.trim() !== '' && cidade.trim() !== '' && especialidade.trim() !== '';
+    const isValid = estado.trim() !== '' && cidade.trim() !== '' && especialidade.trim() !== '' && cidadeId !== '';
     setFormValido(isValid);
   }, [estado, cidade, especialidade]);
 
@@ -349,6 +349,18 @@ export default function BuscaForm() {
       return;
     }
     
+	// NOVA VALIDAÇÃO: Verificar se cidade existe no estado selecionado
+if (estado && cidade && !cidadeId) {
+  setError('Esta cidade não existe no estado selecionado. Por favor, selecione uma cidade da lista.');
+  return;
+}
+
+// NOVA VALIDAÇÃO: Verificar se especialidade é válida
+if (especialidade && !especialidadeId && !ESPECIALIDADES_PADRAO.some(esp => esp.toLowerCase() === especialidade.toLowerCase())) {
+  setError('Especialidade não encontrada. Por favor, selecione uma opção da lista.');
+  return;
+}
+	
     // Se temos os IDs, usamos eles para a busca
     if (cidadeId && especialidadeId) {
       router.push(`/resultados?cidade_id=${cidadeId}&especialidade_id=${especialidadeId}`);
@@ -530,14 +542,15 @@ export default function BuscaForm() {
       {/* Botão de Busca */}
       <div>
         <button
-          type="submit"
-          className={`w-full px-4 py-2 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors ${
-            formValido && !loading
-              ? 'bg-blue-600 text-white hover:bg-blue-700'
-              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-          }`}
-          disabled={!formValido || loading}
-        >
+  type="submit"
+  className={`w-full px-4 py-2 font-medium rounded-md focus:outline-none transition-colors ${
+    formValido && !loading && cidadeId // ADICIONAR && cidadeId
+      ? 'bg-blue-600 text-white hover:bg-blue-700'
+      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+  }`}
+  disabled={!formValido || loading || !cidadeId} // ADICIONAR || !cidadeId
+>
+
           {loading ? 'Carregando...' : 'Buscar Serviços'}
         </button>
       </div>
