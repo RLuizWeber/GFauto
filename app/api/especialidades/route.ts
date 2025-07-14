@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-
+// comentário para forçar o redeploy
 const prisma = new PrismaClient();
 
 export async function GET() {
