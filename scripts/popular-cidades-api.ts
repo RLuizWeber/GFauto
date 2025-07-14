@@ -60,6 +60,10 @@ async function popularCidades() {
     
     console.log(`✅ ${totalEstados} estados encontrados no banco`);
     
+    // CORREÇÃO: Buscar estados do banco e criar mapa sigla → ID
+    const estados = await prisma.estado.findMany();
+    const estadoMap = new Map(estados.map(e => [e.sigla, e.id]));
+    
     const cidadesIBGE = await buscarCidadesIBGE();
     
     console.log('🗑️ Limpando tabela cidades...');
@@ -67,6 +71,7 @@ async function popularCidades() {
     
     console.log('💾 Processando e inserindo cidades...');
     
+    // CORREÇÃO: Usar ID real do estado em vez da sigla
     const cidadesParaInserir = cidadesIBGE.map(cidade => {
       const siglaEstado = cidade.microrregiao.mesorregiao.UF.sigla;
       const slug = criarSlug(cidade.nome, siglaEstado);
@@ -74,7 +79,7 @@ async function popularCidades() {
       return {
         id: slug,
         nome: cidade.nome,
-        estadoId: siglaEstado
+        estadoId: estadoMap.get(siglaEstado)  // CORREÇÃO: Usa ID real do estado
       };
     });
     
