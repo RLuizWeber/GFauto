@@ -46,6 +46,7 @@ Quando o anunciante chega nessa página é porque ele clicou em um plano escolhi
 2. Na conclusão, completamos: razaoSocial, nomeFantasia, cnpj, enderecoEmpresa, bairro, cep, cidade, estado, cargo, imagemUrl - correto?
 Sim. Ele vai mostrar todos mas faltando preencher só estes que não estavam no cadastro simples. E mais os do print pagina6.jpg (ilustrativo): Especialidade, Slogan, Descrição, (obs.: vem do cadastro simples um celular, vamos botar a opção de ele informar o segundo, opcional), O endereço ele vai informar pelos campos (Endereço da Empresa" Rua, número e complemento, Bairro, CEP, Cidade, Estado. 
 Lembrando que esses anúncios irão figurar na página de resultado quando o visitante fizer a busca por Estado, Cidade e "O que Procura?" na página principal https://gfauto.vercel.app/ . (conforme ele vai informando os dados serão inseridos no DB e mostrados no modelo que vai sendo construído)
+Podemos iniciar com algumas especialidades: Lembrando que a lista irá sendo aumentada conforme as visitações feitas no site e por anunciantes que nos informarão novas especialidades, conforme README_cadastro.md, campo "Especialidade". E que o autocompletar no campo "O que Procura?" precisará de um banco de palavras que serão sugestivas para cada especialidade.
 3. Campo para escolha do nome no anúncio - preciso de um campo tipo nomeParaAnuncio (razaoSocial ou nomeFantasia)?
 Acho que é por aí mesmo.
 4. Validação de e-mail acontece entre criar senha e conclusão do cadastro?
