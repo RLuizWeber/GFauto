@@ -15,7 +15,7 @@ export async function GET(request: Request) {
       );
     }
 
-    const cidades = await prisma.cidades.findMany({
+    const cidades = await prisma.cidade.findMany({
       where: {
         estadoId: estadoId
       },
