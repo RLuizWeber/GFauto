@@ -1,4 +1,4 @@
-# 🚀 PLANO MAIOR DEFINITIVO - PROJETO GFAUTO (ok)
+# 🚀 PLANO MAIOR - PROJETO GFAUTO (ok)
 
 **Documento Oficial de Planejamento e Execução**  
 **Data de Criação:** 04/07/2025  
@@ -45,14 +45,14 @@ O Projeto GFauto é uma plataforma web que conecta proprietários de veículos a
 Através da análise do banco de dados via DBeaver, identificamos que o Projeto GFauto **NÃO É UM PROJETO NOVO**, mas sim um **SISTEMA EM TESTE** populado com dados fictícios:
 
 #### **Dados Existentes no Banco:** // rever dados para confirmar parece que não tem nada disso e a estrutura também falta tabelas.
-- **Advertiser:** 24.000 registros (anunciantes)
-- **Anuncio:** 48.000 registros (anúncios)
-- **Payment:** 32.000 registros (pagamentos)
-- **cidades:** 24.000 registros (cidades brasileiras)
-- **especialidades:** 16.000 registros (especialidades automotivas)
-- **estados:** 16.000 registros (estados do Brasil)
-- **imagens_anuncio:** 16.000 registros (imagens dos anúncios)
-- **rotacao_premium:** 24.000 registros (sistema de rotação premium)
+- **Advertiser:** 000 registros (anunciantes)
+- **Anuncio:** 000 registros (anúncios)
+- **Payment:** 000 registros (pagamentos)
+- **cidades:** 5,700 registros (cidades brasileiras) implementando
+- **especialidades:** 000 registros (especialidades automotivas)
+- **estados:** 27 registros (estados do Brasil)
+- **imagens_anuncio:** 000 registros (imagens dos anúncios)
+- **rotacao_premium:** 000 registros (sistema de rotação premium)
 
 ### **🚨 Implicações Desta Descoberta**
 1. **Estratégia:** Desenvolvimento para consolidação, otimização e entrada e produção
@@ -786,7 +786,7 @@ Planos → Cadastro Simples → Senha → E-mail → Pagamento → Conclusão �
 - **PostGres_DB.md** - Configuração Banco de Dados, executa no ambiente específico
 
 ### **READMEs Específicos por Módulo** - Tem módulos (terão que migrar) e que ainda estão em GFauto/ e gfauto-repo e os definitivos estão em GFauto/app/
-- **README_fluxo_app.md** - Página principal
+- **README_pagPrincipal.md** - Página principal
 - **README_visitante.md** - Experiência do usuário
 - **README_resultados.md** - Página de resultados
 - **README_pagtos.md** - Sistema de pagamentos
