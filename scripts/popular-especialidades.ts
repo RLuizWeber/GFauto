@@ -74,8 +74,8 @@ const ESPECIALIDADES_AUTOMOTIVAS = [
 
 // Converter array de strings para objetos com id e nome
 const ESPECIALIDADES_DADOS = ESPECIALIDADES_AUTOMOTIVAS.map(nome => ({
-  id: criarSlug(nome),
-  nome: nome
+  nome: nome,
+  slug: criarSlug(nome)
 }));
 
 async function popularEspecialidades() {
