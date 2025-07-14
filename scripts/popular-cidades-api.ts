@@ -20,7 +20,7 @@ async function buscarCidadesIBGE(): Promise<CidadeIBGE[]> {
   try {
     console.log('🔄 Buscando municípios da API IBGE...');
     
-    const response = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/municipios' );
+    const response = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/municipios');
     
     if (!response.ok) {
       throw new Error(`Erro na API IBGE: ${response.status}`);
@@ -60,7 +60,7 @@ async function popularCidades() {
     
     console.log(`✅ ${totalEstados} estados encontrados no banco`);
     
-    // CORREÇÃO: Buscar estados do banco e criar mapa sigla → ID
+    // Buscar estados do banco e criar mapa sigla → ID
     const estados = await prisma.estado.findMany();
     const estadoMap = new Map(estados.map(e => [e.sigla, e.id]));
     
@@ -71,17 +71,24 @@ async function popularCidades() {
     
     console.log('💾 Processando e inserindo cidades...');
     
-    // CORREÇÃO: Usar ID real do estado em vez da sigla
-    const cidadesParaInserir = cidadesIBGE.map(cidade => {
-      const siglaEstado = cidade.microrregiao.mesorregiao.UF.sigla;
-      const slug = criarSlug(cidade.nome, siglaEstado);
-      
-      return {
-        id: slug,
-        nome: cidade.nome,
-        estadoId: estadoMap.get(siglaEstado)  // CORREÇÃO: Usa ID real do estado
-      };
-    });
+    // CORREÇÃO COMPLETA: Filtrar estados válidos e garantir tipo correto
+    const cidadesParaInserir = cidadesIBGE
+      .filter(cidade => {
+        const sigla = cidade.microrregiao.mesorregiao.UF.sigla;
+        return estadoMap.has(sigla);
+      })
+      .map(cidade => {
+        const siglaEstado = cidade.microrregiao.mesorregiao.UF.sigla;
+        const slug = criarSlug(cidade.nome, siglaEstado);
+        
+        return {
+          id: slug,
+          nome: cidade.nome,
+          estadoId: estadoMap.get(siglaEstado)!  // ! garante que não é undefined
+        };
+      });
+    
+    console.log(`📋 ${cidadesParaInserir.length} cidades válidas para inserção`);
     
     // Inserir em lotes para melhor performance
     const TAMANHO_LOTE = 1000;
