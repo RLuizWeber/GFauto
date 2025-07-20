@@ -1,3 +1,4 @@
+// Local: GFauto/fluxo_plano/components/
 'use client';
 
 import React, { useState } from 'react';

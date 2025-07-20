@@ -172,17 +172,19 @@ module.exports = nextConfig
 ## 📊 ESTRUTURA DO BANCO
 
 ### **Tabelas Existentes (Verificadas via DBeaver):**
-### **Tabelas Existentes (Verificadas via DBeaver - 11/07/2025):**
+### **Tabelas Existentes (Verificadas via DBeaver - 14/07/2025):**
 1. **_prisma_migrations** - 7 registros (incluindo migração de 11/07/2025)
-2. **Advertiser** - **26 campos** (estrutura completa)
-3. **Payment** - Pagamentos
-4. **Anuncio** - Anúncios
-5. **estados** - Estados brasileiros
-6. **cidades** - Cidades brasileiras
-7. **especialidades** - Especialidades profissionais
-8. **rotacao_premium** - Rotação de anúncios premium
-9. **especialidades_disponiveis** - Especialidades disponíveis
-10. **imagens_anuncio** - Imagens dos anúncios
+2. **Payment** - Pagamentos (ok)
+3. **Anuncios** - Anúncios são os que irão figurar nas páginas de resultados.
+4. **estados** - **27 campos** (estrutura completa)
+5. **cidades** - **5571 campos** (estrutura completa)
+6. **especialidades** - **56 campos** (estrutura completa)
+7. **rotacao_premium** - Rotação de anúncios premium
+8  **especialidades_disponíveis** - 
+9. **imagens_anuncio** - Imagens dos anúncios
+10. **Advertiser** - campos (estrutura completa)
+
+* Especialidades Disponíveis (ver para o que serve)
 
 
 ### **Tabela Advertiser (Estrutura Atual - 26 Campos):**

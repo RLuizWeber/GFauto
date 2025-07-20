@@ -3,7 +3,7 @@
 **Documento Oficial de Planejamento e Execução**  
 **Data de Criação:** 04/07/2025  
 **Versão:** 1.0 - Definitiva  
-**Autor:** Manus (Desenvolvedor) sob orientação de Weber  
+**Autor:** Desenvolvedor sob orientação de Weber  
 
 ---
 
@@ -45,14 +45,19 @@ O Projeto GFauto é uma plataforma web que conecta proprietários de veículos a
 Através da análise do banco de dados via DBeaver, identificamos que o Projeto GFauto **NÃO É UM PROJETO NOVO**, mas sim um **SISTEMA EM TESTE** populado com dados fictícios:
 
 #### **Dados Existentes no Banco:** // rever dados para confirmar parece que não tem nada disso e a estrutura também falta tabelas.
-- **Advertiser:** 000 registros (anunciantes)
-- **Anuncio:** 000 registros (anúncios)
-- **Payment:** 000 registros (pagamentos)
-- **cidades:** 5,700 registros (cidades brasileiras) implementando
-- **especialidades:** 000 registros (especialidades automotivas)
-- **estados:** 27 registros (estados do Brasil)
-- **imagens_anuncio:** 000 registros (imagens dos anúncios)
-- **rotacao_premium:** 000 registros (sistema de rotação premium)
+### **Tabelas Existentes (Verificadas via DBeaver - 14/07/2025):**
+1. **_prisma_migrations** - 7 registros (incluindo migração de 14/07/2025)
+2. **Payment** - Pagamentos (receber, confirmar, status, vencimento, etc)
+3. **Anuncios** - Anúncios são os que irão figurar nas páginas de resultados.
+4. **estados** - **27 campos** (estrutura completa, só alterável se for criado mais algum Estado do Brasil)
+5. **cidades** - **5571 campos** (estrutura completa, só alterável se for criada mais alguma cidade no Brasil)
+6. **especialidades** - **56 campos** (estrutura completa, serão inseridas mais especialidades conforme forem surgindo)
+7. **rotacao_premium** - Rotação de anúncios premium a implementar na página de resultados
+8  **especialidades_disponíveis** - 
+9. **imagens_anuncio** - Imagens dos anúncios que o anunciante fará upload para figurar no anúncio dele.
+10. **Advertiser** - campos (estrutura completa) 
+
+* Especialidades Disponíveis (ver para o que serve)
 
 ### **🚨 Implicações Desta Descoberta**
 1. **Estratégia:** Desenvolvimento para consolidação, otimização e entrada e produção
@@ -503,6 +508,7 @@ Quando o anunciante chega nessa página é porque ele clicou em um plano escolhi
 2. Na conclusão, completamos: razaoSocial, nomeFantasia, cnpj, enderecoEmpresa, bairro, cep, cidade, estado, cargo, imagemUrl - correto?
 Sim. Ele vai mostrar todos mas faltando preencher só estes que não estavam no cadastro simples. E mais os do print pagina6.jpg (ilustrativo): Especialidade, Slogan, Descrição, (obs.: vem do cadastro simples um celular, vamos botar a opção de ele informar o segundo, opcional), O endereço ele vai informar pelos campos (Endereço da Empresa" Rua, número e complemento, Bairro, CEP, Cidade, Estado. 
 Lembrando que esses anúncios irão figurar na página de resultado quando o visitante fizer a busca por Estado, Cidade e "O que Procura?" na página principal https://gfauto.vercel.app/ . (conforme ele vai informando os dados serão inseridos no DB e mostrados no modelo que vai sendo construído)
+Podemos iniciar com algumas especialidades: Lembrando que a lista irá sendo aumentada conforme as visitações feitas no site e por anunciantes que nos informarão novas especialidades, conforme README_cadastro.md, campo "Especialidade". E que o autocompletar no campo "O que Procura?" precisará de um banco de palavras que serão sugestivas para cada especialidade.
 3. Campo para escolha do nome no anúncio - preciso de um campo tipo nomeParaAnuncio (razaoSocial ou nomeFantasia)?
 Acho que é por aí mesmo.
 4. Validação de e-mail acontece entre criar senha e conclusão do cadastro?
@@ -717,7 +723,7 @@ Planos → Cadastro Simples → Senha → E-mail → Pagamento → Conclusão �
 
 ---
 
-**Fluxo criado por:** Manus AI  
+**Fluxo criado por:** Desenvolvedor  
 **Baseado em:** README_cadastro.md + esclarecimentos de Weber  
 **Data:** 11/07/2025  
 **Status:** Pronto para implementação 
@@ -816,7 +822,7 @@ O sucesso deste plano depende de:
 
 ---
 
-**Documento criado por:** Manus (Desenvolvedor)  
+**Documento criado por:** Desenvolvedor
 **Aprovação necessária de:** Weber  
 **Próxima revisão:** Após aprovação e início da execução  
 **Status:** Aprovado para início da execução. Mas vamos passo a passo e conversando sempre. Ass. Weber.

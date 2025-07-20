@@ -1,3 +1,4 @@
+// Local: Gfauto/planos/page.tsx
 import PlanoPage from '../../fluxo_plano/components/PlanoPage';
 import type { Metadata } from 'next';
 

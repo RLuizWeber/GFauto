@@ -1,4 +1,4 @@
-// GFauto/fluxo_app/components/HeroSectionCorreto.tsx - Versão Modificada até ANTES do botão "Anuncie sua Empresa" ..
+// GFauto/fluxo_app/components/HeroSectionCorreto.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
