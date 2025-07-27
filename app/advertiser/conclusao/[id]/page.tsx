@@ -1,83 +1,132 @@
-// Nome do Código: page.tsx
-// Versão: 1.2
-// Autor: Alcides Weber & Dev Team
-// Data da última modificação: 2025-07-25
-// Hora: 18:42
-// Comentários: Página de Conclusão do Cadastro com preview do anúncio e botão "Publicar Anúncio"
+/// Caminho: app/advertiser/conclusao/[id]/page.tsx
+// Versão: 1.0
+// Autor: GPT & Weber
+// Data: 27/07/2025
+// Comentários: Tela de Conclusão do Cadastro do anunciante. Busca os dados existentes, complementa as informações do cadastro e atualiza via PUT.
 
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useParams, useRouter } from 'next/navigation'
 
-interface Anunciante {
-  id: string
-  nomeFantasia: string
-  razaoSocial: string
-  imagemUrl: string
-  slogan: string
-  descricao: string
-  nomeParaAnuncio: string
-  planoEscolhido: string
-  statusCadastro: string
-}
+export default function ConclusaoCadastro() {
+  const { id } = useParams()
+  const router = useRouter()
 
-export default function ConclusaoCadastro({ params }: { params: { id: string } }) {
-  const [anunciante, setAnunciante] = useState<Anunciante | null>(null)
+  const [form, setForm] = useState({
+    nomeFantasia: '',
+    nomeRazaoSocial: '',
+    imagemUrl: '',
+    slogan: '',
+    descricao: '',
+    nomeParaAnuncio: ''
+  })
 
   useEffect(() => {
-    async function fetchAnunciante() {
-      const res = await fetch(`/api/advertiser/${params.id}`)
-      if (res.ok) {
+    async function fetchAdvertiser() {
+      try {
+        const res = await fetch(`/api/advertiser/${id}`)
         const data = await res.json()
-        setAnunciante(data)
+        setForm({
+          nomeFantasia: data.nomeFantasia || '',
+          nomeRazaoSocial: data.nomeRazaoSocial || '',
+          imagemUrl: data.imagemUrl || '',
+          slogan: data.slogan || '',
+          descricao: data.descricao || '',
+          nomeParaAnuncio: data.nomeParaAnuncio || ''
+        })
+      } catch (err) {
+        console.error('Erro ao buscar anunciante:', err)
       }
     }
 
-    fetchAnunciante()
-  }, [params.id])
+    if (id) fetchAdvertiser()
+  }, [id])
 
-  if (!anunciante) {
-    return <p className="text-center mt-10">Carregando dados do anunciante...</p>
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+
+    try {
+      const res = await fetch(`/api/advertiser/update/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      })
+
+      if (res.ok) {
+        router.push(`/advertiser/painel/${id}`)
+      } else {
+        console.error('Erro ao atualizar cadastro:', await res.text())
+      }
+    } catch (err) {
+      console.error('Erro geral no envio:', err)
+    }
+  }
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    const { name, value } = e.target
+    setForm(prev => ({ ...prev, [name]: value }))
   }
 
   return (
-    <main className="max-w-4xl mx-auto px-4 py-10">
-      <h1 className="text-3xl font-bold mb-6 text-center">Conclusão do Cadastro</h1>
-
-      <section className="bg-gray-100 p-6 rounded shadow">
-        <h2 className="text-2xl font-semibold mb-4">Preview do Anúncio</h2>
-
-        <div className="mb-4">
-          <strong>Nome para o Anúncio:</strong> {anunciante.nomeParaAnuncio || anunciante.nomeFantasia}
-        </div>
-
-        <div className="mb-4">
-          <strong>Plano Escolhido:</strong> {anunciante.planoEscolhido}
-        </div>
-
-        <div className="mb-4">
-          <strong>Slogan:</strong> {anunciante.slogan}
-        </div>
-
-        <div className="mb-4">
-          <strong>Descrição:</strong> {anunciante.descricao}
-        </div>
-
-        {anunciante.imagemUrl && (
-          <img
-            src={anunciante.imagemUrl}
-            alt="Imagem do Anúncio"
-            className="w-full max-w-md mx-auto mt-6 mb-4"
-          />
-        )}
+    <main className="max-w-xl mx-auto mt-10 p-6 bg-white rounded shadow">
+      <h1 className="text-2xl font-bold mb-6">Conclusão do Cadastro</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          type="text"
+          name="nomeFantasia"
+          placeholder="Nome Fantasia"
+          value={form.nomeFantasia}
+          onChange={handleChange}
+          className="w-full border p-2"
+        />
+        <input
+          type="text"
+          name="nomeRazaoSocial"
+          placeholder="Razão Social"
+          value={form.nomeRazaoSocial}
+          onChange={handleChange}
+          className="w-full border p-2"
+        />
+        <input
+          type="text"
+          name="imagemUrl"
+          placeholder="URL da Imagem"
+          value={form.imagemUrl}
+          onChange={handleChange}
+          className="w-full border p-2"
+        />
+        <input
+          type="text"
+          name="slogan"
+          placeholder="Slogan"
+          value={form.slogan}
+          onChange={handleChange}
+          className="w-full border p-2"
+        />
+        <textarea
+          name="descricao"
+          placeholder="Descrição do Anunciante"
+          value={form.descricao}
+          onChange={handleChange}
+          className="w-full border p-2 h-28"
+        />
+        <input
+          type="text"
+          name="nomeParaAnuncio"
+          placeholder="Nome que será exibido no anúncio"
+          value={form.nomeParaAnuncio}
+          onChange={handleChange}
+          className="w-full border p-2"
+        />
 
         <button
-          className="bg-green-600 text-white px-6 py-3 rounded mt-4"
-          onClick={() => alert('Anúncio publicado com sucesso!')}
+          type="submit"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
-          Publicar Anúncio
+          Finalizar Cadastro
         </button>
-      </section>
+      </form>
     </main>
   )
 }

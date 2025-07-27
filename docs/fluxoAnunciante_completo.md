@@ -1,6 +1,6 @@
 Fluxo Completo do Anunciante – Projeto GFauto 22/07/25 GPT
 
-Este podemos chamar de: O Coração do GFauto por ser o ponto central.
+Este podemos chamar de: "O Coração do GFauto por ser o ponto central."
 
 **Fluxo do Anunciante** // Ver
 Planos → Cadastro Simples (+ plano) → Criar Senha → Validar E-mail → Conclusão Cadastro → Anúncio em Tempo Real → Publicar
