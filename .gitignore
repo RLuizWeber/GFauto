@@ -44,3 +44,6 @@ next-env.d.ts
 
 # testes locais
 /tests/
+
+# arquivos locais ou pessoais
+memoriadesessao.md
