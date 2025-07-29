@@ -2,7 +2,7 @@
 // Versão: 1.1
 // Autor: GPT & Weber
 // Data: 27/07/2025
-// Comentários: Tela de Cadastro Simples do anunciante com redirecionamento automático para conclusão.
+// Comentários: Tela de "Cadastro Simples" do anunciante com redirecionamento automático para conclusão. Essa tela utiliza 8 campos da tabela advertiser do DB.
 
 'use client'
 
