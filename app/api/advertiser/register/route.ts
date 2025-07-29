@@ -1,80 +1,52 @@
 /// Caminho: app/api/advertiser/register/route.ts
-// Versão: 1.1
+// Versão: 1.0
 // Autor: GPT & Weber
-// Data: 27/07/2025
-// Comentários: Rota da API para inserção de dados do Cadastro Simples
+// Data: 29/07/2025
+// Comentários: Rota de cadastro simples do anunciante.
 
 import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';   // <— named export, não default
 import bcrypt from 'bcryptjs';
-import prisma from '@/lib/prisma';
 
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   try {
-    const body = await request.json();
-
     const {
       nomeResponsavel,
       cpf,
       email,
       celContato,
       senha,
-      planoEscolhido,
       especialidade,
-      cidade
-    } = body;
+      cidade,
+      planoEscolhido
+    } = await req.json();
 
-    // Validação mínima
-    if (
-      !nomeResponsavel ||
-      !cpf ||
-      !email ||
-      !celContato ||
-      !senha ||
-      !especialidade ||
-      !cidade
-    ) {
-      return NextResponse.json({ error: 'Todos os campos são obrigatórios' }, { status: 400 });
+    // validações básicas
+    if (!cpf || !email || !senha) {
+      return NextResponse.json({ message: 'Campos obrigatórios faltando' }, { status: 400 });
     }
 
-    // Verificar se já existe cpf OU email para a MESMA especialidade + cidade
-    const existe = await prisma.advertiser.findFirst({
-      where: {
-        cpf,
-        email,
-        especialidade,
-        cidade
-      }
-    });
+    // hash da senha
+    const senhaHash = await bcrypt.hash(senha, 10);
 
-    if (existe) {
-      return NextResponse.json(
-        { error: 'CPF ou E-mail já cadastrados para essa cidade e especialidade' },
-        { status: 409 }
-      );
-    }
-
-    // Criptografar a senha
-    const senhaCriptografada = await bcrypt.hash(senha, 10);
-
-    // Salvar no banco
-    const novoAnunciante = await prisma.advertiser.create({
+    const novo = await prisma.advertiser.create({
       data: {
         nomeResponsavel,
         cpf,
         email,
         celContato,
-        senha: senhaCriptografada,
-        planoEscolhido,
+        senha: senhaHash,
         especialidade,
         cidade,
-        statusCadastro: 'parcial' // padrão para cadastro simples
+        planoEscolhido,
+        statusCadastro: 'incompleto',      // etapa inicial
+        pagamentoStatus: 'isento'         // cortesia padrão
       }
     });
 
-    return NextResponse.json(novoAnunciante, { status: 201 });
-
-  } catch (erro: any) {
-    console.error('Erro na API de cadastro:', erro);
-    return NextResponse.json({ error: 'Erro interno do servidor' }, { status: 500 });
+    return NextResponse.json({ id: novo.id, message: 'Cadastro criado' }, { status: 201 });
+  } catch (err: any) {
+    console.error('[REGISTER ERROR]', err);
+    return NextResponse.json({ message: 'Erro interno ao criar cadastro' }, { status: 500 });
   }
 }
