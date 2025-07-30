@@ -47,4 +47,3 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Erro inesperado no servidor' }, { status: 500 });
   }
 }
-
