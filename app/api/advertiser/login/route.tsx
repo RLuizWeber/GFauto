@@ -30,7 +30,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       message: 'Login bem-sucedido',
-      nome: anunciante.nomeFantasia || anunciante.nomeRazaoSocial,
+      nome: anunciante.nomeFantasia || anunciante.razaoSocial,
       id: anunciante.id,
       plano: anunciante.planoEscolhido,
     });
