@@ -40,7 +40,7 @@ export async function POST(req: Request) {
         cidade,
         planoEscolhido,
         statusCadastro: 'incompleto',      // etapa inicial
-        pagamentoStatus: 'isento'         // cortesia padrão
+        statusPagamento: 'isento'         // cortesia padrão (campo conforme schema)
       }
     });
 
