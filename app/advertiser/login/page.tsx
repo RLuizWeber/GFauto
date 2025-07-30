@@ -6,7 +6,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import InputMask from 'react-input-mask';
 
@@ -29,7 +29,6 @@ export default function LoginPage() {
     });
 
     if (response.ok) {
-      const data = await response.json();
       router.push('https://gfauto.vercel.app/planos');
     } else {
       const data = await response.json();
@@ -46,7 +45,7 @@ export default function LoginPage() {
           <InputMask
             mask="999.999.999-99"
             value={cpf}
-            onChange={(e) => setCpf(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setCpf(e.target.value)}
             className="w-full p-2 border rounded"
             required
           />
