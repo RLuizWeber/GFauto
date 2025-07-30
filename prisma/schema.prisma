@@ -48,7 +48,7 @@ model Payment {
   planId                  String?
   createdAt               DateTime        @default(now())
   updatedAt               DateTime        @updatedAt
-  status                  StatusPagamento
+  status                  statusPagamento
   advertiser              Advertiser      @relation(fields: [advertiserId], references: [id])
   anuncio                 Anuncio         @relation("PaymentToAnuncio", fields: [mercadopagoPreferenceId], references: [mercadopagoPreferenceId])
 }
@@ -165,7 +165,7 @@ model Imagem {
   @@map("imagens_anuncio")
 }
 
-enum StatusPagamento {
+enum statusPagamento {
   PENDING
   APPROVED
   AUTHORIZED
