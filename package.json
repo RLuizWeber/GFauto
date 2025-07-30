@@ -27,6 +27,8 @@
   },
   "devDependencies": {
     "@types/date-fns": "^2.5.3",
-    "@types/react-input-mask": "^3.0.0"
+    "@types/node": "^24.1.0",
+    "@types/react-input-mask": "^3.0.0",
+    "typescript": "^5.8.3"
   }
 }
