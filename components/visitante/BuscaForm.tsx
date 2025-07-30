@@ -550,7 +550,6 @@ if (especialidade && !especialidadeId && !ESPECIALIDADES_PADRAO.some(esp => esp.
   }`}
   disabled={!formValido || loading || !cidadeId} // ADICIONAR || !cidadeId
 >
-
           {loading ? 'Carregando...' : 'Buscar Serviços'}
         </button>
       </div>

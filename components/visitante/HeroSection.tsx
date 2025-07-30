@@ -1,4 +1,4 @@
-// Caminho: /fluxo_visitante/components/visitante/HeroSection.tsx
+// /components/visitante/HeroSection.tsx
 'use client';
 
 import Image from 'next/image';
@@ -21,6 +21,7 @@ export default function HeroSection() {
               Conectamos você aos melhores profissionais e lojas de autopeças da sua região.
             </p>
             <div className="flex flex-wrap gap-4">
+			  {/* Busca rápida e fácil */}
               <div className="flex items-center">
                 <div className="bg-white rounded-full p-2 mr-2">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">

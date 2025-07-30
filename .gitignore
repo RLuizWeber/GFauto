@@ -46,4 +46,9 @@ next-env.d.ts
 /tests/
 
 # arquivos locais ou pessoais
-memoriadesessao.md
+MEMORIADESESSAO.md
+arquivos_typescript.md
+arquivos_typescript_old_01.md
+arquivos_typescript_old_02.md
+extrair_typescript.sh
+extrair_typescript.sh.md

@@ -1,9 +1,9 @@
-// Caminho Novo: /fluxo_visitante/components/visitante/HeroSection.tsx
+// /fluxo_visitante/components/visitante/HeroSection.tsx
 'use client';
 
 import Image from 'next/image';
 
-export default function HeroSectionUpdated() {
+export default function HeroSection() {
   return (
     <div className="relative bg-blue-600 text-white">
       <div className="absolute inset-0 overflow-hidden">
@@ -20,41 +20,31 @@ export default function HeroSectionUpdated() {
             <p className="text-xl mb-6">
               Conectamos você aos melhores profissionais e lojas de autopeças da sua região.
             </p>
-            <div className="flex flex-col gap-4">
-              {/* Busca rápida e fácil */}
+            <div className="flex flex-wrap gap-4">
+			  {/* Busca rápida e fácil */}
               <div className="flex items-center">
-                <div className="bg-white rounded-lg p-2 mr-3 shadow-md">
-                  <img 
-                    src="/images/fluxo_visitante/mc4.png" 
-                    alt="Busca rápida e fácil" 
-                    className="w-12 h-9 object-cover rounded"
-                  />
+                <div className="bg-white rounded-full p-2 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
-                <span className="text-lg font-medium">Busca rápida e fácil</span>
+                <span>Busca rápida e fácil</span>
               </div>
-              
-              {/* Serviços confiáveis */}
               <div className="flex items-center">
-                <div className="bg-white rounded-lg p-2 mr-3 shadow-md">
-                  <img 
-                    src="/images/fluxo_visitante/logo_gf.png" 
-                    alt="Serviços confiáveis" 
-                    className="w-12 h-9 object-cover rounded"
-                  />
+                <div className="bg-white rounded-full p-2 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
-                <span className="text-lg font-medium">Serviços confiáveis</span>
+                <span>Serviços confiáveis</span>
               </div>
-              
-              {/* Contato direto */}
               <div className="flex items-center">
-                <div className="bg-white rounded-lg p-2 mr-3 shadow-md">
-                  <img 
-                    src="/images/fluxo_visitante/image001.jpg" 
-                    alt="Contato direto" 
-                    className="w-12 h-9 object-cover rounded"
-                  />
+                <div className="bg-white rounded-full p-2 mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
-                <span className="text-lg font-medium">Contato direto</span>
+                <span>Contato direto</span>
               </div>
             </div>
           </div>
@@ -63,12 +53,10 @@ export default function HeroSectionUpdated() {
             <div className="relative w-full max-w-md aspect-video">
               <div className="absolute inset-0 bg-white rounded-lg shadow-xl overflow-hidden">
                 <div className="relative w-full h-full">
-                  {/* Imagem ilustrativa principal */}
-                  <img 
-                    src="/images/fluxo_visitante/logo_gf.png" 
-                    alt="GFauto - Serviços Automotivos" 
-                    className="w-full h-full object-cover"
-                  />
+                  {/* Placeholder para imagem */}
+                  <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-500">Imagem ilustrativa</span>
+                  </div>
                 </div>
               </div>
             </div>

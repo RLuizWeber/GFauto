@@ -1,8 +1,19 @@
+// next.config.js
+import path from 'path';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
-    pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
-    distDir: '.next'
-}
+  reactStrictMode: true,
+  // possivelmente outras configurações…
 
-module.exports = nextConfig
+  // ➊ Adiciona alias '@' para resolver imports absolutos
+  webpack(config) {
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      '@': path.resolve(__dirname),
+    };
+    return config;
+  },
+};
+
+export default nextConfig;

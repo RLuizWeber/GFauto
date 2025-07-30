@@ -7,7 +7,7 @@ interface PaginationProps {
 }
 
 export default function Pagination({ currentPage, totalPages, baseUrl }: PaginationProps) {
-  // Gerar array de páginas a serem exibidas
+  // Gerar array de páginas a serem exibidas  // GFauto/components/visitantes/
   const getPageNumbers = () => {
     const pages = [];
     const maxPagesToShow = 5;

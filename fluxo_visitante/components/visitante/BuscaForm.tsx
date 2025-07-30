@@ -138,6 +138,7 @@ export default function BuscaForm() {
         setEstados(data);
       } catch (err) {
         console.error('Erro ao buscar estados:', err);
+		 setError('Não foi possível carregar os estados. Por favor, tente novamente.');
       } finally {
         setLoading(false);
       }
@@ -348,7 +349,19 @@ export default function BuscaForm() {
       return;
     }
     
-    // Se temos os IDs, usamos eles para a busca
+    // NOVA VALIDAÇÃO: Verificar se cidade existe no estado selecionado
+if (estado && cidade && !cidadeId) {
+  setError('Esta cidade não existe no estado selecionado. Por favor, selecione uma cidade da lista.');
+  return;
+}
+
+// NOVA VALIDAÇÃO: Verificar se especialidade é válida
+if (especialidade && !especialidadeId && !ESPECIALIDADES_PADRAO.some(esp => esp.toLowerCase() === especialidade.toLowerCase())) {
+  setError('Especialidade não encontrada. Por favor, selecione uma opção da lista.');
+  return;
+}
+		
+	// Se temos os IDs, usamos eles para a busca
     if (cidadeId && especialidadeId) {
       router.push(`/resultados?cidade_id=${cidadeId}&especialidade_id=${especialidadeId}`);
     } else {
@@ -535,7 +548,7 @@ export default function BuscaForm() {
               ? 'bg-blue-600 text-white hover:bg-blue-700'
               : 'bg-gray-300 text-gray-500 cursor-not-allowed'
           }`}
-          disabled={!formValido || loading}
+          disabled={!formValido || loading} // ADICIONAR || !cidadeId
         >
           {loading ? 'Carregando...' : 'Buscar Serviços'}
         </button>

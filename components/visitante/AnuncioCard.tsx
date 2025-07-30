@@ -1,4 +1,4 @@
-// Caminho: /fluxo_visitante/components/visitante/AnuncioCard.tsx
+// components/visitante/AnuncioCard.tsx
 import Image from 'next/image';
 import Link from 'next/link';
 import { formatarTelefone } from '../../utils/formatters';
