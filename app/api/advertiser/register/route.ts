@@ -39,7 +39,7 @@ export async function POST(req: Request) {
         especialidade,
         cidade,
         planoEscolhido,
-        statusCadastro: 'incompleto',      // etapa inicial
+        statusCadastro: 'incompleto',      // etapa inicial .
         statusPagamento: 'isento'         // use o nome conforme schema.prisma
       }
     });

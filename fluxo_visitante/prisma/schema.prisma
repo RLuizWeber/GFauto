@@ -24,7 +24,7 @@ model Advertiser {
 }
 
 // Enum para os status possíveis de um Pagamento
-enum StatusPagamento {
+enum statusPagamento {
   PENDING      // Aguardando pagamento
   APPROVED     // Pagamento aprovado
   AUTHORIZED   // Pagamento autorizado (pré-autorização)
@@ -42,7 +42,7 @@ model Payment {
   advertiser              Advertiser      @relation(fields: [advertiserId], references: [id])
   mercadopagoPreferenceId String          @unique // ID da preferência gerada pelo MP
   mercadopagoPaymentId    String?         @unique // ID do pagamento efetivo no MP
-  status                  StatusPagamento // Status do pagamento
+  status                  statusPagamento // Status do pagamento
   amount                  Float           // Valor do pagamento
   currency                String          @default("BRL")
   planId                  String?         // ID do plano associado
