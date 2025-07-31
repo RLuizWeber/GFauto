@@ -40,7 +40,7 @@ export async function POST(req: Request) {
         cidade,
         planoEscolhido,
         statusCadastro: 'incompleto',      // etapa inicial
-        statusPagamento: 'isento'         // use o nome conforme schema.prisma
+        pagamentoStatus: 'isento'         // use o nome conforme schema.prisma
       }
     });
 
