@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { format } from 'date-fns';
-import ptBR from 'date-fns/locale/pt-BR';
+import { ptBR } from 'date-fns/locale';
 
 interface TableColumn<T> {
   header: string;
