@@ -1,12 +1,12 @@
 /// Caminho: app/api/advertiser/register/route.ts
 // Versão: 1.0
 // Autor: GPT & Weber
-// Data: 29/07/2025
-// Comentários: Rota de cadastro simples do anunciante.
+// Data: 30/07/2025
+// Comentários: Rota de cadastro simples do anunciante — campos mínimos e sem pagamentoStatus.
 
-import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';   // <— named export, não default
-import bcrypt from 'bcryptjs';
+import { NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
+import bcrypt from 'bcryptjs'
 
 export async function POST(req: Request) {
   try {
@@ -19,16 +19,20 @@ export async function POST(req: Request) {
       especialidade,
       cidade,
       planoEscolhido
-    } = await req.json();
+    } = await req.json()
 
     // validações básicas
     if (!cpf || !email || !senha) {
-      return NextResponse.json({ message: 'Campos obrigatórios faltando' }, { status: 400 });
+      return NextResponse.json(
+        { message: 'Campos obrigatórios faltando' },
+        { status: 400 }
+      )
     }
 
     // hash da senha
-    const senhaHash = await bcrypt.hash(senha, 10);
+    const senhaHash = await bcrypt.hash(senha, 10)
 
+    // cria o anunciante apenas com os campos que existem no schema.prisma
     const novo = await prisma.advertiser.create({
       data: {
         nomeResponsavel,
@@ -39,14 +43,19 @@ export async function POST(req: Request) {
         especialidade,
         cidade,
         planoEscolhido,
-        statusCadastro: 'incompleto',      // etapa inicial .
-        statusPagamento: 'isento'         // use o nome conforme schema.prisma
+        statusCadastro: 'cadastro_simples' // valor default conforme schema.prisma
       }
-    });
+    })
 
-    return NextResponse.json({ id: novo.id, message: 'Cadastro criado' }, { status: 201 });
+    return NextResponse.json(
+      { id: novo.id, message: 'Cadastro criado com sucesso' },
+      { status: 201 }
+    )
   } catch (err: any) {
-    console.error('[REGISTER ERROR]', err);
-    return NextResponse.json({ message: 'Erro interno ao criar cadastro' }, { status: 500 });
+    console.error('[REGISTER ERROR]', err)
+    return NextResponse.json(
+      { message: 'Erro interno ao criar cadastro' },
+      { status: 500 }
+    )
   }
 }
