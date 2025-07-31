@@ -1,8 +1,8 @@
 "use client";
 
 import React from 'react';
-import { format } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
+import { format } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 
 interface TableColumn<T> {
   header: string;
