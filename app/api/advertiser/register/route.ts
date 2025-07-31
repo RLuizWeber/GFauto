@@ -2,7 +2,7 @@
 // Versão: 1.0
 // Autor: GPT & Weber
 // Data: 30/07/2025
-// Comentários: Rota de cadastro simples do anunciante — campos mínimos e sem pagamentoStatus.
+// Comentários: Rota de cadastro simples do anunciante — campos mínimos e sem statusPagamento.
 
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
