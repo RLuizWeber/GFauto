@@ -2,7 +2,7 @@
 // Versão: 1.0
 // Autor: Equipe Dev GFauto com suporte OpenAI
 // Data: 22/07/2025
-// Hora: 22:45 
+// Hora: 22:50 
 // Comentários: Rota completa CRUD Advertiser (Anunciante), campos conforme banco NeonDB.
 
 import { NextResponse } from 'next/server'
