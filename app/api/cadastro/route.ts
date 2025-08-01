@@ -1,200 +1,129 @@
-// app/api/cadastro/route.ts  
+// Caminho: app/api/cadastro/route.ts
+// Versão: 2025-08-01
+// Autor: IA para Weber (revisão Eng. Responsável)
+// Propósito: Cadastro simples do anunciante, conforme fluxo GFauto.
+// Campos manipulados: email, nomeResponsavel, cpf, celContato, senha, planoEscolhido, razaoSocial, nomeFantasia, cnpj, cargo, enderecoEmpresa, bairro, cidade, estado, cep, emailVerificado, statusCadastro
 
-import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcryptjs';
+import { prisma } from '@/lib/prisma'
+import { NextResponse } from 'next/server'
+import bcrypt from 'bcryptjs'
 
-const prisma = new PrismaClient();
-
-// Função para validar CNPJ .
-function validarCNPJ(cnpj: string): boolean {
-  cnpj = cnpj.replace(/[^\d]/g, '');
-  
-  if (cnpj.length !== 14) return false;
-  if (/^(\d)\1{13}$/.test(cnpj)) return false;
-  
-  let soma = 0;
-  let peso = 2;
-  
-  for (let i = 11; i >= 0; i--) {
-    soma += parseInt(cnpj.charAt(i)) * peso;
-    peso = peso === 9 ? 2 : peso + 1;
-  }
-  
-  let resto = soma % 11;
-  let digito1 = resto < 2 ? 0 : 11 - resto;
-  
-  if (parseInt(cnpj.charAt(12)) !== digito1) return false;
-  
-  soma = 0;
-  peso = 2;
-  
-  for (let i = 12; i >= 0; i--) {
-    soma += parseInt(cnpj.charAt(i)) * peso;
-    peso = peso === 9 ? 2 : peso + 1;
-  }
-  
-  resto = soma % 11;
-  let digito2 = resto < 2 ? 0 : 11 - resto;
-  
-  return parseInt(cnpj.charAt(13)) === digito2;
-}
-
-// Função para validar CPF
+// --- Função utilitária para validar CPF ---
 function validarCPF(cpf: string): boolean {
-  cpf = cpf.replace(/[^\d]/g, '');
-  
+  cpf = cpf.replace(/[^\d]+/g, '');
   if (cpf.length !== 11) return false;
-  if (/^(\d)\1{10}$/.test(cpf)) return false;
-  
+  if (/^(\d)\1+$/.test(cpf)) return false;
   let soma = 0;
   for (let i = 0; i < 9; i++) {
     soma += parseInt(cpf.charAt(i)) * (10 - i);
   }
-  
-  let resto = soma % 11;
-  let digito1 = resto < 2 ? 0 : 11 - resto;
-  
-  if (parseInt(cpf.charAt(9)) !== digito1) return false;
-  
+  let resto = 11 - (soma % 11);
+  if (resto === 10 || resto === 11) resto = 0;
+  if (resto !== parseInt(cpf.charAt(9))) return false;
   soma = 0;
   for (let i = 0; i < 10; i++) {
     soma += parseInt(cpf.charAt(i)) * (11 - i);
   }
-  
-  resto = soma % 11;
-  let digito2 = resto < 2 ? 0 : 11 - resto;
-  
-  return parseInt(cpf.charAt(10)) === digito2;
+  resto = 11 - (soma % 11);
+  if (resto === 10 || resto === 11) resto = 0;
+  if (resto !== parseInt(cpf.charAt(10))) return false;
+  return true;
 }
 
-// Função para validar e-mail
-function validarEmail(email: string): boolean {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regex.test(email);
+// --- Função utilitária para validar CNPJ ---
+function validarCNPJ(cnpj: string): boolean {
+  cnpj = cnpj.replace(/[^\d]+/g, '')
+  if (cnpj.length !== 14) return false
+  if (/^(\d)\1+$/.test(cnpj)) return false
+  let tamanho = cnpj.length - 2
+  let numeros = cnpj.substring(0, tamanho)
+  let digitos = cnpj.substring(tamanho)
+  let soma = 0
+  let pos = tamanho - 7
+  for (let i = tamanho; i >= 1; i--) {
+    soma += +numeros.charAt(tamanho - i) * pos--
+    if (pos < 2) pos = 9
+  }
+  let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11
+  if (resultado !== +digitos.charAt(0)) return false
+  tamanho = tamanho + 1
+  numeros = cnpj.substring(0, tamanho)
+  soma = 0
+  pos = tamanho - 7
+  for (let i = tamanho; i >= 1; i--) {
+    soma += +numeros.charAt(tamanho - i) * pos--
+    if (pos < 2) pos = 9
+  }
+  resultado = soma % 11 < 2 ? 0 : 11 - soma % 11
+  if (resultado !== +digitos.charAt(1)) return false
+  return true
 }
 
-// Função para validar força da senha
-function validarSenha(senha: string): boolean {
-  // Mínimo 8 caracteres, pelo menos 1 maiúscula, 1 minúscula, 1 número e 1 especial
-  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  return regex.test(senha);
-}
-
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    
-    // Validação dos campos obrigatórios
-    const camposObrigatorios = [
-      'email', 'senha', 'nomeResponsavel', 'cpf', 'celContato',
-      'razaoSocial', 'nomeFantasia', 'cnpj', 'endereco', 'bairro',
-      'cep', 'cidade', 'estado', 'cargo', 'plano'
-    ];
-    
-    for (const campo of camposObrigatorios) {
-      if (!body[campo] || body[campo].toString().trim() === '') {
-        return NextResponse.json(
-          { error: `Campo obrigatório: ${campo}` },
-          { status: 400 }
-        );
-      }
+    const body = await request.json()
+
+    // --- Validação dos campos obrigatórios ---
+    if (
+      !body.email ||
+      !body.senha ||
+      !body.cpf ||
+      !body.celContato ||
+      !body.nomeResponsavel ||
+      !body.planoEscolhido
+    ) {
+      return NextResponse.json({ error: 'Campos obrigatórios faltando.' }, { status: 400 })
     }
-    
-    // Validações específicas
-    if (!validarEmail(body.email)) {
-      return NextResponse.json(
-        { error: 'E-mail inválido' },
-        { status: 400 }
-      );
+
+    // --- Validação de formato de e-mail ---
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) {
+      return NextResponse.json({ error: 'E-mail inválido.' }, { status: 400 })
     }
-    
-    if (!validarSenha(body.senha)) {
-      return NextResponse.json(
-        { error: 'Senha deve ter pelo menos 8 caracteres, incluindo maiúscula, minúscula, número e caractere especial' },
-        { status: 400 }
-      );
-    }
-    
+
+    // --- Validação do CPF ---
     if (!validarCPF(body.cpf)) {
-      return NextResponse.json(
-        { error: 'CPF inválido' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'CPF inválido.' }, { status: 400 })
     }
-    
-    if (!validarCNPJ(body.cnpj)) {
-      return NextResponse.json(
-        { error: 'CNPJ inválido' },
-        { status: 400 }
-      );
+
+    // --- Validação do CNPJ, se informado ---
+    if (body.cnpj && !validarCNPJ(body.cnpj)) {
+      return NextResponse.json({ error: 'CNPJ inválido.' }, { status: 400 })
     }
-    
-    // Verificar se e-mail já existe
-    const emailExistente = await prisma.advertiser.findUnique({
-      where: { email: body.email.toLowerCase().trim() }
-    });
-    
-    if (emailExistente) {
-      return NextResponse.json(
-        { error: 'E-mail já cadastrado' },
-        { status: 409 }
-      );
-    }
-    
-    // Hash da senha
-    const senhaHash = await bcrypt.hash(body.senha, 12);
-    
-    // Criar anunciante
+
+    // --- Demais validações customizadas podem ser mantidas aqui (ex: telefone, etc.) ---
+
+    // --- Hash da senha ---
+    const hashedPassword = await bcrypt.hash(body.senha, 10)
+
+    // --- Criação do anunciante ---
     const novoAnunciante = await prisma.advertiser.create({
       data: {
-        // === DADOS BÁSICOS (CADASTRO SIMPLES) ===
         email: body.email.toLowerCase().trim(),
         nomeResponsavel: body.nomeResponsavel.trim(),
-        cpf: body.cpf.replace(/[^\d]/g, ''),
+        cpf: body.cpf.trim(),
         celContato: body.celContato.trim(),
-        senha: senhaHash,
-        planoEscolhido: body.plano,
-        
-        // === DADOS DA EMPRESA (CONCLUSÃO DO CADASTRO) ===
-        razaoSocial: body.razaoSocial.trim(),
-        nomeFantasia: body.nomeFantasia.trim(),
-        cnpj: body.cnpj.replace(/[^\d]/g, ''),
-        cargo: body.cargo.trim(),
-        
-        // === ENDEREÇO DA EMPRESA ===
-        enderecoEmpresa: `${body.endereco.trim()}, ${body.bairro.trim()}`,
-        bairro: body.bairro.trim(),
-        cidade: body.cidade.trim(),
-        estado: body.estado.trim(),
-        cep: body.cep.replace(/[^\d]/g, ''),
-        
-        // === CONTROLE DO SISTEMA ===
+        senha: hashedPassword,
+        planoEscolhido: body.planoEscolhido,
+        razaoSocial: body.razaoSocial,
+        nomeFantasia: body.nomeFantasia,
+        cnpj: body.cnpj,
+        cargo: body.cargo,
+        enderecoEmpresa: body.enderecoEmpresa,
+        bairro: body.bairro,
+        cidade: body.cidade,
+        estado: body.estado,
+        cep: body.cep,
         emailVerificado: false,
-        statusCadastro: "cadastro_simples"
+        statusCadastro: 'cadastro_incompleto'
       }
-    });
-    
-    // Determinar próximo passo baseado no plano
-    const proximoPasso = body.plano === 'premium' ? 'pagamento' : 'criar-anuncio';
-    
-    // Log de segurança
-    console.log(`[CADASTRO] Novo anunciante criado: ${novoAnunciante.id} - ${body.email} - Plano: ${body.plano}`);
-    
-    return NextResponse.json({
-      id: novoAnunciante.id,
-      message: 'Cadastro criado com sucesso',
-      proximoPasso: proximoPasso
-    }, { status: 201 });
-    
+    })
+
+    // --- Remove senha do retorno ---
+    const { senha, ...anuncianteSemSenha } = novoAnunciante
+
+    return NextResponse.json(anuncianteSemSenha, { status: 201 })
   } catch (error) {
-    console.error('[CADASTRO ERROR]', error);
-    
-    return NextResponse.json(
-      { error: 'Erro interno do servidor' },
-      { status: 500 }
-    );
-  } finally {
-    await prisma.$disconnect();
+    console.error('[CADASTRO_ADVERTISER_ERROR]', error)
+    return NextResponse.json({ error: 'Erro ao cadastrar anunciante.' }, { status: 500 })
   }
 }
