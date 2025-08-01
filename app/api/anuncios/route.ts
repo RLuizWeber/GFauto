@@ -20,7 +20,7 @@ export async function GET(req: Request) {
     const especialidade_id = searchParams.get('especialidade_id')
 
     // Busca todos os anúncios ativos com filtros, se fornecidos
-    const anuncios = await prisma.anuncio.findMany({
+    const anuncios = await prisma.anuncios.findMany({
       where: {
         cidade_id: cidade_id || undefined,
         especialidade_id: especialidade_id || undefined,

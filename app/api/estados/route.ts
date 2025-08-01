@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    const estados = await prisma.estado.findMany({
+    const estados = await prisma.estados.findMany({
       select: {
         id: true,
         nome: true,
