@@ -7,13 +7,13 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-export async function GET(req: Request) {
-  try {
-    const url = new URL(req.url);
-    const token = url.searchParams.get('token');
-    if (!token) {
-      return NextResponse.json({ message: 'Token não fornecido' }, { status: 400 });
-    }
+// export async function GET(req: Request) {
+  // try {
+    // const url = new URL(req.url);
+    // const token = url.searchParams.get('token');
+    // if (!token) {
+      // return NextResponse.json({ message: 'Token não fornecido' }, { status: 400 });
+    // }
 
     // Mock de verificação: no futuro remova este if e use real lookup
     const registro = await prisma.advertiser.findFirst({
