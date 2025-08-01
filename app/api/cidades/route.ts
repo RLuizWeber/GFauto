@@ -22,7 +22,7 @@ export async function GET(request: Request) {
       select: {
         id: true,
         nome: true,
-        estadoId: true
+        estado_id: true
       },
       orderBy: {
         nome: 'asc'
