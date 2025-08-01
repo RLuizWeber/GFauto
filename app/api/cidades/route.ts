@@ -17,7 +17,7 @@ export async function GET(request: Request) {
 
     const cidades = await prisma.cidades.findMany({
       where: {
-        estadoId: estadoId
+        estado_id: estadoId
       },
       select: {
         id: true,
