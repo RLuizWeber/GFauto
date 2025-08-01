@@ -29,7 +29,6 @@ export async function POST(req: Request) {
         estado: data.estado,
         bairro: data.bairro,
         enderecoEmpresa: data.enderecoEmpresa,
-        telefone: data.telefone,
         celContato: data.celContato,
         celContato2: data.celContato2,
         emailVerificado: data.emailVerificado,
