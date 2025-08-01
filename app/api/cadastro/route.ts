@@ -1,4 +1,4 @@
-// app/api/cadastro/route.ts
+// app/api/cadastro/route.ts  
 
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
