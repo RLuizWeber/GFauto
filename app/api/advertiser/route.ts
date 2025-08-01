@@ -2,7 +2,6 @@
 // Versão: 1.0
 // Autor: Equipe Dev GFauto com suporte OpenAI
 // Data: 22/07/2025
-// Hora: 22:50 
 // Comentários: Rota completa CRUD Advertiser (Anunciante), campos conforme banco NeonDB.
 
 import { NextResponse } from 'next/server'
@@ -14,32 +13,32 @@ export async function POST(req: Request) {
     const data = await req.json()
 
     const novoAnunciante = await prisma.advertiser.create({
-      data: {
-        id: data.id,
-        email: data.email,
-        senha: data.senha,
-        cpf: data.cpf,
-        nomeFantasia: data.nomeFantasia,
-        razaoSocial: data.razaoSocial,
-        nomeResponsavel: data.nomeResponsavel,
-        nomeParaAnuncio: data.nomeParaAnuncio,
-        cargo: data.cargo,
-        cep: data.cep,
-        cidade: data.cidade,
-        estado: data.estado,
-        bairro: data.bairro,
-        enderecoEmpresa: data.enderecoEmpresa,
-        celContato: data.celContato,
-        celContato2: data.celContato2,
-        emailVerificado: data.emailVerificado,
-        especialidade: data.especialidade,
-        planoEscolhido: data.planoEscolhido,
-        imagemUrl: data.imagemUrl,
-        slogan: data.slogan,
-        descricao: data.descricao,
-        statusCadastro: data.statusCadastro,
-      }
-    })
+  data: {
+    email: data.email,
+    senha: data.senha,
+    cpf: data.cpf,
+    nomeFantasia: data.nomeFantasia,
+    razaoSocial: data.razaoSocial,
+    nomeResponsavel: data.nomeResponsavel,
+    nomeParaAnuncio: data.nomeParaAnuncio,
+    cargo: data.cargo,
+    cep: data.cep,
+    cidade: data.cidade,
+    estado: data.estado,
+    bairro: data.bairro,
+    enderecoEmpresa: data.enderecoEmpresa,
+    celContato: data.celContato,
+    celContato2: data.celContato2,
+    cnpj: data.cnpj,
+    descricao: data.descricao,
+    emailVerificado: data.emailVerificado,
+    especialidade: data.especialidade,
+    imagemUrl: data.imagemUrl,
+    planoEscolhido: data.planoEscolhido,
+    slogan: data.slogan,
+    statusCadastro: data.statusCadastro,
+  }
+})
 
     return NextResponse.json(novoAnunciante)
 
