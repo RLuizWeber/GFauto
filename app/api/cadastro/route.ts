@@ -1,6 +1,6 @@
 // Caminho: app/api/cadastro/route.ts
 // Versão: 2025-08-01
-// Autor: IA para Weber (revisão Eng. Responsável)
+// Autor: IA para Weber (revisão Eng. Responsável GFauto)
 // Propósito: Cadastro simples do anunciante, conforme fluxo GFauto.
 // Campos manipulados: email, nomeResponsavel, cpf, celContato, senha, planoEscolhido, razaoSocial, nomeFantasia, cnpj, cargo, enderecoEmpresa, bairro, cidade, estado, cep, emailVerificado, statusCadastro
 
@@ -90,32 +90,35 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'CNPJ inválido.' }, { status: 400 })
     }
 
-    // --- Demais validações customizadas podem ser mantidas aqui (ex: telefone, etc.) ---
-
     // --- Hash da senha ---
     const hashedPassword = await bcrypt.hash(body.senha, 10)
 
+    // --- Criação dinâmica do objeto data ---
+    const data: any = {
+      email: body.email.toLowerCase().trim(),
+      nomeResponsavel: body.nomeResponsavel.trim(),
+      cpf: body.cpf.trim(),
+      celContato: body.celContato.trim(),
+      senha: hashedPassword,
+      planoEscolhido: body.planoEscolhido,
+      emailVerificado: false,
+      statusCadastro: 'cadastro_incompleto'
+    }
+
+    // Campos opcionais só entram se existirem
+    if (body.razaoSocial) data.razaoSocial = body.razaoSocial
+    if (body.nomeFantasia) data.nomeFantasia = body.nomeFantasia
+    if (body.cnpj) data.cnpj = body.cnpj
+    if (body.cargo) data.cargo = body.cargo
+    if (body.enderecoEmpresa) data.enderecoEmpresa = body.enderecoEmpresa
+    if (body.bairro) data.bairro = body.bairro
+    if (body.cidade) data.cidade = body.cidade
+    if (body.estado) data.estado = body.estado
+    if (body.cep) data.cep = body.cep
+
     // --- Criação do anunciante ---
     const novoAnunciante = await prisma.advertiser.create({
-      data: {
-        email: body.email.toLowerCase().trim(),
-        nomeResponsavel: body.nomeResponsavel.trim(),
-        cpf: body.cpf.trim(),
-        celContato: body.celContato.trim(),
-        senha: hashedPassword,
-        planoEscolhido: body.planoEscolhido,
-        razaoSocial: body.razaoSocial,
-        nomeFantasia: body.nomeFantasia,
-        cnpj: body.cnpj,
-        cargo: body.cargo,
-        enderecoEmpresa: body.enderecoEmpresa,
-        bairro: body.bairro,
-        cidade: body.cidade,
-        estado: body.estado,
-        cep: body.cep,
-        emailVerificado: false,
-        statusCadastro: 'cadastro_incompleto'
-      }
+      data
     })
 
     // --- Remove senha do retorno ---
