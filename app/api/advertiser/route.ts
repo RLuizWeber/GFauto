@@ -1,113 +1,92 @@
-// Nome do Código: app/api/advertiser/route.ts
-// Versão: 1.0
-// Autor: Equipe Dev GFauto com suporte OpenAI
-// Data: 22/07/2025
-// Comentários: Rota completa CRUD Advertiser (Anunciante), campos conforme banco NeonDB.
+/// Caminho: app/api/advertiser/route.ts
+// Versão: 2.0
+// Autor: GPT & Weber
+// Data: 01/08/2025
+// Comentários: Rota para operações gerais do anunciante (listagem, conclusão do cadastro, edição e deleção).
+// - NÃO deve ser usada para cadastro simples (POST vai para /register).
+// - PATCH serve para conclusão do cadastro, conforme fluxoAnunciante_completo.md.
 
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
-// POST - Cadastrar Anunciante
-export async function POST(req: Request) {
+// GET: lista todos os anunciantes (poderia ser limitado/paginado em produção)
+export async function GET() {
+  try {
+    const anunciantes = await prisma.advertiser.findMany()
+    return NextResponse.json(anunciantes)
+  } catch (err: any) {
+    console.error('[GET ADVERTISERS ERROR]', err)
+    return NextResponse.json(
+      { message: 'Erro ao buscar anunciantes.' },
+      { status: 500 }
+    )
+  }
+}
+
+// PATCH: conclusão do cadastro (atualiza campos adicionais após cadastro simples)
+export async function PATCH(req: Request) {
   try {
     const data = await req.json()
-
-    const novoAnunciante = await prisma.advertiser.create({
-  data: {
-    email: data.email,
-    senha: data.senha,
-    cpf: data.cpf,
-    nomeFantasia: data.nomeFantasia,
-    razaoSocial: data.razaoSocial,
-    nomeResponsavel: data.nomeResponsavel,
-    nomeParaAnuncio: data.nomeParaAnuncio,
-    cargo: data.cargo,
-    cep: data.cep,
-    cidade: data.cidade,
-    estado: data.estado,
-    bairro: data.bairro,
-    enderecoEmpresa: data.enderecoEmpresa,
-    celContato: data.celContato,
-    celContato2: data.celContato2,
-    cnpj: data.cnpj,
-    descricao: data.descricao,
-    emailVerificado: data.emailVerificado,
-    especialidade: data.especialidade,
-    imagemUrl: data.imagemUrl,
-    planoEscolhido: data.planoEscolhido,
-    slogan: data.slogan,
-    statusCadastro: data.statusCadastro,
-  }
-})
-
-    return NextResponse.json(novoAnunciante)
-
-  } catch (error) {
-    console.error('Erro ao cadastrar anunciante:', error)
-    return NextResponse.json({ error: 'Erro ao cadastrar anunciante.' }, { status: 500 })
-  }
-}
-
-// GET - Buscar Anunciante por e-mail
-export async function GET(req: Request) {
-  try {
-    const { searchParams } = new URL(req.url)
-    const email = searchParams.get('email')
-
-    if (!email) {
-      return NextResponse.json({ error: 'Email é obrigatório.' }, { status: 400 })
-    }
-
-    const anunciante = await prisma.advertiser.findUnique({
-      where: { email }
-    })
-
-    return NextResponse.json(anunciante)
-
-  } catch (error) {
-    console.error('Erro ao buscar anunciante:', error)
-    return NextResponse.json({ error: 'Erro ao buscar anunciante.' }, { status: 500 })
-  }
-}
-
-// PUT - Editar Anunciante
-export async function PUT(req: Request) {
-  try {
-    const data = await req.json()
-
-    const anunciante = await prisma.advertiser.update({
-      where: { id: data.id },
-      data: {
-        ...data
-      }
-    })
-
-    return NextResponse.json(anunciante)
-
-  } catch (error) {
-    console.error('Erro ao editar anunciante:', error)
-    return NextResponse.json({ error: 'Erro ao editar anunciante.' }, { status: 500 })
-  }
-}
-
-// DELETE - Remover Anunciante
-export async function DELETE(req: Request) {
-  try {
-    const { searchParams } = new URL(req.url)
-    const id = searchParams.get('id')
+    const { id, ...camposAtualizar } = data
 
     if (!id) {
-      return NextResponse.json({ error: 'ID é obrigatório.' }, { status: 400 })
+      return NextResponse.json({ message: 'ID do anunciante faltando.' }, { status: 400 })
     }
 
-    await prisma.advertiser.delete({
-      where: { id }
+    // Remove campos que não existem no schema.prisma
+    const camposValidos: any = {}
+    const camposPermitidos = [
+      'nomeFantasia', 'razaoSocial', 'imagemUrl', 'slogan', 'descricao',
+      'nomeParaAnuncio', 'cargo', 'cep', 'cidade', 'estado', 'bairro', 'enderecoEmpresa',
+      'celContato2', 'cnpj', 'especialidade', 'emailVerificado', 'planoEscolhido', 'slogan',
+      'statusCadastro', 'imagemUrl'
+    ]
+    for (const key of camposPermitidos) {
+      if (key in camposAtualizar && camposAtualizar[key] !== undefined) {
+        camposValidos[key] = camposAtualizar[key]
+      }
+    }
+
+    // Atualiza registro
+    const atualizado = await prisma.advertiser.update({
+      where: { id },
+      data: camposValidos
     })
 
-    return NextResponse.json({ message: 'Anunciante removido com sucesso.' })
+    return NextResponse.json(
+      { id: atualizado.id, message: 'Cadastro atualizado com sucesso.' },
+      { status: 200 }
+    )
+  } catch (err: any) {
+    console.error('[PATCH ADVERTISER ERROR]', err)
+    return NextResponse.json(
+      { message: 'Erro ao atualizar cadastro.' },
+      { status: 500 }
+    )
+  }
+}
 
-  } catch (error) {
-    console.error('Erro ao remover anunciante:', error)
-    return NextResponse.json({ error: 'Erro ao remover anunciante.' }, { status: 500 })
+// DELETE: remove anunciante (requer id no body ou query, depende do fluxo real)
+export async function DELETE(req: Request) {
+  try {
+    const data = await req.json()
+    const { id } = data
+
+    if (!id) {
+      return NextResponse.json({ message: 'ID do anunciante faltando.' }, { status: 400 })
+    }
+
+    await prisma.advertiser.delete({ where: { id } })
+
+    return NextResponse.json(
+      { message: 'Anunciante removido com sucesso.' },
+      { status: 200 }
+    )
+  } catch (err: any) {
+    console.error('[DELETE ADVERTISER ERROR]', err)
+    return NextResponse.json(
+      { message: 'Erro ao remover anunciante.' },
+      { status: 500 }
+    )
   }
 }
