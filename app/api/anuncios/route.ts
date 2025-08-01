@@ -24,7 +24,6 @@ export async function GET(req: Request) {
       where: {
         cidade_id: cidade_id || undefined,
         especialidade_id: especialidade_id || undefined,
-        ativo: true
       }
     })
 
