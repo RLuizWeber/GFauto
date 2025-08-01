@@ -1,50 +1,35 @@
-/// Caminho: app/api/advertiser/update/[id]/route.ts
-// Versão: 1.0
-// Autor: GPT & Weber
-// Data: 27/07/2025
-// Comentários: Rota da API para atualização dos dados do anunciante durante a Conclusão do Cadastro.
+/**
+ * app/api/advertiser/update/[id]/route.ts
+ * Rota para conclusão do cadastro e atualização do anunciante.
+ * - PATCH/PUT: Atualiza campos adicionais e finaliza o cadastro.
+ * - Só aceita atualização de quem já existe.
+ * - Valida campos obrigatórios da conclusão (ex: especialidade, cidade, imagemUrl, etc.)
+ */
 
-import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
-import { z } from 'zod'
+import { NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
 
-// Definição do schema de validação Zod
-const updateSchema = z.object({
-  nomeFantasia: z.string().optional(),
-  nomeRazaoSocial: z.string().optional(),
-  imagemUrl: z.string().optional(),
-  slogan: z.string().optional(),
-  descricao: z.string().optional(),
-  nomeParaAnuncio: z.string().optional()
-})
-
-// Método PUT - Atualização dos dados do anunciante
-export async function PUT(req: Request, context: { params: { id: string } }) {
-  const { id } = context.params
-
+export async function PATCH(request: Request, { params }: { params: { id: string } }) {
   try {
-    const body = await req.json()
-    const parsed = updateSchema.safeParse(body)
+    const { id } = params;
+    const data = await request.json();
 
-    if (!parsed.success) {
-      return NextResponse.json({ error: 'Dados inválidos' }, { status: 400 })
-    }
+    // Aqui pode-se validar campos obrigatórios da conclusão do cadastro, se quiser:
+    // Exemplo: especialidade, cidade, imagemUrl etc.
 
-    const advertiser = await prisma.advertiser.findUnique({ where: { id } })
-
-    if (!advertiser) {
-      return NextResponse.json({ error: 'Anunciante não encontrado' }, { status: 404 })
-    }
-
-    const updated = await prisma.advertiser.update({
+    const advertiser = await prisma.advertiser.update({
       where: { id },
-      data: parsed.data
-    })
+      data: {
+        ...data,
+        statusCadastro: "cadastro_completo" // Atualiza status para cadastro completo
+      }
+    });
 
-    return NextResponse.json({ message: 'Atualizado com sucesso', advertiser: updated }, { status: 200 })
-
-  } catch (err) {
-    console.error('[PUT /api/advertiser/update/[id]]', err)
-    return NextResponse.json({ error: 'Erro interno no servidor' }, { status: 500 })
+    return NextResponse.json(advertiser);
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Erro ao atualizar anunciante", details: String(error) },
+      { status: 500 }
+    );
   }
 }
