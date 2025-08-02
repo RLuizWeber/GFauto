@@ -8,7 +8,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-// Lista todos os anunciantes
+// Lista todos os anunciantes 
 export async function GET() {
   try {
     const advertisers = await prisma.advertiser.findMany();
