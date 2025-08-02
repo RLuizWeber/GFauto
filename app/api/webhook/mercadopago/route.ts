@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { PrismaClient, StatusAnuncio, StatusPagamento } from "@prisma/client";
+import { PrismaClient, StatusAnuncio, statusPagamento } from "@prisma/client";
 import crypto from "crypto";
 import { Resend } from "resend";
 
