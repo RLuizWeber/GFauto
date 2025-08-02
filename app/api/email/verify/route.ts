@@ -1,7 +1,7 @@
 /// Caminho: app/api/email/verify/route.ts
 // Versão: 1.0
 // Autor: GPT & Weber
-// Data: 29/07/2025
+// Data: 30/07/2025
 // Comentários: Verifica token de confirmação enviado por e‑mail.
 
 import { NextResponse } from 'next/server';
