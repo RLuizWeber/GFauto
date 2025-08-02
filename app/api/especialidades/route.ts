@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    const especialidades = await prisma.especialidade.findMany({
+    const especialidades = await prisma.especialidades.findMany({
       select: {
         id: true,
         nome: true
