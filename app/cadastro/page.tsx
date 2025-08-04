@@ -2,7 +2,7 @@
 // Versão: 2.0
 // Autor: GPT & Weber
 // Data: 04/08/2025
-// Comentários: "Cadastro Simples" do anunciante com validações completas, máscaras e validação de força da senha
+// Comentários: "Cadastro Simples" do anunciante com validações completas, máscaras e validação de força da senha 
 
 'use client'
 
