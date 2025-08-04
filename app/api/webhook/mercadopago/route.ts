@@ -23,7 +23,7 @@ console.log("DEBUG MODULE LOAD (v2.9.4): Raw process.env.GF_PRIMARY_ADMIN_EMAIL:
 console.log("DEBUG MODULE LOAD (v2.9.4): Raw process.env.GFAUTO_TEST_VAR:", process.env.GFAUTO_TEST_VAR ? process.env.GFAUTO_TEST_VAR : "NÃO CONFIGURADO");
 
 // Função auxiliar para converter string de status do MP para enum statusPagamento
-function convertToStatusPagamento(status: string): StatusPagamento {
+function convertToStatusPagamento(status: string): statusPagamento {
   // Converter para maiúsculas para garantir compatibilidade
   const upperStatus = status.toUpperCase();
   
@@ -188,7 +188,7 @@ export async function POST(request: NextRequest) {
             console.log(`Atualizando pagamento no DB (v2.9.4): Preference ID ${preferenceId}, Status: ${paymentStatus}`);
             
             // Converter o status do MP para o enum statusPagamento
-            const statusEnum = convertTosStatusPagamento(paymentStatus);
+            const statusEnum = convertToStatusPagamento(paymentStatus);
             
             await prisma.payment.updateMany({
               where: { mercadopagoPreferenceId: preferenceId },
