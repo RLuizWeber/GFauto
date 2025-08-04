@@ -283,15 +283,34 @@ export default function CadastroPage() {
         const novo = await response.json()
         const id = novo?.id
         console.log('ID do usuário criado:', id) // Debug
-        setMensagem('Cadastro realizado com sucesso! Redirecionando...')
-        
-        // Aqui será enviado o e-mail de confirmação via Resend
-        // TODO: Implementar envio de e-mail de confirmação
+        setMensagem('Cadastro realizado com sucesso! Enviando e-mail...')
         
         if (id) {
-          setTimeout(() => {
-            router.push(`/advertiser/conclusao/${id}`)
-          }, 1500)
+          // Enviar e-mail de confirmação
+          try {
+            const emailResponse = await fetch('/api/email/send-confirmation', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                advertiserId: id,
+                email: formData.email,
+                nomeResponsavel: formData.nomeResponsavel
+              })
+            });
+
+            if (emailResponse.ok) {
+              setMensagem('✅ Cadastro realizado! Verifique seu e-mail para confirmar.')
+              setTimeout(() => {
+                // Redirecionar para página de instrução sobre o e-mail
+                router.push(`/advertiser/email-sent?email=${encodeURIComponent(formData.email)}`)
+              }, 2000)
+            } else {
+              setMensagem('Cadastro realizado, mas houve erro no envio do e-mail. Tente fazer login.')
+            }
+          } catch (emailError) {
+            console.error('Erro ao enviar e-mail:', emailError)
+            setMensagem('Cadastro realizado, mas houve erro no envio do e-mail. Tente fazer login.')
+          }
         } else {
           setMensagem('Erro: ID do usuário não encontrado. Tente fazer login.')
         }
