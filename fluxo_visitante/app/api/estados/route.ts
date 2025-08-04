@@ -11,7 +11,7 @@ import { prisma } from '../../../../lib/prisma';
  */
 export async function GET(request: Request) {
   try {
-    const estados = await prisma.estado.findMany({
+    const estados = await prisma.estados.findMany({
       orderBy: {
         nome: 'asc'
       }
