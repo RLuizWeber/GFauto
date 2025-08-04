@@ -22,7 +22,7 @@ console.log("DEBUG MODULE LOAD (v2.9.4): Raw process.env.RESEND_API_KEY:", proce
 console.log("DEBUG MODULE LOAD (v2.9.4): Raw process.env.GF_PRIMARY_ADMIN_EMAIL:", process.env.GF_PRIMARY_ADMIN_EMAIL ? "Configurado" : "NÃO CONFIGURADO");
 console.log("DEBUG MODULE LOAD (v2.9.4): Raw process.env.GFAUTO_TEST_VAR:", process.env.GFAUTO_TEST_VAR ? process.env.GFAUTO_TEST_VAR : "NÃO CONFIGURADO");
 
-// Função auxiliar para converter string de status do MP para enum StatusPagamento
+// Função auxiliar para converter string de status do MP para enum statusPagamento
 function convertToStatusPagamento(status: string): StatusPagamento {
   // Converter para maiúsculas para garantir compatibilidade
   const upperStatus = status.toUpperCase();
