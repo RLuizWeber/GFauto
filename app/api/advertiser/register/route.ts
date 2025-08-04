@@ -8,6 +8,7 @@
 
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import bcrypt from "bcryptjs";
 
 export async function POST(request: Request) {
   try {
@@ -31,22 +32,46 @@ export async function POST(request: Request) {
       }
     }
 
-    // Cria o anunciante no banco (campos extra só se enviados)
+    // Verificar se o email já existe
+    const existingUser = await prisma.advertiser.findUnique({
+      where: { email: data.email }
+    });
+
+    if (existingUser) {
+      return NextResponse.json(
+        { error: "E-mail já cadastrado" },
+        { status: 409 }
+      );
+    }
+
+    // Hash da senha no servidor
+    const hashedPassword = await bcrypt.hash(data.senha, 12);
+
+    // Gerar ID único para o advertiser
+    const advertiserId = `adv_${Date.now()}_${Math.random().toString(36).substring(2)}`;
+
+    // Cria o anunciante no banco
     const advertiser = await prisma.advertiser.create({
       data: {
+        id: advertiserId,
         email: data.email,
-        senha: data.senha,
+        senha: hashedPassword,
         cpf: data.cpf,
         celContato: data.celContato,
         nomeResponsavel: data.nomeResponsavel,
         planoEscolhido: data.planoEscolhido,
-        statusCadastro: data.statusCadastro || "cadastro_simples", // default se não vier
-        // Demais campos opcionais podem ser passados, mas não são obrigatórios
-        ...data
+        cidade: data.cidade,
+        estado: data.estado,
+        statusCadastro: "cadastro_simples",
+        emailVerificado: false,
+        updatedAt: new Date()
       }
     });
 
-    return NextResponse.json(advertiser, { status: 201 });
+    // Remover a senha da resposta por segurança
+    const { senha, ...advertiserResponse } = advertiser;
+
+    return NextResponse.json(advertiserResponse, { status: 201 });
   } catch (error) {
     return NextResponse.json(
       { error: "Erro ao cadastrar anunciante", details: String(error) },
