@@ -282,14 +282,19 @@ export default function CadastroPage() {
       if (response.status === 201) {
         const novo = await response.json()
         const id = novo?.id
+        console.log('ID do usuário criado:', id) // Debug
         setMensagem('Cadastro realizado com sucesso! Redirecionando...')
         
         // Aqui será enviado o e-mail de confirmação via Resend
         // TODO: Implementar envio de e-mail de confirmação
         
-        setTimeout(() => {
-          router.push(`/advertiser/conclusao/${id}`)
-        }, 1500)
+        if (id) {
+          setTimeout(() => {
+            router.push(`/advertiser/conclusao/${id}`)
+          }, 1500)
+        } else {
+          setMensagem('Erro: ID do usuário não encontrado. Tente fazer login.')
+        }
       } else {
         const erro = await response.json()
         setMensagem(erro?.error || 'Erro ao cadastrar anunciante')
