@@ -27,20 +27,20 @@ function convertToStatusPagamento(status: string): StatusPagamento {
   // Converter para maiúsculas para garantir compatibilidade
   const upperStatus = status.toUpperCase();
   
-  // Mapear os status do MP para os valores do enum StatusPagamento
+  // Mapear os status do MP para os valores do enum statusPagamento
   switch (upperStatus) {
-    case "PENDING": return StatusPagamento.PENDING;
-    case "APPROVED": return StatusPagamento.APPROVED;
-    case "AUTHORIZED": return StatusPagamento.AUTHORIZED;
-    case "IN_PROCESS": return StatusPagamento.IN_PROCESS;
-    case "IN_MEDIATION": return StatusPagamento.IN_MEDIATION;
-    case "REJECTED": return StatusPagamento.REJECTED;
-    case "CANCELLED": return StatusPagamento.CANCELLED;
-    case "REFUNDED": return StatusPagamento.REFUNDED;
-    case "CHARGED_BACK": return StatusPagamento.CHARGED_BACK;
+    case "PENDING": return statusPagamento.PENDING;
+    case "APPROVED": return statusPagamento.APPROVED;
+    case "AUTHORIZED": return statusPagamento.AUTHORIZED;
+    case "IN_PROCESS": return statusPagamento.IN_PROCESS;
+    case "IN_MEDIATION": return statusPagamento.IN_MEDIATION;
+    case "REJECTED": return statusPagamento.REJECTED;
+    case "CANCELLED": return statusPagamento.CANCELLED;
+    case "REFUNDED": return statusPagamento.REFUNDED;
+    case "CHARGED_BACK": return statusPagamento.CHARGED_BACK;
     default:
       console.warn(`Status desconhecido do MP: ${status}, usando PENDING como fallback (v2.9.4)`);
-      return StatusPagamento.PENDING;
+      return statusPagamento.PENDING;
   }
 }
 
@@ -187,8 +187,8 @@ export async function POST(request: NextRequest) {
           if (preferenceId && paymentStatus) {
             console.log(`Atualizando pagamento no DB (v2.9.4): Preference ID ${preferenceId}, Status: ${paymentStatus}`);
             
-            // Converter o status do MP para o enum StatusPagamento
-            const statusEnum = convertToStatusPagamento(paymentStatus);
+            // Converter o status do MP para o enum statusPagamento
+            const statusEnum = convertTostatusPagamento(paymentStatus);
             
             await prisma.payment.updateMany({
               where: { mercadopagoPreferenceId: preferenceId },
@@ -316,7 +316,7 @@ export async function POST(request: NextRequest) {
               // Atualizar o status do pagamento para "refunded"
               await prisma.payment.update({
                 where: { id: pagamentoOriginal.id },
-                data: { status: StatusPagamento.REFUNDED }
+                data: { status: statusPagamento.REFUNDED }
               });
               console.log(`Status do pagamento atualizado para REFUNDED (v2.9.4).`);
 
@@ -383,7 +383,7 @@ export async function POST(request: NextRequest) {
             // Atualizar o status do pagamento para "charged_back"
             await prisma.payment.update({
               where: { id: pagamentoContestado.id },
-              data: { status: StatusPagamento.CHARGED_BACK }
+              data: { status: statusPagamento.CHARGED_BACK }
             });
             console.log(`Status do pagamento atualizado para CHARGED_BACK (v2.9.4).`);
 
