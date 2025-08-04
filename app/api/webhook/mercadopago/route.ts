@@ -188,7 +188,7 @@ export async function POST(request: NextRequest) {
             console.log(`Atualizando pagamento no DB (v2.9.4): Preference ID ${preferenceId}, Status: ${paymentStatus}`);
             
             // Converter o status do MP para o enum statusPagamento
-            const statusEnum = convertTostatusPagamento(paymentStatus);
+            const statusEnum = convertTosStatusPagamento(paymentStatus);
             
             await prisma.payment.updateMany({
               where: { mercadopagoPreferenceId: preferenceId },
