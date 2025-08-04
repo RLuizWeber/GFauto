@@ -19,15 +19,15 @@ export async function GET(
     const anuncio = await prisma.anuncio.findUnique({
       where: { id },
       include: {
-        imagens: {
+        imagens_anuncio: {
           orderBy: {
             ordem: 'asc'
           }
         },
-        especialidade: true,
-        cidade: {
+        especialidades: true,
+        cidades: {
           include: {
-            estado: true
+            estados: true
           }
         }
       }

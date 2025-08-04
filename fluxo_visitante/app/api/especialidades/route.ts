@@ -15,7 +15,7 @@ export async function GET(request: Request) {
     
     if (!cidadeId) {
       // Se não for fornecido cidade_id, retorna todas as especialidades
-      const especialidades = await prisma.especialidade.findMany({
+      const especialidades = await prisma.especialidades.findMany({
         orderBy: {
           nome: 'asc'
         }
@@ -25,22 +25,22 @@ export async function GET(request: Request) {
     }
     
     // Buscar especialidades disponíveis na cidade
-    const especialidadesDisponiveis = await prisma.especialidadeDisponivel.findMany({
+    const especialidadesDisponiveis = await prisma.especialidades_disponiveis.findMany({
       where: {
-        cidadeId: cidadeId
+        cidade_id: cidadeId
       },
       include: {
-        especialidade: true
+        especialidades: true
       },
       orderBy: {
-        especialidade: {
+        especialidades: {
           nome: 'asc'
         }
       }
     });
     
     // Extrair apenas as especialidades
-    const especialidades = especialidadesDisponiveis.map(item => item.especialidade);
+    const especialidades = especialidadesDisponiveis.map(item => item.especialidades);
     
     return NextResponse.json(especialidades);
   } catch (error) {

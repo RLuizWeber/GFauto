@@ -41,7 +41,7 @@ export async function GET(request: Request) {
       imagemPrincipal: string | null;
       latitude: number | null;
       longitude: number | null;
-      imagens: {
+      imagens_anuncio: {
         id: string;
         url: string;
         ordem: number;
@@ -52,13 +52,13 @@ export async function GET(request: Request) {
     // Buscar anúncios premium
     const anunciosPremium = await prisma.anuncio.findMany({
       where: {
-        especialidadeId: especialidadeId,
-        cidadeId: cidadeId,
+        especialidade_id: especialidadeId,
+        cidade_id: cidadeId,
         plano: 'premium',
         status: 'PUBLICADO'
       },
       include: {
-        imagens: {
+        imagens_anuncio: {
           orderBy: {
             ordem: 'asc'
           }
@@ -69,13 +69,13 @@ export async function GET(request: Request) {
     // Buscar anúncios cortesia
     const anunciosCortesia = await prisma.anuncio.findMany({
       where: {
-        especialidadeId: especialidadeId,
-        cidadeId: cidadeId,
+        especialidade_id: especialidadeId,
+        cidade_id: cidadeId,
         plano: 'cortesia',
         status: 'PUBLICADO'
       },
       include: {
-        imagens: {
+        imagens_anuncio: {
           orderBy: {
             ordem: 'asc'
           }
@@ -84,19 +84,21 @@ export async function GET(request: Request) {
     });
     
     // Buscar ou criar registro de rotação
-    let rotacao = await prisma.rotacaoPremium.findFirst({
+    let rotacao = await prisma.rotacao_premium.findFirst({
       where: {
-        especialidadeId: especialidadeId,
-        cidadeId: cidadeId
+        especialidade_id: especialidadeId,
+        cidade_id: cidadeId
       }
     });
     
     if (!rotacao) {
-      rotacao = await prisma.rotacaoPremium.create({
+      rotacao = await prisma.rotacao_premium.create({
         data: {
-          especialidadeId: especialidadeId,
-          cidadeId: cidadeId,
-          ultimaPosicao: 0
+          id: `${especialidadeId}_${cidadeId}`,
+          especialidade_id: especialidadeId,
+          cidade_id: cidadeId,
+          ultima_posicao: 0,
+          updated_at: new Date()
         }
       });
     }
@@ -104,18 +106,18 @@ export async function GET(request: Request) {
     // Aplicar rotação aos anúncios premium
     let anunciosPremiumRotacionados: typeof anunciosPremium = [];
     if (anunciosPremium.length > 0) {
-      const posicao = rotacao.ultimaPosicao % anunciosPremium.length;
+      const posicao = rotacao.ultima_posicao % anunciosPremium.length;
       anunciosPremiumRotacionados = [
         ...anunciosPremium.slice(posicao),
         ...anunciosPremium.slice(0, posicao)
       ];
       
       // Atualizar posição para próxima consulta
-      await prisma.rotacaoPremium.update({
+      await prisma.rotacao_premium.update({
         where: { id: rotacao.id },
         data: {
-          ultimaPosicao: (posicao + 1) % anunciosPremium.length,
-          updatedAt: new Date()
+          ultima_posicao: (posicao + 1) % anunciosPremium.length,
+          updated_at: new Date()
         }
       });
     }
