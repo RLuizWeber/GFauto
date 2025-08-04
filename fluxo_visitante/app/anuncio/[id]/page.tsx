@@ -13,10 +13,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const anuncio = await prisma.anuncio.findUnique({
     where: { id: params.id },
     include: {
-      especialidade: true,
-      cidade: {
+      especialidades: true,
+      cidades: {
         include: {
-          estado: true
+          estados: true
         }
       }
     }
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${anuncio.titulo} | GFauto`,
-    description: anuncio.descricao || `Detalhes sobre ${anuncio.titulo} em ${anuncio.cidade.nome}/${anuncio.cidade.estado.sigla}`,
+    description: anuncio.descricao || `Detalhes sobre ${anuncio.titulo} em ${anuncio.cidades.nome}/${anuncio.cidades.estados.sigla}`,
   };
 }
 
@@ -38,11 +38,11 @@ export default async function AnuncioPage({ params }: Props) {
   const anuncio = await prisma.anuncio.findUnique({
     where: { id: params.id },
     include: {
-      imagens: true,
-      especialidade: true,
-      cidade: {
+      imagens_anuncio: true,
+      especialidades: true,
+      cidades: {
         include: {
-          estado: true
+          estados: true
         }
       }
     }
@@ -72,7 +72,7 @@ export default async function AnuncioPage({ params }: Props) {
               <div>
                 <h1 className="text-2xl md:text-3xl font-bold">{anuncio.titulo}</h1>
                 <p className="text-blue-100 mt-1">
-                  {anuncio.especialidade.nome} em {anuncio.cidade.nome}/{anuncio.cidade.estado.sigla}
+                  {anuncio.especialidades.nome} em {anuncio.cidades.nome}/{anuncio.cidades.estados.sigla}
                 </p>
               </div>
               <div className="mt-4 md:mt-0">
@@ -89,10 +89,10 @@ export default async function AnuncioPage({ params }: Props) {
               {/* Coluna da esquerda - Imagens */}
               <div className="md:col-span-2">
                 <div className="bg-gray-100 rounded-lg overflow-hidden mb-6">
-                  {anuncio.imagens && anuncio.imagens.length > 0 ? (
+                  {anuncio.imagens_anuncio && anuncio.imagens_anuncio.length > 0 ? (
                     <div className="relative aspect-video">
                       <Image 
-                        src={anuncio.imagens[0].url} 
+                        src={anuncio.imagens_anuncio[0].url} 
                         alt={anuncio.titulo}
                         fill
                         className="object-cover"
@@ -105,9 +105,9 @@ export default async function AnuncioPage({ params }: Props) {
                   )}
                 </div>
                 
-                {anuncio.imagens && anuncio.imagens.length > 1 && (
+                {anuncio.imagens_anuncio && anuncio.imagens_anuncio.length > 1 && (
                   <div className="grid grid-cols-4 gap-2">
-                    {anuncio.imagens.slice(1, 5).map((imagem) => (
+                    {anuncio.imagens_anuncio.slice(1, 5).map((imagem) => (
                       <div key={imagem.id} className="relative aspect-square rounded-md overflow-hidden">
                         <Image 
                           src={imagem.url} 
@@ -145,7 +145,7 @@ export default async function AnuncioPage({ params }: Props) {
                       <div>
                         <p className="text-sm text-gray-500">Endereço:</p>
                         <p className="font-medium">{anuncio.endereco}</p>
-                        <p className="text-sm">{anuncio.cidade.nome}/{anuncio.cidade.estado.sigla}</p>
+                        <p className="text-sm">{anuncio.cidades.nome}/{anuncio.cidades.estados.sigla}</p>
                       </div>
                     )}
                     
