@@ -1,12 +1,10 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
-    const estadoId = searchParams.get('estado_id');
+    const url = new URL(request.url);
+    const estadoId = url.searchParams.get('estado_id');
 
     if (!estadoId) {
       return NextResponse.json(
@@ -14,6 +12,8 @@ export async function GET(request: Request) {
         { status: 400 }
       );
     }
+
+    console.log('Buscando cidades para estado:', estadoId);
 
     const cidades = await prisma.cidades.findMany({
       where: {
@@ -29,6 +29,8 @@ export async function GET(request: Request) {
       }
     });
 
+    console.log(`Encontradas ${cidades.length} cidades para estado ${estadoId}`);
+
     return NextResponse.json(cidades);
   } catch (error) {
     console.error('Erro ao buscar cidades:', error);
@@ -36,8 +38,6 @@ export async function GET(request: Request) {
       { error: 'Erro interno do servidor' },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
