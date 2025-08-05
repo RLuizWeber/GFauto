@@ -20,7 +20,7 @@ export default function LoginPage() {
     e.preventDefault();
     setErro('');
 
-    const response = await fetch('/api/advertiser/login', {
+    const response = await fetch('/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,10 +29,12 @@ export default function LoginPage() {
     });
 
     if (response.ok) {
-      router.push('https://gfauto.vercel.app/planos');
+      const data = await response.json();
+      console.log('Login realizado:', data);
+      router.push('/planos');
     } else {
       const data = await response.json();
-      setErro(data.message || 'Erro ao fazer login');
+      setErro(data.error || 'CPF não encontrado ou senha inválida');
     }
   };
 

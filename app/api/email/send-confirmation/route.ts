@@ -48,7 +48,13 @@ export async function POST(request: Request) {
     });
 
     // URL de confirmação
-    const confirmationUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/advertiser/confirm-email?token=${confirmationToken}`;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://gfauto.vercel.app';
+    const confirmationUrl = `${baseUrl}/advertiser/confirm-email?token=${confirmationToken}`;
+
+    console.log('=== URL CONFIRMAÇÃO ===');
+    console.log('Base URL:', baseUrl);
+    console.log('Token:', confirmationToken);
+    console.log('URL completa:', confirmationUrl);
 
     // Template do e-mail
     const emailHtml = `

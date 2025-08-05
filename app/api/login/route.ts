@@ -1,33 +1,63 @@
 // Nome do Código: route.ts (Login Anunciante)
-// Versão: 1.0
+// Versão: 2.0
 // Autor: Weber & Dev Team
-// Data: 2025-07-25
-// Hora: 20:53
-// Comentários: Rota de login do anunciante para o Cadastro Simples
+// Data: 2025-08-05
+// Hora: 17:30
+// Comentários: Rota de login do anunciante para o Cadastro Simples - corrigida para usar CPF e senha hasheada
 
 import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
+import bcrypt from 'bcryptjs'
 
 export async function POST(req: Request) {
   try {
     const body = await req.json()
-    const { email, senha } = body
+    const { cpf, senha } = body
 
-    if (!email || !senha) {
-      return NextResponse.json({ error: 'E-mail e senha são obrigatórios.' }, { status: 400 })
+    console.log('=== LOGIN ATTEMPT ===');
+    console.log('CPF recebido:', cpf);
+    console.log('Senha recebida:', senha ? '***' : 'vazia');
+
+    if (!cpf || !senha) {
+      return NextResponse.json({ error: 'CPF e senha são obrigatórios.' }, { status: 400 })
     }
 
-    const advertiser = await prisma.advertiser.findUnique({ where: { email } })
+    // Remover formatação do CPF para busca
+    const cpfLimpo = cpf.replace(/\D/g, '');
+    console.log('CPF limpo para busca:', cpfLimpo);
+
+    const advertiser = await prisma.advertiser.findUnique({ 
+      where: { cpf: cpfLimpo } 
+    })
+
+    console.log('Anunciante encontrado:', !!advertiser);
+    if (advertiser) {
+      console.log('ID do anunciante:', advertiser.id);
+      console.log('Email verificado:', advertiser.emailVerificado);
+      console.log('Status cadastro:', advertiser.statusCadastro);
+    }
 
     if (!advertiser) {
-      return NextResponse.json({ error: 'E-mail não encontrado.' }, { status: 404 })
+      return NextResponse.json({ error: 'CPF não encontrado ou senha inválida' }, { status: 404 })
     }
 
-    if (advertiser.senha !== senha) {
-      return NextResponse.json({ error: 'Senha incorreta.' }, { status: 401 })
+    // Verificar senha hasheada
+    const senhaValida = await bcrypt.compare(senha, advertiser.senha);
+    console.log('Senha válida:', senhaValida);
+
+    if (!senhaValida) {
+      return NextResponse.json({ error: 'CPF não encontrado ou senha inválida' }, { status: 401 })
     }
 
-    return NextResponse.json(advertiser, { status: 200 })
+    // Retornar dados do anunciante (sem a senha)
+    const { senha: _, ...anunciante } = advertiser;
+    
+    return NextResponse.json({
+      success: true,
+      anunciante,
+      message: 'Login realizado com sucesso'
+    }, { status: 200 })
+
   } catch (error) {
     console.error('[LOGIN_ADVERTISER]', error)
     return NextResponse.json({ error: 'Erro interno do servidor.' }, { status: 500 })
