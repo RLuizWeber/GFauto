@@ -273,14 +273,24 @@ export default function CadastroPage() {
         statusCadastro: 'cadastro_simples'
       }
 
+      console.log('=== DADOS ENVIANDO PARA API ===')
+      console.log('URL:', '/api/advertiser/register')
+      console.log('Dados:', JSON.stringify(dataToSend, null, 2))
+
       const response = await fetch('/api/advertiser/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dataToSend)
       })
 
+      console.log('=== RESPOSTA DA API ===')
+      console.log('Status:', response.status)
+      console.log('Status Text:', response.statusText)
+
       if (response.status === 201) {
         const novo = await response.json()
+        console.log('=== USUÁRIO CRIADO ===')
+        console.log('Resposta completa:', JSON.stringify(novo, null, 2))
         const id = novo?.id
         console.log('ID do usuário criado:', id) // Debug
         setMensagem('Cadastro realizado com sucesso! Enviando e-mail...')
@@ -288,23 +298,36 @@ export default function CadastroPage() {
         if (id) {
           // Enviar e-mail de confirmação
           try {
+            const emailData = {
+              advertiserId: id,
+              email: formData.email,
+              nomeResponsavel: formData.nomeResponsavel
+            }
+            
+            console.log('=== ENVIANDO EMAIL ===')
+            console.log('Dados do email:', JSON.stringify(emailData, null, 2))
+
             const emailResponse = await fetch('/api/email/send-confirmation', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                advertiserId: id,
-                email: formData.email,
-                nomeResponsavel: formData.nomeResponsavel
-              })
+              body: JSON.stringify(emailData)
             });
 
+            console.log('=== RESPOSTA DO EMAIL ===')
+            console.log('Email Status:', emailResponse.status)
+            console.log('Email Status Text:', emailResponse.statusText)
+
             if (emailResponse.ok) {
+              const emailResult = await emailResponse.json()
+              console.log('Email resultado:', emailResult)
               setMensagem('✅ Cadastro realizado! Verifique seu e-mail para confirmar.')
               setTimeout(() => {
                 // Redirecionar para página de instrução sobre o e-mail
                 router.push(`/advertiser/email-sent?email=${encodeURIComponent(formData.email)}`)
               }, 2000)
             } else {
+              const emailError = await emailResponse.json()
+              console.error('Erro no email:', emailError)
               setMensagem('Cadastro realizado, mas houve erro no envio do e-mail. Tente fazer login.')
             }
           } catch (emailError) {
@@ -316,11 +339,14 @@ export default function CadastroPage() {
         }
       } else {
         const erro = await response.json()
+        console.log('=== ERRO NA API ===')
+        console.log('Erro completo:', JSON.stringify(erro, null, 2))
         setMensagem(erro?.error || 'Erro ao cadastrar anunciante')
       }
     } catch (erro) {
-      setMensagem('Erro de conexão ou servidor')
+      console.error('=== ERRO DE CONEXÃO ===')
       console.error('Erro:', erro)
+      setMensagem('Erro de conexão ou servidor')
     }
   }
 

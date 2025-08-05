@@ -55,21 +55,26 @@ export async function POST(request: Request) {
     console.log('ID gerado para o usuário:', advertiserId);
 
     // Cria o anunciante no banco
+    const advertiserData = {
+      id: advertiserId,
+      email: data.email,
+      senha: hashedPassword,
+      cpf: data.cpf,
+      celContato: data.celContato,
+      nomeResponsavel: data.nomeResponsavel,
+      planoEscolhido: data.planoEscolhido,
+      cidade: data.cidade || null,
+      estado: data.estado || null,
+      statusCadastro: "cadastro_simples",
+      emailVerificado: false,
+      updatedAt: new Date()
+    };
+
+    console.log('=== DADOS PARA CRIAR NO PRISMA ===');
+    console.log(JSON.stringify(advertiserData, null, 2));
+
     const advertiser = await prisma.advertiser.create({
-      data: {
-        id: advertiserId,
-        email: data.email,
-        senha: hashedPassword,
-        cpf: data.cpf,
-        celContato: data.celContato,
-        nomeResponsavel: data.nomeResponsavel,
-        planoEscolhido: data.planoEscolhido,
-        cidade: data.cidade,
-        estado: data.estado,
-        statusCadastro: "cadastro_simples",
-        emailVerificado: false,
-        updatedAt: new Date()
-      }
+      data: advertiserData
     });
 
     console.log('Usuário criado com sucesso:', { id: advertiser.id, email: advertiser.email });

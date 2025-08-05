@@ -109,12 +109,23 @@ export async function POST(request: Request) {
     `;
 
     // Enviar e-mail
+    const fromEmail = process.env.RESEND_VERIFIED_DOMAIN 
+      ? `GFauto <noreply@${process.env.RESEND_VERIFIED_DOMAIN}>` 
+      : 'GFauto <onboarding@resend.dev>'; // Fallback para domínio padrão do Resend
+
+    console.log('=== ENVIANDO EMAIL ===');
+    console.log('From:', fromEmail);
+    console.log('To:', email);
+    console.log('Subject: 🚗 Confirme seu e-mail - GFauto');
+
     const emailResponse = await resend.emails.send({
-      from: 'GFauto <noreply@gfauto.com.br>', // Domínio correto
+      from: fromEmail,
       to: [email],
       subject: '🚗 Confirme seu e-mail - GFauto',
       html: emailHtml,
-      replyTo: 'contato@gfauto.com.br'
+      replyTo: process.env.RESEND_VERIFIED_DOMAIN 
+        ? `contato@${process.env.RESEND_VERIFIED_DOMAIN}` 
+        : undefined
     });
 
     console.log('E-mail enviado:', emailResponse);
