@@ -121,8 +121,8 @@ export async function POST(request: Request) {
     `;
 
     // Enviar e-mail
-    // Usar sempre o domínio padrão do Resend para teste
-    const fromEmail = 'GFauto <onboarding@resend.dev>';
+    // Usar domínio verificado do cliente
+    const fromEmail = 'GFauto <noreply@gfauto.com.br>';
 
     console.log('=== CONFIGURAÇÃO EMAIL ===');
     console.log('RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY);
