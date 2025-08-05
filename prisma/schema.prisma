@@ -34,8 +34,6 @@ model Advertiser {
   senha           String
   slogan          String?
   statusCadastro  String    @default("cadastro_simples")
-  confirmationToken String?
-  confirmationTokenExpires DateTime?
   Anuncio         Anuncio[]
   Payment         Payment[]
 }
