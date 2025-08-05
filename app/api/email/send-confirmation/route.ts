@@ -8,11 +8,12 @@ import { Resend } from "resend";
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: Request) {
   try {
     const { advertiserId, email, nomeResponsavel } = await request.json();
+
+    console.log('=== INICIO API EMAIL ===');
+    console.log('Dados recebidos:', { advertiserId, email, nomeResponsavel });
 
     if (!advertiserId || !email) {
       return NextResponse.json(
@@ -20,6 +21,17 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    // Verificar se a API key existe antes de criar a instância
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY não encontrada nas variáveis de ambiente');
+      return NextResponse.json(
+        { error: "Configuração de e-mail não encontrada" },
+        { status: 500 }
+      );
+    }
+
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     // Gerar token único para confirmação
     const confirmationToken = crypto.randomBytes(32).toString('hex');
@@ -109,27 +121,33 @@ export async function POST(request: Request) {
     `;
 
     // Enviar e-mail
-    const fromEmail = process.env.RESEND_VERIFIED_DOMAIN 
-      ? `GFauto <noreply@${process.env.RESEND_VERIFIED_DOMAIN}>` 
-      : 'GFauto <onboarding@resend.dev>'; // Fallback para domínio padrão do Resend
+    // Usar sempre o domínio padrão do Resend para teste
+    const fromEmail = 'GFauto <onboarding@resend.dev>';
 
     console.log('=== CONFIGURAÇÃO EMAIL ===');
     console.log('RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY);
     console.log('RESEND_API_KEY length:', process.env.RESEND_API_KEY?.length);
-    console.log('RESEND_VERIFIED_DOMAIN:', process.env.RESEND_VERIFIED_DOMAIN);
+    console.log('RESEND_API_KEY first 10 chars:', process.env.RESEND_API_KEY?.substring(0, 10));
     console.log('From email:', fromEmail);
     console.log('To:', email);
     console.log('Subject: 🚗 Confirme seu e-mail - GFauto');
+
+    // Verificar se a API key existe
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY não configurada');
+      return NextResponse.json(
+        { error: "RESEND_API_KEY não configurada" },
+        { status: 500 }
+      );
+    }
 
     try {
       const emailResponse = await resend.emails.send({
         from: fromEmail,
         to: [email],
         subject: '🚗 Confirme seu e-mail - GFauto',
-        html: emailHtml,
-        replyTo: process.env.RESEND_VERIFIED_DOMAIN 
-          ? `contato@${process.env.RESEND_VERIFIED_DOMAIN}` 
-          : undefined
+        html: emailHtml
+        // Removido replyTo para simplificar o teste
       });
 
       console.log('=== RESPOSTA RESEND ===');
