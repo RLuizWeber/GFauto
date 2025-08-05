@@ -113,28 +113,49 @@ export async function POST(request: Request) {
       ? `GFauto <noreply@${process.env.RESEND_VERIFIED_DOMAIN}>` 
       : 'GFauto <onboarding@resend.dev>'; // Fallback para domínio padrão do Resend
 
-    console.log('=== ENVIANDO EMAIL ===');
-    console.log('From:', fromEmail);
+    console.log('=== CONFIGURAÇÃO EMAIL ===');
+    console.log('RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY);
+    console.log('RESEND_API_KEY length:', process.env.RESEND_API_KEY?.length);
+    console.log('RESEND_VERIFIED_DOMAIN:', process.env.RESEND_VERIFIED_DOMAIN);
+    console.log('From email:', fromEmail);
     console.log('To:', email);
     console.log('Subject: 🚗 Confirme seu e-mail - GFauto');
 
-    const emailResponse = await resend.emails.send({
-      from: fromEmail,
-      to: [email],
-      subject: '🚗 Confirme seu e-mail - GFauto',
-      html: emailHtml,
-      replyTo: process.env.RESEND_VERIFIED_DOMAIN 
-        ? `contato@${process.env.RESEND_VERIFIED_DOMAIN}` 
-        : undefined
-    });
+    try {
+      const emailResponse = await resend.emails.send({
+        from: fromEmail,
+        to: [email],
+        subject: '🚗 Confirme seu e-mail - GFauto',
+        html: emailHtml,
+        replyTo: process.env.RESEND_VERIFIED_DOMAIN 
+          ? `contato@${process.env.RESEND_VERIFIED_DOMAIN}` 
+          : undefined
+      });
 
-    console.log('E-mail enviado:', emailResponse);
+      console.log('=== RESPOSTA RESEND ===');
+      console.log('Email response:', JSON.stringify(emailResponse, null, 2));
 
-    return NextResponse.json({
-      success: true,
-      message: "E-mail de confirmação enviado com sucesso",
-      emailResponse: emailResponse.data
-    });
+      if (emailResponse.error) {
+        console.error('Erro do Resend:', emailResponse.error);
+        return NextResponse.json(
+          { error: "Erro ao enviar e-mail", details: emailResponse.error },
+          { status: 500 }
+        );
+      }
+
+      return NextResponse.json({
+        success: true,
+        message: "E-mail de confirmação enviado com sucesso",
+        emailResponse: emailResponse.data || emailResponse
+      });
+
+    } catch (emailError) {
+      console.error('Erro na chamada do Resend:', emailError);
+      return NextResponse.json(
+        { error: "Erro ao enviar e-mail", details: String(emailError) },
+        { status: 500 }
+      );
+    }
 
   } catch (error) {
     console.error('Erro ao enviar e-mail:', error);
