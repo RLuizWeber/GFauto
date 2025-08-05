@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     const cpfLimpo = cpf.replace(/\D/g, '');
     console.log('CPF limpo para busca:', cpfLimpo);
 
-    const advertiser = await prisma.advertiser.findUnique({ 
+    const advertiser = await prisma.advertiser.findFirst({ 
       where: { cpf: cpfLimpo } 
     })
 
