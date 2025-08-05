@@ -31,7 +31,8 @@ export default function LoginPage() {
     if (response.ok) {
       const data = await response.json();
       console.log('Login realizado:', data);
-      router.push('/planos');
+      // Redirecionar para o painel do anunciante após login bem-sucedido
+      router.push('/painel');
     } else {
       const data = await response.json();
       setErro(data.error || 'CPF não encontrado ou senha inválida');
