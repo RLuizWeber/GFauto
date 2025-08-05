@@ -110,11 +110,11 @@ export async function POST(request: Request) {
 
     // Enviar e-mail
     const emailResponse = await resend.emails.send({
-      from: 'GFauto <noreply@gfauto.com>', // Configure seu domínio no Resend
+      from: 'GFauto <noreply@gfauto.com.br>', // Domínio correto
       to: [email],
       subject: '🚗 Confirme seu e-mail - GFauto',
       html: emailHtml,
-      replyTo: 'contato@gfauto.com'
+      replyTo: 'contato@gfauto.com.br'
     });
 
     console.log('E-mail enviado:', emailResponse);

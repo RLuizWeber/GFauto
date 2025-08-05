@@ -2,24 +2,25 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import '../styles/PlanoPage.css';
 
 const PlanoPage = () => {
+  const router = useRouter();
   const [planoSelecionado, setPlanoSelecionado] = useState<string | null>(null);
 
   const handlePlanoClick = (plano: string, periodo?: string, valor?: number) => {
     const planoCompleto = periodo ? `${plano}-${periodo}` : plano;
     setPlanoSelecionado(planoCompleto);
     
-    // Futuramente redirecionará para cadastro/login
     console.log(`Plano selecionado: ${plano}${periodo ? ` - ${periodo}` : ''}${valor ? ` - R$ ${valor}` : ''}`);
     
-    // TODO: Implementar redirecionamento para cadastro/login
-    // if (plano === 'cortesia') {
-    //   router.push('/cadastro?plano=cortesia');
-    // } else {
-    //   router.push('/cadastro?plano=premium&periodo=' + periodo + '&valor=' + valor);
-    // }
+    // Redireciona para cadastro com os parâmetros
+    if (plano === 'cortesia') {
+      router.push('/cadastro?plano=cortesia&valor=0&periodo=');
+    } else {
+      router.push(`/cadastro?plano=premium&periodo=${encodeURIComponent(periodo || '1 ano')}&valor=${valor || 36}`);
+    }
   };
 
   return (

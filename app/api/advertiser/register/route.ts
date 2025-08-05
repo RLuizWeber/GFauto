@@ -13,6 +13,7 @@ import bcrypt from "bcryptjs";
 export async function POST(request: Request) {
   try {
     const data = await request.json();
+    console.log('Dados recebidos para cadastro:', JSON.stringify(data, null, 2));
 
     // Validando campos obrigatórios do cadastro simples
     const requiredFields = [
@@ -25,6 +26,7 @@ export async function POST(request: Request) {
     ];
     for (const field of requiredFields) {
       if (!data[field]) {
+        console.log(`Campo obrigatório ausente: ${field}`);
         return NextResponse.json(
           { error: `Campo obrigatório ausente: ${field}` },
           { status: 400 }
@@ -38,6 +40,7 @@ export async function POST(request: Request) {
     });
 
     if (existingUser) {
+      console.log('E-mail já existe:', data.email);
       return NextResponse.json(
         { error: "E-mail já cadastrado" },
         { status: 409 }
@@ -49,6 +52,7 @@ export async function POST(request: Request) {
 
     // Gerar ID único para o advertiser
     const advertiserId = `adv_${Date.now()}_${Math.random().toString(36).substring(2)}`;
+    console.log('ID gerado para o usuário:', advertiserId);
 
     // Cria o anunciante no banco
     const advertiser = await prisma.advertiser.create({
@@ -68,11 +72,14 @@ export async function POST(request: Request) {
       }
     });
 
+    console.log('Usuário criado com sucesso:', { id: advertiser.id, email: advertiser.email });
+
     // Remover a senha da resposta por segurança
     const { senha, ...advertiserResponse } = advertiser;
 
     return NextResponse.json(advertiserResponse, { status: 201 });
   } catch (error) {
+    console.error('Erro detalhado ao cadastrar anunciante:', error);
     return NextResponse.json(
       { error: "Erro ao cadastrar anunciante", details: String(error) },
       { status: 500 }
