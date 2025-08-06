@@ -11,34 +11,29 @@ export async function GET() {
     console.log('=== API LISTANDO ANUNCIANTES ===');
     console.log('Timestamp:', new Date().toISOString());
 
-    // Forçar nova conexão e limpeza total de cache
-    await prisma.$disconnect();
-    await prisma.$connect();
+    // Usar query Prisma normal - mais estável
+    const advertisers = await prisma.advertiser.findMany({
+      select: {
+        id: true,
+        nomeResponsavel: true,
+        email: true,
+        cpf: true,
+        planoEscolhido: true,
+        statusCadastro: true,
+        emailVerificado: true,
+        createdAt: true,
+        cidade: true,
+        estado: true,
+        celContato: true,
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
 
-    // SOLUÇÃO RADICAL: Query SQL com timestamp único para forçar cache bypass
-    const timestampQuery = Date.now();
-    const advertisers = await prisma.$queryRaw`
-      SELECT 
-        id, 
-        "nomeResponsavel", 
-        email, 
-        cpf, 
-        "planoEscolhido", 
-        "statusCadastro", 
-        "emailVerificado", 
-        "createdAt", 
-        cidade, 
-        estado, 
-        "celContato",
-        ${timestampQuery} as query_timestamp
-      FROM "Advertiser" 
-      ORDER BY "createdAt" DESC
-    ` as any[];
-
-    console.log('Query timestamp:', timestampQuery);
-    console.log('Total de anunciantes encontrados (RAW):', advertisers.length);
-    console.log('IDs dos anunciantes (RAW):', advertisers.map((a: any) => a.id));
-    console.log('Nomes dos anunciantes:', advertisers.map((a: any) => a.nomeResponsavel));
+    console.log('Total de anunciantes encontrados:', advertisers.length);
+    console.log('IDs dos anunciantes:', advertisers.map(a => a.id));
+    console.log('Nomes dos anunciantes:', advertisers.map(a => a.nomeResponsavel));
 
     // Tentar também com o método normal para comparar
     const advertisersPrisma = await prisma.advertiser.findMany({

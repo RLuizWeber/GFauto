@@ -161,35 +161,6 @@ export default function AdminAdvertisersPage() {
             🔄 Atualizar Lista
           </button>
           <button
-            onClick={async () => {
-              console.log('=== TESTANDO API FRESH ===');
-              setLoading(true);
-              try {
-                const response = await fetch('/api/admin/advertisers/fresh', {
-                  method: 'GET',
-                  headers: {
-                    'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
-                    'Pragma': 'no-cache',
-                  },
-                });
-                if (response.ok) {
-                  const data = await response.json();
-                  console.log('FRESH API - Dados:', data.length, 'anunciantes');
-                  console.log('FRESH API - Nomes:', data.map((a: any) => a.nomeResponsavel));
-                  setAdvertisers(data);
-                }
-              } catch (error) {
-                console.error('Erro na API Fresh:', error);
-              } finally {
-                setLoading(false);
-              }
-            }}
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors"
-            title="Usa API alternativa com nova instância Prisma"
-          >
-            🚀 Fresh API
-          </button>
-          <button
             onClick={() => {
               console.log('Forçando reload completo da página...');
               window.location.reload();
