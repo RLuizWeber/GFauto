@@ -1,9 +1,3 @@
-/// Caminho: app/advertiser/conclusao/[id]/page.tsx
-// Versão: 2.1
-// Autor: GPT & Weber
-// Data: 06/08/2025
-// Comentários: Tela de Conclusão do Cadastro com preview em tempo real e campos completos
-
 'use client'
 
 import { useEffect, useState, ChangeEvent } from 'react'
