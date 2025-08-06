@@ -11,6 +11,10 @@ export async function GET() {
     console.log('=== API LISTANDO ANUNCIANTES ===');
     console.log('Timestamp:', new Date().toISOString());
 
+    // Forçar nova conexão e limpeza total de cache
+    await prisma.$disconnect();
+    await prisma.$connect();
+
     // Forçar sem cache no Prisma
     const advertisers = await prisma.$queryRaw`
       SELECT 

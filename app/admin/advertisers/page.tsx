@@ -34,13 +34,17 @@ export default function AdminAdvertisersPage() {
       console.log('=== CARREGANDO ANUNCIANTES ===');
       console.log('Timestamp:', new Date().toISOString());
       
-      // Adicionar timestamp para evitar cache
+      // Força timestamp único + múltiplos parâmetros anti-cache
       const timestamp = Date.now();
-      const response = await fetch(`/api/admin/advertisers?t=${timestamp}`, {
+      const randomId = Math.random().toString(36).substring(7);
+      
+      const response = await fetch(`/api/admin/advertisers?t=${timestamp}&r=${randomId}&force=true&nocache=1`, {
         method: 'GET',
         headers: {
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
           'Pragma': 'no-cache',
+          'Expires': '0',
+          'X-Timestamp': timestamp.toString(),
         },
       });
       
