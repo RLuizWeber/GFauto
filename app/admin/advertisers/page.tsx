@@ -118,13 +118,11 @@ export default function AdminAdvertisersPage() {
         alert('Anunciante excluído com sucesso!');
         console.log('Recarregando dados após exclusão...');
         
-        // Recarregar dados imediatamente após exclusão
-        setTimeout(async () => {
-          console.log('=== RECARREGANDO APÓS EXCLUSÃO ===');
-          setLoading(true);
-          await fetchAdvertisers();
-          setLoading(false);
-        }, 500);
+        // FORÇAR RELOAD COMPLETO DA PÁGINA IMEDIATAMENTE
+        console.log('🔥 FORÇANDO RELOAD COMPLETO DA PÁGINA...');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
         
       } else {
         console.error('Erro na resposta:', data);
@@ -242,9 +240,9 @@ export default function AdminAdvertisersPage() {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {advertisers.map((advertiser) => (
-                <tr key={advertiser.id} className="hover:bg-gray-50">
+            <tbody className="bg-white divide-y divide-gray-200" key={`tbody-${refreshKey}-${advertisers.length}`}>
+              {advertisers.map((advertiser, index) => (
+                <tr key={`${advertiser.id}-${refreshKey}-${index}`} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div>
                       <div className="text-sm font-medium text-gray-900">
