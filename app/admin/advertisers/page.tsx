@@ -52,6 +52,13 @@ export default function AdminAdvertisersPage() {
     console.log('ID para excluir:', id);
     console.log('Nome:', nome);
 
+    // Mostrar loading visual
+    const originalButton = document.querySelector(`[data-delete-id="${id}"]`) as HTMLButtonElement;
+    if (originalButton) {
+      originalButton.disabled = true;
+      originalButton.innerHTML = '⏳ Excluindo...';
+    }
+
     try {
       const response = await fetch(`/api/admin/advertisers/${id}`, {
         method: 'DELETE',
@@ -62,17 +69,37 @@ export default function AdminAdvertisersPage() {
       console.log('Response data:', data);
 
       if (response.ok) {
+        // Remover da lista visualmente primeiro (otimistic update)
+        setAdvertisers(current => current.filter(adv => adv.id !== id));
+        
         alert('Anunciante excluído com sucesso!');
         console.log('Recarregando lista...');
-        await fetchAdvertisers(); // Recarregar lista
-        console.log('Lista recarregada');
+        
+        // Forçar recarregamento da lista para garantir sincronização
+        setTimeout(async () => {
+          await fetchAdvertisers();
+          console.log('Lista recarregada');
+        }, 500);
+        
       } else {
         console.error('Erro na resposta:', data);
         alert(`Erro ao excluir anunciante: ${data.error || 'Erro desconhecido'}`);
+        
+        // Restaurar botão em caso de erro
+        if (originalButton) {
+          originalButton.disabled = false;
+          originalButton.innerHTML = '🗑️ Excluir';
+        }
       }
     } catch (error) {
       console.error('Erro ao excluir anunciante:', error);
       alert('Erro ao excluir anunciante');
+      
+      // Restaurar botão em caso de erro
+      if (originalButton) {
+        originalButton.disabled = false;
+        originalButton.innerHTML = '🗑️ Excluir';
+      }
     }
   };
 
@@ -99,9 +126,20 @@ export default function AdminAdvertisersPage() {
 
   return (
     <div className="p-8">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Administração de Anunciantes</h1>
-        <p className="text-gray-600">Total: {advertisers.length} anunciantes</p>
+      <div className="mb-6 flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Administração de Anunciantes</h1>
+          <p className="text-gray-600">Total: {advertisers.length} anunciantes</p>
+        </div>
+        <button
+          onClick={() => {
+            setLoading(true);
+            fetchAdvertisers();
+          }}
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+        >
+          🔄 Atualizar Lista
+        </button>
       </div>
 
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
@@ -171,7 +209,8 @@ export default function AdminAdvertisersPage() {
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button
                       onClick={() => deleteAdvertiser(advertiser.id, advertiser.nomeResponsavel)}
-                      className="text-red-600 hover:text-red-900 ml-4"
+                      data-delete-id={advertiser.id}
+                      className="text-red-600 hover:text-red-900 ml-4 px-3 py-1 rounded border border-red-300 hover:bg-red-50 transition-colors"
                       title="Excluir anunciante"
                     >
                       🗑️ Excluir
