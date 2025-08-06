@@ -27,7 +27,7 @@ export async function GET() {
         "celContato"
       FROM "Advertiser" 
       ORDER BY "createdAt" DESC
-    `;
+    ` as any[];
 
     console.log('Total de anunciantes encontrados (RAW):', advertisers.length);
     console.log('IDs dos anunciantes (RAW):', advertisers.map((a: any) => a.id));
