@@ -41,6 +41,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'CPF não encontrado ou senha inválida' }, { status: 404 })
     }
 
+    // Verificar se o email foi confirmado
+    if (!advertiser.emailVerificado) {
+      return NextResponse.json({ 
+        error: 'Conta não confirmada. Verifique seu email e clique no link de confirmação antes de fazer login.',
+        needsEmailConfirmation: true 
+      }, { status: 403 })
+    }
+
     // Verificar senha hasheada
     const senhaValida = await bcrypt.compare(senha, advertiser.senha);
     console.log('Senha válida:', senhaValida);

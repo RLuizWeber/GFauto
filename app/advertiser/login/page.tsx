@@ -15,6 +15,9 @@ export default function LoginPage() {
   const [cpf, setCpf] = useState('');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
+  const [showRecoverModal, setShowRecoverModal] = useState(false);
+  const [recoverCpf, setRecoverCpf] = useState('');
+  const [recoverMessage, setRecoverMessage] = useState('');
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +38,35 @@ export default function LoginPage() {
       router.push('/painel');
     } else {
       const data = await response.json();
-      setErro(data.error || 'CPF não encontrado ou senha inválida');
+      if (data.needsEmailConfirmation) {
+        setErro('⚠️ ' + data.error);
+      } else {
+        setErro(data.error || 'CPF não encontrado ou senha inválida');
+      }
+    }
+  };
+
+  const handleRecoverPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setRecoverMessage('');
+
+    const response = await fetch('/api/password/recover', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ cpf: recoverCpf }),
+    });
+
+    const data = await response.json();
+    setRecoverMessage(data.message || data.error);
+    
+    if (response.ok) {
+      setTimeout(() => {
+        setShowRecoverModal(false);
+        setRecoverCpf('');
+        setRecoverMessage('');
+      }, 3000);
     }
   };
 
@@ -70,7 +101,63 @@ export default function LoginPage() {
         >
           Entrar
         </button>
+        
+        <div className="mt-4 text-center">
+          <button
+            type="button"
+            onClick={() => setShowRecoverModal(true)}
+            className="text-blue-600 hover:text-blue-800 text-sm underline"
+          >
+            Esqueci minha senha
+          </button>
+        </div>
       </form>
+
+      {/* Modal de Recuperação de Senha */}
+      {showRecoverModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
+            <h2 className="text-lg font-bold mb-4">Recuperar Senha</h2>
+            <form onSubmit={handleRecoverPassword}>
+              <div className="mb-4">
+                <label className="block font-semibold mb-1">CPF</label>
+                <InputMask
+                  mask="999.999.999-99"
+                  value={recoverCpf}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setRecoverCpf(e.target.value)}
+                  className="w-full p-2 border rounded"
+                  placeholder="Digite seu CPF"
+                  required
+                />
+              </div>
+              {recoverMessage && (
+                <p className={`mb-4 text-sm ${recoverMessage.includes('erro') || recoverMessage.includes('Erro') ? 'text-red-600' : 'text-green-600'}`}>
+                  {recoverMessage}
+                </p>
+              )}
+              <div className="flex gap-2">
+                <button
+                  type="submit"
+                  className="flex-1 bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+                >
+                  Enviar Email
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowRecoverModal(false);
+                    setRecoverCpf('');
+                    setRecoverMessage('');
+                  }}
+                  className="flex-1 bg-gray-300 text-gray-700 p-2 rounded hover:bg-gray-400"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
