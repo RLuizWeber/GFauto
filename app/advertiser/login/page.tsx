@@ -66,11 +66,12 @@ export default function LoginPage() {
     setRecoverMessage(data.message || data.error);
     
     if (response.ok) {
+      // Aumentar o tempo de exibição da mensagem de sucesso
       setTimeout(() => {
         setShowRecoverModal(false);
         setRecoverCpf('');
         setRecoverMessage('');
-      }, 3000);
+      }, 6000); // 6 segundos em vez de 3
     }
   };
 
@@ -126,6 +127,9 @@ export default function LoginPage() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
             <h2 className="text-lg font-bold mb-4">Recuperar Senha</h2>
+            <p className="text-sm text-gray-600 mb-4">
+              Se o CPF estiver cadastrado, você receberá um email com instruções para recuperar sua senha.
+            </p>
             <form onSubmit={handleRecoverPassword}>
               <div className="mb-4">
                 <label className="block font-semibold mb-1">CPF</label>
@@ -139,7 +143,7 @@ export default function LoginPage() {
                 />
               </div>
               {recoverMessage && (
-                <p className={`mb-4 text-sm ${recoverMessage.includes('erro') || recoverMessage.includes('Erro') ? 'text-red-600' : 'text-green-600'}`}>
+                <p className={`mb-4 text-sm font-medium ${recoverMessage.includes('erro') || recoverMessage.includes('Erro') ? 'text-red-600' : 'text-green-600'}`}>
                   {recoverMessage}
                 </p>
               )}

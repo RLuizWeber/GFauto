@@ -116,12 +116,15 @@ function ResetPasswordForm() {
             <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
               <div className="text-center">
                 <div className="mb-4">
-                  <svg className="mx-auto h-12 w-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="mx-auto h-8 w-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                   </svg>
                 </div>
-                <p className="text-green-600 mb-4">
+                <p className="text-green-600 mb-4 font-medium">
                   {message}
+                </p>
+                <p className="text-sm text-gray-600 mb-6">
+                  Se o CPF estiver cadastrado, você receberá um email com instruções para recuperar sua senha.
                 </p>
                 <Link 
                   href="/advertiser/login"
