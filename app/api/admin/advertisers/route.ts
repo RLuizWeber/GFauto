@@ -14,59 +14,26 @@ export async function GET() {
     // Pequeno delay para garantir sincronização do DB
     await new Promise(resolve => setTimeout(resolve, 100));
 
-    // QUERY SIMPLES SEM FILTROS - Pegar TODOS os registros
+    // USAR MESMA ABORDAGEM DO DATABASE EXPLORER (que funciona!)
     const timestamp = Date.now();
-    console.log('=== QUERY SIMPLES SEM FILTROS - TIMESTAMP:', timestamp, '===');
+    console.log('=== QUERY SIMPLES COMO DATABASE EXPLORER - TIMESTAMP:', timestamp, '===');
     
-    const advertisers = await prisma.$queryRaw`
-      SELECT 
-        id, 
-        "nomeResponsavel", 
-        email, 
-        cpf, 
-        "planoEscolhido", 
-        "statusCadastro", 
-        "emailVerificado", 
-        "createdAt", 
-        cidade, 
-        estado, 
-        "celContato"
-      FROM "Advertiser" 
-      ORDER BY "createdAt" DESC
-    ` as any[];
+    // Contar registros primeiro
+    const countResult = await prisma.$queryRawUnsafe(`SELECT COUNT(*) as count FROM "Advertiser"`);
+    const totalCount = Number((countResult as any)[0].count);
+    console.log('🔢 Total count no banco:', totalCount);
+    
+    // Buscar todos os dados (como Database Explorer)
+    const advertisers = await prisma.$queryRawUnsafe(`SELECT * FROM "Advertiser" ORDER BY "createdAt" DESC`) as any[];
 
-    console.log('=== RESULTADOS DA QUERY RAW ===');
-    console.log('Total de anunciantes encontrados:', advertisers.length);
-    console.log('IDs dos anunciantes:', advertisers.map(a => a.id));
-    console.log('Nomes dos anunciantes:', advertisers.map(a => a.nomeResponsavel));
-    console.log('Dados completos:', advertisers);
+    console.log('=== RESULTADOS COMO DATABASE EXPLORER ===');
+    console.log('📊 Total de anunciantes encontrados:', advertisers.length);
+    console.log('🆔 IDs dos anunciantes:', advertisers.map(a => a.id));
+    console.log('👤 Nomes dos anunciantes:', advertisers.map(a => a.nomeResponsavel));
+    console.log('📋 Dados completos:', advertisers);
 
-    // Tentar também com o método normal para comparar
-    const advertisersPrisma = await prisma.advertiser.findMany({
-      select: {
-        id: true,
-        nomeResponsavel: true,
-        email: true,
-        cpf: true,
-        planoEscolhido: true,
-        statusCadastro: true,
-        emailVerificado: true,
-        createdAt: true,
-        cidade: true,
-        estado: true,
-        celContato: true,
-      },
-      orderBy: {
-        createdAt: 'desc'
-      }
-    });
-
-    console.log('=== COMPARAÇÃO PRISMA FINDMANY ===');
-    console.log('Total de anunciantes encontrados (PRISMA):', advertisersPrisma.length);
-    console.log('IDs dos anunciantes (PRISMA):', advertisersPrisma.map(a => a.id));
-
-    // RETORNAR DADOS DO QUERY RAW (deve ser mais confiável)
-    console.log('=== RETORNANDO DADOS DA QUERY RAW ===');
+    // RETORNAR DADOS EXATAMENTE COMO DATABASE EXPLORER FAZ
+    console.log('=== RETORNANDO DADOS COMO DATABASE EXPLORER ===');
     return NextResponse.json(advertisers, {
       headers: {
         'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
