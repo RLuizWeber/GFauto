@@ -14,8 +14,10 @@ export async function GET() {
     // Pequeno delay para garantir sincronização do DB
     await new Promise(resolve => setTimeout(resolve, 100));
 
-    // FORÇA QUERY ÚNICA: Usar $queryRaw com timestamp para quebrar cache
+    // QUERY SIMPLES SEM FILTROS - Pegar TODOS os registros
     const timestamp = Date.now();
+    console.log('=== QUERY SIMPLES SEM FILTROS - TIMESTAMP:', timestamp, '===');
+    
     const advertisers = await prisma.$queryRaw`
       SELECT 
         id, 
@@ -30,14 +32,14 @@ export async function GET() {
         estado, 
         "celContato"
       FROM "Advertiser" 
-      WHERE "createdAt" IS NOT NULL
       ORDER BY "createdAt" DESC
     ` as any[];
 
-    console.log('=== QUERY FORÇADA TIMESTAMP:', timestamp, '===');
+    console.log('=== RESULTADOS DA QUERY RAW ===');
     console.log('Total de anunciantes encontrados:', advertisers.length);
     console.log('IDs dos anunciantes:', advertisers.map(a => a.id));
     console.log('Nomes dos anunciantes:', advertisers.map(a => a.nomeResponsavel));
+    console.log('Dados completos:', advertisers);
 
     // Tentar também com o método normal para comparar
     const advertisersPrisma = await prisma.advertiser.findMany({
@@ -59,10 +61,12 @@ export async function GET() {
       }
     });
 
+    console.log('=== COMPARAÇÃO PRISMA FINDMANY ===');
     console.log('Total de anunciantes encontrados (PRISMA):', advertisersPrisma.length);
     console.log('IDs dos anunciantes (PRISMA):', advertisersPrisma.map(a => a.id));
 
-    // Retornar dados do query raw (mais confiável)
+    // RETORNAR DADOS DO QUERY RAW (deve ser mais confiável)
+    console.log('=== RETORNANDO DADOS DA QUERY RAW ===');
     return NextResponse.json(advertisers, {
       headers: {
         'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
