@@ -24,7 +24,7 @@ export default function PainelPage() {
     { label: 'Gerenciar Anúncios Existentes', rota: '/advertiser/anuncios' },
     { label: 'Atualizar Dados Cadastrais', rota: '/advertiser/editar-dados' },
     { label: 'Renovar Plano', rota: '/planos' },
-    { label: 'Alterar Senha', rota: '/advertiser/alterar-senha' },
+    { label: 'Alterar Senha', rota: '/advertiser/login' }, // Redireciona para login com opção "Esqueci minha senha"
     { label: 'Alterar E-mail', rota: '/advertiser/alterar-email' },
   ];
 

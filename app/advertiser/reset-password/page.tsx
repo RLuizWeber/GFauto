@@ -120,11 +120,8 @@ function ResetPasswordForm() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                   </svg>
                 </div>
-                <p className="text-green-600 mb-4 font-medium">
+                <p className="text-green-600 mb-6 font-medium">
                   {message}
-                </p>
-                <p className="text-sm text-gray-600 mb-6">
-                  Se o CPF estiver cadastrado, você receberá um email com instruções para recuperar sua senha.
                 </p>
                 <Link 
                   href="/advertiser/login"
@@ -145,7 +142,7 @@ function ResetPasswordForm() {
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-red-600">GFauto</h1>
-          <p className="mt-2 text-sm text-gray-600">Garagem do Futuro Auto</p>
+          <p className="mt-2 text-sm text-gray-600">Uma Proposta Ganha-Ganha</p>
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Redefinir Senha
