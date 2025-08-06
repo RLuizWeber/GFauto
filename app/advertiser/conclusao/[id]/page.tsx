@@ -1,5 +1,5 @@
 /// Caminho: app/advertiser/conclusao/[id]/page.tsx
-// Versão: 2.0
+// Versão: 2.1
 // Autor: GPT & Weber
 // Data: 06/08/2025
 // Comentários: Tela de Conclusão do Cadastro com preview em tempo real e campos completos
@@ -91,7 +91,6 @@ export default function ConclusaoCadastro() {
       })
 
       if (res.ok) {
-        // Redirecionar para painel ou página de sucesso
         router.push('/painel')
       } else {
         console.error('Erro ao finalizar cadastro')
@@ -435,7 +434,7 @@ export default function ConclusaoCadastro() {
                         const target = e.target as HTMLImageElement;
                         target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yMCAyMEg0NFY0NEgyMFYyMFoiIHN0cm9rZT0iIzlDQTNBRiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0yOCAyOEwzNiAzNkwyOCA0NCIgc3Ryb2tlPSIjOUNBM0FGIiBzdHJva2Utd2lkdGg9IjIiLz4KPC9zdmc+'}
                       />
-                    />
+                    </img>
                   ) : (
                     <div className="w-16 h-16 bg-gray-100 rounded-lg border flex items-center justify-center">
                       {isPremium ? (
