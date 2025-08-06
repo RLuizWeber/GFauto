@@ -1,6 +1,7 @@
 import './globals.css';
 import localFont from 'next/font/local';
 import Footer from "../components/global/Footer";
+import UserDisplay from "../components/global/UserDisplay";
 
 // Configure a fonte Geist Sans = gfauto/githubVercel/GFauto/app/layout.tsx
 const geistSans = localFont({
@@ -55,6 +56,11 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="font-sans">
+        {/* Header com UserDisplay */}
+        <div className="fixed top-0 right-0 z-50 p-4">
+          <UserDisplay />
+        </div>
+        
         {children}
         <Footer />
       </body>

@@ -34,6 +34,10 @@ export default function LoginPage() {
     if (response.ok) {
       const data = await response.json();
       console.log('Login realizado:', data);
+      
+      // Salvar dados do usuário no localStorage
+      localStorage.setItem('gfauto_user', JSON.stringify(data.anunciante));
+      
       // Redirecionar para o painel do anunciante após login bem-sucedido
       router.push('/painel');
     } else {
