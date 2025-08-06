@@ -38,7 +38,10 @@ export default function AdminAdvertisersPage() {
       const timestamp = Date.now();
       const randomId = Math.random().toString(36).substring(7);
       
-      const response = await fetch(`/api/admin/advertisers?t=${timestamp}&r=${randomId}&force=true&nocache=1`, {
+      const url = `/api/admin/advertisers?t=${timestamp}&r=${randomId}&force=true&nocache=1`;
+      console.log('🔗 URL da requisição:', url);
+      
+      const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
@@ -48,16 +51,21 @@ export default function AdminAdvertisersPage() {
         },
       });
       
+      console.log('📡 Status da resposta:', response.status);
+      console.log('📋 Headers da resposta:', Object.fromEntries(response.headers.entries()));
+      
       if (response.ok) {
         const data = await response.json();
-        console.log('Dados recebidos:', data.length, 'anunciantes');
-        console.log('IDs recebidos:', data.map((a: any) => a.id));
+        console.log('📊 Dados recebidos:', data.length, 'anunciantes');
+        console.log('🆔 IDs recebidos:', data.map((a: any) => a.id));
+        console.log('👤 Nomes recebidos:', data.map((a: any) => a.name));
+        console.log('📋 Dados completos:', data);
         setAdvertisers(data);
       } else {
-        console.error('Erro na resposta:', response.status);
+        console.error('❌ Erro na resposta:', response.status);
       }
     } catch (error) {
-      console.error('Erro ao carregar anunciantes:', error);
+      console.error('💥 Erro ao carregar anunciantes:', error);
     } finally {
       setLoading(false);
     }
@@ -160,6 +168,16 @@ export default function AdminAdvertisersPage() {
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
           >
             🔄 Atualizar Lista
+          </button>
+          <button
+            onClick={() => {
+              console.log('Abrindo Database Explorer para comparação...');
+              window.open('https://gfauto.vercel.app/api/database-explorer/Advertiser', '_blank');
+            }}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors"
+            title="Abrir Database Explorer para verificar dados reais"
+          >
+            🔍 Ver DB
           </button>
           <button
             onClick={() => {

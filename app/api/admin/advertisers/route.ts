@@ -14,26 +14,27 @@ export async function GET() {
     // Pequeno delay para garantir sincronização do DB
     await new Promise(resolve => setTimeout(resolve, 100));
 
-    // Usar query Prisma normal - mais estável
-    const advertisers = await prisma.advertiser.findMany({
-      select: {
-        id: true,
-        nomeResponsavel: true,
-        email: true,
-        cpf: true,
-        planoEscolhido: true,
-        statusCadastro: true,
-        emailVerificado: true,
-        createdAt: true,
-        cidade: true,
-        estado: true,
-        celContato: true,
-      },
-      orderBy: {
-        createdAt: 'desc'
-      }
-    });
+    // FORÇA QUERY ÚNICA: Usar $queryRaw com timestamp para quebrar cache
+    const timestamp = Date.now();
+    const advertisers = await prisma.$queryRaw`
+      SELECT 
+        id, 
+        "nomeResponsavel", 
+        email, 
+        cpf, 
+        "planoEscolhido", 
+        "statusCadastro", 
+        "emailVerificado", 
+        "createdAt", 
+        cidade, 
+        estado, 
+        "celContato"
+      FROM "Advertiser" 
+      WHERE "createdAt" IS NOT NULL
+      ORDER BY "createdAt" DESC
+    ` as any[];
 
+    console.log('=== QUERY FORÇADA TIMESTAMP:', timestamp, '===');
     console.log('Total de anunciantes encontrados:', advertisers.length);
     console.log('IDs dos anunciantes:', advertisers.map(a => a.id));
     console.log('Nomes dos anunciantes:', advertisers.map(a => a.nomeResponsavel));
