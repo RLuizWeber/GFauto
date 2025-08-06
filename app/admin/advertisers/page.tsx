@@ -58,9 +58,19 @@ export default function AdminAdvertisersPage() {
         const data = await response.json();
         console.log('📊 Dados recebidos:', data.length, 'anunciantes');
         console.log('🆔 IDs recebidos:', data.map((a: any) => a.id));
-        console.log('👤 Nomes recebidos:', data.map((a: any) => a.name));
+        console.log('👤 Nomes recebidos:', data.map((a: any) => a.nomeResponsavel));
         console.log('📋 Dados completos:', data);
+        
+        // LOGS DETALHADOS PARA DEBUG
+        console.log('🔍 COMPARAÇÃO DE DADOS:');
+        console.log('- Array length:', data.length);
+        console.log('- Cada anunciante:');
+        data.forEach((adv: any, index: number) => {
+          console.log(`  ${index + 1}. ID: ${adv.id} | Nome: ${adv.nomeResponsavel} | Email: ${adv.email}`);
+        });
+        
         setAdvertisers(data);
+        console.log('✅ setAdvertisers executado com', data.length, 'itens');
       } else {
         console.error('❌ Erro na resposta:', response.status);
       }
