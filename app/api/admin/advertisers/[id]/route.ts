@@ -45,6 +45,22 @@ export async function DELETE(
     console.log('DELETE executado com sucesso');
     console.log('Anunciante excluído:', deletedAdvertiser.nomeResponsavel);
 
+    // VERIFICAÇÃO EXTRA: Confirmar que foi realmente excluído
+    console.log('=== VERIFICAÇÃO PÓS-EXCLUSÃO ===');
+    const verificacao = await prisma.advertiser.findUnique({
+      where: { id }
+    });
+    
+    if (verificacao) {
+      console.error('ERRO: Anunciante ainda existe após exclusão!', verificacao);
+    } else {
+      console.log('✅ CONFIRMADO: Anunciante foi realmente excluído do banco');
+    }
+
+    // Contar total de anunciantes restantes
+    const totalRestante = await prisma.advertiser.count();
+    console.log('Total de anunciantes restantes no banco:', totalRestante);
+
     return NextResponse.json({
       success: true,
       message: 'Anunciante excluído com sucesso',
