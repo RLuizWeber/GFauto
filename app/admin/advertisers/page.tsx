@@ -48,16 +48,27 @@ export default function AdminAdvertisersPage() {
       return;
     }
 
+    console.log('=== INICIANDO EXCLUSÃO ===');
+    console.log('ID para excluir:', id);
+    console.log('Nome:', nome);
+
     try {
       const response = await fetch(`/api/admin/advertisers/${id}`, {
         method: 'DELETE',
       });
 
+      console.log('Response status:', response.status);
+      const data = await response.json();
+      console.log('Response data:', data);
+
       if (response.ok) {
         alert('Anunciante excluído com sucesso!');
-        fetchAdvertisers(); // Recarregar lista
+        console.log('Recarregando lista...');
+        await fetchAdvertisers(); // Recarregar lista
+        console.log('Lista recarregada');
       } else {
-        alert('Erro ao excluir anunciante');
+        console.error('Erro na resposta:', data);
+        alert(`Erro ao excluir anunciante: ${data.error || 'Erro desconhecido'}`);
       }
     } catch (error) {
       console.error('Erro ao excluir anunciante:', error);

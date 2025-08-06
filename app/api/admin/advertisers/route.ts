@@ -8,6 +8,9 @@ import { prisma } from '@/lib/prisma';
 
 export async function GET() {
   try {
+    console.log('=== API LISTANDO ANUNCIANTES ===');
+    console.log('Timestamp:', new Date().toISOString());
+
     const advertisers = await prisma.advertiser.findMany({
       select: {
         id: true,
@@ -26,6 +29,9 @@ export async function GET() {
         createdAt: 'desc'
       }
     });
+
+    console.log('Total de anunciantes encontrados:', advertisers.length);
+    console.log('IDs dos anunciantes:', advertisers.map(a => a.id));
 
     return NextResponse.json(advertisers);
   } catch (error) {
