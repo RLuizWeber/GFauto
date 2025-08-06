@@ -6,7 +6,7 @@
 
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, ChangeEvent } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import InputMask from 'react-input-mask'
 
@@ -187,7 +187,7 @@ export default function ConclusaoCadastro() {
                     <input
                       type="text"
                       value={advertiser.nomeRazaoSocial || ''}
-                      onChange={(e) => handleInputChange('nomeRazaoSocial', e.target.value)}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('nomeRazaoSocial', e.target.value)}
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                       placeholder="Nome oficial da empresa"
                       required
@@ -200,7 +200,7 @@ export default function ConclusaoCadastro() {
                     <input
                       type="text"
                       value={advertiser.nomeFantasia || ''}
-                      onChange={(e) => handleInputChange('nomeFantasia', e.target.value)}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('nomeFantasia', e.target.value)}
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                       placeholder="Nome comercial da empresa"
                     />
@@ -215,7 +215,7 @@ export default function ConclusaoCadastro() {
                     <InputMask
                       mask="99.999.999/9999-99"
                       value={advertiser.cnpj || ''}
-                      onChange={(e) => handleInputChange('cnpj', e.target.value)}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('cnpj', e.target.value)}
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                       placeholder="00.000.000/0000-00"
                     />
@@ -227,7 +227,7 @@ export default function ConclusaoCadastro() {
                     <input
                       type="text"
                       value={advertiser.especialidade || ''}
-                      onChange={(e) => handleInputChange('especialidade', e.target.value)}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('especialidade', e.target.value)}
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                       placeholder="Ex: Mecânica, Elétrica, Pintura..."
                       required
@@ -276,7 +276,7 @@ export default function ConclusaoCadastro() {
                       <input
                         type="text"
                         value={advertiser.enderecoEmpresa || ''}
-                        onChange={(e) => handleInputChange('enderecoEmpresa', e.target.value)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('enderecoEmpresa', e.target.value)}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                         placeholder="Rua, número"
                         required
@@ -286,7 +286,7 @@ export default function ConclusaoCadastro() {
                       <input
                         type="text"
                         value={advertiser.bairro || ''}
-                        onChange={(e) => handleInputChange('bairro', e.target.value)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('bairro', e.target.value)}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                         placeholder="Bairro"
                         required
@@ -298,7 +298,7 @@ export default function ConclusaoCadastro() {
                       <InputMask
                         mask="99999-999"
                         value={advertiser.cep || ''}
-                        onChange={(e) => handleInputChange('cep', e.target.value)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('cep', e.target.value)}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                         placeholder="CEP"
                       />
@@ -307,7 +307,7 @@ export default function ConclusaoCadastro() {
                       <input
                         type="text"
                         value={advertiser.cidade || ''}
-                        onChange={(e) => handleInputChange('cidade', e.target.value)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('cidade', e.target.value)}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                         placeholder="Cidade"
                         required
@@ -317,7 +317,7 @@ export default function ConclusaoCadastro() {
                       <input
                         type="text"
                         value={advertiser.estado || ''}
-                        onChange={(e) => handleInputChange('estado', e.target.value)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('estado', e.target.value)}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                         placeholder="Estado (UF)"
                         maxLength={2}
@@ -339,7 +339,7 @@ export default function ConclusaoCadastro() {
                       <input
                         type="text"
                         value={advertiser.slogan || ''}
-                        onChange={(e) => handleInputChange('slogan', e.target.value)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('slogan', e.target.value)}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                         placeholder="Frase de destaque da empresa"
                       />
@@ -351,7 +351,7 @@ export default function ConclusaoCadastro() {
                       </label>
                       <textarea
                         value={advertiser.descricao || ''}
-                        onChange={(e) => handleInputChange('descricao', e.target.value)}
+                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => handleInputChange('descricao', e.target.value)}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 h-24"
                         placeholder="Descreva os serviços da empresa"
                       />
@@ -364,7 +364,7 @@ export default function ConclusaoCadastro() {
                       <InputMask
                         mask="(99) 99999-9999"
                         value={advertiser.celContato2 || ''}
-                        onChange={(e) => handleInputChange('celContato2', e.target.value)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('celContato2', e.target.value)}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                         placeholder="(00) 00000-0000"
                       />
@@ -377,7 +377,7 @@ export default function ConclusaoCadastro() {
                       <input
                         type="url"
                         value={advertiser.imagemUrl || ''}
-                        onChange={(e) => handleInputChange('imagemUrl', e.target.value)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('imagemUrl', e.target.value)}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                         placeholder="URL da imagem ou logo"
                       />
@@ -393,7 +393,7 @@ export default function ConclusaoCadastro() {
                       <input
                         type="text"
                         value={advertiser.cargo || ''}
-                        onChange={(e) => handleInputChange('cargo', e.target.value)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('cargo', e.target.value)}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                         placeholder="Ex: Proprietário, Gerente, Diretor..."
                       />
@@ -431,9 +431,10 @@ export default function ConclusaoCadastro() {
                       src={advertiser.imagemUrl}
                       alt="Logo da empresa"
                       className="w-16 h-16 object-cover rounded-lg border"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yMCAyMEg0NFY0NEgyMFYyMFoiIHN0cm9rZT0iIzlDQTNBRiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0yOCAyOEwzNiAzNkwyOCA0NCIgc3Ryb2tlPSIjOUNBM0FGIiBzdHJva2Utd2lkdGg9IjIiLz4KPC9zdmc+'
-                      }}
+                      onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yMCAyMEg0NFY0NEgyMFYyMFoiIHN0cm9rZT0iIzlDQTNBRiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0yOCAyOEwzNiAzNkwyOCA0NCIgc3Ryb2tlPSIjOUNBM0FGIiBzdHJva2Utd2lkdGg9IjIiLz4KPC9zdmc+'}
+                      />
                     />
                   ) : (
                     <div className="w-16 h-16 bg-gray-100 rounded-lg border flex items-center justify-center">
