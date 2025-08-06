@@ -11,7 +11,29 @@ export async function GET() {
     console.log('=== API LISTANDO ANUNCIANTES ===');
     console.log('Timestamp:', new Date().toISOString());
 
-    const advertisers = await prisma.advertiser.findMany({
+    // Forçar sem cache no Prisma
+    const advertisers = await prisma.$queryRaw`
+      SELECT 
+        id, 
+        "nomeResponsavel", 
+        email, 
+        cpf, 
+        "planoEscolhido", 
+        "statusCadastro", 
+        "emailVerificado", 
+        "createdAt", 
+        cidade, 
+        estado, 
+        "celContato"
+      FROM "Advertiser" 
+      ORDER BY "createdAt" DESC
+    `;
+
+    console.log('Total de anunciantes encontrados (RAW):', advertisers.length);
+    console.log('IDs dos anunciantes (RAW):', advertisers.map((a: any) => a.id));
+
+    // Tentar também com o método normal para comparar
+    const advertisersPrisma = await prisma.advertiser.findMany({
       select: {
         id: true,
         nomeResponsavel: true,
@@ -30,10 +52,17 @@ export async function GET() {
       }
     });
 
-    console.log('Total de anunciantes encontrados:', advertisers.length);
-    console.log('IDs dos anunciantes:', advertisers.map(a => a.id));
+    console.log('Total de anunciantes encontrados (PRISMA):', advertisersPrisma.length);
+    console.log('IDs dos anunciantes (PRISMA):', advertisersPrisma.map(a => a.id));
 
-    return NextResponse.json(advertisers);
+    // Retornar dados do query raw (mais confiável)
+    return NextResponse.json(advertisers, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      }
+    });
   } catch (error) {
     console.error('Erro ao buscar anunciantes:', error);
     return NextResponse.json(

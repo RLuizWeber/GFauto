@@ -31,10 +31,26 @@ export default function AdminAdvertisersPage() {
 
   const fetchAdvertisers = async () => {
     try {
-      const response = await fetch('/api/admin/advertisers');
+      console.log('=== CARREGANDO ANUNCIANTES ===');
+      console.log('Timestamp:', new Date().toISOString());
+      
+      // Adicionar timestamp para evitar cache
+      const timestamp = Date.now();
+      const response = await fetch(`/api/admin/advertisers?t=${timestamp}`, {
+        method: 'GET',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+        },
+      });
+      
       if (response.ok) {
         const data = await response.json();
+        console.log('Dados recebidos:', data.length, 'anunciantes');
+        console.log('IDs recebidos:', data.map((a: any) => a.id));
         setAdvertisers(data);
+      } else {
+        console.error('Erro na resposta:', response.status);
       }
     } catch (error) {
       console.error('Erro ao carregar anunciantes:', error);
