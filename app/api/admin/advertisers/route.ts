@@ -15,7 +15,8 @@ export async function GET() {
     await prisma.$disconnect();
     await prisma.$connect();
 
-    // Forçar sem cache no Prisma
+    // SOLUÇÃO RADICAL: Query SQL com timestamp único para forçar cache bypass
+    const timestampQuery = Date.now();
     const advertisers = await prisma.$queryRaw`
       SELECT 
         id, 
@@ -28,13 +29,16 @@ export async function GET() {
         "createdAt", 
         cidade, 
         estado, 
-        "celContato"
+        "celContato",
+        ${timestampQuery} as query_timestamp
       FROM "Advertiser" 
       ORDER BY "createdAt" DESC
     ` as any[];
 
+    console.log('Query timestamp:', timestampQuery);
     console.log('Total de anunciantes encontrados (RAW):', advertisers.length);
     console.log('IDs dos anunciantes (RAW):', advertisers.map((a: any) => a.id));
+    console.log('Nomes dos anunciantes:', advertisers.map((a: any) => a.nomeResponsavel));
 
     // Tentar também com o método normal para comparar
     const advertisersPrisma = await prisma.advertiser.findMany({

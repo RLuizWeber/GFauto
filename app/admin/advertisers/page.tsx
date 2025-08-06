@@ -150,25 +150,56 @@ export default function AdminAdvertisersPage() {
           <h1 className="text-2xl font-bold text-gray-900">Administração de Anunciantes</h1>
           <p className="text-gray-600">Total: {advertisers.length} anunciantes</p>
         </div>
-        <button
-          onClick={() => {
-            setLoading(true);
-            fetchAdvertisers();
-          }}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors mr-2"
-        >
-          🔄 Atualizar Lista
-        </button>
-        <button
-          onClick={() => {
-            console.log('Forçando reload completo da página...');
-            window.location.reload();
-          }}
-          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
-          title="Recarrega a página completamente, ignorando todos os caches"
-        >
-          🔥 Hard Refresh
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => {
+              setLoading(true);
+              fetchAdvertisers();
+            }}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+          >
+            🔄 Atualizar Lista
+          </button>
+          <button
+            onClick={async () => {
+              console.log('=== TESTANDO API FRESH ===');
+              setLoading(true);
+              try {
+                const response = await fetch('/api/admin/advertisers/fresh', {
+                  method: 'GET',
+                  headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
+                    'Pragma': 'no-cache',
+                  },
+                });
+                if (response.ok) {
+                  const data = await response.json();
+                  console.log('FRESH API - Dados:', data.length, 'anunciantes');
+                  console.log('FRESH API - Nomes:', data.map((a: any) => a.nomeResponsavel));
+                  setAdvertisers(data);
+                }
+              } catch (error) {
+                console.error('Erro na API Fresh:', error);
+              } finally {
+                setLoading(false);
+              }
+            }}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors"
+            title="Usa API alternativa com nova instância Prisma"
+          >
+            🚀 Fresh API
+          </button>
+          <button
+            onClick={() => {
+              console.log('Forçando reload completo da página...');
+              window.location.reload();
+            }}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+            title="Recarrega a página completamente, ignorando todos os caches"
+          >
+            🔥 Hard Refresh
+          </button>
+        </div>
       </div>
 
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
