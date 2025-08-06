@@ -11,6 +11,9 @@ export async function GET() {
     console.log('=== API LISTANDO ANUNCIANTES ===');
     console.log('Timestamp:', new Date().toISOString());
 
+    // Pequeno delay para garantir sincronização do DB
+    await new Promise(resolve => setTimeout(resolve, 100));
+
     // Usar query Prisma normal - mais estável
     const advertisers = await prisma.advertiser.findMany({
       select: {

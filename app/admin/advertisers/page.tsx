@@ -93,12 +93,13 @@ export default function AdminAdvertisersPage() {
         setAdvertisers(current => current.filter(adv => adv.id !== id));
         
         alert('Anunciante excluído com sucesso!');
-        console.log('Forçando reload completo da página...');
+        console.log('Recarregando dados após exclusão...');
         
-        // SOLUÇÃO RADICAL: Forçar reload completo da página
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+        // Recarregar dados imediatamente após exclusão
+        setTimeout(async () => {
+          console.log('=== RECARREGANDO APÓS EXCLUSÃO ===');
+          await fetchAdvertisers();
+        }, 500);
         
       } else {
         console.error('Erro na resposta:', data);
