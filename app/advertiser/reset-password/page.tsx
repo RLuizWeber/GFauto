@@ -1,6 +1,6 @@
 /**
- * Página de redefinição de senha
- * Permite que o usuário defina uma nova senha usando o token de reset
+ * Página de redefinição de senha.
+ * Permite que o usuário defina uma nova senha usando o token de reset.
  */
 
 'use client';

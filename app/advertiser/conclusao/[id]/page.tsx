@@ -128,14 +128,12 @@ export default function ConclusaoCadastro() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Formulário */}
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h2 className="text-xl font-semibold mb-6 text-gray-900">
               Dados da Empresa
             </h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Dados básicos já preenchidos */}
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="font-medium text-gray-700 mb-3">Dados do Responsável (já cadastrados)</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -170,7 +168,6 @@ export default function ConclusaoCadastro() {
                 </div>
               </div>
 
-              {/* Dados da empresa */}
               <div className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -261,7 +258,6 @@ export default function ConclusaoCadastro() {
                   />
                 </div>
 
-                {/* Endereço */}
                 <div className="space-y-4">
                   <h3 className="font-medium text-gray-700">Endereço da Empresa</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -320,7 +316,6 @@ export default function ConclusaoCadastro() {
                   </div>
                 </div>
 
-                {/* Campos Premium */}
                 {isPremium && (
                   <div className="bg-yellow-50 p-4 rounded-lg space-y-4">
                     <h3 className="font-medium text-yellow-800">Recursos Premium</h3>
@@ -405,7 +400,6 @@ export default function ConclusaoCadastro() {
             </form>
           </div>
 
-          {/* Preview do Anúncio */}
           <div className="bg-white rounded-lg shadow-lg p-6 sticky top-8">
             <h2 className="text-xl font-semibold mb-4 text-gray-900">
               Preview do Anúncio
@@ -414,26 +408,20 @@ export default function ConclusaoCadastro() {
               Veja como seu anúncio aparecerá na página de resultados
             </p>
 
-            {/* Card do anúncio */}
             <div className="border border-gray-200 rounded-lg p-4 bg-white shadow-sm">
               <div className="flex items-start space-x-4">
-                {/* Imagem */}
                 <div className="flex-shrink-0">
                   {advertiser.imagemUrl && isPremium ? (
                     <img
                       src={advertiser.imagemUrl}
                       alt="Logo da empresa"
                       className="w-16 h-16 object-cover rounded-lg border"
-                      onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yMCAyMEg0NFY0NEgyMFYyMFoiIHN0cm9rZT0iIzlDQTNBRiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0yOCAyOEwzNiAzNkwyOCA0NCIgc3Ryb2tlPSIjOUNBM0FGIiBzdHJva2Utd2lkdGg9IjIiLz4KPC9zdmc+'}
-                      />
-                    </img>
+                    />
                   ) : (
                     <div className="w-16 h-16 bg-gray-100 rounded-lg border flex items-center justify-center">
                       {isPremium ? (
                         <span className="text-xs text-gray-500 text-center">
-                          Logo<br/>Empresa
+                          Logo<br />Empresa
                         </span>
                       ) : (
                         <span className="text-xs text-gray-400">
@@ -444,7 +432,6 @@ export default function ConclusaoCadastro() {
                   )}
                 </div>
 
-                {/* Conteúdo */}
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-gray-900 mb-1">
                     {displayName || 'Nome da Empresa'}
@@ -468,7 +455,6 @@ export default function ConclusaoCadastro() {
                     </p>
                   )}
 
-                  {/* Endereço */}
                   {(advertiser.enderecoEmpresa || advertiser.cidade) && (
                     <p className="text-sm text-gray-500 mb-2">
                       📍 {advertiser.enderecoEmpresa && `${advertiser.enderecoEmpresa}, `}
@@ -477,7 +463,6 @@ export default function ConclusaoCadastro() {
                     </p>
                   )}
 
-                  {/* Contatos */}
                   <div className="flex flex-wrap gap-2 text-sm">
                     {advertiser.celContato && (
                       <span className="inline-flex items-center px-2 py-1 bg-green-100 text-green-800 rounded">
@@ -494,7 +479,6 @@ export default function ConclusaoCadastro() {
               </div>
             </div>
 
-            {/* Informações do plano */}
             <div className="mt-4 p-3 bg-gray-50 rounded-lg">
               <p className="text-xs text-gray-600 mb-1">
                 <strong>Plano:</strong> {advertiser.planoEscolhido}
