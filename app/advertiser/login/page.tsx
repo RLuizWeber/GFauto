@@ -110,10 +110,14 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={() => setShowRecoverModal(true)}
-            className="text-blue-600 hover:text-blue-800 text-sm underline"
+            className="text-blue-600 hover:text-blue-800 font-medium underline decoration-2 underline-offset-2"
           >
             Esqueci minha senha
           </button>
+        </div>
+        
+        <div className="mt-2 text-center text-xs text-gray-500">
+          Não tem conta? <a href="/cadastro" className="text-blue-600 hover:text-blue-800 underline">Cadastre-se aqui</a>
         </div>
       </form>
 
