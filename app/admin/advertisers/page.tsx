@@ -93,13 +93,12 @@ export default function AdminAdvertisersPage() {
         setAdvertisers(current => current.filter(adv => adv.id !== id));
         
         alert('Anunciante excluído com sucesso!');
-        console.log('Recarregando lista...');
+        console.log('Forçando reload completo da página...');
         
-        // Forçar recarregamento da lista para garantir sincronização
-        setTimeout(async () => {
-          await fetchAdvertisers();
-          console.log('Lista recarregada');
-        }, 500);
+        // SOLUÇÃO RADICAL: Forçar reload completo da página
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
         
       } else {
         console.error('Erro na resposta:', data);
@@ -156,9 +155,19 @@ export default function AdminAdvertisersPage() {
             setLoading(true);
             fetchAdvertisers();
           }}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors mr-2"
         >
           🔄 Atualizar Lista
+        </button>
+        <button
+          onClick={() => {
+            console.log('Forçando reload completo da página...');
+            window.location.reload();
+          }}
+          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+          title="Recarrega a página completamente, ignorando todos os caches"
+        >
+          🔥 Hard Refresh
         </button>
       </div>
 
