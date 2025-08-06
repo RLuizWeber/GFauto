@@ -24,6 +24,7 @@ export default function AdminAdvertisersPage() {
   const [advertisers, setAdvertisers] = useState<Advertiser[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedAdvertiser, setSelectedAdvertiser] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0); // Força re-render
 
   useEffect(() => {
     fetchAdvertisers();
@@ -71,6 +72,10 @@ export default function AdminAdvertisersPage() {
         
         setAdvertisers(data);
         console.log('✅ setAdvertisers executado com', data.length, 'itens');
+        
+        // FORÇA RE-RENDER TOTAL
+        setRefreshKey(prev => prev + 1);
+        console.log('🔄 refreshKey incrementado para forçar re-render');
       } else {
         console.error('❌ Erro na resposta:', response.status);
       }
@@ -116,7 +121,9 @@ export default function AdminAdvertisersPage() {
         // Recarregar dados imediatamente após exclusão
         setTimeout(async () => {
           console.log('=== RECARREGANDO APÓS EXCLUSÃO ===');
+          setLoading(true);
           await fetchAdvertisers();
+          setLoading(false);
         }, 500);
         
       } else {
@@ -172,7 +179,10 @@ export default function AdminAdvertisersPage() {
         <div className="flex gap-2">
           <button
             onClick={() => {
+              console.log('🔥 RESETANDO ESTADO COMPLETO...');
               setLoading(true);
+              setAdvertisers([]); // Limpa o estado
+              setRefreshKey(prev => prev + 1); // Força re-render
               fetchAdvertisers();
             }}
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
@@ -191,7 +201,9 @@ export default function AdminAdvertisersPage() {
           </button>
           <button
             onClick={() => {
-              console.log('Forçando reload completo da página...');
+              console.log('🔥 HARD REFRESH - Resetando tudo...');
+              setAdvertisers([]);
+              setRefreshKey(prev => prev + 1);
               window.location.reload();
             }}
             className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
@@ -202,7 +214,7 @@ export default function AdminAdvertisersPage() {
         </div>
       </div>
 
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="bg-white shadow-lg rounded-lg overflow-hidden" key={refreshKey}>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
