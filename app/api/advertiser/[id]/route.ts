@@ -28,7 +28,13 @@ export async function GET(
       return NextResponse.json({ error: 'Anunciante não encontrado.' }, { status: 404 })
     }
 
-    return NextResponse.json(advertiser, { status: 200 })
+    // Mapear campos do banco para o frontend
+    const mappedAdvertiser = {
+      ...advertiser,
+      nomeRazaoSocial: advertiser.razaoSocial, // Mapear razaoSocial → nomeRazaoSocial para o frontend
+    }
+
+    return NextResponse.json(mappedAdvertiser, { status: 200 })
   } catch (error) {
     console.error('[GET_ADVERTISER_BY_ID]', error)
     return NextResponse.json({ error: 'Erro interno do servidor.' }, { status: 500 })

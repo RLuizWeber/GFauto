@@ -14,14 +14,21 @@ export async function PATCH(request: Request, { params }: { params: { id: string
     const { id } = params;
     const data = await request.json();
 
-    // Aqui pode-se validar campos obrigatórios da conclusão do cadastro, se quiser:
-    // Exemplo: especialidade, cidade, imagemUrl etc.
+    // Mapear campos do frontend para o banco
+    const mappedData = {
+      ...data,
+      razaoSocial: data.nomeRazaoSocial || data.razaoSocial, // Mapear nomeRazaoSocial → razaoSocial
+    };
+
+    // Remover campo que não existe no banco
+    delete mappedData.nomeRazaoSocial;
+    delete mappedData.usarNomeFantasia; // Este campo não é salvo no banco
 
     const advertiser = await prisma.advertiser.update({
       where: { id },
       data: {
-        ...data,
-        statusCadastro: "cadastro_completo" // Atualiza status para cadastro completo
+        ...mappedData,
+        statusCadastro: "Completo" // Atualiza status para cadastro completo
       }
     });
 
@@ -32,4 +39,9 @@ export async function PATCH(request: Request, { params }: { params: { id: string
       { status: 500 }
     );
   }
+}
+
+// Adicionar suporte ao método PUT (mesmo que PATCH)
+export async function PUT(request: Request, { params }: { params: { id: string } }) {
+  return PATCH(request, { params });
 }
