@@ -35,6 +35,8 @@ export default function ConclusaoCadastro() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [anuncioUrl, setAnuncioUrl] = useState('')
 
   const [advertiser, setAdvertiser] = useState<AdvertiserData>({
     id: '',
@@ -86,12 +88,21 @@ export default function ConclusaoCadastro() {
       })
 
       if (res.ok) {
-        router.push('/painel')
+        const result = await res.json()
+        setSuccess(true)
+        setAnuncioUrl(`https://gfauto.vercel.app/anuncios/${id}`)
+        
+        // Mostrar mensagem de sucesso por 3 segundos antes de redirecionar
+        setTimeout(() => {
+          router.push('/painel')
+        }, 3000)
       } else {
         console.error('Erro ao finalizar cadastro')
+        alert('Erro ao publicar anúncio. Tente novamente.')
       }
     } catch (err) {
       console.error('Erro ao salvar:', err)
+      alert('Erro ao publicar anúncio. Verifique sua conexão e tente novamente.')
     } finally {
       setSaving(false)
     }
@@ -99,6 +110,46 @@ export default function ConclusaoCadastro() {
 
   const isPremium = advertiser.planoEscolhido?.toLowerCase().includes('premium')
   const displayName = advertiser.usarNomeFantasia ? advertiser.nomeFantasia : advertiser.nomeRazaoSocial
+
+  if (success) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center bg-white p-8 rounded-lg shadow-lg max-w-md mx-4">
+          <img 
+            src="/images/fluxo_app/mc4.png" 
+            alt="Sucesso" 
+            className="w-45 mx-auto mb-4"
+            width={180}
+          />
+          <h2 className="text-2xl font-bold text-green-600 mb-4">
+            Parabéns! Seu anúncio foi publicado com sucesso!
+          </h2>
+          <p className="text-gray-600 mb-6">
+            Seu anúncio já está disponível para visualização
+          </p>
+          <div className="space-y-3">
+            <a 
+              href={anuncioUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Ver Meu Anúncio
+            </a>
+            <button 
+              onClick={() => router.push('/painel')}
+              className="block w-full bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors"
+            >
+              Ir para o Painel
+            </button>
+          </div>
+          <p className="text-xs text-gray-500 mt-4">
+            Redirecionando automaticamente em 3 segundos...
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   if (loading) {
     return (
@@ -117,7 +168,7 @@ export default function ConclusaoCadastro() {
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Conclusão do Cadastro</h1>
           <p className="text-gray-600">
-            Complete seus dados e veja como seu anúncio ficará em tempo real
+            Veja abaixo uma Prévia do Seu Anúncio em tempo Real
           </p>
           <div className="mt-2">
             <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
@@ -262,29 +313,10 @@ export default function ConclusaoCadastro() {
                 <div className="space-y-4">
                   <h3 className="font-medium text-gray-700">Endereço da Empresa</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="md:col-span-2">
-                      <input
-                        type="text"
-                        value={advertiser.enderecoEmpresa || ''}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('enderecoEmpresa', e.target.value)}
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                        placeholder="Rua, número"
-                        required
-                      />
-                    </div>
                     <div>
-                      <input
-                        type="text"
-                        value={advertiser.bairro || ''}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('bairro', e.target.value)}
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                        placeholder="Bairro"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        CEP
+                      </label>
                       <InputMask
                         mask="99999-999"
                         value={advertiser.cep || ''}
@@ -294,6 +326,9 @@ export default function ConclusaoCadastro() {
                       />
                     </div>
                     <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Cidade
+                      </label>
                       <input
                         type="text"
                         value={advertiser.cidade || ''}
@@ -304,6 +339,9 @@ export default function ConclusaoCadastro() {
                       />
                     </div>
                     <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Estado (UF)
+                      </label>
                       <input
                         type="text"
                         value={advertiser.estado || ''}
@@ -311,6 +349,34 @@ export default function ConclusaoCadastro() {
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                         placeholder="Estado (UF)"
                         maxLength={2}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Rua e Número
+                      </label>
+                      <input
+                        type="text"
+                        value={advertiser.enderecoEmpresa || ''}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('enderecoEmpresa', e.target.value)}
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                        placeholder="Rua, número"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Bairro
+                      </label>
+                      <input
+                        type="text"
+                        value={advertiser.bairro || ''}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('bairro', e.target.value)}
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                        placeholder="Bairro"
                         required
                       />
                     </div>
@@ -363,16 +429,42 @@ export default function ConclusaoCadastro() {
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Imagem/Logo da Empresa
                       </label>
-                      <input
-                        type="url"
-                        value={advertiser.imagemUrl || ''}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('imagemUrl', e.target.value)}
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                        placeholder="URL da imagem ou logo"
-                      />
-                      <p className="text-xs text-gray-500 mt-1">
-                        Cole a URL de uma imagem hospedada online
-                      </p>
+                      <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-red-400 transition-colors">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0]
+                            if (file) {
+                              // Para agora, vamos usar um placeholder
+                              handleInputChange('imagemUrl', URL.createObjectURL(file))
+                            }
+                          }}
+                          className="hidden"
+                          id="image-upload"
+                        />
+                        <label htmlFor="image-upload" className="cursor-pointer">
+                          <div className="flex flex-col items-center">
+                            {advertiser.imagemUrl ? (
+                              <img 
+                                src={advertiser.imagemUrl} 
+                                alt="Preview" 
+                                className="w-20 h-20 object-cover rounded mb-2"
+                              />
+                            ) : (
+                              <div className="w-20 h-20 bg-gray-100 rounded flex items-center justify-center mb-2">
+                                <span className="text-2xl">📷</span>
+                              </div>
+                            )}
+                            <span className="text-sm text-gray-600">
+                              Baixe ou arraste até aqui a imagem
+                            </span>
+                            <span className="text-xs text-gray-400 mt-1">
+                              PNG, JPG até 5MB
+                            </span>
+                          </div>
+                        </label>
+                      </div>
                     </div>
 
                     <div>
@@ -403,7 +495,7 @@ export default function ConclusaoCadastro() {
 
           <div className="bg-white rounded-lg shadow-lg p-6 sticky top-8">
             <h2 className="text-xl font-semibold mb-4 text-gray-900">
-              Preview do Anúncio
+              Prévia do seu Anúncio
             </h2>
             <p className="text-sm text-gray-600 mb-6">
               Veja como seu anúncio aparecerá na página de resultados
@@ -433,16 +525,10 @@ export default function ConclusaoCadastro() {
                   )}
                 </div>
 
-                <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0 text-center">
                   <h3 className="font-semibold text-gray-900 mb-1">
                     {displayName || 'Nome da Empresa'}
                   </h3>
-                  
-                  {advertiser.especialidade && (
-                    <p className="text-sm text-red-600 font-medium mb-2">
-                      {advertiser.especialidade}
-                    </p>
-                  )}
 
                   {advertiser.slogan && isPremium && (
                     <p className="text-sm text-gray-600 italic mb-2">
@@ -456,15 +542,7 @@ export default function ConclusaoCadastro() {
                     </p>
                   )}
 
-                  {(advertiser.enderecoEmpresa || advertiser.cidade) && (
-                    <p className="text-sm text-gray-500 mb-2">
-                      📍 {advertiser.enderecoEmpresa && `${advertiser.enderecoEmpresa}, `}
-                      {advertiser.bairro && `${advertiser.bairro}, `}
-                      {advertiser.cidade && advertiser.estado && `${advertiser.cidade}/${advertiser.estado}`}
-                    </p>
-                  )}
-
-                  <div className="flex flex-wrap gap-2 text-sm">
+                  <div className="flex flex-wrap justify-center gap-2 text-sm mb-3">
                     {advertiser.celContato && (
                       <span className="inline-flex items-center px-2 py-1 bg-green-100 text-green-800 rounded">
                         📱 {advertiser.celContato}
@@ -476,20 +554,28 @@ export default function ConclusaoCadastro() {
                       </span>
                     )}
                   </div>
+
+                  {(advertiser.enderecoEmpresa || advertiser.cidade) && (
+                    <p className="text-sm text-gray-500">
+                      📍 {advertiser.enderecoEmpresa && `${advertiser.enderecoEmpresa}, `}
+                      {advertiser.bairro && `${advertiser.bairro}, `}
+                      {advertiser.cidade && advertiser.estado && `${advertiser.cidade}/${advertiser.estado}`}
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex-shrink-0 flex flex-col gap-2">
+                  <button className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600">
+                    Localizar no Mapa
+                  </button>
+                  <button className="bg-gray-500 text-white px-3 py-1 rounded text-xs hover:bg-gray-600">
+                    Atualizar Dados
+                  </button>
+                  <button className="bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600">
+                    Contato
+                  </button>
                 </div>
               </div>
-            </div>
-
-            <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-              <p className="text-xs text-gray-600 mb-1">
-                <strong>Plano:</strong> {advertiser.planoEscolhido}
-              </p>
-              <p className="text-xs text-gray-600">
-                <strong>Recursos:</strong> {isPremium ? 
-                  'Logo, slogan, descrição, contatos extras' : 
-                  'Nome, especialidade, endereço, contato'
-                }
-              </p>
             </div>
           </div>
         </div>
