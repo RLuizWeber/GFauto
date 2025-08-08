@@ -88,14 +88,16 @@ export default function PainelHeader() {
             <div className="relative">
               <button
                 onClick={() => setShowMenu(!showMenu)}
-                className="flex items-center justify-center w-10 h-10 bg-blue-600 text-white rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex items-center justify-center w-10 h-10 bg-blue-600 text-white rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 overflow-hidden relative"
               >
                 {user.imagemUrl ? (
-                  <img
-                    src={user.imagemUrl}
-                    alt="Avatar"
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
+                  <div className="w-10 h-10 rounded-full overflow-hidden">
+                    <img
+                      src={user.imagemUrl}
+                      alt="Avatar"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 ) : (
                   <span className="text-sm font-medium">{iniciais}</span>
                 )}

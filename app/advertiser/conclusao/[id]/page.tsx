@@ -540,8 +540,7 @@ export default function ConclusaoCadastro() {
                         )}
                         
                         <div className="space-y-3">
-                          <label className="block">
-                            <span className="sr-only">Escolher arquivo de imagem</span>
+                          <div className="relative">
                             <input
                               type="file"
                               accept="image/*"
@@ -565,17 +564,17 @@ export default function ConclusaoCadastro() {
                                   handleInputChange('imagemUrl', tempUrl)
                                 }
                               }}
-                              className="block w-full text-sm text-gray-500
-                                file:mr-4 file:py-3 file:px-4
-                                file:rounded-lg file:border-0
-                                file:text-sm file:font-semibold
-                                file:bg-blue-50 file:text-blue-700
-                                hover:file:bg-blue-100
-                                file:cursor-pointer cursor-pointer
-                                border border-gray-300 rounded-lg
-                                focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                              id="file-upload"
                             />
-                          </label>
+                            <label 
+                              htmlFor="file-upload"
+                              className="flex items-center justify-center w-full py-3 px-4 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold rounded-lg border border-gray-300 cursor-pointer transition-colors focus-within:ring-2 focus-within:ring-blue-500"
+                            >
+                              <span className="mr-2">📁</span>
+                              {advertiser.imagemUrl ? 'Alterar Imagem' : 'Arquivo de Imagem'}
+                            </label>
+                          </div>
                           
                           <p className="text-xs text-gray-500 text-center">
                             📸 Formatos aceitos: PNG, JPG, JPEG | Tamanho máximo: 5MB
