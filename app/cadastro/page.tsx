@@ -1,6 +1,6 @@
 // Caminho: app/cadastro/page.tsx
 // Versão: 2.0
-// Autor: GPT & Weber
+// Autor: CoPillot & Weber
 // Data: 04/08/2025
 // Comentários: "Cadastro Simples" do anunciante com validações completas, máscaras e validação de força da senha 
 

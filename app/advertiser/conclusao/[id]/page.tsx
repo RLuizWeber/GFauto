@@ -73,6 +73,33 @@ export default function ConclusaoCadastro() {
     setAdvertiser(prev => ({ ...prev, [field]: value }))
   }
 
+  const handleCepChange = async (cep: string) => {
+    // Remove caracteres não numéricos
+    const cleanCep = cep.replace(/\D/g, '')
+    
+    // Atualiza o CEP no estado
+    handleInputChange('cep', cep)
+    
+    // Se o CEP tem 8 dígitos, busca o endereço
+    if (cleanCep.length === 8) {
+      try {
+        const response = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`)
+        const data = await response.json()
+        
+        if (!data.erro) {
+          handleInputChange('cidade', data.localidade)
+          handleInputChange('estado', data.uf)
+          handleInputChange('bairro', data.bairro)
+          if (data.logradouro) {
+            handleInputChange('enderecoEmpresa', data.logradouro)
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao buscar CEP:', error)
+      }
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSaving(true)
@@ -90,12 +117,16 @@ export default function ConclusaoCadastro() {
       if (res.ok) {
         const result = await res.json()
         setSuccess(true)
-        setAnuncioUrl(`https://gfauto.vercel.app/anuncios/${id}`)
         
-        // Mostrar mensagem de sucesso por 3 segundos antes de redirecionar
-        setTimeout(() => {
-          router.push('/painel')
-        }, 3000)
+        // Usar URL real do anúncio retornada pela API
+        if (result.anuncio?.url) {
+          setAnuncioUrl(`https://gfauto.vercel.app${result.anuncio.url}`)
+        } else {
+          // Fallback para URL provisória
+          setAnuncioUrl('https://gfauto.vercel.app/resultados?cidade=' + encodeURIComponent(advertiser.cidade || '') + '&especialidade=' + encodeURIComponent(advertiser.especialidade || ''))
+        }
+        
+        // Remover redirecionamento automático - deixar usuário escolher
       } else {
         console.error('Erro ao finalizar cadastro')
         alert('Erro ao publicar anúncio. Tente novamente.')
@@ -118,8 +149,9 @@ export default function ConclusaoCadastro() {
           <img 
             src="/images/fluxo_app/mc4.png" 
             alt="Sucesso" 
-            className="w-45 mx-auto mb-4"
-            width={180}
+            className="mx-auto mb-4"
+            width="180"
+            height="auto"
           />
           <h2 className="text-2xl font-bold text-green-600 mb-4">
             Parabéns! Seu anúncio foi publicado com sucesso!
@@ -128,24 +160,32 @@ export default function ConclusaoCadastro() {
             Seu anúncio já está disponível para visualização
           </p>
           <div className="space-y-3">
-            <a 
-              href={anuncioUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Ver Meu Anúncio
-            </a>
+            <div className="bg-gray-100 p-3 rounded-lg">
+              <p className="text-sm text-gray-600 mb-2">Link para ver seu anúncio:</p>
+              <a 
+                href={anuncioUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-blue-600 break-all hover:text-blue-800 underline"
+              >
+                {anuncioUrl || 'Aguardando geração do link...'}
+              </a>
+            </div>
+            {anuncioUrl && (
+              <button 
+                onClick={() => window.open(anuncioUrl, '_blank')}
+                className="block w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Ver Meu Anúncio
+              </button>
+            )}
             <button 
               onClick={() => router.push('/painel')}
-              className="block w-full bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors"
+              className="block w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors"
             >
               Ir para o Painel
             </button>
           </div>
-          <p className="text-xs text-gray-500 mt-4">
-            Redirecionando automaticamente em 3 segundos...
-          </p>
         </div>
       </div>
     )
@@ -181,46 +221,46 @@ export default function ConclusaoCadastro() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-6 text-gray-900">
-              Dados da Empresa
-            </h2>
-            
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="font-medium text-gray-700 mb-3">Dados do Responsável (já cadastrados)</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <input
                     type="text"
-                    value={advertiser.nome}
+                    value={advertiser.nome || ''}
                     disabled
                     className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100"
-                    placeholder="Nome do responsável"
+                    placeholder={advertiser.nome ? '' : 'Nome do responsável'}
                   />
                   <input
                     type="text"
-                    value={advertiser.cpf}
+                    value={advertiser.cpf || ''}
                     disabled
                     className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100"
-                    placeholder="CPF"
+                    placeholder={advertiser.cpf ? '' : 'CPF'}
                   />
                   <input
                     type="email"
-                    value={advertiser.email}
+                    value={advertiser.email || ''}
                     disabled
                     className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100"
-                    placeholder="E-mail"
+                    placeholder={advertiser.email ? '' : 'E-mail'}
                   />
                   <input
                     type="text"
-                    value={advertiser.celContato}
+                    value={advertiser.celContato || ''}
                     disabled
                     className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100"
-                    placeholder="Celular"
+                    placeholder={advertiser.celContato ? '' : 'Celular'}
                   />
                 </div>
               </div>
 
               <div className="space-y-4">
+                <h2 className="text-xl font-semibold text-gray-900">
+                  Dados da Empresa
+                </h2>
+                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -320,9 +360,9 @@ export default function ConclusaoCadastro() {
                       <InputMask
                         mask="99999-999"
                         value={advertiser.cep || ''}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('cep', e.target.value)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleCepChange(e.target.value)}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                        placeholder="CEP"
+                        placeholder="CEP (preenchimento automático)"
                       />
                     </div>
                     <div>
@@ -429,10 +469,42 @@ export default function ConclusaoCadastro() {
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Imagem/Logo da Empresa
                       </label>
-                      <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-red-400 transition-colors">
+                      <div className="space-y-3">
+                        {advertiser.imagemUrl ? (
+                          <div className="bg-gray-50 p-4 rounded-lg border-2 border-dashed border-gray-300">
+                            <div className="text-center">
+                              <img 
+                                src={advertiser.imagemUrl} 
+                                alt="Logo da empresa" 
+                                className="mx-auto max-h-32 object-contain rounded-lg"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => handleInputChange('imagemUrl', '')}
+                                className="mt-2 text-red-600 hover:text-red-800 text-sm"
+                              >
+                                Remover imagem
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="bg-gray-50 p-6 rounded-lg border-2 border-dashed border-gray-300 text-center hover:border-red-400 transition-colors">
+                            <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                              <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                            <p className="mt-2 text-sm text-gray-600">
+                              Nenhuma imagem selecionada
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              PNG, JPG até 5MB
+                            </p>
+                          </div>
+                        )}
+                        
                         <input
                           type="file"
                           accept="image/*"
+                          title="Selecionar arquivo de imagem"
                           onChange={(e) => {
                             const file = e.target.files?.[0]
                             if (file) {
@@ -440,30 +512,8 @@ export default function ConclusaoCadastro() {
                               handleInputChange('imagemUrl', URL.createObjectURL(file))
                             }
                           }}
-                          className="hidden"
-                          id="image-upload"
+                          className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                         />
-                        <label htmlFor="image-upload" className="cursor-pointer">
-                          <div className="flex flex-col items-center">
-                            {advertiser.imagemUrl ? (
-                              <img 
-                                src={advertiser.imagemUrl} 
-                                alt="Preview" 
-                                className="w-20 h-20 object-cover rounded mb-2"
-                              />
-                            ) : (
-                              <div className="w-20 h-20 bg-gray-100 rounded flex items-center justify-center mb-2">
-                                <span className="text-2xl">📷</span>
-                              </div>
-                            )}
-                            <span className="text-sm text-gray-600">
-                              Baixe ou arraste até aqui a imagem
-                            </span>
-                            <span className="text-xs text-gray-400 mt-1">
-                              PNG, JPG até 5MB
-                            </span>
-                          </div>
-                        </label>
                       </div>
                     </div>
 

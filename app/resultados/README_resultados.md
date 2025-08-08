@@ -18,6 +18,7 @@ A rotação funciona da seguinte forma:
 - Para cada especialidade/cidade, os anúncios premium são exibidos em ordem rotativa.
 - Exemplo: se há 5 anúncios premium para "Auto Elétrica" em Passo Fundo, cada vez que um visitante buscar, o primeiro da lista muda, seguindo rodízio circular.
 - Isso é controlado pela tabela rotacao_premium e garante que todos tenham chance de aparecer no topo.
+Os "Cortesia" ficarão logo abaixo por ordem de chegada (data em que inseriram o anúncio).
 
 ## Observações Técnicas
 
