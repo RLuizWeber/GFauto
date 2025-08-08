@@ -37,10 +37,10 @@ export default function ConfirmEmailPage() {
         setMessage('E-mail confirmado com sucesso!')
         setAdvertiserId(data.advertiserId)
         
-        // Redirecionar para conclusão do cadastro após 3 segundos
+        // Redirecionar para conclusão do cadastro após 15 segundos
         setTimeout(() => {
           router.push(`/advertiser/conclusao/${data.advertiserId}`)
-        }, 3000)
+        }, 15000)
       } else {
         setStatus('error')
         setMessage(data.error || 'Erro ao confirmar e-mail')
@@ -82,9 +82,15 @@ export default function ConfirmEmailPage() {
                 ✅ E-mail Confirmado!
               </h3>
               <p className="text-gray-600 mb-4">{message}</p>
-              <p className="text-sm text-gray-500">
-                Redirecionando para conclusão do cadastro...
+              <p className="text-sm text-gray-500 mb-4">
+                Redirecionando automaticamente em 15 segundos...
               </p>
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                <p className="text-sm text-green-700">
+                  🎉 Parabéns! Seu e-mail foi confirmado com sucesso. 
+                  Agora você pode finalizar o cadastro da sua empresa.
+                </p>
+              </div>
               
               {advertiserId && (
                 <div className="mt-6">
@@ -101,13 +107,15 @@ export default function ConfirmEmailPage() {
 
           {status === 'error' && (
             <div className="text-center">
-              <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
-                <svg className="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-              </div>
+              <img 
+                src="/images/fluxo_app/mc4.png" 
+                alt="Atenção" 
+                className="mx-auto mb-4"
+                width="180"
+                height="192"
+              />
               <h3 className="text-lg font-medium text-gray-900 mb-2">
-                ❌ Erro na Confirmação
+                Erro na Confirmação
               </h3>
               <p className="text-gray-600 mb-4">{message}</p>
               

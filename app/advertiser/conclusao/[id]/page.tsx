@@ -10,7 +10,7 @@ interface AdvertiserData {
   id: string
   email: string
   cpf: string
-  nome: string
+  nomeResponsavel: string
   celContato: string
   planoEscolhido: string
   nomeFantasia?: string
@@ -44,7 +44,7 @@ export default function ConclusaoCadastro() {
     id: '',
     email: '',
     cpf: '',
-    nome: '',
+    nomeResponsavel: '',
     celContato: '',
     planoEscolhido: 'Cortesia',
     usarNomeFantasia: true
@@ -235,10 +235,10 @@ export default function ConclusaoCadastro() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <input
                     type="text"
-                    value={advertiser.nome || ''}
+                    value={advertiser.nomeResponsavel || ''}
                     disabled
                     className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100"
-                    placeholder={advertiser.nome ? '' : 'Nome do responsável'}
+                    placeholder={advertiser.nomeResponsavel ? '' : 'Nome do responsável'}
                   />
                   <input
                     type="text"
@@ -509,19 +509,61 @@ export default function ConclusaoCadastro() {
                           </div>
                         )}
                         
-                        <input
-                          type="file"
-                          accept="image/*"
-                          title="Selecionar arquivo de imagem"
-                          onChange={(e) => {
-                            const file = e.target.files?.[0]
-                            if (file) {
-                              // Para agora, vamos usar um placeholder
-                              handleInputChange('imagemUrl', URL.createObjectURL(file))
-                            }
-                          }}
-                          className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                        />
+                        <div className="space-y-3">
+                          <label className="block">
+                            <span className="sr-only">Escolher arquivo de imagem</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0]
+                                if (file) {
+                                  // Verificar tamanho do arquivo (5MB = 5 * 1024 * 1024 bytes)
+                                  if (file.size > 5 * 1024 * 1024) {
+                                    alert('Arquivo muito grande! O tamanho máximo é 5MB.')
+                                    return
+                                  }
+                                  
+                                  // Verificar tipo do arquivo
+                                  if (!file.type.startsWith('image/')) {
+                                    alert('Por favor, selecione apenas arquivos de imagem.')
+                                    return
+                                  }
+                                  
+                                  // Criar URL temporária para preview
+                                  const tempUrl = URL.createObjectURL(file)
+                                  handleInputChange('imagemUrl', tempUrl)
+                                }
+                              }}
+                              className="block w-full text-sm text-gray-500
+                                file:mr-4 file:py-3 file:px-4
+                                file:rounded-lg file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-blue-50 file:text-blue-700
+                                hover:file:bg-blue-100
+                                file:cursor-pointer cursor-pointer
+                                border border-gray-300 rounded-lg
+                                focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            />
+                          </label>
+                          
+                          <p className="text-xs text-gray-500 text-center">
+                            📸 Formatos aceitos: PNG, JPG, JPEG | Tamanho máximo: 5MB
+                          </p>
+                          
+                          {advertiser.imagemUrl && (
+                            <div className="mt-3 text-center">
+                              <p className="text-sm text-green-600 mb-2">✅ Imagem carregada com sucesso!</p>
+                              <button
+                                type="button"
+                                onClick={() => handleInputChange('imagemUrl', '')}
+                                className="text-sm text-red-600 hover:text-red-800 underline"
+                              >
+                                🗑️ Remover imagem
+                              </button>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
 
