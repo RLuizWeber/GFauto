@@ -153,46 +153,72 @@ export default function ConclusaoCadastro() {
   if (success) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center bg-white p-8 rounded-lg shadow-lg max-w-md mx-4">
+        <div className="text-center bg-white p-8 rounded-lg shadow-lg max-w-lg mx-4">
           <img 
             src="/images/fluxo_app/mc4.png" 
             alt="Sucesso" 
             className="mx-auto mb-4"
             width="180"
-            height="auto"
+            height="192"
           />
           <h2 className="text-2xl font-bold text-green-600 mb-4">
             Parabéns! Seu anúncio foi publicado com sucesso!
           </h2>
           <p className="text-gray-600 mb-6">
-            Seu anúncio já está disponível para visualização
+            Seu anúncio já está disponível para visualização na página de resultados
           </p>
-          <div className="space-y-3">
-            <div className="bg-gray-100 p-3 rounded-lg">
-              <p className="text-sm text-gray-600 mb-2">Link para ver seu anúncio:</p>
-              <a 
-                href={anuncioUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-blue-600 break-all hover:text-blue-800 underline"
-              >
-                {anuncioUrl || 'Aguardando geração do link...'}
-              </a>
-            </div>
-            {anuncioUrl && (
+          
+          <div className="space-y-4">
+            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+              <h3 className="font-semibold text-blue-800 mb-2">📍 Veja como os anúncios aparecem na página de resultados</h3>
+              <p className="text-sm text-blue-700 mb-3">
+                Seu anúncio aparecerá de forma destacada nos resultados de busca
+              </p>
               <button 
-                onClick={() => window.open(anuncioUrl, '_blank')}
-                className="block w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                onClick={() => window.open('/planos', '_blank')}
+                className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors text-sm"
               >
-                Ver Meu Anúncio
+                Ver Página de Resultados (Modelo)
               </button>
+            </div>
+            
+            {anuncioUrl && (
+              <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                <h3 className="font-semibold text-green-800 mb-2">🎯 Seu anúncio específico</h3>
+                <p className="text-sm text-green-700 mb-3">
+                  Link direto para encontrar seu anúncio nos resultados
+                </p>
+                <button 
+                  onClick={() => window.open(anuncioUrl, '_blank')}
+                  className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors text-sm"
+                >
+                  Ver Meu Anúncio nos Resultados
+                </button>
+              </div>
             )}
-            <button 
-              onClick={() => router.push('/painel')}
-              className="block w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors"
-            >
-              Ir para o Painel
-            </button>
+            
+            <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+              <h3 className="font-semibold text-red-800 mb-2">⚙️ Painel de Controle</h3>
+              <p className="text-sm text-red-700 mb-3">
+                Gerencie seu anúncio, visualize estatísticas e atualize informações
+              </p>
+              <button 
+                onClick={() => router.push('/painel')}
+                className="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors text-sm"
+              >
+                Acessar Painel de Controle
+              </button>
+            </div>
+            
+            <div className="bg-gray-100 p-3 rounded-lg">
+              <p className="text-xs text-gray-600 mb-2">📧 Verificamos seu e-mail:</p>
+              <p className="text-xs text-gray-800 font-mono break-all">
+                {advertiser.email}
+              </p>
+              <p className="text-xs text-gray-500 mt-1">
+                Enviamos uma confirmação com todas as informações do seu anúncio.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -479,19 +505,23 @@ export default function ConclusaoCadastro() {
                       </label>
                       <div className="space-y-3">
                         {advertiser.imagemUrl ? (
-                          <div className="bg-gray-50 p-4 rounded-lg border-2 border-dashed border-gray-300">
+                          <div className="bg-green-50 p-4 rounded-lg border-2 border-green-200">
                             <div className="text-center">
-                              <img 
-                                src={advertiser.imagemUrl} 
-                                alt="Logo da empresa" 
-                                className="mx-auto max-h-32 object-contain rounded-lg"
-                              />
+                              <div className="flex items-center justify-center mb-2">
+                                <svg className="w-6 h-6 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span className="text-green-800 font-medium">Imagem carregada com sucesso!</span>
+                              </div>
+                              <p className="text-sm text-green-700 mb-3">
+                                Sua imagem aparecerá na prévia do anúncio abaixo.
+                              </p>
                               <button
                                 type="button"
                                 onClick={() => handleInputChange('imagemUrl', '')}
-                                className="mt-2 text-red-600 hover:text-red-800 text-sm"
+                                className="text-red-600 hover:text-red-800 text-sm underline"
                               >
-                                Remover imagem
+                                Alterar imagem
                               </button>
                             </div>
                           </div>

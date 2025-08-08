@@ -160,13 +160,12 @@ export async function PATCH(request: Request, { params }: { params: { id: string
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          to: advertiser.email,
-          nomeEmpresa: advertiser.nomeFantasia || advertiser.razaoSocial || advertiser.nomeResponsavel,
+          email: advertiser.email,
+          nomeResponsavel: advertiser.nomeResponsavel,
           especialidade: data.especialidade,
-          cidade: data.cidade,
           plano: advertiser.planoEscolhido,
-          expiresAt: anuncio.data_expiracao,
-          anuncioId: anuncio.id
+          dataExpiracao: anuncio.data_expiracao,
+          anuncioUrl: `https://gfauto.vercel.app/resultados?cidade=${encodeURIComponent(data.cidade)}&especialidade=${encodeURIComponent(data.especialidade)}&anuncio=${anuncio.id}`
         })
       });
 
