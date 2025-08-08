@@ -9,6 +9,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import InputMask from 'react-input-mask';
+import { useAuth } from '@/lib/useAuth';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,6 +19,8 @@ export default function LoginPage() {
   const [showRecoverModal, setShowRecoverModal] = useState(false);
   const [recoverCpf, setRecoverCpf] = useState('');
   const [recoverMessage, setRecoverMessage] = useState('');
+
+  const { login } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,8 +38,8 @@ export default function LoginPage() {
       const data = await response.json();
       console.log('Login realizado:', data);
       
-      // Salvar dados do usuário no localStorage
-      localStorage.setItem('gfauto_user', JSON.stringify(data.anunciante));
+      // Usar o hook de autenticação para fazer login
+      login(data.anunciante);
       
       // Redirecionar para o painel do anunciante após login bem-sucedido
       router.push('/painel');
@@ -96,6 +99,7 @@ export default function LoginPage() {
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
             className="w-full p-2 border rounded"
+            placeholder="Digite sua senha"
             required
           />
         </div>

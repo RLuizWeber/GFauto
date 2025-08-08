@@ -4,6 +4,7 @@
 import { useEffect, useState, ChangeEvent } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import InputMask from 'react-input-mask'
+import { useAuth } from '@/lib/useAuth'
 
 interface AdvertiserData {
   id: string
@@ -33,6 +34,7 @@ interface AdvertiserData {
 export default function ConclusaoCadastro() {
   const { id } = useParams()
   const router = useRouter()
+  const { updateUser } = useAuth()
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -117,6 +119,12 @@ export default function ConclusaoCadastro() {
       if (res.ok) {
         const result = await res.json()
         setSuccess(true)
+        
+        // Atualizar contexto do usuário com os dados mais recentes
+        updateUser({
+          ...advertiser,
+          statusCadastro: 'Completo'
+        })
         
         // Usar URL real do anúncio retornada pela API
         if (result.anuncio?.url) {

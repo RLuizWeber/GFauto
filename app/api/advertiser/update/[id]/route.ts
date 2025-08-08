@@ -152,7 +152,33 @@ export async function PATCH(request: Request, { params }: { params: { id: string
       });
     }
 
-    // 5. Retornar dados do anunciante + URL do anúncio
+    // 5. Enviar e-mail de boas-vindas
+    try {
+      const emailResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/email/welcome`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: advertiser.email,
+          nomeEmpresa: advertiser.nomeFantasia || advertiser.razaoSocial || advertiser.nomeResponsavel,
+          especialidade: data.especialidade,
+          cidade: data.cidade,
+          plano: advertiser.planoEscolhido,
+          expiresAt: anuncio.data_expiracao,
+          anuncioId: anuncio.id
+        })
+      });
+
+      if (!emailResponse.ok) {
+        console.error('Erro ao enviar e-mail de boas-vindas:', await emailResponse.text());
+      }
+    } catch (emailError) {
+      console.error('Falha ao enviar e-mail de boas-vindas:', emailError);
+      // Não falhar a operação principal por causa do e-mail
+    }
+
+    // 6. Retornar dados do anunciante + URL do anúncio
     return NextResponse.json({
       ...advertiser,
       anuncio: {
