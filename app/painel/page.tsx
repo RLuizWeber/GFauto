@@ -6,20 +6,82 @@
 
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/useAuth';
 import PainelHeader from '@/components/painel/Header';
 
+interface AnuncioInfo {
+  data_expiracao?: string;
+  plano?: string;
+}
+
 export default function PainelPage() {
   const router = useRouter();
   const { user, loading, requireAuth } = useAuth();
+  const [anuncioInfo, setAnuncioInfo] = useState<AnuncioInfo | null>(null);
+  const [carregandoAnuncio, setCarregandoAnuncio] = useState(true);
 
   useEffect(() => {
     if (!loading && !requireAuth()) {
       return;
     }
   }, [loading, requireAuth]);
+
+  // Buscar informações do anúncio quando o usuário estiver carregado
+  useEffect(() => {
+    if (user?.id) {
+      buscarInfoAnuncio();
+    }
+  }, [user]);
+
+  const buscarInfoAnuncio = async () => {
+    try {
+      const response = await fetch(`/api/anuncios?advertiserId=${user?.id}`);
+      if (response.ok) {
+        const anuncios = await response.json();
+        if (anuncios.length > 0) {
+          setAnuncioInfo(anuncios[0]); // Pegar o primeiro anúncio
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao buscar informações do anúncio:', error);
+    } finally {
+      setCarregandoAnuncio(false);
+    }
+  };
+
+  // Função para calcular anos de validade baseado no plano
+  const calcularAnosValidade = (plano: string) => {
+    if (!plano) return 1;
+    
+    const planoLower = plano.toLowerCase();
+    if (planoLower.includes('2') || planoLower.includes('dois')) {
+      return 2;
+    } else if (planoLower.includes('3') || planoLower.includes('tres') || planoLower.includes('três')) {
+      return 3;
+    }
+    return 1; // Default: 1 ano
+  };
+
+  // Função para formatar a informação de validade
+  const formatarInfoValidade = () => {
+    if (!anuncioInfo?.data_expiracao && !user?.planoEscolhido) {
+      return '';
+    }
+
+    const plano = anuncioInfo?.plano || user?.planoEscolhido || '';
+    const anos = calcularAnosValidade(plano);
+    const textoAnos = `${anos} ano${anos > 1 ? 's' : ''}`;
+    
+    if (anuncioInfo?.data_expiracao) {
+      const dataExpiracao = new Date(anuncioInfo.data_expiracao);
+      const dataFormatada = dataExpiracao.toLocaleDateString('pt-BR');
+      return ` (${textoAnos}, válido até ${dataFormatada})`;
+    } else {
+      return ` (${textoAnos})`;
+    }
+  };
 
   if (loading) {
     return (
@@ -97,8 +159,15 @@ export default function PainelPage() {
             <div>
               <h2 className="text-lg font-semibold text-gray-900">Status do Plano</h2>
               <p className="text-gray-600">
-                Você está no plano <span className="font-medium text-blue-600">{user.planoEscolhido}</span>
+                Você está no plano <span className="font-medium text-blue-600">
+                  {user.planoEscolhido}{formatarInfoValidade()}
+                </span>
               </p>
+              {carregandoAnuncio && (
+                <p className="text-sm text-gray-400 mt-1">
+                  Carregando informações de validade...
+                </p>
+              )}
             </div>
             <div className="text-right">
               <p className="text-sm text-gray-500">Status do Cadastro</p>

@@ -10,7 +10,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
-// GET: Listar anúncios com filtro opcional por cidade_id e especialidade_id
+// GET: Listar anúncios com filtro opcional por cidade_id, especialidade_id e advertiserId
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url)
@@ -18,12 +18,34 @@ export async function GET(req: Request) {
     // Busca parâmetros da query string
     const cidade_id = searchParams.get('cidade_id')
     const especialidade_id = searchParams.get('especialidade_id')
+    const advertiserId = searchParams.get('advertiserId')
+
+    // Construir filtros dinamicamente
+    const filtros: any = {}
+    if (cidade_id) filtros.cidade_id = cidade_id
+    if (especialidade_id) filtros.especialidade_id = especialidade_id
+    if (advertiserId) filtros.advertiserId = advertiserId
 
     // Busca todos os anúncios ativos com filtros, se fornecidos
     const anuncios = await prisma.anuncio.findMany({
-      where: {
-        cidade_id: cidade_id || undefined,
-        especialidade_id: especialidade_id || undefined,
+      where: filtros,
+      select: {
+        id: true,
+        titulo: true,
+        descricao: true,
+        plano: true,
+        status: true,
+        data_expiracao: true,
+        advertiserId: true,
+        cidade_id: true,
+        especialidade_id: true,
+        telefone: true,
+        whatsapp: true,
+        email: true,
+        imagem_principal: true,
+        endereco: true,
+        createdAt: true,
+        updatedAt: true
       }
     })
 
