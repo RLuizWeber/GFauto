@@ -22,10 +22,36 @@ export interface User {
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [initialized, setInitialized] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    checkAuth();
+    // Verificar auth imediatamente quando o componente monta
+    const initAuth = () => {
+      try {
+        const userData = localStorage.getItem('gfauto_user');
+        if (userData) {
+          const parsedUser = JSON.parse(userData);
+          
+          // Validar se os dados do usuário ainda são válidos
+          if (parsedUser.id && parsedUser.email) {
+            setUser(parsedUser);
+          } else {
+            // Dados inválidos, limpar
+            localStorage.removeItem('gfauto_user');
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao verificar autenticação:', error);
+        localStorage.removeItem('gfauto_user');
+      } finally {
+        setLoading(false);
+        setInitialized(true);
+      }
+    };
+
+    // Executar imediatamente, sem delay
+    initAuth();
   }, []);
 
   const checkAuth = () => {
@@ -63,7 +89,12 @@ export function useAuth() {
   };
 
   const requireAuth = () => {
-    if (!loading && !user) {
+    // Se ainda está carregando ou não foi inicializado, não redirecionar ainda
+    if (loading || !initialized) {
+      return true; // Aguardar
+    }
+    
+    if (!user) {
       router.push('/advertiser/login');
       return false;
     }
@@ -73,6 +104,7 @@ export function useAuth() {
   return {
     user,
     loading,
+    initialized,
     login,
     logout,
     updateUser,

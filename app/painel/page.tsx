@@ -18,15 +18,16 @@ interface AnuncioInfo {
 
 export default function PainelPage() {
   const router = useRouter();
-  const { user, loading, requireAuth } = useAuth();
+  const { user, loading, initialized, requireAuth } = useAuth();
   const [anuncioInfo, setAnuncioInfo] = useState<AnuncioInfo | null>(null);
   const [carregandoAnuncio, setCarregandoAnuncio] = useState(true);
 
   useEffect(() => {
-    if (!loading && !requireAuth()) {
+    // Só verificar auth depois que foi inicializado
+    if (initialized && !requireAuth()) {
       return;
     }
-  }, [loading, requireAuth]);
+  }, [initialized, requireAuth]);
 
   // Buscar informações do anúncio quando o usuário estiver carregado
   useEffect(() => {
@@ -83,12 +84,12 @@ export default function PainelPage() {
     }
   };
 
-  if (loading) {
+  if (loading || !initialized) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Carregando...</p>
+          <p className="mt-4 text-gray-600">Carregando painel...</p>
         </div>
       </div>
     );
@@ -141,6 +142,7 @@ export default function PainelPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Header aparece IMEDIATAMENTE quando user estiver carregado */}
       <PainelHeader />
       
       <main className="max-w-6xl mx-auto py-8 px-4">
@@ -153,7 +155,7 @@ export default function PainelPage() {
           </p>
         </div>
 
-        {/* Status do plano */}
+        {/* Status do plano - pode ter loading separado */}
         <div className="bg-white rounded-lg shadow-sm border p-6 mb-8">
           <div className="flex items-center justify-between">
             <div>
@@ -165,6 +167,7 @@ export default function PainelPage() {
               </p>
               {carregandoAnuncio && (
                 <p className="text-sm text-gray-400 mt-1">
+                  <span className="inline-block animate-spin rounded-full h-3 w-3 border-b-2 border-blue-400 mr-2"></span>
                   Carregando informações de validade...
                 </p>
               )}
@@ -182,7 +185,7 @@ export default function PainelPage() {
           </div>
         </div>
 
-        {/* Grid de funcionalidades */}
+        {/* Grid de funcionalidades - aparece imediatamente */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {botoes.map((botao, index) => (
             <button

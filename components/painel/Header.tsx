@@ -6,16 +6,58 @@
 'use client';
 
 import { useAuth } from '@/lib/useAuth';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 export default function PainelHeader() {
-  const { user, logout } = useAuth();
+  const { user, logout, updateUser } = useAuth();
   const [showMenu, setShowMenu] = useState(false);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   if (!user) return null;
 
   const nomeExibicao = user.nomeFantasia || user.razaoSocial || user.nomeResponsavel;
   const iniciais = nomeExibicao.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+
+  const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validações
+    if (file.size > 5 * 1024 * 1024) {
+      alert('Arquivo muito grande! O tamanho máximo é 5MB.');
+      return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+      alert('Por favor, selecione apenas arquivos de imagem.');
+      return;
+    }
+
+    try {
+      setUploadingAvatar(true);
+      
+      // Criar URL temporária para preview imediato
+      const tempUrl = URL.createObjectURL(file);
+      
+      // Atualizar avatar temporariamente
+      updateUser({ imagemUrl: tempUrl });
+      
+      // Aqui você pode implementar upload real para servidor
+      // Por enquanto, vamos usar a URL temporária
+      
+      setShowMenu(false);
+      
+      // TODO: Implementar upload real para servidor e salvar URL no banco
+      console.log('Avatar atualizado temporariamente. TODO: Implementar upload para servidor.');
+      
+    } catch (error) {
+      console.error('Erro ao fazer upload do avatar:', error);
+      alert('Erro ao atualizar avatar. Tente novamente.');
+    } finally {
+      setUploadingAvatar(false);
+    }
+  };
 
   return (
     <header className="bg-white shadow-sm border-b">
@@ -65,12 +107,13 @@ export default function PainelHeader() {
                   <div className="py-1">
                     <button
                       onClick={() => {
-                        // TODO: Implementar upload de avatar
+                        fileInputRef.current?.click();
                         setShowMenu(false);
                       }}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      disabled={uploadingAvatar}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 disabled:opacity-50"
                     >
-                      Alterar Foto
+                      {uploadingAvatar ? 'Carregando...' : 'Alterar Foto'}
                     </button>
                     <button
                       onClick={() => {
@@ -95,6 +138,16 @@ export default function PainelHeader() {
                 </div>
               )}
             </div>
+            
+            {/* Input file escondido para upload de avatar */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleAvatarUpload}
+              title="Upload de avatar"
+              className="hidden"
+            />
           </div>
         </div>
       </div>
