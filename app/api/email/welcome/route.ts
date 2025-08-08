@@ -38,11 +38,28 @@ export async function POST(request: Request) {
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    // Calcular data de expiração (30 dias para cortesia, 365 para premium)
+    // Calcular período de validade e data de expiração
     const hoje = new Date();
-    const diasValidade = plano.toLowerCase().includes('premium') ? 365 : 30;
-    const dataVencimento = new Date(hoje.getTime() + (diasValidade * 24 * 60 * 60 * 1000));
+    let anosValidade = 1; // Default: 1 ano
+    let diasValidade = 365;
+    
+    if (plano.toLowerCase().includes('premium')) {
+      // Para premium, verificar se há especificação de anos no plano
+      if (plano.toLowerCase().includes('2') || plano.toLowerCase().includes('dois')) {
+        anosValidade = 2;
+        diasValidade = 730;
+      } else if (plano.toLowerCase().includes('3') || plano.toLowerCase().includes('tres') || plano.toLowerCase().includes('três')) {
+        anosValidade = 3;
+        diasValidade = 1095;
+      } else {
+        anosValidade = 1;
+        diasValidade = 365;
+      }
+    }
+    
+    const dataVencimento = dataExpiracao ? new Date(dataExpiracao) : new Date(hoje.getTime() + (diasValidade * 24 * 60 * 60 * 1000));
     const dataFormatada = dataVencimento.toLocaleDateString('pt-BR');
+    const textoValidade = `${anosValidade} ano${anosValidade > 1 ? 's' : ''} com vencimento em: ${dataFormatada}`;
 
     // Template do e-mail
     const htmlContent = `
@@ -74,7 +91,7 @@ export async function POST(request: Request) {
           <div class="highlight">
             <p><strong>📍 Especialidade:</strong> ${especialidade}</p>
             <p><strong>⭐ Plano:</strong> ${plano}</p>
-            <p><strong>📅 Válido até:</strong> ${dataFormatada}</p>
+            <p><strong>📅 Validade:</strong> ${textoValidade}</p>
             <p><strong>🌐 Status:</strong> Publicado e disponível para visualização</p>
           </div>
           

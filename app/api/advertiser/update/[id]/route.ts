@@ -23,6 +23,25 @@ export async function PATCH(request: Request, { params }: { params: { id: string
       );
     }
 
+    // Função para calcular data de expiração baseada no plano
+    const calcularDataExpiracao = (plano: string): Date => {
+      const hoje = new Date();
+      let diasValidade = 365; // Default: 1 ano para cortesia
+      
+      if (plano.toLowerCase().includes('premium')) {
+        // Para premium, verificar se há especificação de anos no plano
+        if (plano.toLowerCase().includes('2') || plano.toLowerCase().includes('dois')) {
+          diasValidade = 730; // 2 anos
+        } else if (plano.toLowerCase().includes('3') || plano.toLowerCase().includes('tres') || plano.toLowerCase().includes('três')) {
+          diasValidade = 1095; // 3 anos
+        } else {
+          diasValidade = 365; // 1 ano (premium padrão)
+        }
+      }
+      
+      return new Date(hoje.getTime() + (diasValidade * 24 * 60 * 60 * 1000));
+    };
+
     // Mapear campos do frontend para o banco
     const mappedData = {
       ...data,
@@ -108,6 +127,9 @@ export async function PATCH(request: Request, { params }: { params: { id: string
       where: { advertiserId: id }
     });
 
+    // Calcular data de expiração
+    const dataExpiracao = calcularDataExpiracao(data.planoEscolhido || 'cortesia');
+
     let anuncio;
     if (anuncioExistente) {
       // Atualizar anúncio existente
@@ -125,7 +147,8 @@ export async function PATCH(request: Request, { params }: { params: { id: string
           imagem_principal: data.imagemUrl,
           plano: data.planoEscolhido?.toLowerCase().includes('premium') ? 'premium' : 'cortesia',
           status: 'PUBLICADO',
-          site: data.site || null
+          site: data.site || null,
+          data_expiracao: dataExpiracao
         }
       });
     } else {
@@ -147,6 +170,7 @@ export async function PATCH(request: Request, { params }: { params: { id: string
           plano: data.planoEscolhido?.toLowerCase().includes('premium') ? 'premium' : 'cortesia',
           status: 'PUBLICADO',
           site: data.site || null,
+          data_expiracao: dataExpiracao,
           updatedAt: new Date()
         }
       });
